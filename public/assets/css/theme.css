@@ -1,0 +1,233 @@
+.auth-form {
+    width: 100%;
+    max-width: 300px;
+}
+
+.logo img {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+/** Rewrite default theme */
+input[type="submit"].icon-single:before,
+input[type="reset"].icon-single:before,
+input[type="button"].icon-single:before,
+button.icon-single:before,
+.button.icon-single:before {
+    margin-right: 0px !important;
+}
+a.icon-single,
+button.icon-single {
+    padding: 0 1.15em;
+}
+
+#main > .inner {
+    padding-bottom: 0 !important;
+}
+
+input[type="file"] {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    background: #ffffff;
+    border-radius: 0.375em;
+    border: none;
+    border: solid 1px rgba(210, 215, 217, 0.75);
+    color: inherit;
+    display: block;
+    outline: 0;
+    padding: 0.5em 1em 0;
+    text-decoration: none;
+    width: 100%;
+    height: 2.75em;
+}
+
+input[type="file"]:invalid {
+    box-shadow: none;
+}
+
+input[type="file"]:focus {
+    border-color: #f56a6a;
+    box-shadow: 0 0 0 1px #f56a6a;
+}
+
+input:disabled {
+    background-color: gainsboro;
+}
+
+.post-description img {
+    margin: 0 auto;
+    display: block;
+    border-radius: 0.375em;
+}
+
+.hidden {
+    display: none;
+}
+
+/** CUSTOM ELEMENTS */
+
+.pointer {
+    cursor: pointer;
+}
+
+.border-none {
+    border: none;
+}
+
+/** Sizing */
+.h-full {
+    height: 100%;
+}
+
+.h-screen {
+    height: 100vh;
+}
+
+.w-full {
+    width: 100%;
+}
+.w-screen {
+    width: 100vw;
+}
+
+/** Margin */
+.ma-0 {
+    margin: 0px;
+}
+
+.mb {
+    margin: 0 0 1em 0;
+}
+
+.mb-2 {
+    margin: 0 0 2em 0;
+}
+
+/** Flex */
+
+.flex {
+    display: flex;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.items-start {
+    align-items: flex-start;
+}
+
+.items-end {
+    align-items: flex-end;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-content-start {
+    justify-content: start;
+}
+
+.justify-content-end {
+    justify-content: end;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+/** Aling */
+.text-center {
+    text-align: center;
+}
+
+/** JQUERY TABLE */
+#table-sheet_length {
+    display: none;
+}
+.dataTables_paginate {
+    display: flex;
+    align-items: center;
+}
+.paginate_button {
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    border-bottom: 0;
+    border-radius: 0.375em;
+    display: inline-block;
+    font-size: 0.8em;
+    font-weight: 600;
+    height: 2em;
+    line-height: 2em;
+    margin: 0 0.125em;
+    min-width: 2em;
+    padding: 0 0.5em;
+    text-align: center;
+}
+
+.paginate_button:first-child {
+    margin-left: 0px;
+}
+
+.paginate_button.current {
+    background-color: #f56a6a;
+    color: #ffffff !important;
+}
+
+.paginate_button.next,
+.paginate_button.previous {
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    background-color: transparent;
+    border-radius: 0.375em;
+    border: 0;
+    box-shadow: inset 0 0 0 2px #f56a6a;
+    color: #f56a6a !important;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Roboto Slab", serif;
+    font-size: 0.8em;
+    font-weight: 700;
+    height: 3.5em;
+    letter-spacing: 0.075em;
+    line-height: 3.5em;
+    padding: 0 2.25em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin: 0 1em;
+}
+
+.paginate_button.disabled {
+    pointer-events: none;
+    opacity: 0.25;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    background-color: transparent;
+    border-radius: 0.375em;
+    border: 0;
+    box-shadow: inset 0 0 0 2px #f56a6a;
+    color: #f56a6a !important;
+    display: inline-block;
+    font-family: "Roboto Slab", serif;
+    font-size: 0.8em;
+    font-weight: 700;
+    height: 3.5em;
+    letter-spacing: 0.075em;
+    line-height: 3.5em;
+    padding: 0 2.25em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
