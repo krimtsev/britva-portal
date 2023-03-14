@@ -34,7 +34,7 @@
                                     <form action="{{ route('d.user.delete', $user->id) }}" method="post" class="inline-block ma-0">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" class="button primary icon small solid fa-trash"> Удалить {{ $user->id }}</button>
+                                        <button type="submit" class="button primary icon small solid fa-trash"> Удалить </button>
                                     </form>
                                 @endif
                             </td>

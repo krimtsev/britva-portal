@@ -94,4 +94,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Sheet::class, 'user_id', 'id');
     }
+
+    public function digests()
+    {
+        return $this->hasMany(Digest::class, 'user_id', 'id');
+    }
 }

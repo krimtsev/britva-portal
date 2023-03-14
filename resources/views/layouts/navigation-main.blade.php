@@ -6,7 +6,7 @@
 		</div>
 		<!-- Menu -->
 		<nav id="menu">
-			
+
 			<!-- <header class="major">
 				<h2>Меню</h2>
 			</header> -->
@@ -67,30 +67,23 @@
 		</nav>
 
         <!-- Section -->
-				<section>
+            @if($digests)
+			<section>
                 <header class="major">
                     <h2>Последние дайджесты:</h2>
                 </header>
                 <div class="mini-posts">
+                    @foreach ($digests as $digest)
                     <article>
-                        <!--<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>-->
-                        <p>Информация о работе заведений в праздники в дайджесте №14</p>
+                        <h4> {{ $digest->title }} </h4>
+                        <p> {!! $digest->description !!} </p>
                     </article>
-                    <article>
-                        <!--<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>-->
-                        <p>Рекомендации по оплате Yclients в 2023 году в дайджесте №13</p>
-                    </article>
-                    <article>
-                        <!--<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>-->
-                        <p>Легализация музыкального оформления в дайджесте №12</p>
-                    </article>
+                    @endforeach
                 </div>
-                <!-- <ul class="actions">
-                    <li><a href="#" class="button">More</a></li>
-                </ul> -->
             </section>
-
+            @endif
 		<!-- Section -->
+
 		<section>
 			<header class="major">
 				<h2>График работы ЦО:</h2>
@@ -98,7 +91,7 @@
 			<p>C понедельника по пятницу<br />C 10:00 до 20:00</p>
 			<p>Больше информации на странице<br /><a href="#">контакты сотрудников ЦО</a></p>
 			<p>Телефон офиса:<br /><a href="tel:+74994440270">+7 (499) 444-02-70</a></p>
-			
+
 		</section>
 
         <!-- Footer -->

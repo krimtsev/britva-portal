@@ -1,9 +1,9 @@
 <x-dashboard-layout>
-    <x-header-section title="Google Sheets" />
+    <x-header-section title="Посты" />
 
     <section>
         <div class="mb-2 flex justify-content-end">
-            <a href="{{ route('d.sheet.create') }}" class="button">{{ __('Добавить') }}</a>
+            <a href="{{ route('d.digest.create') }}" class="button">{{ __('Добавить') }}</a>
         </div>
 
         <div class="table-wrapper">
@@ -13,25 +13,23 @@
                         <th>Id</th>
                         <th>Заголовок</th>
                         <th>Статус</th>
-                        <th>Ссылка</th>
                         <th>Дата создания</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($sheets as $sheet)
+                    @foreach ($digests as $digest)
                     <tr>
-                        <td> {{ $sheet->id }}</td>
-                        <td> <a href="{{ route('d.sheet.show', $sheet->id) }}"> {{ $sheet->title }} </a></td>
-                        <td> {{ $sheet->status() }} </td>
-                        <td> {{ $sheet->slug }}</td>
-                        <td> {{ $sheet->created_at }}</td>
+                        <td> {{ $digest->id }}</td>
+                        <td> <a href="{{ route('d.digest.show', $digest->id) }}"> {{ $digest->title }} </a></td>
+                        <td> {{ $digest->status() }} </td>
+                        <td> {{ $digest->created_at }}</td>
                         <td>
-                            @if (Route::has('d.sheet.edit'))
-                            <a href="{{ route('d.sheet.edit', $sheet->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>
+                            @if (Route::has('d.digest.edit'))
+                            <a href="{{ route('d.digest.edit', $digest->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>
                             @endif
-                            @if (Route::has('d.sheet.delete'))
-                            <form action="{{ route('d.sheet.delete', $sheet->id) }}" method="post" class="inline-block ma-0">
+                            @if (Route::has('d.digest.delete'))
+                            <form action="{{ route('d.digest.delete', $digest->id) }}" method="post" class="inline-block ma-0">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="button primary icon small solid fa-trash"> Удалить </button>
@@ -45,6 +43,6 @@
         </div>
     </section>
     <div class="align-center">
-        {{ $sheets->links() }}
+        {{ $digests->links() }}
     </div>
 </x-dashboard-layout>

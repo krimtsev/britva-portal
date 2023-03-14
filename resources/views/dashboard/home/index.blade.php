@@ -26,6 +26,12 @@
                     <p><b>{{ $counts->sheet }}</b></p>
                 </div>
             </div>
+            <div class="col-4 col-12-medium">
+                <div class="box text-center ">
+                    <h3>Дайджесты</h3>
+                    <p><b>{{ $counts->digest }}</b></p>
+                </div>
+            </div>
         </div>
     </section>
 </x-dashboard-layout>

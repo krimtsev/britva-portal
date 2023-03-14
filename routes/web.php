@@ -40,3 +40,4 @@ require __DIR__ . '/dashboard/posts.php';
 require __DIR__ . '/dashboard/users.php';
 require __DIR__ . '/dashboard/pages.php';
 require __DIR__ . '/dashboard/sheets.php';
+require __DIR__ . '/dashboard/digests.php';
