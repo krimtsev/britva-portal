@@ -55,7 +55,7 @@ class UpdateController extends Controller
         if($is_disabled) {
 
             $validator = Validator::make(
-                ['is_disabled' => $role_id],
+                ['is_disabled' => $is_disabled],
                 ['is_disabled' => ['boolean']]
             );
 
