@@ -1,5 +1,7 @@
 <x-main-layout>
     <div class="flex w-full h-screen items-center justify-content-center flex-col">
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
         <form method="POST" action="{{ route('login') }}" class="auth-form">
             @csrf
 

@@ -59,6 +59,11 @@
                     </div>
 
                     <div class="col-12">
+                        <input type="checkbox" id="is_disabled" name="is_disabled"  {{ $user->is_disabled ? 'checked' : ''}}>
+                        <label for="is_disabled">Пользователь заблокирован</label>
+                    </div>
+
+                    <div class="col-12">
                         <button type="submit" class="fit primary">Обновить</button>
                     </div>
                 </div>

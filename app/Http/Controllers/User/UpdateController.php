@@ -17,6 +17,7 @@ class UpdateController extends Controller
         $password = $request->input('password');
         $password_confirmation = $request->input('password_confirmation');
         $role_id = $request->input('role_id');
+        $is_disabled = !!$request->input('is_disabled');
 
         $data = [];
 
@@ -49,6 +50,22 @@ class UpdateController extends Controller
             }
 
             $data['role_id'] = $role_id;
+        }
+
+        if($is_disabled) {
+
+            $validator = Validator::make(
+                ['is_disabled' => $role_id],
+                ['is_disabled' => ['boolean']]
+            );
+
+            if ($validator->fails()) {
+                return redirect()->route('d.user.edit', $user->id)
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+
+            $data['is_disabled'] = $is_disabled;
         }
 
         if(!empty($data)) {
