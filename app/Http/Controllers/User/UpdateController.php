@@ -36,7 +36,7 @@ class UpdateController extends Controller
             $data['password'] = Hash::make($password);
         }
 
-        if(!is_null($role_id)) {
+        if(!is_null($role_id) && $user->role_id != $role_id) {
 
             $validator = Validator::make(
                 ['role_id' => $role_id],
@@ -52,8 +52,7 @@ class UpdateController extends Controller
             $data['role_id'] = $role_id;
         }
 
-        if($is_disabled) {
-
+        if(isset($is_disabled) && $user->is_disabled != $is_disabled) {
             $validator = Validator::make(
                 ['is_disabled' => $is_disabled],
                 ['is_disabled' => ['boolean']]
