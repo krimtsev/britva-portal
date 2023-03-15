@@ -3,7 +3,7 @@
 
     <section>
         <div class="mb-2 flex justify-content-start">
-            <a href="{{ route('d.post.index') }}" class="button">{{ __('Назад') }}</a>
+            <a href="{{ route('d.page.index') }}" class="button">{{ __('Назад') }}</a>
         </div>
 
         <div class="box">

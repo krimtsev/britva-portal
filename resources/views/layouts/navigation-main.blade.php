@@ -18,8 +18,8 @@
 					<ul>
 						<li><a href="http://learn.mybritva.ru/" target="_blank">Перейти на портал обучения</a></li>
 						<li><a href="http://pay.mybritva.ru/buy/kurs-administratorov-britva" target="_blank">Курс для Администратора</a></li>
-						<li><a href="http://pay.mybritva.ru/buy/kurs-administratorov-britva" target="_blank">Курс для Барбера</a></li>
-						<li><a href="http://pay.mybritva.ru/buy/kurs-administratorov-britva" target="_blank">Курс для Руководителя</a></li>
+						<li><a href="#" target="_blank">Курс для Барбера</a></li>
+						<li><a href="#" target="_blank">Курс для Руководителя</a></li>
 					</ul>
 				</li>
 				<li>
@@ -33,10 +33,10 @@
 						<li><a href="/page/fines">Штрафы по аудиту</a></li>
 					</ul>
 				</li>
-				<li><a href="./sheet/find-certificate" >Поиск по сертификатам</a></li>
+				<li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1ka8_eTE18gQNr-LCCiKYKd_u0rG6dJ5R7oGFTQg6pdM/" target="_blank">МАРКЕТИНГОВЫЙ СБОР</a></li>
 				<li><a href="https://disk.yandex.ru/d/NNyGiI2z0xHvwQ" target="_blank">Видео</a></li>
-				<li><a href="https://drive.google.com/drive/folders/1bnfus8LuyVRMqmg2OSz16H2Aa4qBI60b" target="_blank">Макеты</a></li>
+				<li><a href="https://disk.yandex.ru/d/ozwWXg_KUO5DPQ" target="_blank">Макеты</a></li>
 				<li>
 					<span class="opener">Заявки</span>
 					<ul>
@@ -89,7 +89,7 @@
 				<h2>График работы ЦО:</h2>
 			</header>
 			<p>C понедельника по пятницу<br />C 10:00 до 20:00</p>
-			<p>Больше информации на странице<br /><a href="#">контакты сотрудников ЦО</a></p>
+			<p>Больше информации на странице<br /><a href="/page/contact-office">контакты сотрудников ЦО</a></p>
 			<p>Телефон офиса:<br /><a href="tel:+74994440270">+7 (499) 444-02-70</a></p>
 
 		</section>
