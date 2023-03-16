@@ -24,7 +24,7 @@
                         <td> {{ $sheet->id }}</td>
                         <td> <a href="{{ route('d.sheet.show', $sheet->id) }}"> {{ $sheet->title }} </a></td>
                         <td> {{ $sheet->status() }} </td>
-                        <td> {{ $sheet->slug }}</td>
+                        <td> <a href="{{ route('sheet.index', $sheet->slug) }}" target="_blank"> {{ $sheet->slug }}</td>
                         <td> {{ $sheet->created_at }}</td>
                         <td>
                             @if (Route::has('d.sheet.edit'))

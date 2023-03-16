@@ -13,9 +13,9 @@
 				<!-- <li><a href="{{ route('post.index') }}">Перейти на главную сайта</a></li> -->
                 <li><a href="{{ route('d.home.index') }}">Панель администратора</a></li>
                 <li><a href="{{ route('d.post.index') }}">Записи</a></li>
-                <li><a href="{{ route('d.page.index') }}">Страницы</a></li>
-                <li><a href="{{ route('d.sheet.index') }}">Интеграция с Google Sheet</a></li>
                 <li><a href="{{ route('d.digest.index') }}">Блок дайджестов</a></li>
+                <li><a href="{{ route('d.page.index') }}">Страницы</a></li>
+                <li><a href="{{ route('d.sheet.index') }}">Интеграция с Google-документами</a></li>
                 <li><a href="{{ route('d.user.index') }}">Пользователи</a></li>
             </ul>
         </nav>

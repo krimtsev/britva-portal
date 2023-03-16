@@ -1,37 +1,27 @@
 <x-dashboard-layout>
-    <x-header-section title="Главная" />
+    <x-header-section title="Панель администратора" />
     <section>
-        <div class="row">
-            <div class="col-4 col-12-medium">
-                <div class="box text-center ">
-                    <h3>Посты</h3>
-                    <p><b>{{ $counts->post }}</b></p>
-                </div>
-            </div>
-            <div class="col-4 col-12-medium">
-                <div class="box text-center ">
-                    <h3>Страницы</h3>
-                    <p><b>{{ $counts->page }}</b></p>
-                </div>
-            </div>
-            <div class="col-4 col-12-medium">
-                <div class="box text-center ">
-                    <h3>Пользователи</h3>
-                    <p><b>{{ $counts->user }}</b></p>
-                </div>
-            </div>
-            <div class="col-4 col-12-medium">
-                <div class="box text-center ">
-                    <h3>Google Sheets</h3>
-                    <p><b>{{ $counts->sheet }}</b></p>
-                </div>
-            </div>
-            <div class="col-4 col-12-medium">
-                <div class="box text-center ">
-                    <h3>Дайджесты</h3>
-                    <p><b>{{ $counts->digest }}</b></p>
-                </div>
-            </div>
-        </div>
+		<table class="table">
+			<tr>
+				<td>Всего записей</td>
+				<td>{{ $counts->post }}</td>
+			</tr>
+			<tr>
+				<td>Всего страниц</td>
+				<td>{{ $counts->page }}</td>
+			</tr>
+			<tr>
+				<td>Интеграций с Google-документами	</td>
+				<td>{{ $counts->sheet }}</td>
+			</tr>
+			<tr>
+				<td>Новостных дайджестов</td>
+				<td>{{ $counts->digest }}</td>
+			</tr>
+			<tr>
+				<td>Пользователей</td>
+				<td>{{ $counts->user }}</td>
+			</tr>
+		</table>
     </section>
 </x-dashboard-layout>

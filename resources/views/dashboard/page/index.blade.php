@@ -24,7 +24,8 @@
                         <td> {{ $page->id }}</td>
                         <td> <a href="{{ route('d.page.show', $page->id) }}"> {{ $page->title }} </a></td>
                         <td> {{ $page->status() }} </td>
-                        <td> <a href="{{ $page->slug }}">{{ $page->slug }}</a> </td>
+                        <td> <a href="{{ route('page.index', $page->slug) }}" target="_blank"> {{ $page->slug }} </a></td>
+                        <!-- <td> <a href="{{ $page->slug }}">{{ $page->slug }}</a> </td> -->
                         <td> {{ $page->created_at }}</td>
                         <td>
                             @if (Route::has('d.page.edit'))

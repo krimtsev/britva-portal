@@ -27,8 +27,8 @@ Route::get('/radio', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', [BlogController::class, '__invoke'])->name('post.index');
 
-    Route::get('page/{slug}', [PageController::class, '__invoke']);
-    Route::get('sheet/{slug}', [PageSheetController::class, '__invoke']);
+    Route::get('page/{slug}', [PageController::class, '__invoke'])->name('page.index');
+    Route::get('sheet/{slug}', [PageSheetController::class, '__invoke'])->name('sheet.index');
 });
 
 require __DIR__ . '/auth.php';
