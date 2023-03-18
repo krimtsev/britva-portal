@@ -9,7 +9,7 @@
 
         <div class="flex justify-content-center flex-col items-center">
             <!-- Validation Errors -->
-            @if($userErrors)
+            @if(isset($userErrors))
                 <ul>
                     @foreach (json_decode($userErrors) as $item)
                         <li> {{ $item->user }} | {{ $item->errors }}</li>

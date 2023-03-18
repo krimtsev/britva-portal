@@ -39,7 +39,6 @@ class CreateGroupController extends Controller
 
             if($validator->fails())
             {
-
                 $userErrors[] = array('user' => $item, 'errors' => $validator->errors()->first());
                 continue;
             }
