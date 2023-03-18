@@ -3,6 +3,7 @@
 
     <section >
         <div class="mb-2 flex justify-content-end">
+            <a href="{{ route('d.user.create-group.index') }}" class="button mr-2">{{ __('Добавить группу') }}</a>
             <a href="{{ route('d.user.create') }}" class="button">{{ __('Добавить') }}</a>
         </div>
 

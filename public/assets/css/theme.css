@@ -1,9 +1,9 @@
 body {
-	color: #111111;
+    color: #111111;
 }
 
 p {
-	color: #111111;
+    color: #111111;
 }
 
 .auth-form {
@@ -109,8 +109,20 @@ input:disabled {
     margin: 0 0 1em 0;
 }
 
+.mt-2 {
+    margin: 2em 0 0 0;
+}
+
+.mr-2 {
+    margin: 0 2em 0 0;
+}
+
 .mb-2 {
     margin: 0 0 2em 0;
+}
+
+.ml-2 {
+    margin: 0 0 0 2em;
 }
 
 /** Flex */
@@ -241,5 +253,4 @@ input:disabled {
 }
 
 .paging_simple_numbers {
-	
 }

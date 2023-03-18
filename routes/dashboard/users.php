@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\IndexController;
 use App\Http\Controllers\User\CreateController;
+use App\Http\Controllers\User\CreateGroupController;
 use App\Http\Controllers\User\StoreController;
 use App\Http\Controllers\User\ShowController;
 use App\Http\Controllers\User\EditController;
 use App\Http\Controllers\User\UpdateController;
-use App\Http\Controllers\User\DestroyController;
 
 Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'dashboard'], function () {
 
@@ -19,6 +19,9 @@ Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'dashboard'], fun
         Route::get('/{user}/edit', [EditController::class, '__invoke'])->name('d.user.edit');
         Route::patch('/{user}', [UpdateController::class, '__invoke'])->name('d.user.update');
         // Route::delete('/{user}', [DestroyController::class, '__invoke'])->name('d.user.delete');
+
+        Route::get('/create/group', [CreateGroupController::class, 'index'])->name('d.user.create-group.index');
+        Route::post('/create/group', [CreateGroupController::class, 'store'])->name('d.user.create-group.store');
     });
 
 });
