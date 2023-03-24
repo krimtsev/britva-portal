@@ -56,8 +56,8 @@ input[type="file"]:invalid {
 }
 
 input[type="file"]:focus {
-    border-color: #f56a6a;
-    box-shadow: 0 0 0 1px #f56a6a;
+    border-color: #8D3CAD;
+    box-shadow: 0 0 0 1px #8D3CAD;
 }
 
 input:disabled {
@@ -201,7 +201,7 @@ input:disabled {
 }
 
 .paginate_button.current {
-    background-color: #f56a6a;
+    background-color: #8D3CAD;
     color: #ffffff !important;
 }
 
@@ -211,8 +211,8 @@ input:disabled {
     background-color: transparent;
     border-radius: 0.375em;
     border: 0;
-    box-shadow: inset 0 0 0 2px #f56a6a;
-    color: #f56a6a !important;
+    box-shadow: inset 0 0 0 2px #8D3CAD;
+    color: #8D3CAD !important;
     cursor: pointer;
     display: inline-block;
     font-family: "Roboto Slab", serif;
@@ -236,8 +236,8 @@ input:disabled {
     background-color: transparent;
     border-radius: 0.375em;
     border: 0;
-    box-shadow: inset 0 0 0 2px #f56a6a;
-    color: #f56a6a !important;
+    box-shadow: inset 0 0 0 2px #8D3CAD;
+    color: #8D3CAD !important;
     display: inline-block;
     font-family: "Roboto Slab", serif;
     font-size: 0.8em;
