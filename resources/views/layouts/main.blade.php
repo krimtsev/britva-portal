@@ -12,6 +12,10 @@
         <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
 
+        @if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
+            <link rel="stylesheet" href="{{ asset('assets/css/theme-dark.css') }}">
+        @endif
+
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
@@ -34,5 +38,6 @@
         <script src="{{ asset('assets/js/breakpoints.min.js') }}"></script>
         <script src="{{ asset('assets/js/util.js') }}"></script>
         <script src="{{ asset('assets/js/main.js') }}"></script>
+        <script src="{{ asset('assets/js/general.js') }}"></script>
     </body>
 </html>

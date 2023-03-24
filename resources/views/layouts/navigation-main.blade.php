@@ -97,6 +97,13 @@
         <!-- Footer -->
             <footer id="footer">
                 <p class="copyright">{{ date("Y") }} | BRITVA</p>
+
+                @if (isset($_COOKIE['theme']) == "dark")
+                    <button onclick="toogleTheme()" class="button primary icon small solid fa-sun"> сменить тему </button>
+                @else
+                    <button onclick="toogleTheme()" class="button primary icon small solid fa-moon"> сменить тему </button>
+                @endif
+
             </footer>
 
     </div>
