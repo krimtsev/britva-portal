@@ -3,14 +3,22 @@
 
     @if (Route::has('login'))
         <ul class="icons">
+            <li>
+				@if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
+                    <a onclick="toogleTheme()" class="pointer icon solid fa-sun"></a>
+                @else
+                    <a onclick="toogleTheme()" class="pointer icon solid fa-moon"></a>
+                @endif
+			</li>
+				
             <li>{{ Auth::user()->login }}</li>
-
+						
             @auth
                 @if(Route::is('d.*'))
                     <li><a href="{{ route('post.index') }}" class="border-none">{{ __('Портал') }}</a></li>
                 @else
                     @if (Auth::user()->isAdmin())
-                        <li><a href="{{ route('d.home.index') }}" class="border-none">{{ __('Панель администратора') }}</a></li>
+                        <li><a href="{{ route('d.home.index') }}" class="border-none">{{ __('Консоль') }}</a></li>
                     @endif
                 @endif
             @endauth
