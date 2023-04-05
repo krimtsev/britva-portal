@@ -45,4 +45,7 @@
             </table>
         </div>
     </section>
+    <div class="align-center">
+        {{ $users->links() }}
+    </div>
 </x-dashboard-layout>
