@@ -23,8 +23,6 @@
 					<ul>
 						<li><a href="http://learn.mybritva.ru/" target="_blank">Перейти на портал обучения</a></li>
 						<li><a href="http://pay.mybritva.ru/buy/kurs-administratorov-britva" target="_blank">Курс для Администратора</a></li>
-						<li><a href="#" target="_blank">Курс для Барбера</a></li>
-						<li><a href="#" target="_blank">Курс для Руководителя</a></li>
 					</ul>
 				</li>
 				<li>
@@ -55,16 +53,18 @@
 					</ul>
 				</li>
 				<li><a href="https://disk.yandex.ru/d/NNyGiI2z0xHvwQ" target="_blank">Видео</a></li>
-				<li><a href="/page/paid-services">Платные услуги ЦО</a></li>
+				<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
 				<li>
 					<span class="opener">Заявки</span>
 					<ul>
 						<li><a href="https://forms.gle/vStrvEx5uw9NqicR6">Заявка на дизайн</a></li>
+						<li><a href="https://docs.google.com/forms/d/1730Zt5Ect9gdMhOjjRvZBHc-cz3cG5WHzoPhp8Ep_24/viewform?edit_requested=true" target="_blank">Заявка на сертификат</a></li>
 						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdEPHKl637KqNBoeRJM70SG4RAa_Fkq7Kz24DEZe18yDtdTwQ/viewform?usp=sf_link" target="_blank">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
 						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLScvCdbQqAQ9XF6I1fftLZ0Fuc3F_Kqe-dfNFkpOuLhfv2A_hw/viewform" target="_blank">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
 					</ul>
 				</li>
 				<li><a href="/page/discounts">Корпоративные скидки</a></li>
+				<li><a href="https://britva.tech/britva/" target="_blank">Страница для администраторов</a></li>
 				<li>
 					<span class="opener">Контакты</span>
 					<ul>

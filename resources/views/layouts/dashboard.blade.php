@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
 
+		<link rel="icon" type="image/x-icon" href="./favicon.ico">
+	
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
 

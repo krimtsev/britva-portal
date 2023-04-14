@@ -5,7 +5,7 @@
 
         <form method="POST" action="{{ route('register') }}" class="auth-form">
             @csrf
-
+						
             <!-- Login -->
             <div class="mb">
                 <input
