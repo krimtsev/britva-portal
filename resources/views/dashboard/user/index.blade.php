@@ -11,11 +11,12 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>№</th>
                         <th>Логин</th>
                         <th>Роль</th>
                         <th>Статус</th>
-                        <th>Дата создания</th>
+                        <th>Дата регистрации</th>
+                        <th>Последняя авторизация</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                             <td> {{ $user->userRole() }}</td>
                             <td> {{ $user->is_disabled ? 'Заблокирован' : 'Активен' }}</td>
                             <td> {{ $user->created_at }}</td>
+                            <td> {{ $user->last_auth }}</td>
                             <td>
                                 @if (Route::has('d.user.edit'))
                                     <a href="{{ route('d.user.edit', $user->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>

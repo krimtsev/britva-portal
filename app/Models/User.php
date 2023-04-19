@@ -21,7 +21,8 @@ class User extends Authenticatable
         'login',
         'password',
         'role_id',
-        'is_disabled'
+        'is_disabled',
+        'last_auth'
     ];
 
     /**
