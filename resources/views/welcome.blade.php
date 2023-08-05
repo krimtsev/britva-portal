@@ -5,10 +5,10 @@
         <form method="POST" action="{{ route('login') }}" class="auth-form">
             @csrf
 			
-			<!-- Alert -->
+			<!-- Alert 
 			<div class="mb">
 				<p class="text-center">Коллеги, не пугайтесь!<br />У нас обновился портал.<br />За доступами к Диме Крымцеву.</p>	
-            </div>
+            </div>-->
 			
 			<!-- Logo -->
 			<div class="logo">

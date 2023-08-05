@@ -33,7 +33,8 @@
 						<li><a href="/page/certificate">Сертификаты</a></li>
 						<li><a href="/page/price-list">Прайс-лист</a></li>
 						<li><a href="/page/rospotrebnadzor">Роспотребнадзор</a></li>
-						<li><a href="/page/fines">Штрафы по аудиту</a></li>
+						<li><a href="/page/fines">Штрафы</a></li>
+						<li><a href="/page/fines-audit">Штрафы по аудиту</a></li>
 					</ul>
 				</li>
 				<li>
