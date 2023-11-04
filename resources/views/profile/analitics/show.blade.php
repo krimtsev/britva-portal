@@ -2,29 +2,6 @@
     <x-header-section title="Аналитика" />
 
     <section>
-        <div>
-            <form action="{{ route('p.analytics.show') }}" method="post">
-                @csrf
-
-                <div class="row gtr-uniform">
-                    <div class="col-4">
-                        <select name="month" id="month">
-                            <option value="">Выберите месяц</option>
-                            @foreach ($months as $key => $value)
-                                <option value="{{ $key }}">{{ $value }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-4">
-                        <input type="submit" value="Создать отчет" class="primary">
-                    </div>
-
-                    <div class="col-4"> {{ $params["start_date"] }} - {{ $params["end_date"] }}</div>
-                </div>
-            </form>
-        </div>
-
         <div class="table-wrapper" style="font-size: 0.8em">
             <table>
                 <thead>
@@ -83,20 +60,20 @@
                         </td>
                     </tr>
                 @endforeach
-                <tr>
-                    <!-- <td> </td> -->
-                    <td> </td>
-                    <td> <div class="center"><b>{{ $total["loyalty"] }} </b></div></td>
-                    <td> <div class="center"><b>{{ $total["income_total"] }} </b></div></td>
-                    <td> <div class="center"><b>{{ $total["average_sum"] }} </b></div></td>
-                    <td> <div class="center"><b>{{ $total["add_services"] }} </b></div></td>
-                    <td> <div class="center"><b>{{ $total["sales"] }} </b></div></td>
-                    <td> <div class="center"></div></td>
-                    <td> <div class="center"></div></td>
-                    <td> <div class="center"><b>{{ $total["comments_total"] }} ({{ $total["comments_best"] }}) </b></div></td>
-                    <td> <div class="center"><b>{{ $total["fullnesss"] }}% </b></div></td>
-                    <td> <div class="center"><b>{{ $total["new_client"] }} </b></div></td>
-                </tr>
+                    <tr>
+                        <!-- <td> </td> -->
+                        <td> </td>
+                        <td> <div class="center"><b>{{ $total["loyalty"] }} </b></div></td>
+                        <td> <div class="center"><b>{{ $total["income_total"] }} </b></div></td>
+                        <td> <div class="center"><b>{{ $total["average_sum"] }} </b></div></td>
+                        <td> <div class="center"><b>{{ $total["add_services"] }} </b></div></td>
+                        <td> <div class="center"><b>{{ $total["sales"] }} </b></div></td>
+                        <td> <div class="center"></div></td>
+                        <td> <div class="center"></div></td>
+                        <td> <div class="center"><b>{{ $total["comments_total"] }} ({{ $total["comments_best"] }}) </b></div></td>
+                        <td> <div class="center"><b>{{ $total["fullnesss"] }}% </b></div></td>
+                        <td> <div class="center"><b>{{ $total["new_client"] }} </b></div></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

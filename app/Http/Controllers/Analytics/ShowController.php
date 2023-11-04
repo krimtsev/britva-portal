@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Analytics;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\YclientsService;
-use Illuminate\Http\Request;
-use Utils;
 
 /**
  *  1. getStaff - получаем список сотрудников
@@ -15,28 +13,15 @@ use Utils;
 
 class ShowController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke()
     {
+        // \Cache::clear();
 
-        $months = Utils::getMonthArray();
-
-        $data = request()->validate([
-            'month' => 'required|string',
-        ]);
-
-        $start_date = explode("_", $data["month"]);
-        $start_date[2] = "01";
-        $start_date = implode('-', $start_date);
-
-        $end_date = $data["month"];
-
-        \Cache::clear();
-
-        $company_id = 747327;
+        $company_id = 41120;
 
         $params = [
-            "start_date" => $start_date,
-            "end_date"   => $end_date,
+            "start_date" => "2023-08-01",
+            "end_date"   => "2023-08-31",
             "company_id" => $company_id
         ];
 
@@ -81,10 +66,10 @@ class ShowController extends Controller
             }
 
             if (is_array($companyStatsByStaff) && !empty($companyStatsByStaff)) {
-                $table[$id]["average_sum"] = round($companyStatsByStaff["average_sum"]);
-                $table[$id]["fullnesss"] = round($companyStatsByStaff["fullnesss"]);
-                $table[$id]["new_client"] = round($companyStatsByStaff["new_client"]);
-                $table[$id]["income_total"] = round($companyStatsByStaff["income_total"]);
+                $table[$id]["average_sum"] = $companyStatsByStaff["average_sum"];
+                $table[$id]["fullnesss"] = $companyStatsByStaff["fullnesss"];
+                $table[$id]["new_client"] = $companyStatsByStaff["new_client"];
+                $table[$id]["income_total"] = $companyStatsByStaff["income_total"];
             } else {
                 $table[$id]["average_sum"] = 0;
                 $table[$id]["fullnesss"] = 0;
@@ -146,8 +131,6 @@ class ShowController extends Controller
             $table[$id]["sum"] = $table[$id]["add_services"] + $table[$id]["sales"];
         }
 
-        uasort($table, function ($item1, $item2) { return $item2["income_total"] <=> $item1["income_total"]; } );
-
         // Итого
 
         $total = [
@@ -178,9 +161,8 @@ class ShowController extends Controller
             $total["comments_best"] += $one["comments_best"];
         }
 
-        return view('profile.analitics.show', compact('table', 'total', 'params', 'months'));
+        return view('profile.analitics.index', compact('table', 'total'));
     }
-
 }
 
 /*
