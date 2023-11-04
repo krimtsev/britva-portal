@@ -70,13 +70,14 @@ class ShowController extends Controller
                 $table[$id]["fullnesss"] = $companyStatsByStaff["fullnesss"];
                 $table[$id]["new_client"] = $companyStatsByStaff["new_client"];
                 $table[$id]["income_total"] = $companyStatsByStaff["income_total"];
+                $table[$id]["income_goods"] = $companyStatsByStaff["income_goods"];
             } else {
                 $table[$id]["average_sum"] = 0;
                 $table[$id]["fullnesss"] = 0;
                 $table[$id]["new_client"] = 0;
                 $table[$id]["income_total"] = 0;
+                $table[$id]["income_goods"] = 0;
             }
-
             // Всего отзывов (из них 5)
 
             if (is_array($comments) && isset($comments[$id])) {
@@ -143,7 +144,9 @@ class ShowController extends Controller
             "sales" => 0,
             "comments_total" => 0,
             "comments_best" => 0,
+            "income_goods" => 0,
         ];
+
         $stats = $client->getCompanyStats();
 
         if (is_array($stats) && !empty($stats)) {
@@ -151,6 +154,7 @@ class ShowController extends Controller
             $total["fullnesss"] = $stats["fullnesss"];
             $total["new_client"] = $stats["new_client"];
             $total["income_total"] = $stats["income_total"];
+            $table["income_goods"] = $stats["income_goods"];
         }
 
         foreach ($table as $one) {

@@ -21,7 +21,7 @@ class IndexController extends Controller
 
         $params = [
             "start_date" => "2023-10-01",
-            "end_date"   => "2023-10-20",
+            "end_date"   => "2023-10-31",
             "company_id" => $company_id
         ];
 
@@ -70,11 +70,13 @@ class IndexController extends Controller
                 $table[$id]["fullnesss"] = $companyStatsByStaff["fullnesss"];
                 $table[$id]["new_client"] = $companyStatsByStaff["new_client"];
                 $table[$id]["income_total"] = $companyStatsByStaff["income_total"];
+                $table[$id]["income_goods"] = $companyStatsByStaff["income_goods"];
             } else {
                 $table[$id]["average_sum"] = 0;
                 $table[$id]["fullnesss"] = 0;
                 $table[$id]["new_client"] = 0;
                 $table[$id]["income_total"] = 0;
+                $table[$id]["income_goods"] = 0;
             }
 
             // Всего отзывов (из них 5)
@@ -141,6 +143,7 @@ class IndexController extends Controller
             "loyalty" => 0,
             "add_services" => 0,
             "sales" => 0,
+            "income_goods" => 0,
             "comments_total" => 0,
             "comments_best" => 0,
         ];
@@ -151,6 +154,7 @@ class IndexController extends Controller
             $total["fullnesss"] = $stats["fullnesss"];
             $total["new_client"] = $stats["new_client"];
             $total["income_total"] = $stats["income_total"];
+            $total["income_goods"] = $stats["income_goods"];
         }
 
         foreach ($table as $one) {

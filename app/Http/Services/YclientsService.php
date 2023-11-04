@@ -114,6 +114,7 @@ class YclientsService
                 "fullnesss" => $response["data"]["fullness_stats"]["current_percent"],
                 "new_client" => $response["data"]["client_stats"]["new_count"],
                 "income_total" => $response["data"]["income_total_stats"]["current_sum"],
+                "income_goods" => $response["data"]["income_goods_stats"]["current_sum"],
             ];
 
         } catch (Throwable $e) {
@@ -149,6 +150,7 @@ class YclientsService
                 "fullnesss" => $response["data"]["fullness_stats"]["current_percent"],
                 "new_client" => $response["data"]["client_stats"]["new_count"],
                 "income_total" => $response["data"]["income_total_stats"]["current_sum"],
+                "income_goods" => $response["data"]["income_goods_stats"]["current_sum"],
             ];
 
         } catch (Throwable $e) {
@@ -284,9 +286,18 @@ class YclientsService
                 9771809,  // DEPOT
                 7188703,  // MGC QUICK SPA
                 6536565,  // VOLCANO
+                12724278, // ВОССТАНАВЛИВАЮЩАЯ ТЕРАПИЯ ДЛЯ ЛИЦА RHEA
+                13621893, // ВОССТАНАВЛИВАЮЩАЯ ТЕРАПИЯ ДЛЯ ЛИЦА RHEA + ПАТЧИ
                 8220685,  // КОМПЛЕКС ПО УХОДУ ЗА КОЖЕЙ ОТ LONDON GROOMING
                 10052100, // КОМПЛЕКС ПО УХОДУ ЗА КОЖЕЙ ОТ LONDON GROOMING (СО СКРАБОМ)
-                12724278, // УХОД И ВОССТАНОВЛЕНИЕ ЛИЦА RHEA
+                10823857, // ЛИМФОДРИНАЖНЫЙ МАССАЖ
+                10802729, // МАССАЖ ЛИЦА
+                10802743, // МАССАЖ ЛИЦА + ПИЛИНГ + УЛЬТРАЗВУКОВАЯ ЧИСТКА + АЛЬГИНАТНАЯ МАСКА + УВЛАЖНЯЮЩИЙ КРЕМ
+                10802739, // ПИЛИНГ + УЛЬТРАЗВУКОВАЯ ЧИСТКА + АЛЬГИНАТНАЯ МАСКА + УВЛАЖНЯЮЩИЙ КРЕМ
+                10823866, // РАССЛАБЛЯЮЩИЙ МАССАЖ
+                10802726, // УВЛАЖНЯЮЩАЯ МАСКА
+                10802733, // УЛЬТРАЗВУКОВАЯ ЧИСТКА + АЛЬГИНАТНАЯ МАСКА + УВЛАЖНЯЮЩИЙ КРЕМ
+                13621869, // УХОД ВОКРУГ ГЛАЗ RHEA
 
                 10659272, // ART HAIR TATTOO
                 1928689,  // HAIR TATTOO
@@ -298,7 +309,11 @@ class YclientsService
                 12034752, // КОМПЛЕКСНЫЙ УХОД ЗА КОЖЕЙ ГОЛОВЫ И ВОЛОСАМИ ОТ SOLOMON’S
                 12320049, // КОМПЛЕКСНЫЙ УХОД ЗА КОЖЕЙ ГОЛОВЫ И ВОЛОСАМИ ОТ SYSTEM 4
                 12863952, // КОМПЛЕКСНЫЙ УХОД ЗА КОЖЕЙ ГОЛОВЫ И ВОЛОСАМИ ОТ THEO
+                13695706, //КОРРЕКЦИЯ + ОКРАШИВАНИЕ БРОВЕЙ
+                13695709, //КОРРЕКЦИЯ БРОВЕЙ
                 2695459,  // ОКАНТОВКА ГОЛОВЫ
+                12902309, // ОКРАШИВАНИЕ БРОВЕЙ
+                5769238,  // ПАТЧИ
                 6540050,  // ТОНИРОВАНИЕ БОРОДЫ
                 6540052,  // ТОНИРОВАНИЕ ГОЛОВЫ
                 1510473,  // УКЛАДКА БЕЗ СТРИЖКИ
