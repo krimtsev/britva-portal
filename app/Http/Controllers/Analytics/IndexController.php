@@ -12,7 +12,7 @@ class IndexController extends Controller
     {
         $months = Utils::getMonthArray();
 
-        $users = User::select('login', 'name', 'yclients_id')->orderBy('id', 'DESC')->get();
+        $users = User::select('login', 'name', 'yclients_id')->orderBy('name')->get();
 
         return view('analytics.index', compact("months", "users"));
     }
