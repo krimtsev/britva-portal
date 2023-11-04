@@ -18,11 +18,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'login',
+        'name',
         'password',
         'role_id',
         'yclients_id',
         'is_disabled',
-        'last_auth'
+        'last_activity'
     ];
 
     /**
@@ -46,26 +47,25 @@ class User extends Authenticatable
 
     protected $roleList = [
         'USER' => [
-            'KEY' => 1,
-            'VALUE' => 'Пользователь'
+            'ID' => 1,
+            'NAME' => 'Пользователь'
         ],
         'ADMIN' => [
-            'KEY' => 2,
-            'VALUE' => 'Администратор'
-        ]
+            'ID' => 2,
+            'NAME' => 'Администратор'
+        ],
     ];
 
     public function roleListById()
     {
         return array_reduce(array_values($this->roleList), function ($acc, $item) {
-            $acc[$item['KEY']] = $item['VALUE'];
+            $acc[$item['ID']] = $item['NAME'];
             return $acc;
         }, []);
     }
 
     public function userRole()
     {
-
         $array = $this->roleListById();
 
         if (array_key_exists($this->role_id, $array)) {
@@ -77,8 +77,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-
-        return $this->role_id == $this->roleList['ADMIN']['KEY'];
+        return $this->role_id == $this->roleList['ADMIN']['ID'];
     }
 
     public function posts()

@@ -16,7 +16,7 @@
                         <th>Роль</th>
                         <th>Статус</th>
                         <th>ID филиала</th>
-                        <th>Последняя авторизация</th>
+                        <th>Последняя активность</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
@@ -34,7 +34,7 @@
                                 <td><a href="https://yclients.com/timetable/{{ $user->yclients_id }}">{{ $user->yclients_id }}</a></td>
                             @endif
 
-                            <td> {{ $user->last_auth }}</td>
+                            <td> {{ $user->last_activity }}</td>
                             <td>
                                 @if (Route::has('d.user.edit'))
                                     <a href="{{ route('d.user.edit', $user->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>

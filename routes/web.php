@@ -44,9 +44,10 @@ require __DIR__ . '/dashboard/users.php';
 require __DIR__ . '/dashboard/pages.php';
 require __DIR__ . '/dashboard/sheets.php';
 require __DIR__ . '/dashboard/digests.php';
+require __DIR__ . '/dashboard/analytics.php';
 
 /**
  * Профиль пользователя
  */
 require __DIR__ . '/profile/index.php';
-require __DIR__ . '/profile/analitics.php';
+require __DIR__ . '/profile/analytics.php';

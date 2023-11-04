@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Analytics;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\YclientsService;
+use App\Models\User;
+use App\Utils\Utils;
+use Illuminate\Http\Request;
 
 /**
  *  1. getStaff - получаем список сотрудников
@@ -13,15 +16,25 @@ use App\Http\Services\YclientsService;
 
 class ShowController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        // \Cache::clear();
+        $end_date = $request->input('month');
 
-        $company_id = 41120;
+        $arr_end_date = explode("-", $end_date);
+        $arr_end_date[2] = "01";
+        $start_date = implode("-", $arr_end_date);
+
+        $company_id = $request->input('company_id');
+
+        $isSync = $request->input('sync');
+
+        \Cache::clear();
+
+        $company_id = $company_id;
 
         $params = [
-            "start_date" => "2023-08-01",
-            "end_date"   => "2023-08-31",
+            "start_date" => $start_date,
+            "end_date"   => $end_date,
             "company_id" => $company_id
         ];
 
@@ -78,6 +91,7 @@ class ShowController extends Controller
                 $table[$id]["income_total"] = 0;
                 $table[$id]["income_goods"] = 0;
             }
+
             // Всего отзывов (из них 5)
 
             if (is_array($comments) && isset($comments[$id])) {
@@ -142,11 +156,10 @@ class ShowController extends Controller
             "loyalty" => 0,
             "add_services" => 0,
             "sales" => 0,
+            "income_goods" => 0,
             "comments_total" => 0,
             "comments_best" => 0,
-            "income_goods" => 0,
         ];
-
         $stats = $client->getCompanyStats();
 
         if (is_array($stats) && !empty($stats)) {
@@ -154,7 +167,7 @@ class ShowController extends Controller
             $total["fullnesss"] = $stats["fullnesss"];
             $total["new_client"] = $stats["new_client"];
             $total["income_total"] = $stats["income_total"];
-            $table["income_goods"] = $stats["income_goods"];
+            $total["income_goods"] = $stats["income_goods"];
         }
 
         foreach ($table as $one) {
@@ -165,7 +178,16 @@ class ShowController extends Controller
             $total["comments_best"] += $one["comments_best"];
         }
 
-        return view('profile.analitics.index', compact('table', 'total'));
+        $months = Utils::getMonthArray();
+
+        $users = User::select('login', 'yclients_id')->orderBy('id', 'DESC')->get();
+
+        return view('analytics.show', compact(
+            'table',
+            'total',
+            'months',
+            'users',
+        ));
     }
 }
 

@@ -3,12 +3,19 @@
 namespace App\Utils;
 
 
+use App\Config\Constants;
+
 class Utils
 {
-    public static function getMonthArray() {
+    public static function getMonthArray($start = null, $end = null) {
 
-        $start_date = '2023-08-01';
-        $end_date = '2023-10-01';
+        $start_date = $start
+            ? date('Y-m-d', $start)
+            : Constants::START_DATE;
+
+        $end_date = $end
+            ? date('Y-m-d', $end)
+            : date("Y-m-d", strtotime("-1 month",strtotime(date('Y-m-d'))));
 
         $arr_months = [
             '',

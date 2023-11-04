@@ -12,11 +12,28 @@ class UpdateController extends Controller
 
     public function __invoke(User $user, Request $request)
     {
+        $name = $request->input('name');
         $role_id = $request->input('role_id');
         $is_disabled = !!$request->input('is_disabled');
         $yclients_id = $request->input('yclients_id');
 
         $data = [];
+
+        if(!is_null($name)) {
+
+            $validator = Validator::make(
+                ['name' => $name],
+                ['name' => ['string']]
+            );
+
+            if ($validator->fails()) {
+                return redirect()->route('d.user.edit', $user->id)
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+
+            $data['name'] = $name;
+        }
 
         if(!is_null($role_id) && $user->role_id != $role_id) {
 

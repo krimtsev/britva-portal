@@ -16,6 +16,7 @@
                 <li><a href="{{ route('d.page.index') }}">Страницы</a></li>
                 <li><a href="{{ route('d.sheet.index') }}">Интеграция с Google-документами</a></li>
                 <li><a href="{{ route('d.user.index') }}">Пользователи</a></li>
+                <li><a href="{{ route('d.analytics.index') }}">Аналитика</a></li>
             </ul>
         </nav>
     </div>

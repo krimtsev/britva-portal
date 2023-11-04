@@ -14,7 +14,7 @@
             <li>{{ Auth::user()->login }}</li>
 
             @auth
-                @if(!Route::is('p.*'))
+                @if(!Route::is('p.*') && false)
                     <li><a href="{{ route('p.home.index') }}" class="border-none">{{ __('Профиль') }}</a></li>
                 @endif
 

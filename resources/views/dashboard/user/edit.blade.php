@@ -31,6 +31,16 @@
                     </div>
 
                     <div class="col-12">
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            value="{{ $user->name }}"
+                            placeholder="Название филиала"
+                        />
+                    </div>
+
+                    <div class="col-12">
                         <select name="role_id" id="role_id">
                             @foreach($user->roleListById() as $key => $value)
                                 <option
