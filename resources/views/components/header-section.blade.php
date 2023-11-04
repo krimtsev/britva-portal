@@ -10,16 +10,22 @@
                     <a onclick="toogleTheme()" class="pointer icon solid fa-moon"></a>
                 @endif
 			</li>
-				
+
             <li>{{ Auth::user()->login }}</li>
-						
+
             @auth
-                @if(Route::is('d.*'))
-                    <li><a href="{{ route('post.index') }}" class="border-none">{{ __('Портал') }}</a></li>
-                @else
+                @if(!Route::is('p.*'))
+                    <li><a href="{{ route('p.home.index') }}" class="border-none">{{ __('Профиль') }}</a></li>
+                @endif
+
+                @if(!Route::is('d.*'))
                     @if (Auth::user()->isAdmin())
                         <li><a href="{{ route('d.home.index') }}" class="border-none">{{ __('Консоль') }}</a></li>
                     @endif
+                @endif
+
+                @if(Route::is('d.*') || Route::is('p.*'))
+                    <li><a href="{{ route('post.index') }}" class="border-none">{{ __('Портал') }}</a></li>
                 @endif
             @endauth
 

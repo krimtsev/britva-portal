@@ -15,7 +15,7 @@
                         <th>Логин</th>
                         <th>Роль</th>
                         <th>Статус</th>
-                        <th>Дата регистрации</th>
+                        <th>ID филиала</th>
                         <th>Последняя авторизация</th>
                         <th>Действия</th>
                     </tr>
@@ -27,7 +27,13 @@
                             <td> <a href="{{ route('d.user.show', $user->id) }}"> {{ $user->login }} </a></td>
                             <td> {{ $user->userRole() }}</td>
                             <td> {{ $user->is_disabled ? 'Заблокирован' : 'Активен' }}</td>
-                            <td> {{ $user->created_at }}</td>
+
+                            @if (empty($user->yclients_id))
+                                <td> Не указан </td>
+                            @else
+                                <td><a href="https://yclients.com/timetable/{{ $user->yclients_id }}">{{ $user->yclients_id }}</a></td>
+                            @endif
+
                             <td> {{ $user->last_auth }}</td>
                             <td>
                                 @if (Route::has('d.user.edit'))

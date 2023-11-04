@@ -9,8 +9,8 @@
         <div class="box">
             <p>Логин: {{ $user->login }}</p>
             <p>Роль: {{ $user->userRole() }}</p>
-            <!-- <p>Имя: {{ $user->name }}</p>
-            <p>Email: {{ $user->email }}</p> -->
+            <p>Yclients id: {{ $user->yclients_id }}</p>
+            <p>Дата регистрации: {{ $user->created_at }}</p>
         </div>
     </section>
 </x-dashboard-layout>

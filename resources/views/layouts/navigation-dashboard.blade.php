@@ -10,7 +10,6 @@
                     <h2>Меню</h2>
                 </header> -->
             <ul>
-				<!-- <li><a href="{{ route('post.index') }}">Перейти на главную сайта</a></li> -->
                 <li><a href="{{ route('d.home.index') }}">Панель администратора</a></li>
                 <li><a href="{{ route('d.post.index') }}">Записи</a></li>
                 <li><a href="{{ route('d.digest.index') }}">Блок дайджестов</a></li>

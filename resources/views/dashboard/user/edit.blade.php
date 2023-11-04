@@ -2,8 +2,12 @@
     <x-header-section title="Редактировать пользователя" />
 
     <section>
-        <div class="mb-2 flex justify-content-start">
+        <div class="mb-2 flex justify-between">
             <a href="{{ route('d.user.index') }}" class="button">{{ __('Назад') }}</a>
+
+            @if (Route::has('d.user.password.index'))
+                <a href="{{ route('d.user.password.index', $user->id) }}" class="button">{{ __('Изменить пароль') }}</a>
+            @endif
         </div>
 
         <div class="flex justify-content-center flex-col items-center">
@@ -27,25 +31,6 @@
                     </div>
 
                     <div class="col-12">
-                        <input
-                            id="password"
-                            type="password"
-                            name="password"
-                            autocomplete="new-password"
-                            placeholder="Пароль"
-                        />
-                    </div>
-
-                    <div class="col-12">
-                        <input
-                            id="password_confirmation"
-                            type="password"
-                            name="password_confirmation"
-                            placeholder="Подтвердить пароль"
-                        />
-                    </div>
-
-                    <div class="col-12">
                         <select name="role_id" id="role_id">
                             @foreach($user->roleListById() as $key => $value)
                                 <option
@@ -61,6 +46,16 @@
                     <div class="col-12">
                         <input type="checkbox" id="is_disabled" name="is_disabled"  {{ $user->is_disabled ? 'checked' : ''}}>
                         <label for="is_disabled">Пользователь заблокирован</label>
+                    </div>
+
+                    <div class="col-12">
+                        <input
+                            id="yclients_id"
+                            type="text"
+                            name="yclients_id"
+                            value="{{ $user->yclients_id }}"
+                            placeholder="Yclients ID"
+                        />
                     </div>
 
                     <div class="col-12">

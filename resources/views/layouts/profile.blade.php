@@ -22,7 +22,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
 
-    <body class="is-preload dashboard">
+    <body class="is-preload profile">
         <div id="wrapper">
             <!-- Page Content -->
             <div id="main">
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            @include('layouts.navigation-dashboard')
+            @include('layouts.navigation-profile')
         </div>
 
         <!-- Scripts -->

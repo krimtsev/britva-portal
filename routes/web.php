@@ -35,9 +35,18 @@ require __DIR__ . '/auth.php';
 
 require __DIR__ . '/static.php';
 
+/**
+ * Панель администратора
+ */
 require __DIR__ . '/dashboard/index.php';
 require __DIR__ . '/dashboard/posts.php';
 require __DIR__ . '/dashboard/users.php';
 require __DIR__ . '/dashboard/pages.php';
 require __DIR__ . '/dashboard/sheets.php';
 require __DIR__ . '/dashboard/digests.php';
+
+/**
+ * Профиль пользователя
+ */
+require __DIR__ . '/profile/index.php';
+require __DIR__ . '/profile/analitics.php';

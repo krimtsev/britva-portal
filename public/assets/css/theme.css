@@ -181,6 +181,10 @@ input:disabled {
     justify-content: center;
 }
 
+.justify-between {
+    justify-content: space-between;
+}
+
 .flex-row {
     flex-direction: row;
 }
@@ -198,9 +202,11 @@ input:disabled {
 #table-sheet_length {
     display: none;
 }
+
 .dataTables_paginate {
     display: block;
 }
+
 .paginate_button {
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -279,4 +285,8 @@ input:disabled {
 
 html body div#wrapper div#main div.inner header#header ul.icons li a.icon.solid. {
 	cursor: pointer;
+}
+
+.small {
+    color: #aaa;
 }

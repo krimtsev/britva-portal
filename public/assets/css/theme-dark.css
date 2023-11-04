@@ -60,3 +60,7 @@ button.primary:hover,
 .button.primary:hover {
     background-color: var(--color-main-dark);
 }
+
+.small {
+    color: #aaa;
+}

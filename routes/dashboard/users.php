@@ -8,6 +8,7 @@ use App\Http\Controllers\User\StoreController;
 use App\Http\Controllers\User\ShowController;
 use App\Http\Controllers\User\EditController;
 use App\Http\Controllers\User\UpdateController;
+use App\Http\Controllers\User\PasswordController;
 
 Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'dashboard'], function () {
 
@@ -19,6 +20,9 @@ Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'dashboard'], fun
         Route::get('/{user}/edit', [EditController::class, '__invoke'])->name('d.user.edit');
         Route::patch('/{user}', [UpdateController::class, '__invoke'])->name('d.user.update');
         // Route::delete('/{user}', [DestroyController::class, '__invoke'])->name('d.user.delete');
+
+        Route::get('/{user}/password', [PasswordController::class, 'index'])->name('d.user.password.index');
+        Route::patch('/{user}/password', [PasswordController::class, 'update'])->name('d.user.password.update');
 
         Route::get('/create/group', [CreateGroupController::class, 'index'])->name('d.user.create-group.index');
         Route::post('/create/group', [CreateGroupController::class, 'store'])->name('d.user.create-group.store');
