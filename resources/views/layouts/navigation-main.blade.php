@@ -31,7 +31,6 @@
 						<li><a href="https://disk.yandex.ru/d/uPvUBS47I_47qw" target="_blank">Облако документов</a></li>
 						<li><a href="/page/subscription">Абонементы</a></li>
 						<li><a href="/page/certificate">Сертификаты</a></li>
-						<li><a href="/page/price-list">Прайс-лист</a></li>
 						<li><a href="/page/rospotrebnadzor">Роспотребнадзор</a></li>
 						<li><a href="/page/fines">Штрафы</a></li>
 						<li><a href="/page/fines-audit">Штрафы по аудиту</a></li>
@@ -42,6 +41,7 @@
 					<ul>
 						<li><a href="/page/mango-forwarding">Настройка переадресации Mango</a></li>
 						<li><a href="/page/yclients-alerts">Всплывающие уведомления Yclients</a></li>
+						<li><a target="_blank" href="https://youtu.be/6cy9sEyNDXU?si=3x0R0pmKIRHM08YO">Настройка измнения цен ЭВОТОР</a></li>
 					</ul>
 				</li>
 				<li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
@@ -53,7 +53,7 @@
 						<li><a href="https://disk.yandex.ru/d/_G5bIHExwxfUlw" target="_blank">Макеты для инсты</a></li>
 					</ul>
 				</li>
-				<li><a href="https://disk.yandex.ru/d/NNyGiI2z0xHvwQ" target="_blank">Видео</a></li>
+				<li><a href="https://disk.yandex.ru/d/shqZrB4nMWMr0A" target="_blank">Видео на ТВ</a></li>
 				<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
 				<li>
 					<span class="opener">Заявки</span>
@@ -62,6 +62,8 @@
 						<li><a href="https://docs.google.com/forms/d/1730Zt5Ect9gdMhOjjRvZBHc-cz3cG5WHzoPhp8Ep_24/viewform?edit_requested=true" target="_blank">Заявка на сертификат</a></li>
 						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdEPHKl637KqNBoeRJM70SG4RAa_Fkq7Kz24DEZe18yDtdTwQ/viewform?usp=sf_link" target="_blank">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
 						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLScvCdbQqAQ9XF6I1fftLZ0Fuc3F_Kqe-dfNFkpOuLhfv2A_hw/viewform" target="_blank">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
+						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSerYr5kXeZs6XahEbxZMTdMLNJy71row8M3Bw1xx1jsTqr_bw/viewform" target="_blank">ЗАЯВКА НА ЭКСПЕРТА</a></li>
+						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdxA6Q4fpN85PEVsIrI3HCFu_-XLuVV2_XLBU3bXouA7SQeXg/viewform" target="_blank">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
 					</ul>
 				</li>
 				<li><a href="/page/discounts">Корпоративные скидки</a></li>
