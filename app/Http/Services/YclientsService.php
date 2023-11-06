@@ -55,14 +55,18 @@ class YclientsService
      * Получение списка сотрудников
      * @return false | array<string[]>
      */
+	 
     public function getStaff() {
         try {
+			
+			//dd($this->company_id);
+			
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff", $this->company_id);
-
+			
             $response = $this->httpWithHeaders()->get($url);
 
             $response = $response->json($key = null);
-
+			
             if(!$response["success"]) {
                 return false;
             }
