@@ -11,7 +11,9 @@
 
                 <x-analytics-form
                     :months="$months"
+                    :selectedMonth="$selected_month"
                     :users="$users"
+                    :selectedUser="$selected_user"
                 />
             </form>
         </div>
@@ -21,7 +23,7 @@
                 <thead>
                 <tr>
                     <!-- <th>ID</th> -->
-                    <th>Сотрудник</th>
+                    <th style="width: 160px;">Сотрудник</th>
                     <th>Лояльность</th>
                     <th>Оборот</th>
                     <th>Средний чек</th>
@@ -40,10 +42,14 @@
                         <!-- <td> {{ $one["id"] }} </td> -->
                         <td>
                             <div>{{ $one["name"] }} </div>
-                            <div class="small">{{ $one["specialization"] }}</div>
+                            <div class="small">
+                                @if(Str::lower($one["name"]) !== 'лист ожидания' )
+                                    {{ $one["specialization"] }}
+                                @endif
+                            </div>
                         </td>
                         <td>
-                            <div class="center"> {{ $one["loyalty"] }} </div>
+                            <div class="center">{{ $one["loyalty"] }}</div>
                         </td>
                         <td>
                             <div class="center">{{ $one["income_total"] }} </div>
@@ -52,7 +58,7 @@
                             <div class="center">{{ $one["average_sum"] }} </div>
                         </td>
                         <td>
-                            <div class="center">{{ $one["add_services"] }} </div>
+                            <div class="center">{{ $one["additional_services"] }} </div>
                         </td>
                         <td>
                             <div class="center">{{ $one["sales"] }} </div>
@@ -74,20 +80,21 @@
                         </td>
                     </tr>
                 @endforeach
+                @if(!empty($total))
                     <tr>
-                        <!-- <td> </td> -->
                         <td> </td>
                         <td> <div class="center"><b>{{ $total["loyalty"] }} </b></div></td>
                         <td> <div class="center"><b>{{ $total["income_total"] }} </b></div></td>
                         <td> <div class="center"><b>{{ $total["average_sum"] }} </b></div></td>
-                        <td> <div class="center"><b>{{ $total["add_services"] }} </b></div></td>
-                        <td> <div class="center"><b>{{ $total["sales"] }} </b></div></td>
-                        <td> <div class="center"></div></td>
-                        <td> <div class="center"></div></td>
+                        <td> <div class="center"><b>{{ $total["additional_services"] }} </b></div></td>
+                        <td> <div class="center"><b>{{ $total["income_goods"] }} </b></div></td>
+                        <td> <div class="center"> - </div></td>
+                        <td> <div class="center"> - </div></td>
                         <td> <div class="center"><b>{{ $total["comments_total"] }} ({{ $total["comments_best"] }}) </b></div></td>
                         <td> <div class="center"><b>{{ $total["fullnesss"] }}% </b></div></td>
                         <td> <div class="center"><b>{{ $total["new_client"] }} </b></div></td>
                     </tr>
+                @endif
                 </tbody>
             </table>
         </div>

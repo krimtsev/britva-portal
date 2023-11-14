@@ -2,7 +2,10 @@
     <div class="col-3">
         <select name="month" id="month">
             @foreach($months as $month => $value)
-                <option value="{{ $month }}">
+                <option
+                    value="{{ $month }}"
+                    {{ $month == $selectedMonth ? 'selected' : '' }}
+                >
                     {{ $value }}
                 </option>
             @endforeach
@@ -14,7 +17,10 @@
         <select name="company_id" id="company_id">
             @foreach ($users as $user)
                 @if (!empty($user->yclients_id))
-                    <option value="{{ $user->yclients_id }}">
+                    <option
+                        value="{{ $user->yclients_id }}"
+                        {{ $user->yclients_id == $selectedUser ? 'selected' : '' }}
+                    >
                         @if (isset($user->name) && $user->name !== '')
                             {{ $user->name }}
                         @else

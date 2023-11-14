@@ -48,7 +48,7 @@
                                     value="{{ $key }}"
                                 >
                                     {{ $value }}
-                            </option>
+                                </option>
                             @endforeach
                         </select>
                     </div>

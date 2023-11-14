@@ -11,7 +11,9 @@
 
                 <x-analytics-form
                     :months="$months"
+                    :selectedMonth="$selected_month"
                     :users="$users"
+                    :selectedUser="$selected_user"
                 />
             </form>
         </div>

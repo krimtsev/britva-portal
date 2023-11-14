@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class YclientsService
 {
@@ -103,6 +104,7 @@ class YclientsService
                 "date_to"   => $this->end_date,
                 "staff_id"  => $staff_id
             ]);
+
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/analytics/overall/?%s", $this->company_id, $query);
 
             $response = $this->httpWithHeaders()->get($url);
@@ -123,6 +125,7 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e);
+
             return false;
         }
     }
@@ -150,7 +153,7 @@ class YclientsService
             }
 
             return [
-                "average_sum" => (int) $response["data"]["income_average_stats"]["current_sum"],
+                "average_sum" => $response["data"]["income_average_stats"]["current_sum"],
                 "fullnesss" => $response["data"]["fullness_stats"]["current_percent"],
                 "new_client" => $response["data"]["client_stats"]["new_count"],
                 "income_total" => $response["data"]["income_total_stats"]["current_sum"],
