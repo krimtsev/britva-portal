@@ -41,6 +41,7 @@
 					<ul>
 						<li><a href="/page/mango-forwarding">Настройка переадресации Mango</a></li>
 						<li><a href="/page/yclients-alerts">Всплывающие уведомления Yclients</a></li>
+						<li><a target="_blank" href="https://www.youtube.com/playlist?list=PLhU6BmCA9pdCwapNa44e3BWdPe0EnvJJ2">Настройка Wahelp</a></li>
 						<li><a target="_blank" href="https://youtu.be/6cy9sEyNDXU?si=3x0R0pmKIRHM08YO">Настройка измнения цен ЭВОТОР</a></li>
 					</ul>
 				</li>
