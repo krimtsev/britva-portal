@@ -32,7 +32,7 @@ class YclientsBranchReport extends Model
     ];
 
     public static function addRecord($table) {
-        YclientsBranchReport::updateOrCreate(
+        self::updateOrCreate(
             [
                 "company_id" => $table["company_id"],
                 "staff_id"   => $table["staff_id"],

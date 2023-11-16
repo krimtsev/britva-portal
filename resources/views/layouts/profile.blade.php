@@ -41,5 +41,7 @@
         <script src="{{ asset('assets/js/util.js') }}"></script>
         <script src="{{ asset('assets/js/main.js') }}"></script>
         <script src="{{ asset('assets/js/general.js') }}"></script>
+        <!-- Charts -->
+        <script src="{{ asset('assets/js/chartjs.js') }}"></script>
     </body>
 </html>

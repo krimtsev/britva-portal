@@ -51,4 +51,55 @@ class Utils
         return $arr_month;
     }
 
+    public static function setFirstDay($date = null) {
+        if (empty($date)) {
+            return date('Y-m-d', $date);
+        }
+
+        $arr = explode("-", $date);
+        $arr[2] = "01";
+        return implode("-", $arr);
+    }
+
+    public static function setLastDay($date = null) {
+        if (empty($date)) {
+            return date("Y-m-t", strtotime(date("Y-m-t", $date)));
+        }
+
+        return date('Y-m-t', strtotime($date));
+    }
+
+    static function setMinusMonths($date = null, $minus = -1) {
+        if (empty($date)) {
+            return date('Y-m-d', strtotime(date('Y-m-d', $date) . " {$minus} months"));
+        }
+
+        return date('Y-m-d', strtotime($date . " {$minus} months"));
+    }
+
+    static function getPeriodMonthArray($start_date = null, $end_date = null, $months = 1)
+    {
+        $dates = [[
+            "start_date" => $start_date,
+            "end_date"   => $end_date
+        ]];
+
+        $end_date_point = strtotime(Constants::START_DATE);
+
+        for ($i = 0; $i < $months; $i++) {
+            $sd = Utils::setMinusMonths($dates[$i]["start_date"]);
+            $ed = Utils::setLastDay($sd);
+
+            if (strtotime($sd) < $end_date_point) {
+                break;
+            }
+
+            $dates[] = [
+                "start_date" => $sd,
+                "end_date"   => $ed
+            ];
+        }
+
+        return $dates;
+    }
 }

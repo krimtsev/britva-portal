@@ -1,5 +1,5 @@
 <div class="row gtr-uniform">
-    <div class="col-3">
+    <div class="col-3 col-6-medium col-12-small">
         <select name="month" id="month">
             @foreach($months as $month => $value)
                 <option
@@ -13,7 +13,7 @@
     </div>
 
     <?php if(Auth::user()->isAdmin()): ?>
-    <div class="col-3">
+    <div class="col-3 col-6-medium col-12-small">
         <select name="company_id" id="company_id">
             @foreach ($users as $user)
                 @if (!empty($user->yclients_id))
@@ -33,11 +33,11 @@
     </div>
     <?php endif; ?>
 
-    <div class="col-3">
+    <div class="col-3 col-6-medium col-12-small">
         <input type="submit" class="fit primary" value="Загрузить" name="load" />
     </div>
 
-    <div class="col-3">
+    <div class="col-3 col-6-medium col-12-small">
         <input type="submit" class="fit secondary" value="Синхронизировать" name="sync" />
     </div>
 </div>

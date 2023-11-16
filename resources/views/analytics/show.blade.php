@@ -17,11 +17,11 @@
                 />
             </form>
         </div>
-	
+
 	<style>
-		
+
 	</style>
-	
+
         <div class="table-wrapper" style="font-size: 0.8em;">
             <table>
                 <thead>
@@ -80,6 +80,18 @@
                 </tbody>
             </table>
         </div>
+        <form method="POST" action="{{ route('d.analytics.company') }}" class="w-full">
+            @csrf
+
+            <input type="text" style="display: none;" value="{{ $selected_month }}" name="month" />
+            <input type="text" style="display: none;" value="{{ $selected_user }}" name="company_id" />
+
+            <div class="flex justify-content-start mb-2">
+                <div class="col-3 ">
+                    <input type="submit" class="fit primary" value="График компании" name="company" />
+                </div>
+            </div>
+        </form>
     </section>
 
 </x-dashboard-layout>

@@ -28,7 +28,7 @@ class YclientsBranchTotalReport extends Model
     ];
 
     public static function addRecord($table) {
-        YclientsBranchTotalReport::updateOrCreate(
+        self::updateOrCreate(
             [
                 "company_id" => $table["company_id"],
                 "start_date" => $table["start_date"],
