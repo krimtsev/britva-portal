@@ -43,8 +43,8 @@
                     <div class="col-12">
                         <select name="role_id" id="role_id">
                             @foreach($user->roleListById() as $key => $value)
-                                <option
-                                    {{ $key === $user->role_id ? 'selected' : '' }}
+                                <option 
+									{{ $key === $user->role_id ? 'selected' : '' }}
                                     value="{{ $key }}"
                                 >
                                     {{ $value }}

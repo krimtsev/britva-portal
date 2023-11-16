@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
 
-		<link rel="icon" type="image/x-icon" href="./favicon.ico">
+		<link rel="icon" href="{{ url('favicon.ico') }}">
 
         @if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
             <link rel="stylesheet" href="{{ asset('assets/css/theme-dark.css') }}">
