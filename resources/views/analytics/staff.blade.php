@@ -293,11 +293,21 @@
                 show: false,
             },
             states: {
+                normal: {
+                    filter: {
+                        type: 'none',
+                    }
+                },
                 hover: {
                     filter: {
                         type: 'none',
                     }
                 },
+                active: {
+                    filter: {
+                        type: 'none',
+                    }
+                }
             }
         }
 
