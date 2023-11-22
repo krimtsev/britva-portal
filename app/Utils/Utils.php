@@ -7,16 +7,7 @@ use App\Config\Constants;
 
 class Utils
 {
-    public static function getMonthArray($start = null, $end = null) {
-
-        $start_date = $start
-            ? date('Y-m-d', $start)
-            : Constants::START_DATE;
-
-        $end_date = $end
-            ? date('Y-m-d', $end)
-            : date("Y-m-d", strtotime("-1 month",strtotime(date('Y-m-d'))));
-
+    public static function getMonth($month_number) {
         $arr_months = [
             '',
             'Январь',
@@ -33,8 +24,27 @@ class Utils
             'Декабрь'
         ];
 
-        $start_timestamp = strtotime(str_replace('-', '/', $start_date));
-        $end_timestamp = strtotime(str_replace('-', '/', $end_date));
+        return $arr_months[$month_number];
+    }
+
+    public static function dateToTimestamp($date) {
+        return strtotime(str_replace('-', '/', $date));
+    }
+
+    public static function getMonthArray($start = null, $end = null) {
+
+        $start_date = $start
+            ? date('Y-m-d', $start)
+            : Constants::START_DATE;
+
+        $end_date = $end
+            ? date('Y-m-d', $end)
+            : date("Y-m-d", strtotime("-1 month",strtotime(date('Y-m-d'))));
+
+
+
+        $start_timestamp = self::dateToTimestamp($start_date);
+        $end_timestamp = self::dateToTimestamp($end_date);
 
         $start_month_timestamp = strtotime(date('F Y', $start_timestamp));
         $current_month_timestamp = strtotime(date('F Y', $end_timestamp));
@@ -42,7 +52,7 @@ class Utils
         $arr_month = array();
 
         while( $current_month_timestamp >= $start_month_timestamp ) {
-            $arr_month[strtolower(date('Y-m-t', $end_timestamp))] = $arr_months[date('n', $end_timestamp)] .' '. date('Y', $end_timestamp);
+            $arr_month[strtolower(date('Y-m-t', $end_timestamp))] = self::getMonth(date('n', $end_timestamp)) .' '. date('Y', $end_timestamp);
             $end_timestamp = strtotime('-1 month', $end_timestamp);
 
             $current_month_timestamp = strtotime(date('F Y', $end_timestamp));
@@ -101,5 +111,15 @@ class Utils
         }
 
         return $dates;
+    }
+
+    public static function dateToMothAndYear($date) {
+        $timestamp = self::dateToTimestamp($date);
+
+        return self::getMonth(date('n', $timestamp)) .' '. date('Y', $timestamp);
+    }
+
+    public static function toNumberFormat($number) {
+        return number_format($number, 0, ".", " ");
     }
 }

@@ -56,18 +56,15 @@ class YclientsService
      * Получение списка сотрудников
      * @return false | array<string[]>
      */
-	 
+
     public function getStaff() {
         try {
-			
-			//dd($this->company_id);
-			
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff", $this->company_id);
-			
+
             $response = $this->httpWithHeaders()->get($url);
 
             $response = $response->json($key = null);
-			
+
             if(!$response["success"]) {
                 return false;
             }
@@ -119,6 +116,7 @@ class YclientsService
                 "average_sum" => (int) $response["data"]["income_average_stats"]["current_sum"],
                 "fullnesss" => $response["data"]["fullness_stats"]["current_percent"],
                 "new_client" => $response["data"]["client_stats"]["new_count"],
+                "return_client" => $response["data"]["client_stats"]["return_count"],
                 "income_total" => $response["data"]["income_total_stats"]["current_sum"],
                 "income_goods" => $response["data"]["income_goods_stats"]["current_sum"],
             ];

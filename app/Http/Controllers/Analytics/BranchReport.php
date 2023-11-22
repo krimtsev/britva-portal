@@ -37,8 +37,11 @@ class BranchReport extends Controller
             foreach ($staff as $one) {
                 $id = $one["id"];
 
+                // ID филиала
+                $table[$id]["company_id"] = $company_id;
+
                 // ID сотрудника
-                $table[$id]["id"] = $id;
+                $table[$id]["staff_id"] = $id;
 
                 // Имя сотрудника
                 $table[$id]["name"] = $one["name"];
@@ -52,15 +55,19 @@ class BranchReport extends Controller
                 if (is_array($companyStatsByStaff) && !empty($companyStatsByStaff)) {
                     $table[$id]["average_sum"] = $companyStatsByStaff["average_sum"];
                     $table[$id]["fullnesss"] = $companyStatsByStaff["fullnesss"];
-                    $table[$id]["new_client"] = $companyStatsByStaff["new_client"];
                     $table[$id]["income_total"] = $companyStatsByStaff["income_total"];
                     $table[$id]["income_goods"] = $companyStatsByStaff["income_goods"];
+                    $table[$id]["new_client"] = $companyStatsByStaff["new_client"];
+                    $table[$id]["return_client"] = $companyStatsByStaff["return_client"];
+                    $table[$id]["total_client"] = $companyStatsByStaff["new_client"] + $companyStatsByStaff["return_client"];
                 } else {
                     $table[$id]["average_sum"] = 0;
                     $table[$id]["fullnesss"] = 0;
-                    $table[$id]["new_client"] = 0;
                     $table[$id]["income_total"] = 0;
                     $table[$id]["income_goods"] = 0;
+                    $table[$id]["new_client"] = 0;
+                    $table[$id]["return_client"] = 0;
+                    $table[$id]["total_client"] = 0;
                 }
 
                 // Всего отзывов (из них 5)

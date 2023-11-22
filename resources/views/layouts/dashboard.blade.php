@@ -42,6 +42,6 @@
         <script src="{{ asset('assets/js/main.js') }}"></script>
         <script src="{{ asset('assets/js/general.js') }}"></script>
         <!-- Charts -->
-        <script src="{{ asset('assets/js/chartjs.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     </body>
 </html>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Analytics;
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\Analytics\BranchReport;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\YclientsBranchReport;
 use App\Models\YclientsBranchTotalReport;
@@ -25,9 +25,7 @@ class ShowController extends Controller
         $end_date = $request->input('month');
 
         // Дата начала
-        $arr_end_date = explode("-", $end_date);
-        $arr_end_date[2] = "01";
-        $start_date = implode("-", $arr_end_date);
+        $start_date =  Utils::setFirstDay($end_date);
 
         // ID филиала
         $company_id = $request->input('company_id');
@@ -52,8 +50,8 @@ class ShowController extends Controller
             if (!empty($table)) {
                 foreach ($table as $one) {
                     $tmp_table =   [
-                        "company_id"     => $company_id,
-                        "staff_id"       => $one["id"],
+                        "company_id"     => $one["company_id"],
+                        "staff_id"       => $one["staff_id"],
                         "name"           => $one["name"],
                         "specialization" => $one["specialization"],
                         "average_sum"    => $one["average_sum"],
@@ -67,6 +65,8 @@ class ShowController extends Controller
                         "sales"          => $one["sales"],
                         "additional_services" => $one["additional_services"],
                         "sum"            => $one["sum"],
+                        "total_client"   => $one["total_client"],
+                        "return_client"  => $one["return_client"],
                         "start_date"     => $start_date,
                         "end_date"       => $end_date,
                     ];

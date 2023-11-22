@@ -1,3 +1,5 @@
+@props(['months', 'selectedMonth', 'users', 'selectedUser', 'staffId'])
+
 <div class="row gtr-uniform">
     <div class="col-3 col-6-medium col-12-small">
         <select name="month" id="month">
@@ -12,7 +14,7 @@
         </select>
     </div>
 
-    <?php if(Auth::user()->isAdmin()): ?>
+    @if(Auth::user()->isAdmin() && empty($staffId))
     <div class="col-3 col-6-medium col-12-small">
         <select name="company_id" id="company_id">
             @foreach ($users as $user)
@@ -31,7 +33,13 @@
             @endforeach
         </select>
     </div>
-    <?php endif; ?>
+    @else
+        <input type="hidden" value="{{ $selectedUser }}" name="company_id" />
+    @endif
+
+    @if(!empty($staffId))
+        <input type="hidden" value="{{ $staffId }}" name="staff_id" />
+    @endif
 
     <div class="col-3 col-6-medium col-12-small">
         <input type="submit" class="fit primary" value="Загрузить" name="load" />

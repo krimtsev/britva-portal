@@ -43,7 +43,14 @@
                 @foreach ($table as $one)
                     <tr>
                         <td>
-                            <div>{{ $one["name"] }} </div>
+                            @if(empty($one["staff_id"]) || empty($one["company_id"]))
+                                {{ $one["name"] }}
+                            @else
+                                <a href="#" onclick="goToStaff({{ $one["staff_id"] }}, {{ $one["company_id"] }})" style="cursor: pointer">
+                                    {{ $one["name"] }}
+                                </a>
+                            @endif
+
                             <div class="small">
                                 @if(Str::lower($one["name"]) !== 'лист ожидания' )
                                     {{ $one["specialization"] }}
@@ -95,3 +102,43 @@
     </section>
 
 </x-dashboard-layout>
+
+<script>
+function goToStaff(staff_id, company_id) {
+    const form = document.createElement('form');
+    document.body.appendChild(form);
+
+    form.target = "_blank"
+    form.method = "post"
+    form.action = `staff/chart`
+
+    const data = [
+        {
+            name:  "_token",
+            value: `<?php echo csrf_token(); ?>`
+        },
+        {
+            name:  "staff_id",
+            value: staff_id
+        },
+        {
+            name:  "company_id",
+            value: company_id
+        },
+        {
+            name:  "month",
+            value: `<?php echo $selected_month; ?>`
+        },
+    ]
+
+    for(let val of data) {
+        let input = document.createElement('input')
+        input.type = "hidden"
+        input.name = val.name
+        input.value = val.value
+        form.appendChild(input);
+    }
+
+    form.submit()
+}
+</script>
