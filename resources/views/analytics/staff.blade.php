@@ -1,5 +1,5 @@
 <x-dashboard-layout>
-    <x-header-section title="Аналитика - график компании" />
+    <x-header-section title="Аналитика - график по сотруднику" />
 
     <section>
         <div class="flex justify-content-start mb-2">
@@ -21,29 +21,35 @@
 
         <div class="row chart-wrapper">
             <div class="col-3">
-                <div class="header-section month">
-                    {{ $total["month"] }}
-                </div>
-                <div class="title-section">
-                    <div class="text-center price">{{ $total["income_total"] }} ₽</div>
-                    <div class="text-center title">Валовая выручка</div>
-                </div>
-                <div class="user">
-                    <div class="staff-section">
+				 <div class="">
+					<div class="header-section month text-center">
+						{{ $total["month"] }}
+					</div>
+					<div class="title-section">
+						<div class="text-center price">{{ $total["income_total"] }} ₽</div>
+						<div class="text-center title">Валовая выручка</div>
+					</div>
+                    <div class="staff-section user">
                         <div class="text-center name">{{ $total["name"] }}</div>
                         <div class="text-center specialization">{{ $total["specialization"] }}</div>
                     </div>
                     <div class="staff-section fullnesss-section">
-                        <div class="text-center name">{{ $total["fullnesss"] }} %</div>
+                        <div class="text-center fullnesss">{{ $total["fullnesss"] }} %</div>
                         <x-progress-bar :total="$total['fullnesss']" />
-                        <div class="text-center specialization">Заполняемость</div>
+                        <div class="text-center fullnesss">Заполняемость</div>
+                    </div>
+					<div class="staff-section fullnesss-section">
+                        <div class="text-center fullnesss">(пока не работает)</div>
+                        <x-progress-bar :total="$total['fullnesss']" />
+                        <div class="text-center fullnesss">Возвращаемость</div>
                     </div>
                 </div>
             </div>
 
             <div class="col-3">
                 <div class="header-section">
-                    {{ $total["total_client"] }} - Всего клиентов
+                    <span class="icon solid fas fa-users"></span>
+                    <span class="header-section_icon">{{ $total["total_client"] }} - Всего клиентов</span>
                 </div>
                 <div class="title-section">
                     <div class="text-center price">{{ $total["additional_services"] }} ₽</div>
@@ -56,7 +62,8 @@
 
             <div class="col-3">
                 <div class="header-section">
-                    {{ $total["return_client"] }} - Постоянные клиенты
+					<span class="icon solid fas fa-user-friends"></span>
+                    <span class="header-section_icon">{{ $total["return_client"] }} - Постоянные клиенты</span>
                 </div>
                 <div class="title-section-other">
                     <div class="text-center price">{{ $total["average_sum"] }} ₽</div>
@@ -69,7 +76,8 @@
 
             <div class="col-3">
                 <div class="header-section">
-                    {{ $total["new_client"] }} - Новые клиенты
+					<span class="icon solid fas fa-user-plus"></span>
+                    <span class="header-section_icon">{{ $total["new_client"] }} - Новые клиенты</span>
                 </div>
                 <div class="title-section">
                     <div class="text-center price">{{ $total["sales"] }} ₽</div>
@@ -96,12 +104,13 @@
 .title {
     font-size: 1.5em;
     color: white;
+	font-style: italic;
 }
 .chart-wrapper {
     max-width: 1200px;
     background: #222;
     padding: 0.5em 0.5em 0.5em 0;
-    font-family: "Roboto Slab", serif;
+    font-family: "Roboto", serif;
     margin: 0 !important;
 }
 .chart-wrapper.row > * {
@@ -109,13 +118,12 @@
 }
 
 .user {
-
-    border-top: 3px solid white;
+	border-top: 1px solid white;
 }
 .title-section-other,
 .title-section-other .price,
 .title-section-other .title{
-    background: #B0CB1F;
+    background: #b7d900;
     color: #222;
 }
 .chart {
@@ -131,10 +139,13 @@
     color: white;
 }
 .name {
-    font-size: 2.5em;
+    font-size: 3em;
+	font-family: "Roboto", serif;
+	color: #b7d900;
 }
 .specialization {
-    font-size: 1em;
+    font-size: 1.3em;
+	font-weight: lighter;
 }
 .header-section {
     padding: 0.5em;
@@ -146,16 +157,27 @@
     height: 400px;
     overflow: hidden;
 }
+
 .fullnesss-section {
     margin-bottom: 0.5em;
+	padding-top: 20px;
+}
+
+.fullnesss {
+	font-size: 1.5em;
+	font-weight: lighter;
+	font-style: italic;
 }
 
 .month {
     background: #222;
     color: white;
-    border-bottom: 3px solid white;
+    border-bottom: 1px solid white;
 }
 
+.header-section_icon {
+	padding-left: 10px;
+}
 </style>
 
 <script>
@@ -177,7 +199,7 @@
         })
 
         const colors = additional_services.map((val) => "#aaa")
-        colors[additional_services.length-1] = "#444"
+        colors[additional_services.length-1] = "#222"
 
         const options = {
             series: [],
@@ -203,8 +225,8 @@
                     return str.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, "$1 ")
                 },
                 style: {
-                    fontSize: "16px",
-                    fontFamily: "Roboto, Arial, sans-serif",
+                    fontSize: "24px",
+                    fontFamily: "Roboto, sans-serif",
                     fontWeight: "bold",
                     colors
                 },
@@ -221,7 +243,7 @@
             plotOptions: {
                 bar: {
                     horizontal: false,
-                    columnWidth: '75%',
+                    columnWidth: '55%',
                     distributed: true,
                     dataLabels: {
                         position: 'top'
@@ -244,8 +266,8 @@
                 type: "categtxory",
                 categories: selected_period,
                 axisBorder: {
-                    show: true,
-                    color: "#EBEBEB",
+                    show: false,
+                    color: "#222",
                     height: 1,
                     width: "100%",
                     offsetX: 0,
