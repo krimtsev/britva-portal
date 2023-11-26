@@ -46,7 +46,7 @@
                     </div>
 					<div class="staff-section fullnesss-section">
                         <div class="text-center fullnesss">(пока не работает)</div>
-                        <x-progress-bar :total="$total['fullnesss']" />
+                        <x-progress-bar :total="100" />
                         <div class="text-center fullnesss">Возвращаемость</div>
                     </div>
                 </div>
