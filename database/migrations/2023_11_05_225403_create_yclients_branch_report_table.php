@@ -42,13 +42,13 @@ class CreateYclientsBranchReportTable extends Migration
 
             $table->integer('comments_best');
 
-            $table->float('loyalty');
+            $table->integer('loyalty');
 
-            $table->float('sales');
+            $table->integer('sales');
 
-            $table->float('additional_services');
+            $table->integer('additional_services');
 
-            $table->float('sum');
+            $table->integer('sum');
 
             $table->date('start_date');
 

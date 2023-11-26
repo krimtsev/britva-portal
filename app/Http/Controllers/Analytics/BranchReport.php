@@ -83,13 +83,13 @@ class BranchReport extends Controller
                 $transactions = $client->getTransactionsCompanyByStaffId($id);
 
                 if (is_array($transactions) && array_key_exists("loyalty", $transactions)) {
-                    $table[$id]["loyalty"] = round($transactions["loyalty"]);
+                    $table[$id]["loyalty"] = round($transactions["loyalty"], 0);
                 } else {
                     $table[$id]["loyalty"] = 0;
                 }
 
                 if (is_array($transactions) && array_key_exists("sales", $transactions)) {
-                    $table[$id]["sales"] = round($transactions["sales"]);
+                    $table[$id]["sales"] = round($transactions["sales"], 0);
                 } else {
                     $table[$id]["sales"] = 0;
                 }
@@ -98,7 +98,7 @@ class BranchReport extends Controller
                 $additional_services = $client->getRecordsByStaffId($id);
 
                 if (is_numeric($additional_services)) {
-                    $table[$id]["additional_services"] = round($additional_services);
+                    $table[$id]["additional_services"] = round($additional_services, 0);
                 } else {
                     $table[$id]["additional_services"] = 0;
                 }
@@ -124,7 +124,7 @@ class BranchReport extends Controller
             ];
 
             if (is_array($stats) && !empty($stats)) {
-                $total["average_sum"] = round($stats["average_sum"]);
+                $total["average_sum"] = round($stats["average_sum"], 0);
                 $total["fullnesss"] = $stats["fullnesss"];
                 $total["new_client"] = $stats["new_client"];
                 $total["income_total"] = $stats["income_total"];
