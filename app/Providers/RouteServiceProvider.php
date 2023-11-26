@@ -62,4 +62,16 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
     }
+
+    public static function getAdminTypeView() {
+        $view = request()->route()->getAction("view");
+        $isProfile = $view === "profile";
+        $isDashboard = $view === "dashboard";
+
+        return [
+            "view"        => $view,
+            "isProfile"   => $isProfile,
+            "isDashboard" => $isDashboard,
+        ];
+    }
 }

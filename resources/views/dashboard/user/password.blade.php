@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Изменение пароля пользователя" />
 
     <section>
@@ -52,4 +52,4 @@
             </form>
         </div>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

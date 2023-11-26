@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
 
-		<link rel="icon" type="image/x-icon" href="./favicon.ico">
+		<link rel="icon" href="{{ url('favicon.ico') }}">
 
         @if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
             <link rel="stylesheet" href="{{ asset('assets/css/theme-dark.css') }}">
@@ -22,7 +22,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
 
-    <body class="is-preload profile">
+    <body class="is-preload admin">
         <div id="wrapper">
             <!-- Page Content -->
             <div id="main">
@@ -31,7 +31,11 @@
                 </div>
             </div>
 
-            @include('layouts.navigation-profile')
+            @if($isDashboard)
+                @include('layouts.navigation-dashboard')
+            @elseif($isProfile)
+                @include('layouts.navigation-profile')
+            @endif
         </div>
 
         <!-- Scripts -->

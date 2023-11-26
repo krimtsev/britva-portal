@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Редактировать Google Sheet" />
 
     <section>
@@ -53,4 +53,4 @@
             </div>
         </form>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

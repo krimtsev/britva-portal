@@ -1,4 +1,4 @@
-@props(['months', 'selectedMonth', 'users', 'selectedUser', 'staffId'])
+@props(['months', 'selectedMonth', 'users', 'selectedUser', 'staffId', 'isDashboard'])
 
 <div class="row gtr-uniform">
     <div class="col-3 col-6-medium col-12-small">
@@ -14,7 +14,7 @@
         </select>
     </div>
 
-    @if(Auth::user()->isAdmin() && empty($staffId))
+    @if(Auth::user()->isAdmin() && empty($staffId) && $isDashboard)
     <div class="col-3 col-6-medium col-12-small">
         <select name="company_id" id="company_id">
             @foreach ($users as $user)

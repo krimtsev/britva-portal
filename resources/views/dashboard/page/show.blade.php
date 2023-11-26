@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="{{$page->title}}" />
 
     <section>
@@ -13,4 +13,4 @@
             </div>
         </div>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

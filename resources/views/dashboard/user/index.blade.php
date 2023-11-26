@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Пользователи" />
 
     <section >
@@ -56,4 +56,4 @@
     <div class="align-center">
         {{ $users->links() }}
     </div>
-</x-dashboard-layout>
+</x-admin-layout>

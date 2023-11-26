@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Просмотр Google Sheet" />
 
     <section>
@@ -37,7 +37,7 @@
             </div>
         </div>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>
 
 <script src="{{ asset('assets/js/jquery.dataTables.min_russian.js') }}"></script>
 

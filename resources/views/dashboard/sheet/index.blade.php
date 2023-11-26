@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Google Sheets" />
 
     <section>
@@ -47,4 +47,4 @@
     <div class="align-center">
         {{ $sheets->links() }}
     </div>
-</x-dashboard-layout>
+</x-admin-layout>

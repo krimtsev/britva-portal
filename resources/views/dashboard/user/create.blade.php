@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Добавить пользователя" />
 
     <section>
@@ -70,4 +70,4 @@
             </form>
         </div>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Панель администратора" />
     <section>
 		<table class="table">
@@ -24,4 +24,4 @@
 			</tr>
 		</table>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

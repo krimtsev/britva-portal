@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Страницы" />
 
     <section>
@@ -48,4 +48,4 @@
     <div class="align-center">
         {{ $pages->links() }}
     </div>
-</x-dashboard-layout>
+</x-admin-layout>

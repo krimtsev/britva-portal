@@ -6,7 +6,7 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-             <form method="POST" action="{{ $isDashboard ? route('d.analytics.show') : route('p.analytics.show') }}" class="w-full">
+            <form method="POST" action="{{ route('d.analytics.show') }}" class="w-full">
                 @csrf
 
                 <x-analytics-form
@@ -14,7 +14,6 @@
                     :selectedMonth="$selected_month"
                     :users="$users"
                     :selectedUser="$selected_user"
-                    :isDashboard="$isDashboard"
                 />
             </form>
         </div>

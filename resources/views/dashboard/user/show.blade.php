@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Просмотр пользователя" />
 
     <section>
@@ -15,4 +15,4 @@
             <p>Последняя активность: {{ $user->last_activity }}</p>
         </div>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

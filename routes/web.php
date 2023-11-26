@@ -38,16 +38,20 @@ require __DIR__ . '/static.php';
 /**
  * Панель администратора
  */
-require __DIR__ . '/dashboard/index.php';
-require __DIR__ . '/dashboard/posts.php';
-require __DIR__ . '/dashboard/users.php';
-require __DIR__ . '/dashboard/pages.php';
-require __DIR__ . '/dashboard/sheets.php';
-require __DIR__ . '/dashboard/digests.php';
-require __DIR__ . '/dashboard/analytics.php';
+Route::group(['view' => 'dashboard'], function () {
+    require __DIR__ . '/dashboard/index.php';
+    require __DIR__ . '/dashboard/posts.php';
+    require __DIR__ . '/dashboard/users.php';
+    require __DIR__ . '/dashboard/pages.php';
+    require __DIR__ . '/dashboard/sheets.php';
+    require __DIR__ . '/dashboard/digests.php';
+    require __DIR__ . '/dashboard/analytics.php';
+});
 
 /**
  * Профиль пользователя
  */
-require __DIR__ . '/profile/index.php';
-require __DIR__ . '/profile/analytics.php';
+Route::group(['view' => 'profile'], function () {
+    require __DIR__ . '/profile/index.php';
+    require __DIR__ . '/profile/analytics.php';
+});

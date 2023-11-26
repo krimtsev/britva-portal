@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Редактировать пользователя" />
 
     <section>
@@ -75,4 +75,4 @@
             </form>
         </div>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

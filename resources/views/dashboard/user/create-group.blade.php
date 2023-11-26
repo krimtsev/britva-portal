@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Добавить группу пользователя" />
 
     <section>
@@ -40,4 +40,4 @@
             </form>
         </div>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

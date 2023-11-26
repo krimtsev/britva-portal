@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Добавить Google Sheet" />
 
     <section>
@@ -42,4 +42,4 @@
             </div>
         </form>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

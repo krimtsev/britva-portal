@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Просмотр поста" />
 
     <section>
@@ -10,4 +10,4 @@
             <x-post :post="$digest" />
         </div>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>

@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Редактировать пост" />
 
     <section>
@@ -38,7 +38,7 @@
             </div>
         </form>
     </section>
-</x-dashboard-layout>
+</x-admin-layout>
 
 <script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
 <script>

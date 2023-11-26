@@ -6,7 +6,7 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-            <form method="POST" action="{{ $isDashboard ? route('d.analytics.staff') : route('p.analytics.staff') }}" class="w-full">
+            <form method="POST" action="{{ route('d.analytics.staff') }}" class="w-full">
                 @csrf
 
                 <x-analytics-form
@@ -15,17 +15,11 @@
                     :users="$users"
                     :selectedUser="$selected_user"
                     :staffId="$staff_id"
-                    :isDashboard="$isDashboard"
                 />
             </form>
         </div>
 
-        @if(empty($table_list) || empty($total))
-            <div>
-                Данные отсутствуют
-            </div>>
-        @else
-            <div class="row chart-wrapper">
+        <div class="row chart-wrapper">
             <div class="col-3">
 				 <div class="">
 					<div class="header-section month text-center">
@@ -94,7 +88,6 @@
                 </div>
             </div>
         </div>
-        @endif
     </section>
 
 </x-admin-layout>

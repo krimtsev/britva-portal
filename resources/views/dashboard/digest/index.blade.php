@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-admin-layout>
     <x-header-section title="Посты" />
 
     <section>
@@ -45,4 +45,4 @@
     <div class="align-center">
         {{ $digests->links() }}
     </div>
-</x-dashboard-layout>
+</x-admin-layout>
