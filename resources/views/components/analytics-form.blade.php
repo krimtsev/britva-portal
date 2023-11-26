@@ -45,7 +45,9 @@
         <input type="submit" class="fit primary" value="Загрузить" name="load" />
     </div>
 
-    <div class="col-3 col-6-medium col-12-small">
-        <input type="submit" class="fit secondary" value="Синхронизировать" name="sync" />
-    </div>
+    @if($isDashboard)
+        <div class="col-3 col-6-medium col-12-small">
+            <input type="submit" class="fit secondary" value="Синхронизировать" name="sync" />
+        </div>
+    @endif
 </div>
