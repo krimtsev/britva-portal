@@ -27,7 +27,7 @@ function toolgeLoading() {
         $('[data-id="content"]').hide();
     }, 100);
 }
-$('input[data-id="analytics-sync"], input[data-id="analytics-load"], input[data-id="analytics-company"], button[data-id="analytics-company"]')
+$('button[data-id="analytics-sync"], input[data-id="analytics-load"], input[data-id="analytics-company"], button[data-id="analytics-company"]')
     .on("click", function() {
         toolgeLoading();
 });
