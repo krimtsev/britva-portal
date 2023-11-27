@@ -43,7 +43,7 @@ class ChartStaffController extends Controller
                     return $staff["staff_id"] == $staff_id;
                 });
                 if(!empty($result)) {
-                    $table_list[] = $result[0];
+                    $table_list[] = array_shift($result);
                 }
             }
         }
