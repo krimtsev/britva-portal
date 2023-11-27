@@ -7,7 +7,7 @@
 
         <x-wrapper-content-loader>
             <x-slot name="header">
-                <div style="display: flex; gap: 1em;">
+                <div style="display: flex; gap: 1em">
                     <form method="POST" action="{{ $isDashboard ? route('d.analytics.show') : route('p.analytics.show') }}" class="w-full">
                         @csrf
 
