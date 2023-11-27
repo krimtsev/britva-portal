@@ -3110,55 +3110,12 @@ button:disabled,
     align-items: center;
 }
 
-/** ТАБЫ */
-
-.tabs {
-    display: flex;
-    flex-wrap: wrap;
-}
-.tabs > .tab-input {
-    position: absolute;
-    opacity: 0;
-}
-.tabs > .tab-label {
-    width: auto;
-    background: #e5e5e5;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 18px;
-    color: #7f7f7f;
-    transition: background 0.1s, color 0.1s;
-    border-radius: 0.375em;
-    margin-right: 26px;
-    height: 2.5em;
-    padding: 0 2.25em;
-    letter-spacing: 0.075em;
-    line-height: 2.5em;
-    text-align: center;
+.button-icon-fix {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
 }
 
-.tabs > .tab-label:before {
-    display: none !important;
-}
-
-.tabs > .tab-label:hover {
-    background: #d8d8d8;
-}
-.tabs > .tab-label:active {
-    background: #ccc;
-}
-.tabs > .tab-input:focus + .tab-label {
-    z-index: 1;
-}
-.tabs > .tab-input:checked + .tab-label {
-    background: var(--color-main);
-    color: #fff;
-}
-.tabs > .tab-panel {
-    width: 100%;
-    display: none;
-    order: 99;
-}
-.tabs > .tab-input:checked + .tab-label + .tab-panel {
-    display: block;
+.button-icon-fix::before {
+    font-size: 1.5em;
+    margin-right: 0px !important;
 }

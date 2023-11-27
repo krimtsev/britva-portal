@@ -2,101 +2,102 @@
     <x-header-section title="Аналитика - график по сотруднику" />
 
     <section>
-        <div class="flex justify-content-start mb-2">
-            <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-            <form method="POST" action="{{ $isDashboard ? route('d.analytics.staff') : route('p.analytics.staff') }}" class="w-full">
-                @csrf
+        <x-wrapper-content-loader>
+            <x-slot name="header">
+                <form method="POST" action="{{ $isDashboard ? route('d.analytics.staff') : route('p.analytics.staff') }}" class="w-full">
+                    @csrf
 
-                <x-analytics-form
-                    :months="$months"
-                    :selectedMonth="$selected_month"
-                    :users="$users"
-                    :selectedUser="$selected_user"
-                    :staffId="$staff_id"
-                    :isDashboard="$isDashboard"
-                />
-            </form>
-        </div>
+                    <x-analytics-form
+                        :months="$months"
+                        :selectedMonth="$selected_month"
+                        :users="$users"
+                        :selectedUser="$selected_user"
+                        :staffId="$staff_id"
+                        :isDashboard="$isDashboard"
+                    />
+                </form>
+            </x-slot>
 
-        @if(empty($table_list) || empty($total))
-            <div>
-                Данные отсутствуют
-            </div>>
-        @else
-            <div class="row chart-wrapper">
-            <div class="col-3">
-				 <div class="">
-					<div class="header-section month text-center">
-						{{ $total["month"] }}
-					</div>
-					<div class="title-section">
-						<div class="text-center price">{{ $total["income_total"] }} ₽</div>
-						<div class="text-center title">Валовая выручка</div>
-					</div>
-                    <div class="staff-section user">
-                        <div class="text-center name">{{ $total["name"] }}</div>
-                        <div class="text-center specialization">{{ $total["specialization"] }}</div>
+            @if(empty($table_list) || empty($total))
+                <div>
+                    Данные отсутствуют
+                </div>>
+            @else
+                <div class="row chart-wrapper">
+                <div class="col-3">
+                     <div class="">
+                        <div class="header-section month text-center">
+                            {{ $total["month"] }}
+                        </div>
+                        <div class="title-section">
+                            <div class="text-center price">{{ $total["income_total"] }} ₽</div>
+                            <div class="text-center title">Валовая выручка</div>
+                        </div>
+                        <div class="staff-section user">
+                            <div class="text-center name">{{ $total["name"] }}</div>
+                            <div class="text-center specialization">{{ $total["specialization"] }}</div>
+                        </div>
+                        <div class="staff-section fullnesss-section">
+                            <div class="text-center fullnesss">{{ $total["fullnesss"] }} %</div>
+                            <x-progress-bar :total="$total['fullnesss']" />
+                            <div class="text-center fullnesss">Заполняемость</div>
+                        </div>
+                        <div class="staff-section fullnesss-section">
+                            <div class="text-center fullnesss">(пока не работает)</div>
+                            <x-progress-bar :total="100" />
+                            <div class="text-center fullnesss">Возвращаемость</div>
+                        </div>
                     </div>
-                    <div class="staff-section fullnesss-section">
-                        <div class="text-center fullnesss">{{ $total["fullnesss"] }} %</div>
-                        <x-progress-bar :total="$total['fullnesss']" />
-                        <div class="text-center fullnesss">Заполняемость</div>
+                </div>
+
+                <div class="col-3">
+                    <div class="header-section">
+                        <span class="icon solid fas fa-users"></span>
+                        <span class="header-section_icon">{{ $total["total_client"] }} - Всего клиентов</span>
                     </div>
-					<div class="staff-section fullnesss-section">
-                        <div class="text-center fullnesss">(пока не работает)</div>
-                        <x-progress-bar :total="100" />
-                        <div class="text-center fullnesss">Возвращаемость</div>
+                    <div class="title-section">
+                        <div class="text-center price">{{ $total["additional_services"] }} ₽</div>
+                        <div class="text-center title">Сумма доп. услуг</div>
+                    </div>
+                    <div class="chart-section">
+                        <div id="chartjs_1" class="chart"></div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="header-section">
+                        <span class="icon solid fas fa-user-friends"></span>
+                        <span class="header-section_icon">{{ $total["return_client"] }} - Постоянные клиенты</span>
+                    </div>
+                    <div class="title-section-other">
+                        <div class="text-center price">{{ $total["average_sum"] }} ₽</div>
+                        <div class="text-center title">Средний чек</div>
+                    </div>
+                    <div class="chart-section">
+                        <div id="chartjs_2" class="chart"></div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="header-section">
+                        <span class="icon solid fas fa-user-plus"></span>
+                        <span class="header-section_icon">{{ $total["new_client"] }} - Новые клиенты</span>
+                    </div>
+                    <div class="title-section">
+                        <div class="text-center price">{{ $total["sales"] }} ₽</div>
+                        <div class="text-center title">Продаж за месяц</div>
+                    </div>
+                    <div class="chart-section">
+                        <div id="chartjs_3" class="chart"></div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-3">
-                <div class="header-section">
-                    <span class="icon solid fas fa-users"></span>
-                    <span class="header-section_icon">{{ $total["total_client"] }} - Всего клиентов</span>
-                </div>
-                <div class="title-section">
-                    <div class="text-center price">{{ $total["additional_services"] }} ₽</div>
-                    <div class="text-center title">Сумма доп. услуг</div>
-                </div>
-                <div class="chart-section">
-                    <div id="chartjs_1" class="chart"></div>
-                </div>
-            </div>
-
-            <div class="col-3">
-                <div class="header-section">
-					<span class="icon solid fas fa-user-friends"></span>
-                    <span class="header-section_icon">{{ $total["return_client"] }} - Постоянные клиенты</span>
-                </div>
-                <div class="title-section-other">
-                    <div class="text-center price">{{ $total["average_sum"] }} ₽</div>
-                    <div class="text-center title">Средний чек</div>
-                </div>
-                <div class="chart-section">
-                    <div id="chartjs_2" class="chart"></div>
-                </div>
-            </div>
-
-            <div class="col-3">
-                <div class="header-section">
-					<span class="icon solid fas fa-user-plus"></span>
-                    <span class="header-section_icon">{{ $total["new_client"] }} - Новые клиенты</span>
-                </div>
-                <div class="title-section">
-                    <div class="text-center price">{{ $total["sales"] }} ₽</div>
-                    <div class="text-center title">Продаж за месяц</div>
-                </div>
-                <div class="chart-section">
-                    <div id="chartjs_3" class="chart"></div>
-                </div>
-            </div>
-        </div>
-        @endif
+            @endif
+        </x-wrapper-content-loader>
     </section>
-
 </x-admin-layout>
 
 <style>

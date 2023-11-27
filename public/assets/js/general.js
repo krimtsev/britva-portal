@@ -14,3 +14,21 @@ function toogleTheme() {
 
     window.location.reload();
 }
+
+function toolgeLoading() {
+    setTimeout(function() {
+        $('select[data-id="analytics-months"]').attr("disabled", true);
+        $('select[data-id="analytics-users"]').attr("disabled", true);
+        $('input[data-id="analytics-load"]').attr("disabled", true);
+        $('button[data-id="analytics-sync"]').attr("disabled", true);
+        $('button[data-id="analytics-company"]').attr("disabled", true);
+
+        $('[data-id="loading"] > div').show();
+        $('[data-id="content"]').hide();
+    }, 100);
+}
+$('input[data-id="analytics-sync"], input[data-id="analytics-load"], input[data-id="analytics-company"]')
+    .on("click", function() {
+        toolgeLoading();
+});
+

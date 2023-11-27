@@ -290,3 +290,7 @@ html body div#wrapper div#main div.inner header#header ul.icons li a.icon.solid.
 .small {
     color: #aaa;
 }
+
+.pa-8 {
+    padding: 4em;
+}

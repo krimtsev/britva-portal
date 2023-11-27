@@ -2,21 +2,23 @@
     <x-header-section title="Аналитика" />
 
     <section>
-        <div class="flex justify-content-start ">
-            <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-             <form method="POST" action="{{ $isDashboard ? route('d.analytics.show') : route('p.analytics.show') }}" class="w-full">
-                @csrf
+        <x-wrapper-content-loader>
+            <x-slot name="header">
+                <form method="POST" action="{{ $isDashboard ? route('d.analytics.show') : route('p.analytics.show') }}" class="w-full">
+                    @csrf
 
-                <x-analytics-form
-                    :months="$months"
-                    :selectedMonth="$selected_month"
-                    :users="$users"
-                    :selectedUser="$selected_user"
-                    :isDashboard="$isDashboard"
-                />
-            </form>
-        </div>
+                    <x-analytics-form
+                        :months="$months"
+                        :selectedMonth="$selected_month"
+                        :users="$users"
+                        :selectedUser="$selected_user"
+                        :isDashboard="$isDashboard"
+                    />
+                </form>
+            </x-slot>
+        </x-wrapper-content-loader>
     </section>
 </x-admin-layout>

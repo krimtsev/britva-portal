@@ -2,28 +2,27 @@
     <x-header-section title="Аналитика - график компании" />
 
     <section>
-        <div class="flex justify-content-start mb-2">
-            <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-            <form method="POST" action="{{ $isDashboard ? route('d.analytics.company') : route('p.analytics.company') }}" class="w-full">
-                @csrf
+        <x-wrapper-content-loader>
+            <x-slot name="header">
+                <form method="POST" action="{{ $isDashboard ? route('d.analytics.company') : route('p.analytics.company') }}" class="w-full">
+                    @csrf
 
-                <x-analytics-form
-                    :months="$months"
-                    :selectedMonth="$selected_month"
-                    :users="$users"
-                    :selectedUser="$selected_user"
-                    :isDashboard="$isDashboard"
-                />
-            </form>
-        </div>
+                    <x-analytics-form
+                        :months="$months"
+                        :selectedMonth="$selected_month"
+                        :users="$users"
+                        :selectedUser="$selected_user"
+                        :isDashboard="$isDashboard"
+                    />
+                </form>
+            </x-slot>
 
-        <div>
             <div id="chartjs" class="canvas"></div>
-        </div>
+        </x-wrapper-content-loader>
     </section>
-
 </x-admin-layout>
 
 <style>
