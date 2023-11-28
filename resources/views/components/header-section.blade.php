@@ -15,12 +15,12 @@
 
             @auth
                 @if(!Route::is('p.*') && false)
-                    <li><a href="{{ route('p.home.index') }}" class="border-none">{{ __('Профиль') }}</a></li>
+                    <li><a href="{{ route('p.user.index') }}" class="border-none">{{ __('Профиль') }}</a></li>
                 @endif
 
                 @if(!Route::is('d.*'))
                     @if (Auth::user()->isAdmin())
-                        <li><a href="{{ route('d.home.index') }}" class="border-none">{{ __('Консоль') }}</a></li>
+                        <li><a href="{{ route('d.user.index') }}" class="border-none">{{ __('Консоль') }}</a></li>
                     @endif
                 @endif
 

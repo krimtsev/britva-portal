@@ -22,6 +22,6 @@ class DashboardController extends Controller
             'digest' => Digest::count(),
         ];
 
-        return view('dashboard.home.index', compact('counts'));
+        return view('dashboard.user.index', compact('counts'));
     }
 }

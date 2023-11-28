@@ -52,6 +52,6 @@ Route::group(['view' => 'dashboard'], function () {
  * Профиль пользователя
  */
 Route::group(['view' => 'profile'], function () {
-    require __DIR__ . '/profile/index.php';
+    require __DIR__ . '/profile/user.php';
     require __DIR__ . '/profile/analytics.php';
 });
