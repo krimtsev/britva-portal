@@ -38,7 +38,7 @@ require __DIR__ . '/static.php';
 /**
  * Панель администратора
  */
-Route::group(['view' => 'dashboard'], function () {
+Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
     require __DIR__ . '/dashboard/index.php';
     require __DIR__ . '/dashboard/posts.php';
     require __DIR__ . '/dashboard/users.php';
@@ -51,7 +51,7 @@ Route::group(['view' => 'dashboard'], function () {
 /**
  * Профиль пользователя
  */
-Route::group(['view' => 'profile'], function () {
+Route::group(['middleware' => ['auth'], 'prefix' => 'profile', 'view' => 'profile'], function () {
     require __DIR__ . '/profile/user.php';
     require __DIR__ . '/profile/analytics.php';
 });

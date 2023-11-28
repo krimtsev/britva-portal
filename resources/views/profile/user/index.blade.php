@@ -13,11 +13,21 @@
                 <div class="row gtr-uniform">
                     <div class="col-12">
                         <input
+                            id="current_password"
+                            type="password"
+                            name="current_password"
+                            autocomplete="new-password"
+                            placeholder="Текущий пароль"
+                        />
+                    </div>
+
+                    <div class="col-12">
+                        <input
                             id="password"
                             type="password"
                             name="password"
                             autocomplete="new-password"
-                            placeholder="Пароль"
+                            placeholder="Новый пароль"
                         />
                     </div>
 

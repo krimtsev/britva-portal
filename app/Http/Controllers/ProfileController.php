@@ -10,38 +10,30 @@ use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
-    public function __invoke()
+    public function index()
     {
         return view('profile.user.index');
     }
 
     public function update(Request $request)
     {
-        $password = $request->input('password');
-        $password_confirmation = $request->input('password_confirmation');
-
         $user = Auth::user();
 
-        $data = [];
+        $userPassword = $user->password;
 
-        if(!is_null($password) || !is_null($password_confirmation)) {
-            $validator = Validator::make(
-                ['password' => $password, 'password_confirmation' => $password_confirmation],
-                ['password' => ['required', 'confirmed', Rules\Password::defaults()]]
-            );
+        $request->validate(
+            ['current_password' => 'required'],
+            ['password' => 'required|same:password_confirmation|min:6'],
+            ['password_confirmation' => ['required']]
+        );
 
-            if ($validator->fails()) {
-                return redirect()->route('d.user.password.index', $user->id)
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-
-            $data['password'] = Hash::make($password);
+        if (!Hash::check($request->current_password, $userPassword)) {
+            return back()->withErrors(['current_password'=>'current password not match']);
         }
 
-        if(!empty($data)) {
-            $user->update($data);
-        }
+        $user->password = Hash::make($request->password);
+
+        $user->save();
 
         return redirect()->route('p.user.index');
     }
