@@ -24,7 +24,7 @@
             @if(empty($table_list) || empty($total))
                 <div>
                     Данные отсутствуют
-                </div>>
+                </div>
             @else
                 <div class="row chart-wrapper">
                 <div class="col-3">
