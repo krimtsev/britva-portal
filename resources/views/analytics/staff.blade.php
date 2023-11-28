@@ -7,24 +7,36 @@
 
         <x-wrapper-content-loader>
             <x-slot name="header">
-                <form method="POST" action="{{ $isDashboard ? route('d.analytics.staff') : route('p.analytics.staff') }}" class="w-full">
-                    @csrf
+                <div style="display: flex; gap: 1em">
+                    <form method="POST" action="{{ $isDashboard ? route('d.analytics.staff') : route('p.analytics.staff') }}">
+                        @csrf
 
-                    <x-analytics-form
-                        :months="$months"
-                        :selectedMonth="$selected_month"
-                        :users="$users"
-                        :selectedUser="$selected_user"
-                        :staffId="$staff_id"
-                        :isDashboard="$isDashboard"
-                    />
-                </form>
+                        <x-analytics-form
+                            :months="$months"
+                            :selectedMonth="$selected_month"
+                            :users="$users"
+                            :selectedUser="$selected_user"
+                            :isDashboard="$isDashboard"
+                        />
+                    </form>
+
+                    <form method="POST" action="{{ $isDashboard ? route('d.analytics.show') : route('p.analytics.show') }}" class="w-full">
+                        @csrf
+
+                        <input type="text" style="display: none;" value="{{ $selected_month }}" name="month" />
+                        <input type="text" style="display: none;" value="{{ $selected_user }}" name="company_id" />
+
+                        <div class="flex justify-content-start mb-2">
+                            <div class="col-3 ">
+                                <button type="submit" class="primary icon solid fa-th-list button-icon-fix"  name="company" data-id="analytics-back" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </x-slot>
 
             @if(empty($table_list) || empty($total))
-                <div>
-                    Данные отсутствуют
-                </div>
+                <x-data-empty />
             @else
                 <div class="row chart-wrapper">
                 <div class="col-3">

@@ -22,6 +22,7 @@ function toolgeLoading() {
         $('input[data-id="analytics-load"]').attr("disabled", true);
         $('button[data-id="analytics-sync"]').attr("disabled", true);
         $('button[data-id="analytics-company"]').attr("disabled", true);
+        $('button[data-id="analytics-back"]').attr("disabled", true);
 
         $('[data-id="loading"] > div').show();
         $('[data-id="content"]').hide();

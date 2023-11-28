@@ -7,20 +7,39 @@
 
         <x-wrapper-content-loader>
             <x-slot name="header">
-                <form method="POST" action="{{ $isDashboard ? route('d.analytics.company') : route('p.analytics.company') }}" class="w-full">
-                    @csrf
+                <div style="display: flex; gap: 1em">
+                    <form method="POST" action="{{ $isDashboard ? route('d.analytics.company') : route('p.analytics.company') }}">
+                        @csrf
 
-                    <x-analytics-form
-                        :months="$months"
-                        :selectedMonth="$selected_month"
-                        :users="$users"
-                        :selectedUser="$selected_user"
-                        :isDashboard="$isDashboard"
-                    />
-                </form>
+                        <x-analytics-form
+                            :months="$months"
+                            :selectedMonth="$selected_month"
+                            :users="$users"
+                            :selectedUser="$selected_user"
+                            :isDashboard="$isDashboard"
+                        />
+                    </form>
+
+                    <form method="POST" action="{{ $isDashboard ? route('d.analytics.show') : route('p.analytics.show') }}" class="w-full">
+                        @csrf
+
+                        <input type="text" style="display: none;" value="{{ $selected_month }}" name="month" />
+                        <input type="text" style="display: none;" value="{{ $selected_user }}" name="company_id" />
+
+                        <div class="flex justify-content-start mb-2">
+                            <div class="col-3 ">
+                                <button type="submit" class="primary icon solid fa-th-list button-icon-fix"  name="company" data-id="analytics-back" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </x-slot>
 
-            <div id="chartjs" class="canvas"></div>
+            @if(empty($total_list) || empty($selected_period))
+                <x-data-empty />
+            @else
+                <div id="chartjs" class="canvas"></div>
+            @endif
         </x-wrapper-content-loader>
     </section>
 </x-admin-layout>
