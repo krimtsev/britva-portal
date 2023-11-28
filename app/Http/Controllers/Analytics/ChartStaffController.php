@@ -64,7 +64,7 @@ class ChartStaffController extends Controller
         $table_last_data = [];
         $total = [];
 
-        if (count($table_list) > 1){
+        if (count($table_list) >= 1){
             $table_list = array_reverse($table_list);
             $table_last_data = $table_list[array_key_last($table_list)];
         }
