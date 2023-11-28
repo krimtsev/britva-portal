@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 
 class ChartStaffController extends Controller
 {
@@ -39,11 +40,11 @@ class ChartStaffController extends Controller
             if($table instanceof Collection) {
                 $table_list[] = array_merge(...$table->where("staff_id", $staff_id)->toArray());
             } else {
-                $result = array_filter($table, function($staff) use ($staff_id) {
+                $staffData = Arr::first($table, function($staff) use ($staff_id) {
                     return $staff["staff_id"] == $staff_id;
                 });
-                if(!empty($result)) {
-                    $table_list[] = array_shift($result);
+                if(!empty($staffData)) {
+                    $table_list[] = $staffData;
                 }
             }
         }
