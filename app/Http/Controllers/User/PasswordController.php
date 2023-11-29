@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules;
 
 class PasswordController extends Controller
 {
@@ -18,29 +17,14 @@ class PasswordController extends Controller
 
     public function update(User $user, Request $request)
     {
-        $password = $request->input('password');
-        $password_confirmation = $request->input('password_confirmation');
+        $request->validate([
+            'password' => 'required|same:password_confirmation|min:6',
+            'password_confirmation' => 'required',
+        ]);
 
-        $data = [];
+        $user->password = Hash::make($request->password);
 
-        if(!is_null($password) || !is_null($password_confirmation)) {
-            $validator = Validator::make(
-                ['password' => $password, 'password_confirmation' => $password_confirmation],
-                ['password' => ['required', 'confirmed', Rules\Password::defaults()]]
-            );
-
-            if ($validator->fails()) {
-                return redirect()->route('d.user.password.index', $user->id)
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-
-            $data['password'] = Hash::make($password);
-        }
-
-        if(!empty($data)) {
-            $user->update($data);
-        }
+        $user->save();
 
         return redirect()->route('d.user.edit', $user->id);
     }
