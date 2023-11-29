@@ -1,4 +1,4 @@
-@props(['months', 'selectedMonth', 'users', 'selectedUser', 'staffId', 'isDashboard'])
+@props(['months', 'selectedMonth', 'users', 'selectedUser', 'staffId' => null, 'isDashboard'])
 
 <div style="display: flex; gap: 1em;">
     <div style="min-width: 13em">

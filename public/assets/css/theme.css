@@ -242,7 +242,7 @@ input:disabled {
     color: #8D3CAD !important;
     cursor: pointer;
     display: inline-block;
-    font-family: "Roboto Slab", serif;
+    font-family: "Roboto", serif;
     font-size: 0.8em;
     font-weight: 700;
     height: 3.5em;
@@ -266,7 +266,7 @@ input:disabled {
     box-shadow: inset 0 0 0 2px #8D3CAD;
     color: #8D3CAD !important;
     display: inline-block;
-    font-family: "Roboto Slab", serif;
+    font-family: "Roboto", serif;
     font-size: 0.8em;
     font-weight: 700;
     height: 3.5em;

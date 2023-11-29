@@ -39,6 +39,7 @@ class ChartStaffController extends Controller
 
             if($table instanceof Collection) {
                 $table_list[] = array_merge(...$table->where("staff_id", $staff_id)->toArray());
+
             } else {
                 $staffData = Arr::first($table, function($staff) use ($staff_id) {
                     return $staff["staff_id"] == $staff_id;
@@ -63,6 +64,8 @@ class ChartStaffController extends Controller
 
         $table_last_data = [];
         $total = [];
+
+
 
         if (count($table_list) >= 1){
             $table_list = array_reverse($table_list);

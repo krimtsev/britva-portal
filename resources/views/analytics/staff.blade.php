@@ -17,6 +17,7 @@
                             :users="$users"
                             :selectedUser="$selected_user"
                             :isDashboard="$isDashboard"
+                            :staffId="$staff_id"
                         />
                     </form>
 
@@ -57,12 +58,13 @@
                             <x-progress-bar :total="$total['fullnesss']" />
                             <div class="text-center fullnesss">Заполняемость</div>
                         </div>
-                        <div class="staff-section fullnesss-section">
+                        {{-- <div class="staff-section fullnesss-section">
                             <div class="text-center fullnesss">(пока не работает)</div>
                             <x-progress-bar :total="100" />
                             <div class="text-center fullnesss">Возвращаемость</div>
-                        </div>
+                        </div>--}}
                     </div>
+                    <div></div>
                 </div>
 
                 <div class="col-3">
@@ -76,6 +78,9 @@
                     </div>
                     <div class="chart-section">
                         <div id="chartjs_1" class="chart"></div>
+                    </div>
+                    <div class="legenda">
+                        <div class="sqrt prev"> </div> - Прошлый период
                     </div>
                 </div>
 
@@ -91,6 +96,9 @@
                     <div class="chart-section">
                         <div id="chartjs_2" class="chart"></div>
                     </div>
+                    <div class="legenda">
+                        <div class="sqrt current"> </div> - Отчетный месяц
+                    </div>
                 </div>
 
                 <div class="col-3">
@@ -104,6 +112,9 @@
                     </div>
                     <div class="chart-section">
                         <div id="chartjs_3" class="chart"></div>
+                    </div>
+                    <div class="legenda">
+
                     </div>
                 </div>
             </div>
@@ -198,6 +209,29 @@
 .header-section_icon {
 	padding-left: 10px;
 }
+
+.legenda {
+    color: #222;
+    display: flex;
+    align-items: center;
+    padding: 1em 1em 1em 2em;
+    background: white;
+    height: 54px;
+}
+.legenda > .sqrt {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5em;
+}
+
+.legenda > .sqrt.current {
+    background: #222;
+}
+
+.legenda > .sqrt.prev {
+    background: #aaa;
+}
+
 </style>
 
 <script>
