@@ -21,11 +21,11 @@ class ProfileController extends Controller
 
         $userPassword = $user->password;
 
-        $request->validate(
-            ['current_password' => 'required'],
-            ['password' => 'required|same:password_confirmation|min:6'],
-            ['password_confirmation' => ['required']]
-        );
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|same:password_confirmation|min:6',
+            'password_confirmation' => 'required',
+        ]);
 
         if (!Hash::check($request->current_password, $userPassword)) {
             return back()->withErrors(['current_password'=>'current password not match']);
