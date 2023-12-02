@@ -19,7 +19,7 @@
                 @endif
 
                 @if(!Route::is('d.*'))
-                    @if (Auth::user()->isAdmin())
+                    @if (Auth::user()->isSysAdmin())
                         <li><a href="{{ route('d.user.index') }}" class="border-none">{{ __('Консоль') }}</a></li>
                     @endif
                 @endif

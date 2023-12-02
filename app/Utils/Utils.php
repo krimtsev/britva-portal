@@ -32,13 +32,12 @@ class Utils
     }
 
     public static function getMonthArray($start = null, $end = null) {
-
         $start_date = $start
-            ? date('Y-m-d', $start)
+            ? date('Y-m-d', strtotime($start))
             : Constants::START_DATE;
 
         $end_date = $end
-            ? date('Y-m-d', $end)
+            ? date('Y-m-d', strtotime($end))
             : date("Y-m-d", strtotime("-1 month",strtotime(date('Y-m-d'))));
 
 
@@ -87,26 +86,28 @@ class Utils
         return date('Y-m-d', strtotime($date . " {$minus} months"));
     }
 
-    static function getPeriodMonthArray($start_date = null, $end_date = null, $months = 1)
+    static function getPeriodMonthArray($date, $months = 1)
     {
-        $dates = [[
-            "start_date" => $start_date,
-            "end_date"   => $end_date
-        ]];
+        $dates = [
+            [
+                "start_date" => self::setFirstDay($date),
+                "end_date"   => self::setLastDay($date)
+            ]
+        ];
 
         $end_date_point = strtotime(Constants::START_DATE);
 
-        for ($i = 0; $i < $months; $i++) {
-            $sd = Utils::setMinusMonths($dates[$i]["start_date"]);
-            $ed = Utils::setLastDay($sd);
+        for ($i = 0; $i < $months -1; $i++) {
+            $new_start_date = Utils::setMinusMonths($dates[$i]["start_date"]);
+            $new_end_date = Utils::setLastDay($new_start_date);
 
-            if (strtotime($sd) < $end_date_point) {
+            if (strtotime($new_start_date) < $end_date_point) {
                 break;
             }
 
             $dates[] = [
-                "start_date" => $sd,
-                "end_date"   => $ed
+                "start_date" => $new_start_date,
+                "end_date"   => $new_end_date
             ];
         }
 
@@ -121,5 +122,9 @@ class Utils
 
     public static function toNumberFormat($number) {
         return number_format($number, 0, ".", " ");
+    }
+
+    public static function getPreviousStartMonth() {
+        return  self::setMinusMonths(date('Y-m-d', time()));
     }
 }

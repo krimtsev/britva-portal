@@ -16,13 +16,10 @@ class ChartStaffController extends Controller
     public function __invoke(Request $request)
     {
         // Дата окончания (передается из формы)
-        $end_date = $request->input("month");
-
-        // Дата начала
-        $start_date =  Utils::setFirstDay($end_date);
+        $selected_month = $request->input("month");
 
         // ID филиала
-        $company_id = $request->input("company_id");
+        $selected_user = $request->input("company_id");
 
         // ID сотрудника
         $staff_id = $request->input("staff_id");
@@ -30,12 +27,12 @@ class ChartStaffController extends Controller
         // Признак принудительного одновдения из yclients
         $isSync = $request->input("sync");
 
-        $dates = Utils::getPeriodMonthArray($start_date, $end_date, 3);
+        $dates = Utils::getPeriodMonthArray($selected_month, 4);
 
         $table_list = [];
 
         foreach ($dates as $date) {
-            list($table, $total) = TableReport::get($isSync, $date["start_date"], $date["end_date"], $company_id);
+            list($table, $total) = TableReport::get($isSync, $date["start_date"], $date["end_date"], $selected_user);
 
             if($table instanceof Collection) {
                 $table_list[] = array_merge(...$table->where("staff_id", $staff_id)->toArray());
@@ -54,18 +51,12 @@ class ChartStaffController extends Controller
 
         $users = User::select("login", "name", "yclients_id")->orderBy("name")->get();
 
-        $selected_month = $end_date;
-
-        $selected_user = $company_id;
-
         $selected_period = json_encode(array_map(function($date) {
             return Utils::dateToMothAndYear($date["start_date"]);
         }, array_reverse($dates)));
 
         $table_last_data = [];
         $total = [];
-
-
 
         if (count($table_list) >= 1){
             $table_list = array_reverse($table_list);

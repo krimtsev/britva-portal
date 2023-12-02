@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Post\BlogController;
 use App\Http\Controllers\Page\PageController;
 use App\Http\Controllers\Sheet\PageSheetController;
+use App\Http\Middleware\RoleAdminValue;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,7 @@ require __DIR__ . '/static.php';
 /**
  * Панель администратора
  */
-Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
+Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
     require __DIR__ . '/dashboard/index.php';
     require __DIR__ . '/dashboard/posts.php';
     require __DIR__ . '/dashboard/users.php';
@@ -46,6 +47,7 @@ Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'dashboard', 'vie
     require __DIR__ . '/dashboard/sheets.php';
     require __DIR__ . '/dashboard/digests.php';
     require __DIR__ . '/dashboard/analytics.php';
+    require __DIR__ . '/dashboard/jobs.php';
 });
 
 /**

@@ -1,4 +1,4 @@
-@props(['months', 'selectedMonth', 'users', 'selectedUser', 'staffId' => null, 'isDashboard'])
+@props(['months', 'selectedMonth', 'users', 'selectedUser', 'staffId' => null, 'isDashboard' => null])
 
 <div style="display: flex; gap: 1em;">
     <div style="min-width: 13em">
@@ -14,7 +14,7 @@
         </select>
     </div>
 
-    @if(Auth::user()->isAdmin() && empty($staffId) && $isDashboard)
+    @if((Auth::user()->isSysAdmin() || Auth::user()->isAdmin()) && empty($staffId))
         <div style="min-width: 18em">
             <select name="company_id" id="company_id" data-id="analytics-users">
                 @foreach ($users as $user)

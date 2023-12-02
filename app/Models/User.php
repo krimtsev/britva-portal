@@ -48,13 +48,42 @@ class User extends Authenticatable
     protected $roleList = [
         'USER' => [
             'ID' => 1,
-            'NAME' => 'Пользователь'
+            'NAME' => 'Пользователь',
+            'VALUE' => 1000
+        ],
+        'SYS_ADMIN' => [
+            'ID' => 2,
+            'NAME' => 'Системный администратор',
+            'VALUE' => 3000
         ],
         'ADMIN' => [
-            'ID' => 2,
-            'NAME' => 'Администратор'
+            'ID' => 3,
+            'NAME' => 'Администратор',
+            'VALUE' => 2000
         ],
     ];
+
+    public function accessValueByRoleId(int $id)
+    {
+        switch ($id) {
+            case $this->roleList['USER']['ID']:
+                return $this->roleList['USER']['VALUE'];
+            case $this->roleList['ADMIN']['ID']:
+                return this->roleList['ADMIN']['VALUE'];
+            case $this->roleList['SYS_ADMIN']['ID']:
+                return his->roleList['SYS_ADMIN']['VALUE'];
+            default:
+                return 0;
+        }
+    }
+
+    public function accessValueByRoleName(string $key)
+    {
+        if (array_key_exists($key, $this->roleList)) {
+            return $this->roleList[$key]['VALUE'];
+        }
+        return 0;
+    }
 
     public function roleListById()
     {
@@ -73,6 +102,15 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function checkAccessRoleValue($value) {
+        return self::accessValueByRoleId($this->role_id) >= $value;
+    }
+
+    public function isSysAdmin()
+    {
+        return $this->role_id == $this->roleList['SYS_ADMIN']['ID'];
     }
 
     public function isAdmin()

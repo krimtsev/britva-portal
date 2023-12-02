@@ -1,6 +1,7 @@
 :root {
     --color-main: #8D3CAD;
     --color-main-dark: #70308A;
+    --color-danger: #990000;
 }
 
 body {
@@ -19,6 +20,14 @@ p {
 .logo img {
     width: 100%;
     margin-bottom: 1em;
+}
+
+.color-main {
+    color: var(--color-main)
+}
+
+.color-danger {
+    color: var(--color-danger)
 }
 
 /** Rewrite default theme */

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 
-class Role
+class RoleAdminValue
 {
 
     /**
@@ -18,8 +18,7 @@ class Role
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next) {
-
-        if (Auth::user()->isAdmin()){
+        if (Auth::user()->accessValueByRoleName("SYS_ADMIN")) {
             return $next($request);
         } else {
             return redirect(RouteServiceProvider::HOME);

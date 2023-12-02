@@ -14,23 +14,20 @@ class ChartCompanyController extends Controller
     public function __invoke(Request $request)
     {
         // Дата окончания (передается из формы)
-        $end_date = $request->input("month");
-
-        // Дата начала
-        $start_date =  Utils::setFirstDay($end_date);
+        $selected_month = $request->input("month");
 
         // ID филиала
-        $company_id = $request->input("company_id");
+        $selected_user = $request->input("company_id");
 
         // Признак принудительного одновдения из yclients
         $isSync = $request->input("sync");
 
-        $dates = Utils::getPeriodMonthArray($start_date, $end_date, 3);
+        $dates = Utils::getPeriodMonthArray($selected_month, 4);
 
         $total_list = [];
 
         foreach ($dates as $date) {
-            list($table, $total) = TableReport::get($isSync, $date["start_date"], $date["end_date"], $company_id);
+            list($table, $total) = TableReport::get($isSync, $date["start_date"], $date["end_date"], $selected_user);
 
             $total_list[] = $total;
         }
@@ -38,10 +35,6 @@ class ChartCompanyController extends Controller
         $months = Utils::getMonthArray();
 
         $users = User::select("login", "name", "yclients_id")->orderBy("name")->get();
-
-        $selected_month = $end_date;
-
-        $selected_user = $company_id;
 
         $total_list = json_encode(array_reverse($total_list));
 

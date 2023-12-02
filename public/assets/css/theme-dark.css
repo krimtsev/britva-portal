@@ -1,6 +1,7 @@
 :root {
     --color-main: #B0CB1F;
     --color-main-dark: #8CA218;
+    --color-danger: #990000;
 }
 
 body {
@@ -10,6 +11,14 @@ body {
 
 p {
     color: #dddddd;
+}
+
+.color-main {
+    color: var(--color-main)
+}
+
+.color-danger {
+    color: var(--color-danger)
 }
 
 #sidebar {

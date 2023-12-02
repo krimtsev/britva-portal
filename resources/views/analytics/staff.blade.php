@@ -279,7 +279,7 @@
                     return str.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, "$1 ")
                 },
                 style: {
-                    fontSize: "24px",
+                    fontSize: "18px",
                     fontFamily: "Roboto, sans-serif",
                     fontWeight: "bold",
                     colors
