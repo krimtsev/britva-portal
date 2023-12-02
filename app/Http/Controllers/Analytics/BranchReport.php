@@ -53,7 +53,7 @@ class BranchReport extends Controller
                 $companyStatsByStaff = $client->getCompanyStatsByStaff($id);
 
                 if (is_array($companyStatsByStaff) && !empty($companyStatsByStaff)) {
-                    $table[$id]["average_sum"] = $companyStatsByStaff["average_sum"];
+                    $table[$id]["average_sum"] = round($companyStatsByStaff["average_sum"], 0);
                     $table[$id]["fullnesss"] = $companyStatsByStaff["fullnesss"];
                     $table[$id]["income_total"] = $companyStatsByStaff["income_total"];
                     $table[$id]["income_goods"] = $companyStatsByStaff["income_goods"];

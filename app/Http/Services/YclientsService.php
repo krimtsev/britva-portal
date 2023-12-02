@@ -113,7 +113,7 @@ class YclientsService
             }
 
             return [
-                "average_sum" => (int) $response["data"]["income_average_stats"]["current_sum"],
+                "average_sum" => (float) $response["data"]["income_average_stats"]["current_sum"],
                 "fullnesss" => $response["data"]["fullness_stats"]["current_percent"],
                 "new_client" => $response["data"]["client_stats"]["new_count"],
                 "return_client" => $response["data"]["client_stats"]["return_count"],
