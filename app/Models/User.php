@@ -118,6 +118,10 @@ class User extends Authenticatable
         return $this->role_id == $this->roleList['ADMIN']['ID'];
     }
 
+    public function isAccessRightAdminOrHigher() {
+        return self::checkAccessRoleValue(self::accessValueByRoleName('ADMIN'));
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'user_id', 'id');

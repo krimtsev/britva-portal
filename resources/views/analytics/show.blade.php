@@ -5,7 +5,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        @if (empty($selected_user))
+        @if (empty($selected_user) && !Auth::user()->isAccessRightAdminOrHigher())
             <x-data-empty description="Не указан индентификатор филиала" />
         @else
             <x-wrapper-content-loader>
