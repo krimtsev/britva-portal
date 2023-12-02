@@ -5,7 +5,10 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <x-wrapper-content-loader>
+        @if (empty($selected_user))
+            <x-data-empty description="Не указан индентификатор филиала" />
+        @else
+            <x-wrapper-content-loader>
             <x-slot name="header">
                 <div style="display: flex; gap: 1em">
                     <form method="POST" action="{{ $isDashboard ? route('d.analytics.company') : route('p.analytics.company') }}">
@@ -41,6 +44,7 @@
                 <div id="chartjs" class="canvas"></div>
             @endif
         </x-wrapper-content-loader>
+        @endif
     </section>
 </x-admin-layout>
 
