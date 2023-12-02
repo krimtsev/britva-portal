@@ -69,9 +69,9 @@ class User extends Authenticatable
             case $this->roleList['USER']['ID']:
                 return $this->roleList['USER']['VALUE'];
             case $this->roleList['ADMIN']['ID']:
-                return this->roleList['ADMIN']['VALUE'];
+                return $this->roleList['ADMIN']['VALUE'];
             case $this->roleList['SYS_ADMIN']['ID']:
-                return his->roleList['SYS_ADMIN']['VALUE'];
+                return $this->roleList['SYS_ADMIN']['VALUE'];
             default:
                 return 0;
         }
