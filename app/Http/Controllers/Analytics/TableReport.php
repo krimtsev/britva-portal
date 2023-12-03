@@ -12,15 +12,20 @@ class TableReport extends Controller
 {
     public static function get($isSync, $start_date, $end_date, $company_id)
     {
-        $table = YclientsBranchReport::where("company_id", $company_id)
-            ->where("start_date", $start_date)
-            ->where("end_date", $end_date)
-            ->get();
+        $table = [];
+        $total = [];
 
-        $total = YclientsBranchTotalReport::where("company_id", $company_id)
-            ->where("start_date", $start_date)
-            ->where("end_date", $end_date)
-            ->first();
+        if (!$isSync) {
+            $table = YclientsBranchReport::where("company_id", $company_id)
+                ->where("start_date", $start_date)
+                ->where("end_date", $end_date)
+                ->get();
+
+            $total = YclientsBranchTotalReport::where("company_id", $company_id)
+                ->where("start_date", $start_date)
+                ->where("end_date", $end_date)
+                ->first();
+        }
 
         if ($isSync || (count($table) == 0 || !$total)) {
 

@@ -125,6 +125,6 @@ class Utils
     }
 
     public static function getPreviousStartMonth() {
-        return  self::setMinusMonths(date('Y-m-d', time()));
+        return  self::setFirstDay(self::setMinusMonths(date('Y-m-d', time())));
     }
 }
