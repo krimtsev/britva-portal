@@ -37,7 +37,7 @@ class StatusCompanyController extends Controller
 
         $months = Utils::getMonthArray(Arr::last($dates), Arr::first($dates));
 
-        return view("jobs.status-company", compact(
+        return view("dashboard.jobs.status-company", compact(
             "table",
             "dates",
             "months",
