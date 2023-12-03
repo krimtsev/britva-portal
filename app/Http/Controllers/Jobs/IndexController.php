@@ -26,6 +26,8 @@ class IndexController extends Controller
                 $user->yclients_id
             )->onQueue("analytics");
         }
+
+        return view('dashboard.jobs.start');
     }
 
 }
