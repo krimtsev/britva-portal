@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Analytics;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\YclientsService;
+use Illuminate\Support\Str;
 use Throwable;
 
 /*
@@ -47,7 +48,7 @@ class BranchReport extends Controller
                 $table[$id]["name"] = $one["name"];
 
                 // Профессия
-                $table[$id]["specialization"] = $one["specialization"];
+                $table[$id]["specialization"] = Str::limit($one["specialization"], 60, $end='...');
 
                 // Средний чек, Заполняемость, Новые клиенты, Оборот,
                 $companyStatsByStaff = $client->getCompanyStatsByStaff($id);
