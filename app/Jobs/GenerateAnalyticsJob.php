@@ -66,11 +66,16 @@ class GenerateAnalyticsJob implements ShouldQueue, ShouldBeUnique
      */
     public function handle()
     {
-        TableReport::get(
-            $this->isSync,
-            $this->start_date,
-            $this->end_date,
-            $this->company_id
-        );
+        try {
+            TableReport::get(
+                $this->isSync,
+                $this->start_date,
+                $this->end_date,
+                $this->company_id,
+                true
+            );
+        } catch (Exception $exception) {
+            $this->release($this->attempts() * 5);
+        }
     }
 }

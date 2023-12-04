@@ -2,6 +2,7 @@
     --color-main: #B0CB1F;
     --color-main-dark: #8CA218;
     --color-danger: #990000;
+    --color-success: #009900;
 }
 
 body {
@@ -19,6 +20,10 @@ p {
 
 .color-danger {
     color: var(--color-danger)
+}
+
+.color-success {
+    color: var(--color-success)
 }
 
 #sidebar {

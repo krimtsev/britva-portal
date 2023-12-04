@@ -243,9 +243,6 @@
         const table_list = JSON.parse(`<?php echo $table_list; ?>`);
         const selected_period = JSON.parse(`<?php echo $selected_period; ?>`);
 
-        console.log(table_list)
-        console.log(selected_period)
-
         const additional_services = []
         const average_sum = []
         const sales = []

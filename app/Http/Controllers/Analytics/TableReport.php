@@ -10,12 +10,12 @@ use Illuminate\Support\Collection;
 
 class TableReport extends Controller
 {
-    public static function get($isSync, $start_date, $end_date, $company_id)
+    public static function get($isSync, $start_date, $end_date, $company_id, $isSkipDB = false)
     {
         $table = [];
         $total = [];
 
-        if (!$isSync) {
+        if (!$isSkipDB) {
             $table = YclientsBranchReport::where("company_id", $company_id)
                 ->where("start_date", $start_date)
                 ->where("end_date", $end_date)

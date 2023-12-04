@@ -2,6 +2,7 @@
     --color-main: #8D3CAD;
     --color-main-dark: #70308A;
     --color-danger: #990000;
+    --color-success: #009900;
 }
 
 body {
@@ -28,6 +29,10 @@ p {
 
 .color-danger {
     color: var(--color-danger)
+}
+
+.color-success {
+    color: var(--color-success)
 }
 
 /** Rewrite default theme */

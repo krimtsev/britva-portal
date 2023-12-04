@@ -19,7 +19,7 @@
                         @foreach ($one["dates"] as $date)
                             <td class="text-center">
                                 @if ($date)
-                                    <i class="fa fa-check color-main"></i>
+                                    <i class="fa fa-check color-success"></i>
                                 @else
                                     <i class="fa fa-ban color-danger"></i>
                                 @endif
