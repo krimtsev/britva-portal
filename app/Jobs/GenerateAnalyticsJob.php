@@ -39,6 +39,8 @@ class GenerateAnalyticsJob implements ShouldQueue, ShouldBeUnique
      */
     public $tries = 2;
 
+    public $sleep = 30;
+
     /**
      * Задать временной предел попыток выполнить задания.
      *
