@@ -74,7 +74,6 @@ class GenerateAnalyticsJob implements ShouldQueue, ShouldBeUnique
                 $this->start_date,
                 $this->end_date,
                 $this->company_id,
-                true
             );
         } catch (Exception $exception) {
             $this->release($this->attempts() * 5);
