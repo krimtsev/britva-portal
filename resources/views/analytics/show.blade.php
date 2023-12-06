@@ -31,7 +31,7 @@
 
                         <div class="flex justify-content-start mb-2">
                             <div class="col-3 ">
-                                <button type="submit" class="primary icon solid fa-chart-area button-icon-fix"  value="Синхронизировать" name="company" data-id="analytics-company" />
+                                <button type="submit" class="primary icon solid fa-chart-area button-icon-fix" name="company" data-id="analytics-company" />
                             </div>
                         </div>
                     </form>

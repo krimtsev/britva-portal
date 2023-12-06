@@ -51,3 +51,5 @@
         </div>
     @endif
 </div>
+
+<script src="{{ asset('assets/js/reload.js') }}"></script>

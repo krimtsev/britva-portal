@@ -16,6 +16,8 @@ function toogleTheme() {
 }
 
 function toolgeLoading() {
+    console.log("toolgeLoading")
+
     setTimeout(function() {
         $('select[data-id="analytics-months"]').attr("disabled", true);
         $('select[data-id="analytics-users"]').attr("disabled", true);
@@ -26,10 +28,13 @@ function toolgeLoading() {
 
         $('[data-id="loading"] > div').show();
         $('[data-id="content"]').hide();
+
+        console.log("setTimeout")
     }, 100);
 }
-$('button[data-id="analytics-sync"], input[data-id="analytics-load"], input[data-id="analytics-company"], button[data-id="analytics-company"]')
-    .on("click", function() {
-        toolgeLoading();
-});
 
+$('button[data-id="analytics-sync"], input[data-id="analytics-load"], button[data-id="analytics-company"]')
+    .on("click", function () {
+        console.log("in")
+        toolgeLoading();
+    });

@@ -37,7 +37,7 @@ class GenerateAnalyticsJob implements ShouldQueue, ShouldBeUnique
      *
      * @var int
      */
-    public $tries = 2;
+    public $tries = 5;
 
     public $sleep = 30;
 
@@ -48,7 +48,7 @@ class GenerateAnalyticsJob implements ShouldQueue, ShouldBeUnique
      */
     public function retryUntil()
     {
-        return now()->addMinutes(5);
+        return now()->addMinutes(100);
     }
 
     /**

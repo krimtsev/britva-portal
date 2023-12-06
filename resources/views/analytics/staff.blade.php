@@ -132,24 +132,25 @@
     width: 100%;
 }
 .price {
-    font-size: 3em;
+    font-size: 42px;
     font-weight: bold;
     color: white;
 }
 .title {
-    font-size: 1.5em;
+    font-size: 21px;
     color: white;
 	font-style: italic;
 }
 .chart-wrapper {
-    max-width: 1200px;
+    width: 1200px;
+    height: 612px;
     background: #222;
-    padding: 0.5em 0.5em 0.5em 0;
+    padding: 5px 5px 5px 0;
     font-family: "Roboto", serif;
     margin: 0 !important;
 }
 .chart-wrapper.row > * {
-    padding: 0 0 0 0.5em !important;
+    padding: 0 0 0 5px !important;
 }
 
 .user {
@@ -164,7 +165,7 @@
 .chart {
     display: flex;
     align-items: flex-start;
-    margin-top: 0.5em;
+    margin-top: 5px;
 }
 
 .staff-section {
@@ -174,17 +175,17 @@
     color: white;
 }
 .name {
-    font-size: 3em;
+    font-size: 42px;
 	font-family: "Roboto", serif;
 	color: #b7d900;
 }
 .specialization {
-    font-size: 1.3em;
+    font-size: 18px;
 	font-weight: lighter;
 }
 .header-section {
-    padding: 0.5em;
-    margin-bottom: 0.5em;
+    padding: 5px;
+    margin-bottom: 5px;
     background: white;
     color: #222;
 }
@@ -194,12 +195,12 @@
 }
 
 .fullnesss-section {
-    margin-bottom: 0.5em;
+    margin-bottom: 5px;
 	padding-top: 20px;
 }
 
 .fullnesss {
-	font-size: 1.5em;
+	font-size: 21px;
 	font-weight: lighter;
 	font-style: italic;
 }
@@ -218,14 +219,14 @@
     color: #222;
     display: flex;
     align-items: center;
-    padding: 1em 1em 1em 2em;
+    padding: 14px 14px 14px 28px;
     background: white;
     height: 54px;
 }
 .legenda > .sqrt {
     width: 20px;
     height: 20px;
-    margin-right: 0.5em;
+    margin-right: 5px;
 }
 
 .legenda > .sqrt.current {
@@ -279,8 +280,9 @@
                     const str = "" + val + ""
                     return str.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, "$1 ")
                 },
+                textAnchor: 'middle',
                 style: {
-                    fontSize: "18px",
+                    fontSize: "16px",
                     fontFamily: "Roboto, sans-serif",
                     fontWeight: "bold",
                     colors
@@ -315,7 +317,8 @@
                 opacity: 1,
             },
             yaxis: {
-                show: false
+                show: false,
+                tickAmount: 6,
             },
             xaxis: {
                 type: "categtxory",

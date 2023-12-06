@@ -24,7 +24,7 @@ class IndexController extends Controller
                 $date["start_date"],
                 $date["end_date"],
                 $user->yclients_id
-            )->onQueue("analytics");
+            )->onConnection('database')->onQueue("analytics");
         }
 
         return view('dashboard.jobs.start');

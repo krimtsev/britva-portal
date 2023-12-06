@@ -62,8 +62,6 @@
         const income_total = []
         const income_goods = []
 
-        console.log(total_list)
-
         total_list.forEach(total => {
             income_total.push(total.income_total)
             income_goods.push(total.income_goods)
