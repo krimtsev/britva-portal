@@ -12,10 +12,22 @@ class ProfileController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+
+        $data = [
+            "login" => $user->login,
+            "name" => $user->name,
+        ];
+
+        return view('profile.home.index', compact('data'));
+    }
+
+    public function changePasswordIndex()
+    {
         return view('profile.user.index');
     }
 
-    public function update(Request $request)
+    public function changePasswordUpdate(Request $request)
     {
         $user = Auth::user();
 
