@@ -52,6 +52,7 @@
 					<ul>
 						<li><a href="https://disk.yandex.ru/d/ozwWXg_KUO5DPQ" target="_blank">Макеты печатные</a></li>
 						<li><a href="https://disk.yandex.ru/d/_G5bIHExwxfUlw" target="_blank">Макеты для инсты</a></li>
+						<li><a href="https://disk.yandex.ru/d/gYdjTyCWu_bU3A" target="_blank">Макеты на НГ 2023-2024</a></li>
 					</ul>
 				</li>
 				<li><a href="https://disk.yandex.ru/d/shqZrB4nMWMr0A" target="_blank">Видео на ТВ</a></li>
