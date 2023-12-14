@@ -55,7 +55,7 @@
 						<li><a href="https://disk.yandex.ru/d/gYdjTyCWu_bU3A" target="_blank">Макеты на НГ 2023-2024</a></li>
 					</ul>
 				</li>
-				<li><a href="https://disk.yandex.ru/d/shqZrB4nMWMr0A" target="_blank">Видео на ТВ</a></li>
+				<li><a href="https://disk.yandex.ru/d/ODcgMSK8CtAh9A" target="_blank">Видео на ТВ</a></li>
 				<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
 				<li>
 					<span class="opener">Заявки</span>

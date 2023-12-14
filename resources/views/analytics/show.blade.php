@@ -46,13 +46,13 @@
                         <thead>
                             <tr>
                                 <th>Имя</th>
-                                <th class="text-center">Лояльность</th>
-                                <th class="text-center">Оборот</th>
+                                <th class="text-center">Продажи<br>абонементов и сертификатов</th>
+                                <th class="text-center">Валовая выручка</th>
                                 <th class="text-center">Средний чек</th>
-                                <th class="text-center">Доп. услуги</th>
-                                <th class="text-center">Продажи</th>
-                                <th class="text-center">Сумма продаж</th>
-                                <th class="text-center">Возвращаемость</th>
+                                <th class="text-center">Доп.<br>услуги</th>
+                                <th class="text-center">Продажи<br>(без сертов)</th>
+                                <th class="text-center">Сумма<br>доп.услуг и продаж</th>
+                                <th class="text-center">Возвращаемость<br>(будет позже)</th>
                                 <th class="text-center">Всего отзывов<br>(из них 5)</th>
                                 <th class="text-center">Заполняемость</th>
                                 <th class="text-center">Новые клиенты</th>
