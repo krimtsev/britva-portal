@@ -14,7 +14,7 @@ class YclientsBranchTotalReport extends Model
     protected $fillable = [
         "company_id",
         "average_sum",
-        "fullnesss",
+        "fullness",
         "new_client",
         "income_total",
         "loyalty",

@@ -39,7 +39,7 @@ class TableReport extends Controller
                         "name"           => $one["name"],
                         "specialization" => $one["specialization"],
                         "average_sum"    => $one["average_sum"],
-                        "fullnesss"      => $one["fullnesss"],
+                        "fullness"       => $one["fullness"],
                         "new_client"     => $one["new_client"],
                         "income_total"   => $one["income_total"],
                         "income_goods"   => $one["income_goods"],

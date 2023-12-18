@@ -17,7 +17,7 @@ class YclientsBranchReport extends Model
         "name",
         "specialization",
         "average_sum",
-        "fullnesss",
+        "fullness",
         "new_client",
         "return_client",
         "total_client" ,

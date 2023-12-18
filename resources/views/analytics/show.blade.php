@@ -84,7 +84,7 @@
                                 <td class="text-center">{{ $one["sum"] }}</td>
                                 <td class="text-center"> - </td>
                                 <td class="text-center">{{ $one["comments_total"] }} ({{ $one["comments_best"] }})</td>
-                                <td class="text-center">{{ $one["fullnesss"] }}%</td>
+                                <td class="text-center">{{ $one["fullness"] }}%</td>
                                 <td class="text-center">{{ $one["new_client"] }}</td>
                             </tr>
                         @endforeach
@@ -98,7 +98,7 @@
                             <td class="text-center"> - </td>
                             <td class="text-center"> - </td>
                             <td class="text-center"><b>{{ $total["comments_total"] }} ({{ $total["comments_best"] }}) </b></td>
-                            <td class="text-center"><b>{{ $total["fullnesss"] }}% </b></td>
+                            <td class="text-center"><b>{{ $total["fullness"] }}% </b></td>
                             <td class="text-center"><b>{{ $total["new_client"] }} </b></td>
                         </tr>
                         </tbody>

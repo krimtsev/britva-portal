@@ -68,7 +68,7 @@ class ChartStaffController extends Controller
             $total = [
                 "name"                => $table_last_data["name"],
                 "specialization"      => $table_last_data["specialization"],
-                "fullnesss"           => $table_last_data["fullnesss"],
+                "fullness"           => $table_last_data["fullness"],
                 "new_client"          => $table_last_data["new_client"],
                 "total_client"        => $table_last_data["total_client"],
                 "return_client"       => $table_last_data["return_client"],

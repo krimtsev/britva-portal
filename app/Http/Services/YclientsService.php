@@ -114,7 +114,7 @@ class YclientsService
 
             return [
                 "average_sum" => (float) $response["data"]["income_average_stats"]["current_sum"],
-                "fullnesss" => $response["data"]["fullness_stats"]["current_percent"],
+                "fullness" => $response["data"]["fullness_stats"]["current_percent"],
                 "new_client" => $response["data"]["client_stats"]["new_count"],
                 "return_client" => $response["data"]["client_stats"]["return_count"],
                 "income_total" => $response["data"]["income_total_stats"]["current_sum"],
@@ -152,7 +152,7 @@ class YclientsService
 
             return [
                 "average_sum" => $response["data"]["income_average_stats"]["current_sum"],
-                "fullnesss" => $response["data"]["fullness_stats"]["current_percent"],
+                "fullness" => $response["data"]["fullness_stats"]["current_percent"],
                 "new_client" => $response["data"]["client_stats"]["new_count"],
                 "income_total" => $response["data"]["income_total_stats"]["current_sum"],
                 "income_goods" => $response["data"]["income_goods_stats"]["current_sum"],

@@ -55,7 +55,7 @@ class BranchReport extends Controller
 
                 if (is_array($companyStatsByStaff) && !empty($companyStatsByStaff)) {
                     $table[$id]["average_sum"] = round($companyStatsByStaff["average_sum"], 0);
-                    $table[$id]["fullnesss"] = $companyStatsByStaff["fullnesss"];
+                    $table[$id]["fullness"] = $companyStatsByStaff["fullness"];
                     $table[$id]["income_total"] = $companyStatsByStaff["income_total"];
                     $table[$id]["income_goods"] = $companyStatsByStaff["income_goods"];
                     $table[$id]["new_client"] = $companyStatsByStaff["new_client"];
@@ -63,7 +63,7 @@ class BranchReport extends Controller
                     $table[$id]["total_client"] = $companyStatsByStaff["new_client"] + $companyStatsByStaff["return_client"];
                 } else {
                     $table[$id]["average_sum"] = 0;
-                    $table[$id]["fullnesss"] = 0;
+                    $table[$id]["fullness"] = 0;
                     $table[$id]["income_total"] = 0;
                     $table[$id]["income_goods"] = 0;
                     $table[$id]["new_client"] = 0;
@@ -113,7 +113,7 @@ class BranchReport extends Controller
 
             $total = [
                 "average_sum" => 0,
-                "fullnesss" => 0,
+                "fullness" => 0,
                 "new_client" => 0,
                 "income_total" => 0,
                 "loyalty" => 0,
@@ -126,7 +126,7 @@ class BranchReport extends Controller
 
             if (is_array($stats) && !empty($stats)) {
                 $total["average_sum"] = round($stats["average_sum"], 0);
-                $total["fullnesss"] = $stats["fullnesss"];
+                $total["fullness"] = $stats["fullness"];
                 $total["new_client"] = $stats["new_client"];
                 $total["income_total"] = $stats["income_total"];
                 $total["income_goods"] = $stats["income_goods"];

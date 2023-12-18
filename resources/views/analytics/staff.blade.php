@@ -56,15 +56,15 @@
                             <div class="text-center name">{{ $total["name"] }}</div>
                             <div class="text-center specialization">{{ $total["specialization"] }}</div>
                         </div>
-                        <div class="staff-section fullnesss-section">
-                            <div class="text-center fullnesss">{{ $total["fullnesss"] }} %</div>
-                            <x-progress-bar :total="$total['fullnesss']" />
-                            <div class="text-center fullnesss">Заполняемость</div>
+                        <div class="staff-section fullness-section">
+                            <div class="text-center fullness">{{ $total["fullness"] }} %</div>
+                            <x-progress-bar :total="$total['fullness']" />
+                            <div class="text-center fullness">Заполняемость</div>
                         </div>
-                        {{-- <div class="staff-section fullnesss-section">
-                            <div class="text-center fullnesss">(пока не работает)</div>
+                        {{-- <div class="staff-section fullness-section">
+                            <div class="text-center fullness">(пока не работает)</div>
                             <x-progress-bar :total="100" />
-                            <div class="text-center fullnesss">Возвращаемость</div>
+                            <div class="text-center fullness">Возвращаемость</div>
                         </div>--}}
                     </div>
                     <div></div>
@@ -194,12 +194,12 @@
     overflow: hidden;
 }
 
-.fullnesss-section {
+.fullness-section {
     margin-bottom: 5px;
 	padding-top: 20px;
 }
 
-.fullnesss {
+.fullness {
 	font-size: 21px;
 	font-weight: lighter;
 	font-style: italic;

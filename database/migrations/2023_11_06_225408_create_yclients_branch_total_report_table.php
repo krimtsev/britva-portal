@@ -21,7 +21,7 @@ class CreateYclientsBranchTotalReportTable extends Migration
 
             $table->integer('average_sum');
 
-            $table->integer('fullnesss');
+            $table->integer('fullness');
 
             $table->integer('new_client');
 
