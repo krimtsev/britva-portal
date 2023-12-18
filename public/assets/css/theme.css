@@ -212,6 +212,10 @@ input:disabled {
     text-align: center;
 }
 
+.text-middle {
+	vertical-align: middle;
+}
+
 /** JQUERY TABLE */
 #table-sheet_length {
     display: none;
