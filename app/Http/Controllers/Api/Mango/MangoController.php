@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Mango;
 
 use App\Http\Services\MangoService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
@@ -12,11 +13,16 @@ class MangoController extends Controller
 {
     protected $cacheKey = "mango_last_call_timestamp";
 
-    public function index()
+    public function index(Request $request)
     {
+
+        if ($request->input("flush")) {
+            Cache::flush();
+        }
+
         $date = Carbon::now();
 
-        $lastCallTimestamp = \Cache::get($this->cacheKey, false);
+        $lastCallTimestamp = Cache::get($this->cacheKey, false);
 
         $end_date = $date->format('d.m.Y H:i:s');
 
