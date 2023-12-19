@@ -13,16 +13,28 @@ class MangoService
     /** SALT */
     private $salt;
 
-    public function __construct()
+    /** Дата начала выборки */
+    private $start_date;
+
+    /** Дата окончания выборки */
+    private $end_date;
+
+    public function __construct($start_date, $end_date)
     {
         $this->vpbx_api_key = env('MANGO_VPBX_API_KEY', '');
         $this->salt = env('MANGO_SALT', '');
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
     }
 
     private function httpWithHeaders() {
         return Http::withOptions([
             "verify" => false,
         ])->asForm();
+    }
+
+    private function getHash($json) {
+        return hash("sha256", $this->vpbx_api_key . $json . $this->salt);
     }
 
     public function get() {
@@ -32,15 +44,15 @@ class MangoService
             $url = "https://app.mango-office.ru/vpbx/stats/calls/request";
 
             $json = json_encode([
-                "start_date" => "17.12.2023 00:00:00",
-                "end_date" => "17.12.2023 23:59:59",
-                "limit" => "5000",
+                "start_date" => $this->start_date,
+                "end_date" => $this->end_date,
+                "limit" => "100",
                 "offset" => "0",
                 "context_type" => 1,
                 "context_status" => 0
             ]);
 
-            $sign = hash("sha256", $this->vpbx_api_key . $json . $this->salt);
+            $sign = $this->getHash($json);
 
             $response = self::httpWithHeaders()->post($url, [
                 "sign" => $sign,
@@ -51,9 +63,12 @@ class MangoService
 
             $response = $response->json();
 
-            if (!$response["key"]) return false;
+            if (!$response["key"]) return [
+                "error" => "Ошибка получения ключа"
+            ];
 
             /** ПОЛУЧЕНИЕ ДАННЫХ ПО ЗВОНКАМ */
+            sleep(5);
 
             $url = "https://app.mango-office.ru/vpbx/stats/calls/result";
 
@@ -61,7 +76,7 @@ class MangoService
                 "key" => $response["key"],
             ]);
 
-            $sign = hash("sha256", $this->vpbx_api_key . $json . $this->salt);
+            $sign = $this->getHash($json);
 
             $response = self::httpWithHeaders()->post($url, [
                 "sign" => $sign,
@@ -71,11 +86,17 @@ class MangoService
 
             $response = $response->json();
 
-            return $response["data"][0];
+            $result = array_key_exists("data", $response)
+                ? $response["data"]
+                : [];
+
+            return $result;
 
         } catch (Throwable $e) {
             report($e);
-            return $e;
+            return [
+                "error" => $e
+            ];
         }
     }
 }
