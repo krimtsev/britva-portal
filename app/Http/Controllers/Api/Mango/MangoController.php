@@ -51,14 +51,14 @@ class MangoController extends Controller
 
         if (count($data) !== 0) {
             foreach ($data[0]["list"] as $one) {
-                $caller_number = $one["caller_number"];
+                $called_number = $one["called_number"];
 
-                if (!array_key_exists($caller_number, $this->whiteListTelnums)) {
+                if (!array_key_exists($called_number, $this->whiteListTelnums)) {
                     continue;
                 }
 
                 $timestamp = $one["context_start_time"];
-                $id = self::createID($timestamp, $caller_number);
+                $id = self::createID($timestamp, $called_number);
 
                 if (in_array($id, $ids)) {
                     continue;
@@ -66,13 +66,13 @@ class MangoController extends Controller
 
                 $telnums_list[] = [
                     "timestamp"     => $timestamp,
-                    "caller_number" => $caller_number
+                    "called_number" => $called_number
                 ];
 
                 $table[] = [
-                    "name"               => $this->whiteListTelnums[$caller_number],
-                    "caller_number"      => $caller_number,
-                    "called_number"      => $one["called_number"],
+                    "name"               => $this->whiteListTelnums[$called_number],
+                    "caller_number"      => $one["caller_number"],
+                    "called_number"      => $called_number,
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"]
                 ];
@@ -95,15 +95,15 @@ class MangoController extends Controller
         foreach ($cached_list as $one) {
             if (Carbon::createFromTimestamp($one["timestamp"]) >  $start_date) {
                 $telnums_list[] = $one;
-                $ids[] = self::createID($one["timestamp"], $one["caller_number"]);
+                $ids[] = self::createID($one["timestamp"], $one["called_number"]);
             }
         }
 
         return [$telnums_list, $ids];
     }
 
-    protected function createID($timestamp, $caller_number): string
+    protected function createID($timestamp, $called_number): string
     {
-        return "{$timestamp}_{$caller_number}";
+        return "{$timestamp}_{$called_number}";
     }
 }
