@@ -90,8 +90,6 @@ class MangoService
                 ? $response["data"]
                 : [];
 
-            dd($result);
-
             return $result;
 
         } catch (Throwable $e) {
