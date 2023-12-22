@@ -66,7 +66,8 @@ class MangoController extends Controller
 
                 $telnums_list[] = [
                     "timestamp"     => $timestamp,
-                    "called_number" => $called_number
+                    "called_number" => $called_number,
+                    "time"          => Carbon::createFromTimestamp($timestamp)->format('d.m.Y H:i:s')
                 ];
 
                 $table[] = [
@@ -87,13 +88,14 @@ class MangoController extends Controller
 
     protected function getCachedTelnums($start_date): array
     {
+        $_startDate = Carbon::parse($start_date);
         $cached_list = Cache::get($this->cacheKey, []);
 
         $telnums_list = [];
         $ids = [];
 
         foreach ($cached_list as $one) {
-            if (Carbon::createFromTimestamp($one["timestamp"]) >  $start_date) {
+            if (Carbon::createFromTimestamp($one["timestamp"]) > $_startDate) {
                 $telnums_list[] = $one;
                 $ids[] = self::createID($one["timestamp"], $one["called_number"]);
             }
