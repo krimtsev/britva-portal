@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
 
         'isAdmin' => \App\Http\Middleware\RoleAdmin::class,
         'isSysAdmin' => \App\Http\Middleware\RoleSysAdmin::class,
+        'api_token' =>\App\Http\Middleware\EnsureTokenIsValid::class,
     ];
 }

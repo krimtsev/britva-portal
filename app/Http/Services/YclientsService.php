@@ -31,8 +31,12 @@ class YclientsService
         $this->partner_token = env('YCLIENTS_PARTNER_TOKEN', '');
         $this->company_id = $params["company_id"];
 
-        $this->start_date = $params["start_date"];
-        $this->end_date = $params["end_date"];
+        if (array_key_exists('start_date', $params)) {
+            $this->start_date = $params["start_date"];
+        }
+        if (array_key_exists('end_date', $params)) {
+            $this->end_date = $params["end_date"];
+        }
     }
 
     private function httpWithHeaders() {
@@ -401,6 +405,25 @@ class YclientsService
         ]);
 
         $url = sprintf("https://api.yclients.com/api/v1/company/%s/services", $this->company_id, $query);
+
+        $response = $this->httpWithHeaders()->get($url);
+
+        $response = $response->json($key = null);
+
+        if(!$response["success"]) {
+            return false;
+        }
+
+        return $response["data"];
+    }
+
+    function getClientNameByTelnum($caller_number) {
+        $query = http_build_query([
+            "phone"   => $caller_number,
+        ]);
+
+        // вставить правильный url
+        $url = sprintf("https://api.yclients.com/api/v1/clients/%s", $this->company_id, $query);
 
         $response = $this->httpWithHeaders()->get($url);
 

@@ -17,4 +17,6 @@ use App\Http\Controllers\Api\Mango\MangoController;
 //     return $request->user();
 // });
 
-Route::get('/mango', [MangoController::class, 'index']);
+Route::group(['middleware' => ['api_token']], function () {
+    Route::get('/mango', [MangoController::class, 'index']);
+});
