@@ -179,7 +179,9 @@ class MangoController extends Controller
 
             $data = $client->getClientNameByTelnum($caller_number);
 
-            $name = array_key_exists("name", $data) ? $data["name"] : "";
+            if ($data && count($data) && array_key_exists("name", $data[0])) {
+                $name = $data[0]["name"];
+            }
         }
 
         $telnums_list[$caller_number] = [
