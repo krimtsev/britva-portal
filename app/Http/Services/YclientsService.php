@@ -404,7 +404,7 @@ class YclientsService
             "category_id"   => $category_id,
         ]);
 
-        $url = sprintf("https://api.yclients.com/api/v1/company/%s/services", $this->company_id, $query);
+        $url = sprintf("https://api.yclients.com/api/v1/company/%s/services?%s", $this->company_id, $query);
 
         $response = $this->httpWithHeaders()->get($url);
 
@@ -419,11 +419,10 @@ class YclientsService
 
     function getClientNameByTelnum($caller_number) {
         $query = http_build_query([
-            "phone"   => $caller_number,
+            "phone" => $caller_number,
         ]);
 
-        // вставить правильный url
-        $url = sprintf("https://api.yclients.com/api/v1/clients/%s", $this->company_id, $query);
+        $url = sprintf("https://api.yclients.com/api/v1/clients/%s?%s", $this->company_id, $query);
 
         $response = $this->httpWithHeaders()->get($url);
 
