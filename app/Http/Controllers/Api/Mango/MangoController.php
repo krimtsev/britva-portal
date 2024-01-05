@@ -68,6 +68,10 @@ class MangoController extends Controller
             "name"       => "Шелепиха",
             "company_id" => "849039"
         ],
+        "74991101379" => [
+            "name"       => "Курьяново",
+            "company_id" => "716673"
+        ],
     ];
 
     public function index(Request $request)
@@ -170,7 +174,7 @@ class MangoController extends Controller
             }
         }
 
-        if (!empty($name)) {
+        if (empty($name)) {
             $params = [
                 "company_id" => $company_id
             ];
@@ -179,7 +183,7 @@ class MangoController extends Controller
 
             $data = $client->getClientNameByTelnum($caller_number);
 
-            if ($data && count($data) && array_key_exists("name", $data[0])) {
+            if (is_array($data) && count($data) && array_key_exists("name", $data[0])) {
                 $name = $data[0]["name"];
             }
         }
