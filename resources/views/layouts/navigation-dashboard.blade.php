@@ -3,8 +3,8 @@
     <div class="inner">
         <!-- Menu -->
         <nav id="menu">
-            <div class="logo">
-                <img src="{{ asset('images/static/logo.png') }}" />
+            <div class="logo" style="padding: 0 40px;">
+                <img src="{{ asset('images/static/logo.svg') }}" />
             </div>
             <!-- <header class="major">
                     <h2>Меню</h2>
