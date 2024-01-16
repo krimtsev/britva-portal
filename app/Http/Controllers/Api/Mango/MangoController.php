@@ -190,7 +190,7 @@ class MangoController extends Controller
 
         $telnums_list[$caller_number] = [
             "name"      => $name,
-            "timestamp" => Carbon::now()
+            "timestamp" => Carbon::now()->timestamp
         ];
 
         Cache::put($this->cacheNamesKey, $telnums_list, Carbon::now()->addMinutes(30));
