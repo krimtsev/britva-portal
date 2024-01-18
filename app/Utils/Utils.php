@@ -41,7 +41,6 @@ class Utils
             : date("Y-m-d", strtotime("-1 month",strtotime(date('Y-m-d'))));
 
 
-
         $start_timestamp = self::dateToTimestamp($start_date);
         $end_timestamp = self::dateToTimestamp($end_date);
 
@@ -126,5 +125,24 @@ class Utils
 
     public static function getPreviousStartMonth() {
         return  self::setFirstDay(self::setMinusMonths(date('Y-m-d', time())));
+    }
+
+    public static function getListDaysByPeriod($start_date, $end_date) {
+        $start_timestamp = self::dateToTimestamp($start_date);
+        $end_timestamp = self::dateToTimestamp($end_date);
+
+        $start_day_timestamp = strtotime(date('F Y', $start_timestamp));
+        $current_day_timestamp = strtotime(date('F Y', $end_timestamp));
+
+        $list = array();
+
+        while($current_day_timestamp >= $start_day_timestamp) {
+            $list[date('Y-m-d', $end_timestamp)] = date('d', $end_timestamp);
+            $end_timestamp = strtotime('-1 day', $end_timestamp);
+
+            $current_day_timestamp = strtotime(date('F Y', $end_timestamp));
+        }
+
+        return $list;
     }
 }

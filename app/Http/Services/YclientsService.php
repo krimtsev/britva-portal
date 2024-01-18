@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use Illuminate\Support\Facades\Http;
 use Throwable;
+use Carbon\Carbon;
 
 class YclientsService
 {
@@ -433,6 +434,48 @@ class YclientsService
         }
 
         return $response["data"];
+    }
+
+    function getRoyaltyByStaffId($staff_id) {
+        try {
+            $query = http_build_query([
+                "start_date" => $this->start_date,
+                "end_date"   => $this->end_date,
+                "count"      => $this->count,
+                "staff_id"   => $staff_id,
+            ]);
+
+            $url = sprintf("https://api.yclients.com/api/v1/records/%s?%s", $this->company_id, $query);
+
+            $response = $this->httpWithHeaders()->get($url);
+
+            $response = $response->json($key = null);
+
+            if(!$response["success"]) {
+                return false;
+            }
+
+            $resullt = [];
+
+            foreach ($response["data"] as $one) {
+                if (!is_array($one["services"]) && count($one["services"]) === 0)
+                    continue;
+
+                $date = Carbon::parse($one["date"])->format('Y-m-d');
+
+                if (!array_key_exists($date, $resullt)){
+                    $resullt[$date] = 1;
+                } else {
+                    $resullt[$date] += 1;
+                }
+            }
+
+            return $resullt;
+
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
     }
 }
 

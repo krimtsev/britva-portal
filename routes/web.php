@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', '
     require __DIR__ . '/dashboard/analytics.php';
     require __DIR__ . '/dashboard/jobs.php';
     require __DIR__ . '/dashboard/mango.php';
+    require __DIR__ . '/dashboard/royalty.php';
 });
 
 /**
