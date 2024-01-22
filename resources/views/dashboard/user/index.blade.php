@@ -22,7 +22,13 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                        <tr>
+                        <tr
+                            @if ($user->is_disabled)
+                                style="background: rgba(141, 60, 173, 0.1)"
+                            @elseif($user->isAdmin())
+                                style="background: rgba(83, 173, 60, 0.1)"
+                            @endif
+                        >
                             <td> {{ $user->id }}</td>
                             <td> <a href="{{ route('d.user.show', $user->id) }}"> {{ $user->login }} </a></td>
                             <td> {{ $user->userRole() }}</td>

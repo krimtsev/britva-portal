@@ -35,6 +35,8 @@ class BranchReport extends Controller
             // Коментарии
             $comments = $client->getCommentsByCompany();
 
+            $table = [];
+
             foreach ($staff as $one) {
                 $id = $one["id"];
 

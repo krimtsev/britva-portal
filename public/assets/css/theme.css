@@ -1,7 +1,8 @@
 :root {
     --color-main: #8D3CAD;
     --color-main-dark: #70308A;
-	
+    --color-danger: #990000;
+    --color-success: #009900;
 }
 
 body {
@@ -25,6 +26,18 @@ p {
 .logo img {
     width: 100%;
     margin-bottom: 1em;
+}
+
+.color-main {
+    color: var(--color-main)
+}
+
+.color-danger {
+    color: var(--color-danger)
+}
+
+.color-success {
+    color: var(--color-success)
 }
 
 /** Rewrite default theme */
@@ -187,6 +200,10 @@ input:disabled {
     justify-content: center;
 }
 
+.justify-between {
+    justify-content: space-between;
+}
+
 .flex-row {
     flex-direction: row;
 }
@@ -200,13 +217,19 @@ input:disabled {
     text-align: center;
 }
 
+.text-middle {
+	vertical-align: middle;
+}
+
 /** JQUERY TABLE */
 #table-sheet_length {
     display: none;
 }
+
 .dataTables_paginate {
     display: block;
 }
+
 .paginate_button {
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -242,7 +265,7 @@ input:disabled {
     color: #8D3CAD !important;
     cursor: pointer;
     display: inline-block;
-    font-family: "Roboto Slab", serif;
+    font-family: "Roboto", serif;
     font-size: 0.8em;
     font-weight: 700;
     height: 3.5em;
@@ -266,7 +289,7 @@ input:disabled {
     box-shadow: inset 0 0 0 2px #8D3CAD;
     color: #8D3CAD !important;
     display: inline-block;
-    font-family: "Roboto Slab", serif;
+    font-family: "Roboto", serif;
     font-size: 0.8em;
     font-weight: 700;
     height: 3.5em;
@@ -285,4 +308,16 @@ input:disabled {
 
 html body div#wrapper div#main div.inner header#header ul.icons li a.icon.solid. {
 	cursor: pointer;
+}
+
+.small {
+    color: #aaa;
+}
+
+.pa-8 {
+    padding: 4em;
+}
+
+.royalty .royalty-day-of-week {
+    background: rgba(141, 60, 173, 0.1);
 }

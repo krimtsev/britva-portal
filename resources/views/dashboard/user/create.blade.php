@@ -34,7 +34,6 @@
                             type="text"
                             name="name"
                             :value="old('name')"
-                            required
                             autofocus
                             placeholder="Название филиала"
                         />

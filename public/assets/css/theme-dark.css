@@ -1,6 +1,8 @@
 :root {
-    --color-main: #006c66;
-    --color-main-dark: #00b9ae;
+    --color-main: #B0CB1F;
+    --color-main-dark: #8CA218;
+    --color-danger: #990000;
+    --color-success: #009900;
 }
 
 body {
@@ -10,6 +12,18 @@ body {
 
 p {
     color: #dddddd;
+}
+
+.color-main {
+    color: var(--color-main)
+}
+
+.color-danger {
+    color: var(--color-danger)
+}
+
+.color-success {
+    color: var(--color-success)
 }
 
 #sidebar {
@@ -59,4 +73,16 @@ input[type="button"].primary:hover,
 button.primary:hover,
 .button.primary:hover {
     background-color: var(--color-main-dark);
+}
+
+.small {
+    color: #aaa;
+}
+
+.royalty .royalty-day-of-week {
+    background: rgba(176, 203, 31, 0.2);
+}
+
+.royalty td b {
+    color: #ddd;
 }
