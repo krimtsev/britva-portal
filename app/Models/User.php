@@ -124,8 +124,6 @@ class User extends Authenticatable
     }
 
     public function isAccessRightAdminOrHigher() {
-        dd(self::accessValueByRoleId($this->role_id));
-
         return self::checkAccessRoleValue(self::accessValueByRoleName('ADMIN'));
     }
 
