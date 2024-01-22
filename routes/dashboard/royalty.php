@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Royalty\IndexController;
-use App\Http\Controllers\Royalty\ShowController;
+use App\Http\Controllers\Royalty\Soda\IndexController;
+use App\Http\Controllers\Royalty\Soda\ShowController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'royalty'], function () {

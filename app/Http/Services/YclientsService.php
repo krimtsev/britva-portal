@@ -40,6 +40,10 @@ class YclientsService
         }
     }
 
+    public function updateCompanyId($company_id) {
+        $this->company_id = $company_id;
+    }
+
     private function httpWithHeaders() {
         return Http::withHeaders([
             "Accept"        => "application/vnd.yclients.v2+json",
