@@ -312,3 +312,7 @@ html body div#wrapper div#main div.inner header#header ul.icons li a.icon.solid.
 .pa-8 {
     padding: 4em;
 }
+
+.royalty .royalty-day-of-week {
+    background: rgba(141, 60, 173, 0.1);
+}

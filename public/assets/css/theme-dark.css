@@ -78,3 +78,11 @@ button.primary:hover,
 .small {
     color: #aaa;
 }
+
+.royalty .royalty-day-of-week {
+    background: rgba(176, 203, 31, 0.2);
+}
+
+.royalty td b {
+    color: #ddd;
+}

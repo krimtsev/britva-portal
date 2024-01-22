@@ -137,7 +137,10 @@ class Utils
         $list = array();
 
         while($current_day_timestamp >= $start_day_timestamp) {
-            $list[date('Y-m-d', $end_timestamp)] = date('d', $end_timestamp);
+            $list[date('Y-m-d', $end_timestamp)] = [
+                "day" => date('d', $end_timestamp),
+                "dayOfWeek" => date('w', $end_timestamp)
+            ];
             $end_timestamp = strtotime('-1 day', $end_timestamp);
 
             $current_day_timestamp = strtotime(date('F Y', $end_timestamp));

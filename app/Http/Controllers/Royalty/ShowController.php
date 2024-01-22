@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ShowController extends Controller {
 
@@ -43,15 +44,20 @@ class ShowController extends Controller {
             foreach ($staff as $one) {
                 $id = $one["id"];
 
-                $table[$id]["name"] = $one["name"];
+                if(!Str::of(Str::lower($one["specialization"]))->contains(['барбер', 'эксперт', 'barber', 'expert'])) {
+                    continue;
+                }
 
                 $royaltyData = $client->getRoyaltyByStaffId($id);
 
                 if ($royaltyData) {
                     $table[$id]["data"] =  $royaltyData;
                 } else {
-                    $table[$id]["data"] = [];
+                    continue;
                 }
+
+                $table[$id]["name"] = $one["name"];
+                $table[$id]["specialization"] = $one["specialization"];
             }
 
             $months = Utils::getMonthArray();
@@ -79,7 +85,7 @@ class ShowController extends Controller {
                     foreach ($selectedStaff["data"] as $staff_date => $staff_day) {
                         if($date == $staff_date) {
                             $total[$date] += 1;
-                           }
+                        }
                     }
                 }
             }
