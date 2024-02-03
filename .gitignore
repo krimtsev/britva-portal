@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /storage/google
+/storage/mango
 /vendor
 .env
 .env.backup
