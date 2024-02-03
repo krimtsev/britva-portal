@@ -13,4 +13,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact-franchise', function () {
         return view('static.contact-franchise');
     });
+	
+	Route::get('/internet-calculator', function () {
+        return view('static.internet-calculator');
+    });
 });
