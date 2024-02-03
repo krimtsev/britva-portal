@@ -6,7 +6,6 @@ use App\Http\Services\MangoService;
 use App\Http\Controllers\Controller;
 use App\Http\Services\YclientsService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 
@@ -14,65 +13,6 @@ class MangoController extends Controller
 {
     protected $cacheKey = "mango_last_telnums_call";
     protected $cacheNamesKey = "yclients_last_names_call";
-
-    protected $whiteListTelnums = [
-        "74994606679" => [
-            "name"       => "Авиамоторная",
-            "company_id" => "496409"
-        ],
-        "74991101276" => [
-            "name"       =>"Академическая",
-            "company_id" => "513275"
-        ],
-        "74994502602" => [
-            "name"       => "Балашиха",
-            "company_id" => "170786"
-        ],
-        "74994442194" => [
-            "name"       => "Бульвар Рокоссовского",
-            "company_id" => "666041"
-        ],
-        "74991107612" => [
-            "name"       => "Измайловская",
-            "company_id" => "114260"
-        ],
-        "74994551025" => [
-            "name"       => "Люберцы",
-            "company_id" => "245243"
-        ],
-        "74991107696" => [
-            "name"       => "Новокосино (Октября 20)",
-            "company_id" => "41120"
-        ],
-        "74991108260" => [
-            "name"       => "Новокосино (Новокосинская 8)",
-            "company_id" => "219611"
-        ],
-        "74994556805" => [
-            "name"       => "Партизанская",
-            "company_id" => "747327"
-        ],
-        "74991105455" => [
-            "name"       => "Первомайская",
-            "company_id" => "66863"
-        ],
-        "74994502902" => [
-            "name"       => "Семеновская",
-            "company_id" => "203125"
-        ],
-        "74993022031" => [
-            "name"       => "Технопарк",
-            "company_id" => "747674"
-        ],
-        "74994508616" => [
-            "name"       => "Шелепиха",
-            "company_id" => "849039"
-        ],
-        "74991101379" => [
-            "name"       => "Курьяново",
-            "company_id" => "716673"
-        ],
-    ];
 
     public function index(Request $request)
     {
@@ -92,13 +32,15 @@ class MangoController extends Controller
 
         $table = [];
 
-        list($telnums_list, $ids) = self::getCachedTelnums($start_date);
+        list($cachedTelnumsList, $ids) = self::getCachedTelnums($start_date);
+
+        $whiteListTelnums = $this->getWhiteTelnumsList();
 
         if (count($data) !== 0) {
             foreach ($data[0]["list"] as $one) {
                 $called_number = $one["called_number"];
 
-                if (!array_key_exists($called_number, $this->whiteListTelnums)) {
+                if (!array_key_exists($called_number, $whiteListTelnums)) {
                     continue;
                 }
 
@@ -109,28 +51,28 @@ class MangoController extends Controller
                     continue;
                 }
 
-                $telnums_list[] = [
+                $cachedTelnumsList[] = [
                     "timestamp"     => $timestamp,
                     "called_number" => $called_number
                 ];
 
                 $table[] = [
-                    "name"               => $this->whiteListTelnums[$called_number]["name"],
+                    "name"               => $whiteListTelnums[$called_number]["name"],
                     "client_name"        => $this->getClientName(
-                        $this->whiteListTelnums[$called_number]["company_id"],
+                        $whiteListTelnums[$called_number]["company_id"],
                         $one["caller_number"],
                         $start_date
                     ),
                     "caller_number"      => $one["caller_number"],
                     "called_number"      => $called_number,
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
-                    "call_duration"      => $one["duration"]
+                    "call_duration"      => $one["duration"],
+                    "tg_chat_id"         => $whiteListTelnums[$called_number]["tg_chat_id"]
                 ];
             }
-
         }
 
-        Cache::put($this->cacheKey, $telnums_list, Carbon::now()->addMinutes(30));
+        Cache::put($this->cacheKey, $cachedTelnumsList, Carbon::now()->addMinutes(30));
 
         return $table;
     }
@@ -196,5 +138,25 @@ class MangoController extends Controller
         Cache::put($this->cacheNamesKey, $telnums_list, Carbon::now()->addMinutes(30));
 
         return $name;
+    }
+
+    protected function getWhiteTelnumsList() {
+        $list = storage_path('mango/telnums.json');
+
+        if (is_string($list)) {
+            if (!file_exists($list)) {
+                throw new Error(sprintf('file "%s" does not exist', $list));
+            }
+
+            $json = file_get_contents($list);
+
+            if (!$list = json_decode($json, true)) {
+                throw new LogicException('invalid json for auth config');
+            }
+
+            return $list;
+        }
+
+        return [];
     }
 }
