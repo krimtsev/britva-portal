@@ -22,7 +22,9 @@
 					<span class="opener">Обучение</span>
 					<ul>
 						<li><a href="http://learn.mybritva.ru/" target="_blank">Перейти на портал обучения</a></li>
-						<li><a href="http://pay.mybritva.ru/buy/kurs-administratorov-britva" target="_blank">Курс для Администратора</a></li>
+						<li><a href="http://pay.mybritva.ru/buy/kurs-administratorov-britva" target="_blank">Курс для администратора</a></li>
+						<li><a href="http://pay.mybritva.ru/buy/kurs-dlya-barberov-britva" target="_blank">Курс для барбера</a></li>
+						<li style="font-size: 10px; color: black;"><br>Если вам необходимо передать ссылку на курс сотруднику, нажмите на ссылку ПКМ (правая кнопка мыши) и "Копировать ссылку". А после отправьте своему сотруднику.</li>
 					</ul>
 				</li>
 				<li>
