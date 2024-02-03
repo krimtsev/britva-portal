@@ -141,7 +141,7 @@ class MangoController extends Controller
     }
 
     protected function getWhiteTelnumsList() {
-        $list = storage_path('mango/telnums.json');
+        $list = storage_path('mango/britva/telnums.json');
 
         if (is_string($list)) {
             if (!file_exists($list)) {
@@ -151,7 +151,7 @@ class MangoController extends Controller
             $json = file_get_contents($list);
 
             if (!$list = json_decode($json, true)) {
-                throw new LogicException('invalid json for auth config');
+                throw new Error('invalid json for auth config');
             }
 
             return $list;
