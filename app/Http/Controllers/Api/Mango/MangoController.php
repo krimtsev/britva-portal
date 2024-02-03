@@ -20,6 +20,10 @@ class MangoController extends Controller
             "name"       => "Академическая",
             "company_id" => "849036"
         ],
+		"74993027014" => [
+            "name"       => "Аминьевская (ЖК Событие)",
+            "company_id" => "916286"
+        ],
 		"74993022956" => [
             "name"       => "Бульвар Рокоссовского",
             "company_id" => "868716"

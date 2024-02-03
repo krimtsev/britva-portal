@@ -24,6 +24,8 @@
                         <li><a href="https://mysoda.ru/page/start" target="_blank">С чего начать?</a></li>
                         <li><a href="http://learn.mybritva.ru/" target="_blank">Перейти на портал обучения</a></li>
                         <li><a href="http://pay.mybritva.ru/buy/kurs-mastera-nogtevogo-servisa" target="_blank">Курс мастера ногтевого сервиса</a></li>
+                        <li><a href="http://pay.mybritva.ru/buy/vvodnaya-informaciya-dlya-stilistov-soda" target="_blank">Курс для стилистов</a></li>
+						<li style="font-size: 10px; color: black;"><br>Если вам необходимо передать ссылку на курс сотруднику, нажмите на ссылку ПКМ (правая кнопка мыши) и "Копировать ссылку". А после отправьте своему сотруднику.</li>
                     </ul>
                 </li>
                 <li>
