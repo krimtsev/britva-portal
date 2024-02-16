@@ -8,6 +8,7 @@ use App\Http\Services\YclientsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use Throwable;
 
 class MangoController extends Controller
 {
@@ -24,9 +25,14 @@ class MangoController extends Controller
         $end_date = $date->format('d.m.Y H:i:s');
         $start_date = $date->subMinutes(30)->format('d.m.Y H:i:s');
 
-        $service = new MangoService($start_date, $end_date);
+        $data = [];
+        try {
+            $service = new MangoService($start_date, $end_date);
 
-        $data = $service->get();
+            $data = $service->get();
+        } catch (Throwable $e) {
+            report("[MANGO] [ERROR] get: " . $e);
+        }
 
         if (array_key_exists("error", $data)) return $data;
 
@@ -56,13 +62,20 @@ class MangoController extends Controller
                     "called_number" => $called_number
                 ];
 
-                $table[] = [
-                    "name"               => $whiteListTelnums[$called_number]["name"],
-                    "client_name"        => $this->getClientName(
+                $client_name = "";
+                try {
+                    $client_name = $this->getClientName(
                         $whiteListTelnums[$called_number]["company_id"],
                         $one["caller_number"],
                         $start_date
-                    ),
+                    );
+                } catch (Throwable $e) {
+                    report("[YCLIENTS] [ERROR] getClientName: " . $e);
+                }
+
+                $table[] = [
+                    "name"               => $whiteListTelnums[$called_number]["name"],
+                    "client_name"        => $client_name,
                     "caller_number"      => $one["caller_number"],
                     "called_number"      => $called_number,
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
