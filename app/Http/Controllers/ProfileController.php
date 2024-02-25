@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
 
 class ProfileController extends Controller
 {
@@ -14,12 +16,16 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        $data = [
-            "login" => $user->login,
-            "name" => $user->name,
-        ];
+        $login = $user->login;
 
-        return view('profile.home.index', compact('data'));
+        $partner = false;
+        if ($user->partner_id) {
+            $partner = Partner::where('id', '=', $user->partner_id)->firstOr(function () {
+                return false;
+            });
+        }
+
+        return view('profile.home.index', compact('login', 'partner'));
     }
 
     public function changePasswordIndex()

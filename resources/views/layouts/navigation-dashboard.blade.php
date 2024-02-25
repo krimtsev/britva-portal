@@ -19,6 +19,7 @@
                 <li><a href="{{ route('d.analytics.index') }}">Аналитика</a></li>
                 <li><a href="{{ route('d.jobs.status-company') }}">Задачи</a></li>
                 <li><a href="{{ route('d.royalty.index') }}">Роялти</a></li>
+                <li><a href="{{ route('d.partner.index') }}">Партнеры</a></li>
             </ul>
         </nav>
     </div>

@@ -33,7 +33,7 @@
 
                 <!-- Break -->
                 <div class="col-12">
-                    <input type="submit" value="Обновить" class="primary"></li>
+                    <input type="submit" value="Обновить" class="primary">
                 </div>
             </div>
         </form>

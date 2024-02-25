@@ -23,7 +23,8 @@ class User extends Authenticatable
         'role_id',
         'yclients_id',
         'is_disabled',
-        'last_activity'
+        'last_activity',
+        'partner_id'
     ];
 
     /**

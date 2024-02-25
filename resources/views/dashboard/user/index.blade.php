@@ -34,11 +34,20 @@
                             <td> {{ $user->userRole() }}</td>
                             <td> {{ $user->is_disabled ? 'Заблокирован' : 'Активен' }}</td>
 
-                            @if (empty($user->yclients_id))
-                                <td> Не указан </td>
-                            @else
-                                <td><a href="https://yclients.com/timetable/{{ $user->yclients_id }}">{{ $user->yclients_id }}</a></td>
-                            @endif
+                            <td>
+                                <div>
+                                    @if (empty($user->yclients_id))
+                                        Не указан
+                                    @else
+                                        <a href="https://yclients.com/timetable/{{ $user->yclients_id }}">{{ $user->yclients_id }}</a>
+                                    @endif
+                                </div>
+                                <div style="color: gray;">
+                                    @if ($user->partner_yclients_id)
+                                        {{ $user->partner_yclients_id }}
+                                    @endif
+                                </div>
+                            </td>
 
                             <td> {{ $user->last_activity }}</td>
                             <td>
