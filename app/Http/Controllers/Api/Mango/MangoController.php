@@ -154,14 +154,23 @@ class MangoController extends Controller
     }
 
     protected function getWhiteTelnumsList() {
+		// try {
+			
+		// } catch (Throwable $e) {
+			// report("[YCLIENTS] [ERROR] getClientName: " . $e);
+        // }
+		
+		
         $list = storage_path('mango/britva/telnums.json');
-
+		
         if (is_string($list)) {
             if (!file_exists($list)) {
                 throw new Error(sprintf('file "%s" does not exist', $list));
             }
 
             $json = file_get_contents($list);
+			
+					// dd(json_decode($json, true));
 
             if (!$list = json_decode($json, true)) {
                 throw new Error('invalid json for auth config');
