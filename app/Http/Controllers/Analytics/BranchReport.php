@@ -145,7 +145,7 @@ class BranchReport extends Controller
             return [$table, $total];
 
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
 
             return [[],[]];
         }

@@ -31,7 +31,7 @@ class MangoController extends Controller
 
             $data = $service->get();
         } catch (Throwable $e) {
-            report("[MANGO] [ERROR] get: " . $e);
+            report("[MANGO] [ERROR] get: " . $e->getMessage());
         }
 
         if (array_key_exists("error", $data)) return $data;
@@ -70,7 +70,7 @@ class MangoController extends Controller
                         $start_date
                     );
                 } catch (Throwable $e) {
-                    report("[YCLIENTS] [ERROR] getClientName: " . $e);
+                    report("[YCLIENTS] [ERROR] getClientName: " . $e->getMessage());
                 }
 
                 $table[] = [

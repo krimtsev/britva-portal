@@ -101,7 +101,7 @@ class ShowController extends Controller {
             ));
 
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
 
             return [];
         }
