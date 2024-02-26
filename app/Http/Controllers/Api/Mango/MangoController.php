@@ -15,6 +15,8 @@ class MangoController extends Controller
     protected $cacheKey = "mango_last_telnums_call";
     protected $cacheNamesKey = "yclients_last_names_call";
 
+    protected $testCallKey = "mango_test_call";
+
     public function index(Request $request)
     {
         if ($request->input("flush")) {
@@ -86,6 +88,14 @@ class MangoController extends Controller
         }
 
         Cache::put($this->cacheKey, $cachedTelnumsList, Carbon::now()->addMinutes(30));
+
+        /*
+         * Добавляем тестовый звонок
+         */
+        if(Cache::has($this->testCallKey)) {
+            $table[] = Cache::get($this->testCallKey);
+            Cache::forget($this->testCallKey);
+        }
 
         return $table;
     }
@@ -171,5 +181,21 @@ class MangoController extends Controller
         }
 
         return [];
+    }
+
+    public function test() {
+        $data = [
+            "name"               => "Тестовый филиал",
+            "client_name"        => "Иван",
+            "caller_number"      => "+79991234567",
+            "called_number"      => "+79997654321",
+            "context_start_time" => "Прямо сейчас",
+            "call_duration"      => "0",
+            "tg_chat_id"         => "-1001993054003"
+        ];
+
+        Cache::put($this->testCallKey, $data, Carbon::now()->addMinutes(30));
+
+        return true;
     }
 }
