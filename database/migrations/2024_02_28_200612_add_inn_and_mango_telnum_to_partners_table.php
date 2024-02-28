@@ -16,7 +16,7 @@ class AddInnAndMangoTelnumToPartnersTable extends Migration
         Schema::table('partners', function (Blueprint $table) {
             // INN
             $table->after('organization', function ($table) {
-                $table->string('inn', 12);
+                $table->string('inn', 12)->nullable();
             });
 
             // Yclients номер телефона филиала
