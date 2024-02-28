@@ -8,7 +8,7 @@
 
             <div>Вы авторизировались как: <b>{{ $login }}</b></div>
 
-            @if($partner)
+            {{--@if($partner)
                 <hr>
 
                 @if($partner->organization)
@@ -44,7 +44,7 @@
                 @if($partner->start_at)
                     <div class="mb-2">Договор подписан: {{ $partner->start_at }} </div>
                 @endif
-            @endif
+            @endif--}}
         </div>
     </section>
 </x-admin-layout>

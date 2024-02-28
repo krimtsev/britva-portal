@@ -15,6 +15,7 @@ class Partner extends Model
 
     protected $fillable = [
         'organization',
+        'inn',
         'name',
         'contract_number',
         'email',
@@ -22,6 +23,7 @@ class Partner extends Model
         'telnum_2',
         'telnum_3',
         'yclients_id',
+        'mango_telnum',
         'address',
         'start_at'
     ];

@@ -25,14 +25,16 @@ class PartnersController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
+            'inn'             => 'nullable|string|max:12',
             'organization'    => 'nullable|string|max:255',
             'name'            => 'required|string|max:255|unique:partners',
             'contract_number' => 'required|string|max:50|unique:partners',
             'email'           => 'email|nullable',
-            'telnum_1'        => 'nullable|string|min:12|max:12',
-            'telnum_2'        => 'nullable|string|min:12|max:12',
-            'telnum_3'        => 'nullable|string|min:12|max:12',
+            'telnum_1'        => 'nullable|string|min:11|max:12',
+            'telnum_2'        => 'nullable|string|min:11|max:12',
+            'telnum_3'        => 'nullable|string|min:11|max:12',
             'yclients_id'     => 'nullable|string|max:255',
+            'mango_telnum'    => 'nullable|string|min:11|max:12',
             'address'         => 'nullable|string|max:255',
             'start_at'        => 'nullable|date_format:Y-m-d',
         ]);
@@ -50,14 +52,16 @@ class PartnersController extends Controller
     public function update(Partner $partner, Request $request)
     {
         $data = $request->validate([
+            'inn'             => 'nullable|string|max:12',
             'organization'    => 'nullable|string|max:255',
             'name'            => 'required|string|max:255|unique:partners,name,'.$partner->id,
             'contract_number' => 'required|string|max:50|unique:partners,contract_number,'.$partner->id,
             'email'           => 'email|nullable',
-            'telnum_1'        => 'nullable|string|min:12|max:12',
-            'telnum_2'        => 'nullable|string|min:12|max:12',
-            'telnum_3'        => 'nullable|string|min:12|max:12',
+            'telnum_1'        => 'nullable|string|min:11|max:12',
+            'telnum_2'        => 'nullable|string|min:11|max:12',
+            'telnum_3'        => 'nullable|string|min:11|max:12',
             'yclients_id'     => 'nullable|string|max:255',
+            'mango_telnum'    => 'nullable|string|min:11|max:12',
             'address'         => 'nullable|string|max:255',
             'start_at'        => 'nullable|date_format:Y-m-d',
         ]);

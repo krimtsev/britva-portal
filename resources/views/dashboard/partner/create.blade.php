@@ -51,6 +51,17 @@
                     </div>
 
                     <div class="col-6 col-12-xsmall">
+                        <h5>ИНН</h5>
+                        <input
+                            id="inn"
+                            type="text"
+                            name="inn"
+                            :value="old('inn')"
+                            placeholder=""
+                        />
+                    </div>
+
+                    <div class="col-6 col-12-xsmall">
                         <h5>Email</h5>
                         <input
                             id="email"
@@ -79,6 +90,17 @@
                             type="text"
                             name="yclients_id"
                             :value="old('yclients_id')"
+                            placeholder=""
+                        />
+                    </div>
+
+                    <div class="col-6 col-12-xsmall">
+                        <h5>Mango телефон</h5>
+                        <input
+                            id="mango_telnum"
+                            type="text"
+                            name="mango_telnum"
+                            :value="old('mango_telnum')"
                             placeholder=""
                         />
                     </div>
