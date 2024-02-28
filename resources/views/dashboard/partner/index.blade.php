@@ -10,8 +10,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>№</th>
                         <th>Название филиала</th>
+                        <th>Организация</th>
                         <th>Номер договора</th>
                         <th>ID филиала</th>
                         <th>Дата подписания</th>
@@ -21,8 +21,8 @@
                 <tbody>
                     @foreach ($partners as $partner)
                         <tr>
-                            <td> {{ $partner->id }}</td>
                             <td> {{ $partner->name }}</td>
+                            <td> {{ $partner->organization }}</td>
                             <td> {{ $partner->contract_number }}</td>
                             <td> {{ $partner->yclients_id }}</td>
                             <td> {{ $partner->start_at }}</td>
