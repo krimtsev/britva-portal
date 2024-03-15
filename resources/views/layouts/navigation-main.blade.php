@@ -67,6 +67,7 @@
 						<li><a href="https://docs.google.com/forms/d/1730Zt5Ect9gdMhOjjRvZBHc-cz3cG5WHzoPhp8Ep_24/viewform?edit_requested=true" target="_blank">Заявка на сертификат</a></li>
 						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdEPHKl637KqNBoeRJM70SG4RAa_Fkq7Kz24DEZe18yDtdTwQ/viewform?usp=sf_link" target="_blank">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
 						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLScvCdbQqAQ9XF6I1fftLZ0Fuc3F_Kqe-dfNFkpOuLhfv2A_hw/viewform" target="_blank">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
+						<li><a href="https://docs.google.com/forms/d/1c5WIiAyJhyThcNNofdQpuwTz_LE_xaI5JiFws1ZvWDs/viewform?edit_requested=true#responses" target="_blank">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
 						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSerYr5kXeZs6XahEbxZMTdMLNJy71row8M3Bw1xx1jsTqr_bw/viewform" target="_blank">ЗАЯВКА НА ЭКСПЕРТА</a></li>
 						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdxA6Q4fpN85PEVsIrI3HCFu_-XLuVV2_XLBU3bXouA7SQeXg/viewform" target="_blank">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
 						<li><a href="https://docs.google.com/forms/d/1xlCBolWdb4HEmWJD-7vowf2GDpU_ywi1PW6cT1W6Pys/viewform" target="_blank">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>

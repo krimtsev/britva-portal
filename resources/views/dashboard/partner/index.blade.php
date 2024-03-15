@@ -7,28 +7,32 @@
         </div>
 
         <div class="table-wrapper">
-            <table>
+            <table style="font-size: 0.8em;">
                 <thead>
                     <tr>
                         <th>Название филиала</th>
                         <th>Организация</th>
-                        <th>Номер договора</th>
-                        <th>ID филиала</th>
-                        <th>Дата подписания</th>
+                        <th class="text-center">ИНН</th>
+                        <th class="text-center">Номер<br>договора</th>
+                        <th class="text-center">Телефон<br>филиала</th>
+                        <th class="text-center">ID филиала</th>
+                        <th class="text-center">Дата<br>открытия</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody	>
                     @foreach ($partners as $partner)
                         <tr>
                             <td> {{ $partner->name }}</td>
                             <td> {{ $partner->organization }}</td>
-                            <td> {{ $partner->contract_number }}</td>
-                            <td> {{ $partner->yclients_id }}</td>
-                            <td> {{ $partner->start_at }}</td>
+                            <td class="text-center"> {{ $partner->inn }}</td>
+                            <td class="text-center"> {{ $partner->contract_number }}</td>
+                            <td class="text-center"> {{ $partner->mango_telnum }}</td>
+                            <td class="text-center"> {{ $partner->yclients_id }}</td>
+                            <td class="text-center"> {{ $partner->start_at }}</td>
                             <td>
                                 @if (Route::has('d.partner.edit'))
-                                    <a href="{{ route('d.partner.edit', $partner->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>
+                                    <a href="{{ route('d.partner.edit', $partner->id) }}" class="button primary icon small solid fa-edit button-icon-fix"></a>
                                 @endif
 
                                 {{--
