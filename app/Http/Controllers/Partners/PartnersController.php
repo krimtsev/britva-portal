@@ -84,4 +84,19 @@ class PartnersController extends Controller
 
         return view('profile.partners.index', compact('partners'));
     }
+
+
+    /*
+    // Выполнялось для заполнения телефонов по списку
+    public function updateTelnumsByJSONList() {
+
+        $list = [
+            ["74994606679", "496409"],
+        ];
+
+        foreach ($list as [$telnum, $yclients_id]) {
+            Partner::where("yclients_id", $yclients_id)->update(['mango_telnum' => $telnum]);
+        }
+    }
+    */
 }

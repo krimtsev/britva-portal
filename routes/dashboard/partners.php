@@ -15,4 +15,7 @@ Route::group(['prefix' => 'partners'], function () {
     Route::patch('/{partner}', [PartnersController::class, 'update'])->name('d.partner.update');
 
     Route::delete('/{partner}', [PartnersController::class, 'destroy'])->name('d.partner.delete');
+
+    // Выполнялось для заполнения телефонов по списку
+    // Route::get('/update-telnums', [PartnersController::class, 'updateTelnumsByJSONList']);
 });

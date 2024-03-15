@@ -82,7 +82,8 @@ class MangoController extends Controller
                     "called_number"      => $called_number,
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"],
-                    "tg_chat_id"         => $whiteListTelnums[$called_number]["tg_chat_id"]
+                    "tg_chat_id"         => $whiteListTelnums[$called_number]["tg_chat_id"],
+                    "isActive"           => array_key_exists("active", $whiteListTelnums[$called_number])
                 ];
             }
         }
