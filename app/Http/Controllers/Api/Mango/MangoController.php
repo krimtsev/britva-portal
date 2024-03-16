@@ -191,7 +191,8 @@ class MangoController extends Controller
                 $table[$telnum] = [
                     "missed"     => 0,
                     "name"       => $value["name"],
-                    "tg_chat_id" => $value["tg_chat_id"]
+                    "tg_chat_id" => $value["tg_chat_id"],
+                    "isActive"   => $value["active"] || false
                 ];
             }
 
@@ -207,8 +208,9 @@ class MangoController extends Controller
 
             foreach ($table as $value) {
                 $result[$value['tg_chat_id']][] = [
-                    "missed" => $value["missed"],
-                    "name"   => $value["name"],
+                    "missed"   => $value["missed"],
+                    "name"     => $value["name"],
+                    "isActive" => $value["isActive"],
                 ];
             }
         }
