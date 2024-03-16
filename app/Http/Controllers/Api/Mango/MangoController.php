@@ -165,7 +165,10 @@ class MangoController extends Controller
     }
 
     protected function getWhiteTelnumsList() {
-        $list = storage_path('mango/britva/telnums.json');
+        $partnerName = env('PARTNER_NAME', '');
+        $folder = sprintf("mango/%s/telnums.json", $partnerName);
+
+        $list = storage_path($folder);
 
         if (is_string($list)) {
             if (!file_exists($list)) {
