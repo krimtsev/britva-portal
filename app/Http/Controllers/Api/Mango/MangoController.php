@@ -195,7 +195,8 @@ class MangoController extends Controller
             "called_number"      => "79997654321",
             "context_start_time" => "Прямо сейчас",
             "call_duration"      => "0",
-            "tg_chat_id"         => "-1001993054003"
+            "tg_chat_id"         => "-1001993054003",
+            "isActive"           => true
         ];
 
         Cache::put($this->testCallKey, $data, Carbon::now()->addMinutes(30));
