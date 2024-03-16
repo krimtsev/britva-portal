@@ -31,7 +31,7 @@ class CreatePartnersTable extends Migration
             // Телефонные номера
             $table->string('telnum_1', 12)->nullable();
             $table->string('telnum_2', 12)->nullable();
-            $table->string('telnum_2', 12)->nullable();
+            $table->string('telnum_3', 12)->nullable();
 
             // Yclients ID
             $table->string('yclients_id')->nullable();
