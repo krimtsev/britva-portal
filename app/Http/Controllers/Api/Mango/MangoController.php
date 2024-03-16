@@ -164,6 +164,60 @@ class MangoController extends Controller
         return $name;
     }
 
+    public function getStatisticsForPastDay() {
+        $end_date = Carbon::today()->format('d.m.Y H:i:s');
+        $start_date = Carbon::yesterday()->format('d.m.Y H:i:s');
+
+        $data = [];
+
+        try {
+            $service = new MangoService($start_date, $end_date, 1000);
+
+            $data = $service->get();
+
+        } catch (Throwable $e) {
+            report("[MANGO] [ERROR] getStatisticsForPastDay: " . $e->getMessage());
+        }
+
+        if (array_key_exists("error", $data)) return $data;
+
+        $result = [];
+
+        if (count($data) !== 0) {
+            $table = [];
+            $whiteListTelnums = $this->getWhiteTelnumsList();
+
+            foreach ($whiteListTelnums as $telnum => $value) {
+                $table[$telnum] = [
+                    "missed"     => 0,
+                    "name"       => $value["name"],
+                    "tg_chat_id" => $value["tg_chat_id"],
+                    "isActive"   => $value["active"] || false
+                ];
+            }
+
+            foreach ($data[0]["list"] as $one) {
+                $called_number = $one["called_number"];
+
+                if (!array_key_exists($called_number, $table)) {
+                    continue;
+                }
+
+                $table[$called_number]["missed"] += 1;
+            }
+
+            foreach ($table as $value) {
+                $result[$value['tg_chat_id']][] = [
+                    "missed"   => $value["missed"],
+                    "name"     => $value["name"],
+                    "isActive" => $value["isActive"],
+                ];
+            }
+        }
+
+        return $result;
+    }
+
     protected function getWhiteTelnumsList() {
         $partnerName = env('PARTNER_NAME', '');
         $folder = sprintf("mango/%s/telnums.json", $partnerName);
@@ -188,8 +242,10 @@ class MangoController extends Controller
     }
 
     public function test() {
+        $partnerName = env('PARTNER_NAME', '');
+
         $data = [
-            "name"               => "Тестовый филиал",
+            "name"               => "Тестовый филиал - {$partnerName}",
             "client_name"        => "Иван",
             "caller_number"      => "79991234567",
             "called_number"      => "79997654321",

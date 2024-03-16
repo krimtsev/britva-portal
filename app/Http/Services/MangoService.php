@@ -19,12 +19,17 @@ class MangoService
     /** Дата окончания выборки */
     private $end_date;
 
-    public function __construct($start_date, $end_date)
+    /** Кол-во записей */
+    private $limit = 100;
+
+    public function __construct($start_date, $end_date, $limit)
     {
         $this->vpbx_api_key = env('MANGO_VPBX_API_KEY', '');
         $this->salt = env('MANGO_SALT', '');
         $this->start_date = $start_date;
         $this->end_date = $end_date;
+
+        if ($limit) $this->limit = $limit;
     }
 
     private function httpWithHeaders() {
@@ -44,11 +49,11 @@ class MangoService
             $url = "https://app.mango-office.ru/vpbx/stats/calls/request";
 
             $json = json_encode([
-                "start_date" => $this->start_date,
-                "end_date" => $this->end_date,
-                "limit" => "100",
-                "offset" => "0",
-                "context_type" => 1,
+                "start_date"     => $this->start_date,
+                "end_date"       => $this->end_date,
+                "limit"          => $this->limit,
+                "offset"         => "0",
+                "context_type"   => 1,
                 "context_status" => 0
             ]);
 
