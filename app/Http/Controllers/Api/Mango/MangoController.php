@@ -6,7 +6,6 @@ use App\Http\Services\MangoService;
 use App\Http\Controllers\Controller;
 use App\Http\Services\YclientsService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Throwable;
@@ -41,13 +40,15 @@ class MangoController extends Controller
 
         $table = [];
 
-        list($telnums_list, $ids) = self::getCachedTelnums($start_date);
+        list($cachedTelnumsList, $ids) = self::getCachedTelnums($start_date);
+
+        $whiteListTelnums = $this->getWhiteTelnumsList();
 
         if (count($data) !== 0) {
             foreach ($data[0]["list"] as $one) {
                 $called_number = $one["called_number"];
 
-                if (!array_key_exists($called_number, $this->whiteListTelnums)) {
+                if (!array_key_exists($called_number, $whiteListTelnums)) {
                     continue;
                 }
 
@@ -58,7 +59,7 @@ class MangoController extends Controller
                     continue;
                 }
 
-                $telnums_list[] = [
+                $cachedTelnumsList[] = [
                     "timestamp"     => $timestamp,
                     "called_number" => $called_number
                 ];
@@ -164,7 +165,7 @@ class MangoController extends Controller
     }
 
     protected function getWhiteTelnumsList() {
-        $list = storage_path('mango/britva/telnums.json');
+        $list = storage_path('mango/soda/telnums.json');
 
         if (is_string($list)) {
             if (!file_exists($list)) {
