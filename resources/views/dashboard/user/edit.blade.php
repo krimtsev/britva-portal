@@ -20,17 +20,18 @@
 
                 <div class="row gtr-uniform">
                     <div class="col-12">
+                        <h5>Логин</h5>
                         <input
                             id="login"
                             type="text"
                             name="login"
                             value="{{ $user->login }}"
                             placeholder="Логин"
-                            disabled
                         />
                     </div>
 
                     <div class="col-12">
+                        <h5>Название филиала</h5>
                         <input
                             id="name"
                             type="text"
@@ -41,6 +42,7 @@
                     </div>
 
                     <div class="col-12">
+                        <h5>Роль</h5>
                         <select name="role_id" id="role_id">
                             @foreach($user->roleListById() as $key => $value)
                                 <option
@@ -54,11 +56,13 @@
                     </div>
 
                     <div class="col-12">
+                        <h5>Статус пользователя</h5>
                         <input type="checkbox" id="is_disabled" name="is_disabled"  {{ $user->is_disabled ? 'checked' : ''}}>
                         <label for="is_disabled">Пользователь заблокирован</label>
                     </div>
 
                     <div class="col-12">
+                        <h5>Yclients ID</h5>
                         <input
                             id="yclients_id"
                             type="text"
@@ -66,6 +70,24 @@
                             value="{{ $user->yclients_id }}"
                             placeholder="Yclients ID"
                         />
+                    </div>
+
+                    <div class="col-12">
+                        <h5>Привязать партнера</h5>
+                        <select name="partner_id" id="partner_id">
+                            <option value=""> --- </option>
+                            @foreach($partners as $partner)
+                                <option
+                                    {{ $partner->id === $user->partner_id ? 'selected' : '' }}
+                                    value="{{ $partner->id }}"
+                                >
+                                    @if ($partner->organization)
+                                        {{ $partner->organization }}
+                                    @endif
+                                    ({{ $partner->contract_number }})
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="col-12">

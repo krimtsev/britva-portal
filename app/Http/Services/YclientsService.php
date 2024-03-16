@@ -94,7 +94,7 @@ class YclientsService
             return $staff;
 
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
             return false;
         }
     }
@@ -131,7 +131,7 @@ class YclientsService
             ];
 
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
 
             return false;
         }
@@ -168,7 +168,7 @@ class YclientsService
             ];
 
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
             return false;
         }
     }
@@ -218,7 +218,7 @@ class YclientsService
             return $comments;
 
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
             return false;
         }
     }
@@ -273,7 +273,7 @@ class YclientsService
                 "sales" => $sales
             ];
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
             return false;
         }
     }
@@ -578,7 +578,7 @@ class YclientsService
             return $total;
 
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
             return false;
         }
     }
@@ -661,7 +661,7 @@ class YclientsService
             return $resullt;
 
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
             return false;
         }
     }

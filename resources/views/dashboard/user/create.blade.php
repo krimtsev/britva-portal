@@ -27,18 +27,6 @@
                         />
                     </div>
 
-                    <!-- Name -->
-                    <div class="col-12">
-                        <input
-                            id="name"
-                            type="text"
-                            name="name"
-                            :value="old('name')"
-                            autofocus
-                            placeholder="Название филиала"
-                        />
-                    </div>
-
                     <!-- Password -->
                     <div class="col-12">
                         <input
@@ -60,6 +48,20 @@
                             required
                             placeholder="Подтвердить пароль"
                         />
+                    </div>
+
+                    <div class="col-12">
+                        <select name="partner_id" id="partner_id">
+                            <option value="" disabled selected> --- </option>
+                            @foreach($partners as $partner)
+                                <option value="{{ $partner->id }}">
+                                    @if ($partner->organization)
+                                        {{ $partner->organization }}
+                                    @endif
+                                    ({{ $partner->contract_number }})
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="col-12">

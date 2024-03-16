@@ -23,7 +23,8 @@ class User extends Authenticatable
         'role_id',
         'yclients_id',
         'is_disabled',
-        'last_activity'
+        'last_activity',
+        'partner_id'
     ];
 
     /**
@@ -123,8 +124,7 @@ class User extends Authenticatable
         return $this->role_id == $this->roleList['USER']['ID'];
     }
 
-    public function isAccessRightAdminOrHigher()
-    {
+    public function isAccessRightAdminOrHigher() {
         return self::checkAccessRoleValue(self::accessValueByRoleName('ADMIN'));
     }
 

@@ -88,30 +88,32 @@
 		</nav>
 
         <!-- Section -->
-        @if($digests)
-            <section>
+            @if($digests)
+			<section>
                 <header class="major">
                     <h2>Последние дайджесты:</h2>
                 </header>
                 <div class="mini-posts">
                     @foreach ($digests as $digest)
-                        <article>
-                            <h4> {{ $digest->title }} </h4>
-                            <p> {!! $digest->description !!} </p>
-                        </article>
+                    <article>
+                        <h4> {{ $digest->title }} </h4>
+                        <p> {!! $digest->description !!} </p>
+                    </article>
                     @endforeach
                 </div>
             </section>
-        @endif
+            @endif
+		<!-- Section -->
 
-        <!-- Section -->
-        <section>
-            <header class="major">
-                <h2>График работы ЦО:</h2>
-            </header>
-            <p>C понедельника по пятницу<br />C 10:00 до 20:00</p>
-            <p>Больше информации на странице<br /><a href="/page/contact-office">контакты сотрудников ЦО</a></p>
-        </section>
+		<section>
+			<header class="major">
+				<h2>График работы ЦО:</h2>
+			</header>
+			<p>C понедельника по пятницу<br />C 10:00 до 20:00</p>
+			<p>Больше информации на странице<br /><a href="/page/contact-office">контакты сотрудников ЦО</a></p>
+			<!-- <p>Телефон офиса:<br /><a href="tel:+74994440270">+7 (499) 444-02-70</a></p> -->
+
+		</section>
 
         <!-- Footer -->
         <footer id="footer">

@@ -37,7 +37,7 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/static.php';
 
 /**
- * Панель администратора
+ * Панель системиного администратора
  */
 Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
     require __DIR__ . '/dashboard/index.php';
@@ -50,13 +50,15 @@ Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', '
     require __DIR__ . '/dashboard/jobs.php';
     require __DIR__ . '/dashboard/mango.php';
     require __DIR__ . '/dashboard/royalty.php';
+    require __DIR__ . '/dashboard/partners.php';
 });
 
 /**
- * Профиль пользователя
+ * Профиль пользователя / администратора
  */
 Route::group(['middleware' => ['auth'], 'prefix' => 'profile', 'view' => 'profile'], function () {
     require __DIR__ . '/profile/home.php';
     require __DIR__ . '/profile/user.php';
     require __DIR__ . '/profile/analytics.php';
+    require __DIR__ . '/profile/partners.php';
 });

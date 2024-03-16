@@ -86,14 +86,17 @@ class MangoService
 
             $response = $response->json();
 
+            /**
+             * TODO: Проверить возвращение данных $response. Может быть null в $response["data"] ?
+             */
             $result = array_key_exists("data", $response)
                 ? $response["data"]
-                : [];
+                : ["error" => "Ошибка получения данных из Mango"];
 
             return $result;
 
         } catch (Throwable $e) {
-            report($e);
+            report($e->getMessage());
             return [
                 "error" => $e
             ];

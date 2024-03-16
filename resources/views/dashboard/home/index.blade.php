@@ -1,5 +1,6 @@
 <x-admin-layout>
     <x-header-section title="Панель администратора" />
+
     <section>
 		<table class="table">
 			<tr>

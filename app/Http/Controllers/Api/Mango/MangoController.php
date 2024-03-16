@@ -6,13 +6,17 @@ use App\Http\Services\MangoService;
 use App\Http\Controllers\Controller;
 use App\Http\Services\YclientsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use Throwable;
 
 class MangoController extends Controller
 {
     protected $cacheKey = "mango_last_telnums_call";
     protected $cacheNamesKey = "yclients_last_names_call";
+
+    protected $testCallKey = "mango_test_call";
 
     public function index(Request $request)
     {
@@ -24,23 +28,26 @@ class MangoController extends Controller
         $end_date = $date->format('d.m.Y H:i:s');
         $start_date = $date->subMinutes(30)->format('d.m.Y H:i:s');
 
-        $service = new MangoService($start_date, $end_date);
+        $data = [];
+        try {
+            $service = new MangoService($start_date, $end_date);
 
-        $data = $service->get();
+            $data = $service->get();
+        } catch (Throwable $e) {
+            report("[MANGO] [ERROR] get: " . $e->getMessage());
+        }
 
         if (array_key_exists("error", $data)) return $data;
 
         $table = [];
 
-        list($cachedTelnumsList, $ids) = self::getCachedTelnums($start_date);
-
-        $whiteListTelnums = $this->getWhiteTelnumsList();
+        list($telnums_list, $ids) = self::getCachedTelnums($start_date);
 
         if (count($data) !== 0) {
             foreach ($data[0]["list"] as $one) {
                 $called_number = $one["called_number"];
 
-                if (!array_key_exists($called_number, $whiteListTelnums)) {
+                if (!array_key_exists($called_number, $this->whiteListTelnums)) {
                     continue;
                 }
 
@@ -51,28 +58,44 @@ class MangoController extends Controller
                     continue;
                 }
 
-                $cachedTelnumsList[] = [
+                $telnums_list[] = [
                     "timestamp"     => $timestamp,
                     "called_number" => $called_number
                 ];
 
-                $table[] = [
-                    "name"               => $whiteListTelnums[$called_number]["name"],
-                    "client_name"        => $this->getClientName(
+                $client_name = "";
+                try {
+                    $client_name = $this->getClientName(
                         $whiteListTelnums[$called_number]["company_id"],
                         $one["caller_number"],
                         $start_date
-                    ),
+                    );
+                } catch (Throwable $e) {
+                    report("[YCLIENTS] [ERROR] getClientName: " . $e->getMessage());
+                }
+
+                $table[] = [
+                    "name"               => $whiteListTelnums[$called_number]["name"],
+                    "client_name"        => $client_name,
                     "caller_number"      => $one["caller_number"],
                     "called_number"      => $called_number,
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"],
-                    "tg_chat_id"         => $whiteListTelnums[$called_number]["tg_chat_id"]
+                    "tg_chat_id"         => $whiteListTelnums[$called_number]["tg_chat_id"],
+                    "isActive"           => array_key_exists("active", $whiteListTelnums[$called_number])
                 ];
             }
         }
 
         Cache::put($this->cacheKey, $cachedTelnumsList, Carbon::now()->addMinutes(30));
+
+        /*
+         * Добавляем тестовый звонок
+         */
+        if(Cache::has($this->testCallKey)) {
+            $table[] = Cache::get($this->testCallKey);
+            Cache::forget($this->testCallKey);
+        }
 
         return $table;
     }
@@ -141,7 +164,7 @@ class MangoController extends Controller
     }
 
     protected function getWhiteTelnumsList() {
-        $list = storage_path('mango/soda/telnums.json');
+        $list = storage_path('mango/britva/telnums.json');
 
         if (is_string($list)) {
             if (!file_exists($list)) {
@@ -158,5 +181,21 @@ class MangoController extends Controller
         }
 
         return [];
+    }
+
+    public function test() {
+        $data = [
+            "name"               => "Тестовый филиал",
+            "client_name"        => "Иван",
+            "caller_number"      => "79991234567",
+            "called_number"      => "79997654321",
+            "context_start_time" => "Прямо сейчас",
+            "call_duration"      => "0",
+            "tg_chat_id"         => "-1001993054003"
+        ];
+
+        Cache::put($this->testCallKey, $data, Carbon::now()->addMinutes(30));
+
+        return true;
     }
 }
