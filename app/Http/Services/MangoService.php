@@ -20,16 +20,16 @@ class MangoService
     private $end_date;
 
     /** Кол-во записей */
-    private $limit = 100;
+    private $limit;
 
-    public function __construct($start_date, $end_date, $limit)
+    public function __construct($start_date, $end_date, $limit = 100)
     {
         $this->vpbx_api_key = env('MANGO_VPBX_API_KEY', '');
         $this->salt = env('MANGO_SALT', '');
         $this->start_date = $start_date;
         $this->end_date = $end_date;
 
-        if ($limit) $this->limit = $limit;
+        $this->limit = $limit;
     }
 
     private function httpWithHeaders() {
