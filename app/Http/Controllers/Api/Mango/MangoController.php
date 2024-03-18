@@ -165,8 +165,8 @@ class MangoController extends Controller
     }
 
     public function getStatisticsForPastDay() {
-        $end_date = Carbon::today()->format('d.m.Y H:i:s');
-        $start_date = Carbon::yesterday()->format('d.m.Y H:i:s');
+        $start_date = Carbon::today()->format('d.m.Y H:i:s');
+        $end_date = Carbon::tomorrow()->format('d.m.Y H:i:s');
 
         $data = [];
 
@@ -192,7 +192,7 @@ class MangoController extends Controller
                     "missed"     => 0,
                     "name"       => $value["name"],
                     "tg_chat_id" => $value["tg_chat_id"],
-                    "isActive"   => $value["active"] || false
+                    "isActive"   => array_key_exists("active", $value) ? $value["active"] : false
                 ];
             }
 
