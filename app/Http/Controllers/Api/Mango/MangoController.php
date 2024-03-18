@@ -67,7 +67,7 @@ class MangoController extends Controller
                 $client_name = "";
                 try {
                     $client_name = $this->getClientName(
-                        $whiteListTelnums[$called_number]["company_id"],
+                        $telnumsList[$called_number]["company_id"],
                         $one["caller_number"],
                         $start_date
                     );
@@ -76,14 +76,14 @@ class MangoController extends Controller
                 }
 
                 $table[] = [
-                    "name"               => $whiteListTelnums[$called_number]["name"],
+                    "name"               => $telnumsList[$called_number]["name"],
                     "client_name"        => $client_name,
                     "caller_number"      => $one["caller_number"],
                     "called_number"      => $called_number,
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"],
-                    "tg_chat_id"         => $whiteListTelnums[$called_number]["tg_chat_id"],
-                    "isActive"           => array_key_exists("active", $whiteListTelnums[$called_number])
+                    "tg_chat_id"         => $telnumsList[$called_number]["tg_chat_id"],
+                    "isActive"           => array_key_exists("active", $telnumsList[$called_number])
                 ];
             }
         }
