@@ -42,13 +42,13 @@ class MangoController extends Controller
 
         list($cachedTelnumsList, $ids) = self::getCachedTelnums($start_date);
 
-        $whiteListTelnums = $this->getWhiteTelnumsList();
+        $telnumsList = $this->getTelnumsList();
 
         if (count($data) !== 0) {
             foreach ($data[0]["list"] as $one) {
                 $called_number = $one["called_number"];
 
-                if (!array_key_exists($called_number, $whiteListTelnums)) {
+                if (!array_key_exists($called_number, $telnumsList)) {
                     continue;
                 }
 
@@ -185,9 +185,9 @@ class MangoController extends Controller
 
         if (count($data) !== 0) {
             $table = [];
-            $whiteListTelnums = $this->getWhiteTelnumsList();
+            $telnumsList = $this->getTelnumsList();
 
-            foreach ($whiteListTelnums as $telnum => $value) {
+            foreach ($telnumsList as $telnum => $value) {
                 $table[$telnum] = [
                     "missed"     => 0,
                     "name"       => $value["name"],
@@ -218,7 +218,7 @@ class MangoController extends Controller
         return $result;
     }
 
-    protected function getWhiteTelnumsList() {
+    protected function getTelnumsList() {
         $partnerName = env('PARTNER_NAME', '');
         $folder = sprintf("mango/%s/telnums.json", $partnerName);
 
@@ -239,6 +239,20 @@ class MangoController extends Controller
         }
 
         return [];
+    }
+
+    protected function getPartnersList() {
+        $list = $this->getTelnumsList();
+        $result = [];
+
+        foreach ($list as $value) {
+            $result[$value['tg_chat_id']][] = [
+                "name"       => $value["name"],
+                "isActive"   => array_key_exists("active", $value) ? $value["active"] : false,
+            ];
+        }
+
+        return $result;
     }
 
     public function test() {

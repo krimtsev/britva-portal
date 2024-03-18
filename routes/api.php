@@ -21,4 +21,5 @@ Route::group(['middleware' => ['api_token']], function () {
     Route::get('/mango', [MangoController::class, 'index']);
     Route::get('/mango/test', [MangoController::class, 'test']);
     Route::get('/mango/statistics', [MangoController::class, 'getStatisticsForPastDay']);
+    Route::get('/mango/partners-list', [MangoController::class, 'getPartnersList']);
 });
