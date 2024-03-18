@@ -42,7 +42,7 @@ class MangoController extends Controller
 
         list($cachedTelnumsList, $ids) = self::getCachedTelnums($start_date);
 
-        $whiteListTelnums = $this->getWhiteTelnumsList();
+        $whiteListTelnums = $this->getTelnumsList();
 
         if (count($data) !== 0) {
             foreach ($data[0]["list"] as $one) {
@@ -185,7 +185,7 @@ class MangoController extends Controller
 
         if (count($data) !== 0) {
             $table = [];
-            $whiteListTelnums = $this->getWhiteTelnumsList();
+            $whiteListTelnums = $this->getTelnumsList();
 
             foreach ($whiteListTelnums as $telnum => $value) {
                 $table[$telnum] = [
@@ -218,7 +218,7 @@ class MangoController extends Controller
         return $result;
     }
 
-    protected function getWhiteTelnumsList() {
+    protected function getTelnumsList() {
         $partnerName = env('PARTNER_NAME', '');
         $folder = sprintf("mango/%s/telnums.json", $partnerName);
 
@@ -239,6 +239,12 @@ class MangoController extends Controller
         }
 
         return [];
+    }
+
+    protected function getPartnersList() {
+        $list = $this->getTelnumsList();
+
+        return array_values($list);
     }
 
     public function test() {
