@@ -25,7 +25,11 @@ class Partner extends Model
         'yclients_id',
         'mango_telnum',
         'address',
-        'start_at'
+        'start_at',
+
+        'tg_active',
+        'tg_chat_id',
+        'tg_pay_end'
     ];
 
     public function user()
