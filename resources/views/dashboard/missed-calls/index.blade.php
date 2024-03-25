@@ -22,7 +22,11 @@
                             <td class="text-center"> {{ $partner->tg_chat_id }}</td>
                             <td class="text-center"> {{ $partner->tg_pay_end }}</td>
                             <td class="text-center">
-                                {{ $partner->tg_active ? 'Активен' : 'Отключен' }}
+                                @if ($partner->tg_active)
+                                    <i class="fa fa-check color-success"></i>
+                                @else
+                                    <i class="fa fa-ban color-danger"></i>
+                                @endif
                             </td>
                             <td>
                                 @if (Route::has('d.missed-calls.edit'))

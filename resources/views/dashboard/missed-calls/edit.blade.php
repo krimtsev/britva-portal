@@ -16,8 +16,9 @@
                 <div class="col-12">
                     <h5>Статус</h5>
                     <select name="tg_active" id="tg_active">
-                        <option {{ 1 === $partner->tg_active ? 'selected' : '' }} value="{{ 1 }}">Активен</option>
-                        <option {{ 0 === $partner->tg_active ? 'selected' : '' }} value="{{ 0 }}">Отключен</option>
+                        <option value="---">---</option>
+                        <option {{ 1 === $partner->tg_active ? 'selected="selected"' : '' }} value="{{ 1 }}">Активен</option>
+                        <option {{ 0 === $partner->tg_active ? 'selected="selected"' : '' }} value="{{ 0 }}">Отключен</option>
                     </select>
                 </div>
 
