@@ -234,8 +234,6 @@ class MangoController extends Controller
             }
         }
 
-        dd($result);
-
         return $result;
     }
 
