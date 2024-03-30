@@ -2,6 +2,6 @@
     <x-header-section title="Задачи" />
 
     <section>
-        Задачи добавлены
+        Задачи добавлены за период {{ $date["start_date"] }} - {{ $date["end_date"] }}
     </section>
 </x-admin-layout>

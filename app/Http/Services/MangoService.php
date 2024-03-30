@@ -20,16 +20,28 @@ class MangoService
     private $end_date;
 
     /** Кол-во записей */
-    private $limit;
+    private $limit = 100;
 
-    public function __construct($start_date, $end_date, $limit = 100)
+    /**
+     * Статус звонков
+     * 1 – успешный, 0 – неуспешный.
+     */
+    private $context_status;
+
+    public function __construct($params)
     {
-        $this->vpbx_api_key = env('MANGO_VPBX_API_KEY', '');
-        $this->salt = env('MANGO_SALT', '');
-        $this->start_date = $start_date;
-        $this->end_date = $end_date;
+        $this->vpbx_api_key = env("MANGO_VPBX_API_KEY", "");
+        $this->salt = env("MANGO_SALT", "");
+        $this->start_date = $params["start_date"];
+        $this->end_date = $params["end_date"];
 
-        $this->limit = $limit;
+        if (array_key_exists("limit", $params)) {
+            $this->limit = $params["limit"];
+        }
+
+        if (array_key_exists("context_status", $params)) {
+            $this->context_status = $params["context_status"];
+        }
     }
 
     private function httpWithHeaders() {
@@ -42,20 +54,29 @@ class MangoService
         return hash("sha256", $this->vpbx_api_key . $json . $this->salt);
     }
 
+    /**
+     * "context_status":
+     * "context_type": 1 - входящие, 2 - истодящие, 3 - внутренние.
+     */
     public function get() {
         try {
             /** ПОЛУЧЕНИЕ КЛЮЧА */
 
             $url = "https://app.mango-office.ru/vpbx/stats/calls/request";
 
-            $json = json_encode([
+            $params = [
                 "start_date"     => $this->start_date,
                 "end_date"       => $this->end_date,
                 "limit"          => $this->limit,
                 "offset"         => "0",
                 "context_type"   => 1,
-                "context_status" => 0
-            ]);
+            ];
+
+            if (!is_null($this->context_status)) {
+                $params["context_status"] = $this->context_status;
+            }
+
+            $json = json_encode($params);
 
             $sign = $this->getHash($json);
 
@@ -73,7 +94,7 @@ class MangoService
             ];
 
             /** ПОЛУЧЕНИЕ ДАННЫХ ПО ЗВОНКАМ */
-            sleep(5);
+            sleep(20);
 
             $url = "https://app.mango-office.ru/vpbx/stats/calls/result";
 
@@ -96,7 +117,10 @@ class MangoService
              */
             $result = array_key_exists("data", $response)
                 ? $response["data"]
-                : ["error" => "Ошибка получения данных из Mango"];
+                : [
+                    "error" => "Ошибка получения данных из Mango",
+                    "response" => $response,
+                  ];
 
             return $result;
 

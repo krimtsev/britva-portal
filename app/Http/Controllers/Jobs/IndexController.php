@@ -7,14 +7,48 @@ use App\Jobs\GenerateAnalyticsJob;
 use App\Models\User;
 use App\Utils\Utils;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Throwable;
+use App\Config\Constants;
 
 class IndexController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $selected_month = Utils::getPreviousStartMonth();
+        try {
+            $selected_month = Utils::getPreviousStartMonth();
+            $date =  Utils::getPeriodMonthArray($selected_month, 1)[0];
 
-        $date =  Utils::getPeriodMonthArray($selected_month, 1)[0];
+            if($request->input("period")) {
+                $start = Carbon::createFromFormat("Y-m-d", $request->input("period"))->startOfMonth();
+                $end = Carbon::createFromFormat("Y-m-d", $request->input("period"))->endOfMonth();
+
+                $prevPerion = Carbon::createFromFormat("Y-m-d", $selected_month)->startOfMonth();
+                $startPeriod = Carbon::createFromFormat("Y-m-d", Constants::START_DATE)->startOfMonth();
+
+                if($start > $prevPerion) {
+                    return [
+                        "start" => $start,
+                        "prevPerion" => $prevPerion
+                    ];
+                }
+
+                if($start < $startPeriod) {
+                    return [
+                        "start" => $start,
+                        "startPeriod" => $startPeriod
+                    ];
+                }
+
+                $date = [
+                    "start_date" => $start->format("Y-m-d"),
+                    "end_date" => $end->format("Y-m-d")
+                ];
+            }
+
+        } catch (Throwable $e) {
+            dd($e);
+        }
 
         $users = User::select("name", "yclients_id")->where('yclients_id', '<>', "")->orderBy("name")->get();
 
@@ -27,7 +61,7 @@ class IndexController extends Controller
             )->onConnection('database')->onQueue("analytics");
         }
 
-        return view('dashboard.jobs.start');
+        return view('dashboard.jobs.start', compact("date"));
     }
 
 }
