@@ -12,8 +12,8 @@ use Throwable;
 
 class MangoController extends Controller
 {
-    protected $cacheKey = "mango_last_telnums_call";
-    protected $cacheNamesKey = "yclients_last_names_call";
+    protected $cacheMangoKey = "mango_last_telnums_call";
+    protected $cacheYclientsKey = "yclients_last_names_call";
 
     protected $testCallKey = "mango_test_call";
 
@@ -88,7 +88,7 @@ class MangoController extends Controller
             }
         }
 
-        Cache::put($this->cacheKey, $cachedTelnumsList, Carbon::now()->addMinutes(30));
+        Cache::put($this->cacheMangoKey, $cachedTelnumsList, Carbon::now()->addMinutes(40));
 
         /*
          * Добавляем тестовый звонок
@@ -104,7 +104,7 @@ class MangoController extends Controller
     protected function getCachedTelnums($start_date): array
     {
         $timestamp = Carbon::parse($start_date);
-        $cached_list = Cache::get($this->cacheKey, []);
+        $cached_list = Cache::get($this->cacheMangoKey, []);
 
         $telnums_list = [];
         $ids = [];
@@ -126,7 +126,7 @@ class MangoController extends Controller
 
     protected function getClientName($company_id, $caller_number, $start_date) {
         $timestamp = Carbon::parse($start_date);
-        $cached_list = Cache::get($this->cacheNamesKey, []);
+        $cached_list = Cache::get($this->cacheYclientsKey, []);
         $telnums_list = [];
         $name = "";
 
@@ -159,7 +159,7 @@ class MangoController extends Controller
             "timestamp" => Carbon::now()->timestamp
         ];
 
-        Cache::put($this->cacheNamesKey, $telnums_list, Carbon::now()->addMinutes(30));
+        Cache::put($this->cacheYclientsKey, $telnums_list, Carbon::now()->addMinutes(30));
 
         return $name;
     }
@@ -171,7 +171,7 @@ class MangoController extends Controller
         $data = [];
 
         try {
-            $service = new MangoService($start_date, $end_date, 1000);
+            $service = new MangoService($start_date, $end_date, 5000);
 
             $data = $service->get();
 
@@ -189,7 +189,9 @@ class MangoController extends Controller
 
             foreach ($telnumsList as $telnum => $value) {
                 $table[$telnum] = [
+                    "total"      => 0,
                     "missed"     => 0,
+                    "received"   => 0,
                     "name"       => $value["name"],
                     "tg_chat_id" => $value["tg_chat_id"],
                     "isActive"   => array_key_exists("active", $value) ? $value["active"] : false
@@ -203,12 +205,19 @@ class MangoController extends Controller
                     continue;
                 }
 
-                $table[$called_number]["missed"] += 1;
+                if ($one["context_status"] === 0) {
+                    $table[$called_number]["missed"] += 1;
+                } else {
+                    $table[$called_number]["received"] += 1;
+                }
+                $table[$called_number]["total"] += 1;
             }
 
             foreach ($table as $value) {
                 $result[$value['tg_chat_id']][] = [
                     "missed"   => $value["missed"],
+                    "received" => $value["received"],
+                    "total"    => $value["total"],
                     "name"     => $value["name"],
                     "isActive" => $value["isActive"],
                 ];
