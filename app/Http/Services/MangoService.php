@@ -56,7 +56,7 @@ class MangoService
                 "end_date"       => $this->end_date,
                 "limit"          => $this->limit,
                 "offset"         => "0",
-                // "context_type"   => 1,
+                "context_type"   => 1,
                 // "context_status" => 0
             ]);
 
