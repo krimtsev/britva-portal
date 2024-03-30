@@ -44,6 +44,7 @@ class MangoService
 
     /**
      * "context_status":  1 – успешный, 0 – неуспешный.
+     * "context_type": 1 - входящие, 2 - истодящие, 3 - внутренние.
      */
     public function get() {
         try {
@@ -57,7 +58,7 @@ class MangoService
                 "limit"          => $this->limit,
                 "offset"         => "0",
                 "context_type"   => 1,
-                // "context_status" => 0
+                "context_status" => 0
             ]);
 
             $sign = $this->getHash($json);
