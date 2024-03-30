@@ -27,9 +27,15 @@ class MangoController extends Controller
         $end_date = $date->format('d.m.Y H:i:s');
         $start_date = $date->subMinutes(30)->format('d.m.Y H:i:s');
 
+        $params = [
+            "start_date"     => $start_date,
+            "end_date"       => $end_date,
+            "context_status" => 0
+        ];
+
         $data = [];
         try {
-            $service = new MangoService($start_date, $end_date);
+            $service = new MangoService($params);
 
             $data = $service->get();
         } catch (Throwable $e) {
@@ -167,11 +173,15 @@ class MangoController extends Controller
     public function getStatisticsForPastDay() {
         $start_date = Carbon::today()->format('d.m.Y H:i:s');
         $end_date = Carbon::tomorrow()->format('d.m.Y H:i:s');
+        $params = [
+            "start_date" => $start_date,
+            "end_date"   => $end_date,
+            "limit"      => 5000,
+        ];
 
         $data = [];
-
         try {
-            $service = new MangoService($start_date, $end_date, 5000);
+            $service = new MangoService($params);
 
             $data = $service->get();
 
@@ -223,6 +233,8 @@ class MangoController extends Controller
                 ];
             }
         }
+
+        dd($result);
 
         return $result;
     }
