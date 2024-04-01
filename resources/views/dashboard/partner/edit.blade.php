@@ -106,34 +106,26 @@
                 <div class="col-12">
                     <h5>Номера телефонов</h5>
                     <div class="row gtr-uniform">
-                        <div class="col-6 col-12-xsmall">
-                            <input
-                                id="telnum_1"
-                                type="text"
-                                name="telnum_1"
-                                value="{{ $partner->telnum_1 }}"
-                                placeholder=""
-                            />
-                        </div>
-                        <div class="col-6 col-12-xsmall">
-                            <input
-                                id="telnum_2"
-                                type="text"
-                                name="telnum_2"
-                                value="{{ $partner->telnum_2 }}"
-                                placeholder=""
-                            />
-                        </div>
-                        <div class="col-6 col-12-xsmall">
-                            <input
-                                id="telnum_3"
-                                type="text"
-                                name="telnum_3"
-                                value="{{ $partner->telnum_3 }}"
-                                placeholder=""
-                            />
-                        </div>
-
+                        @foreach ($partner->telnums as $key => $telnum)
+                            <div class="col-6 col-12-xsmall">
+                                <input
+                                    id="number_{{ $key  }}"
+                                    type="text"
+                                    name="telnums[{{ $key  }}][number]"
+                                    value="{{ $telnum["number"] }}"
+                                    placeholder="79991234567"
+                                />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input
+                                    id="name_{{ $key }}"
+                                    type="text"
+                                    name="telnums[{{ $key }}][name]"
+                                    value="{{ $telnum["name"] }}"
+                                    placeholder="Дмитрий"
+                                />
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 

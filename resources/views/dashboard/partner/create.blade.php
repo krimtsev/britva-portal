@@ -110,29 +110,58 @@
                         <div class="row gtr-uniform">
                             <div class="col-6 col-12-xsmall">
                                 <input
-                                    id="telnum_1"
+                                    id="number_0"
                                     type="text"
-                                    name="telnum_1"
-                                    :value="old('telnum_1')"
-                                    placeholder=""
+                                    name="telnums[0][number]"
+                                    value=""
+                                    placeholder="79991234567"
                                 />
                             </div>
                             <div class="col-6 col-12-xsmall">
                                 <input
-                                    id="telnum_2"
+                                    id="name_0"
                                     type="text"
-                                    name="telnum_2"
-                                    :value="old('telnum_2')"
-                                    placeholder=""
+                                    name="telnums[0][name]"
+                                    value=""
+                                    placeholder="Дмитрий"
+                                />
+                            </div>
+
+                            <div class="col-6 col-12-xsmall">
+                                <input
+                                    id="number_1"
+                                    type="text"
+                                    name="telnums[1][number]"
+                                    value=""
+                                    placeholder="79991234567"
                                 />
                             </div>
                             <div class="col-6 col-12-xsmall">
                                 <input
-                                    id="telnum_3"
+                                    id="name_1"
                                     type="text"
-                                    name="telnum_3"
-                                    :value="old('telnum_3')"
-                                    placeholder=""
+                                    name="telnums[1][name]"
+                                    value=""
+                                    placeholder="Дмитрий"
+                                />
+                            </div>
+
+                            <div class="col-6 col-12-xsmall">
+                                <input
+                                    id="number_2"
+                                    type="text"
+                                    name="telnums[2][number]"
+                                    value=""
+                                    placeholder="79991234567"
+                                />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input
+                                    id="name_2"
+                                    type="text"
+                                    name="telnums[2][name]"
+                                    value=""
+                                    placeholder="Дмитрий"
                                 />
                             </div>
 
