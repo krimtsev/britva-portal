@@ -30,14 +30,22 @@ class YclientsService
     {
         $this->app_token = env('YCLIENTS_APP_TOKEN', '');
         $this->partner_token = env('YCLIENTS_PARTNER_TOKEN', '');
-        $this->company_id = $params["company_id"];
+
+        if (array_key_exists('company_id', $params)) {
+            $this->company_id = $params["company_id"];
+        }
 
         if (array_key_exists('start_date', $params)) {
             $this->start_date = $params["start_date"];
         }
+
         if (array_key_exists('end_date', $params)) {
             $this->end_date = $params["end_date"];
         }
+    }
+
+    public function setCompanyId($id) {
+        $this->company_id = $id;
     }
 
     private function httpWithHeaders() {
@@ -308,6 +316,7 @@ class YclientsService
                 10802726, // УВЛАЖНЯЮЩАЯ МАСКА
                 10802733, // УЛЬТРАЗВУКОВАЯ ЧИСТКА + АЛЬГИНАТНАЯ МАСКА + УВЛАЖНЯЮЩИЙ КРЕМ
                 13621869, // УХОД ВОКРУГ ГЛАЗ RHEA
+                15412256, // КОМПЛЕКС ПО УХОДУ ЗА КОЖЕЙ ЛИЦА И БОРОДЫ
 
                 10659272, // ART HAIR TATTOO
                 1928689,  // HAIR TATTOO
@@ -327,35 +336,43 @@ class YclientsService
                 6540050,  // ТОНИРОВАНИЕ БОРОДЫ
                 6540052,  // ТОНИРОВАНИЕ ГОЛОВЫ
                 1510473,  // УКЛАДКА БЕЗ СТРИЖКИ
+                15355703, // ДЕТОКС КОЖИ ГОЛОВЫ ОТ REUZEL
             ];
 
             // Услуги в комплексе
 
             $SERVICES_COST = [
-                5855572 => 1600, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК - 1600 рублей
-                5855566 => 400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК - 400 рулей
-                13458944 => 2800, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT - 2800 рублей
-                13458949 => 3200, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК - 3200 рублей
-                5855583 => 1600, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN + ВОСК - 1600 рублей
-                5855560 => 1200, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN - 1200 рублей
+                5855572 => 1900, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК
+                5855566 => 500, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК
+                13458944 => 2900, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT
+                13458949 => 3400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК
+                5855583 => 1900, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN + ВОСК
+                5855560 => 1400, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN
 
-                7043251 => 1200, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN // ТОП-БАРБЕР - 1200 рублей
-                7043266 => 1600, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК // ТОП-БАРБЕР - 1600 рублей
-                7043330 => 1600, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN + ВОСК // ТОП-БАРБЕР - 1600 рублей
-                13458978 => 3200, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК // ТОП-БАРБЕР - 3200 рублей
-                13458971 => 2800, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT // ТОП-БАРБЕР - 2800 рублей
-                7043262 => 400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // ТОП-БАРБЕР - 400 рублей
+                7043251 => 1400, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN // ТОП-БАРБЕР
+                7043266 => 1900, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК // ТОП-БАРБЕР
+                7043330 => 1900, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN + ВОСК // ТОП-БАРБЕР
+                13458978 => 3400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК // ТОП-БАРБЕР
+                13458971 => 2900, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT // ТОП-БАРБЕР
+                7043262 => 500, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // ТОП-БАРБЕР
 
-                8337664 => 1200, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN // БРЕНД-БАРБЕР - 1200 рублей
-                8337665 => 1600, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК // БРЕНД-БАРБЕР - 1600 рублей
-                8337669 => 1600, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN + ВОСК // БРЕНД-БАРБЕР - 1600 рублей
-                13458996 => 3200, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК // БРЕНД-БАРБЕР - 3200 рублей
-                13458994 => 2800, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT // БРЕНД-БАРБЕР - 2800 рублей
-                8337666 => 400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // БРЕНД-БАРБЕР - 400 рублей
+                8337664 => 1400, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN // БРЕНД-БАРБЕР
+                8337665 => 1900, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК // БРЕНД-БАРБЕР
+                8337669 => 1900, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN + ВОСК // БРЕНД-БАРБЕР
+                13458996 => 3400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК // БРЕНД-БАРБЕР
+                13458994 => 2900, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT // БРЕНД-БАРБЕР
+                8337666 => 500, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // БРЕНД-БАРБЕР
 
-                12320307 => 2800, // МУЖСКАЯ СТРИЖКА + DEPOT // ЭКСПЕРТ - 2800 рублей
-                12320304 => 3200, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК // ЭКСПЕРТ - 3200 рублей
-                12320306 => 400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // ЭКСПЕРТ - 400 рублей
+                14514601 => 1400, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN // БРЕНД-БАРБЕР+
+                14514599 => 1900, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК // БРЕНД-БАРБЕР+
+                14514600 => 1900, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN + ВОСК // БРЕНД-БАРБЕР+
+                15320508 => 3400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК // БРЕНД-БАРБЕР+
+                15320509 => 2900, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT // БРЕНД-БАРБЕР+
+                14514595 => 400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // БРЕНД-БАРБЕР+
+
+                12320307 => 2900, // МУЖСКАЯ СТРИЖКА + DEPOT // ЭКСПЕРТ
+                12320304 => 3400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК // ЭКСПЕРТ
+                12320306 => 500, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // ЭКСПЕРТ
             ];
 
             $SERVICES_COST_IDS = array_keys($SERVICES_COST);
@@ -373,7 +390,7 @@ class YclientsService
             $total = 0;
 
             foreach ($response["data"] as $one) {
-                if (!is_array($one["services"]) && count($one["services"]) === 0)
+                if (!is_array($one["services"]) || count($one["services"]) === 0)
                     continue;
 
                 foreach ($one["services"] as $service) {
@@ -455,22 +472,114 @@ class YclientsService
                 return false;
             }
 
-            $resullt = [];
+            $result = [];
 
             foreach ($response["data"] as $one) {
-                if (!is_array($one["services"]) && count($one["services"]) === 0)
+                if (!is_array($one["services"]) || count($one["services"]) === 0)
                     continue;
 
                 $date = Carbon::parse($one["date"])->format('Y-m-d');
 
-                if (!array_key_exists($date, $resullt)){
-                    $resullt[$date] = 1;
+                if (!array_key_exists($date, $result)){
+                    $result[$date] = 1;
                 } else {
-                    $resullt[$date] += 1;
+                    $result[$date] += 1;
                 }
             }
 
-            return $resullt;
+            return $result;
+
+        } catch (Throwable $e) {
+            report($e->getMessage());
+            return false;
+        }
+    }
+
+    public function getRecordsList() {
+        try {
+            $query = http_build_query([
+                "start_date" => $this->start_date,
+                "end_date"   => $this->end_date,
+                "count"      => $this->count,
+            ]);
+
+            $url = sprintf("https://api.yclients.com/api/v1/records/%s?%s", $this->company_id, $query);
+
+            $response = $this->httpWithHeaders()->get($url);
+
+            $response = $response->json($key = null);
+
+            if(!$response["success"]) {
+                return false;
+            }
+
+            $result = [];
+
+            foreach ($response["data"] as $one) {
+                if (!is_array($one["services"]) || count($one["services"]) === 0 ||
+                    (!$one["client"] || !$one["client"]["id"])
+                )
+                    continue;
+
+                $clientId = $one["client"]["id"];
+
+                if (!array_key_exists($clientId, $result)) {
+                    $result[$clientId] = [
+                        "id"       => $clientId,
+                        "name"     => $one["client"]["name"],
+                        "phone"    => $one["client"]["phone"],
+                        "services" => array_map(function($service) { return $service["title"]; }, $one["services"]),
+                    ];
+                }
+            }
+
+            return $result;
+
+        } catch (Throwable $e) {
+            report($e->getMessage());
+            dd($e->getMessage());
+            return false;
+        }
+    }
+
+    public function getVisitedForPeriod($ids) {
+        try {
+            $values = array_unique($ids);
+
+            $body = json_encode([
+                "page"       => 1,
+                "page_size"  => $this->count,
+                "fields"     => [
+                    "id",
+                    "name",
+                    "phone"
+                ],
+                "filters"    => [
+                    [
+                        "type"   => "id",
+                        "state"  => [
+                            "value" => $values
+                        ],
+                    ]
+                ],
+                "order_by"   => "last_visit_date",
+                "order_by_direction" => "desc",
+                "operation"  => "AND"
+            ]);
+
+            $url = sprintf("https://api.yclients.com/api/v1/company/%s/clients/search", $this->company_id);
+
+            $response = $this->httpWithHeaders()
+                ->withBody($body, 'application/json')
+                ->post($url);
+
+            $response = $response->json($key = null);
+
+            if(!$response["success"]) {
+                return false;
+            }
+
+            return $response["data"];
 
         } catch (Throwable $e) {
             report($e->getMessage());
