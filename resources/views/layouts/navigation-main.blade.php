@@ -30,7 +30,7 @@
 				<li>
 					<span class="opener">Документация</span>
 					<ul>
-						<li><a href="https://disk.yandex.ru/d/uPvUBS47I_47qw" target="_blank">Облако документов</a></li>
+						<li><a href="https://disk.yandex.ru/d/y3CMh7Hi8A3pyA" target="_blank">Облако документов</a></li>
 						<li><a href="/page/subscription">Абонементы</a></li>
 						<li><a href="/page/certificate">Сертификаты</a></li>
 						<li><a href="/page/rospotrebnadzor">Роспотребнадзор</a></li>
@@ -47,19 +47,25 @@
 						<li><a target="_blank" href="https://youtu.be/6cy9sEyNDXU?si=3x0R0pmKIRHM08YO">Настройка измнения цен ЭВОТОР</a></li>
 					</ul>
 				</li>
+				<li>
+					<span class="opener">Дополнительные услуги</span>
+					<ul>
+						<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
+						<li><a href="https://mybritva.ru/page/service-bot">Сервис пропущенных звонков</a></li>
+					</ul>
+				</li>
 				<li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1ka8_eTE18gQNr-LCCiKYKd_u0rG6dJ5R7oGFTQg6pdM/" target="_blank">Таблица маркет.сбора</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1Y9zxXV-NZZvFHJNnESGBDiipCMNM1jjqQEzHqj8KRg0" target="_blank">Таблица оплаты телефонии</a></li>
 				<li>
 					<span class="opener">Макеты</span>
 					<ul>
-						<li><a href="https://disk.yandex.ru/d/ozwWXg_KUO5DPQ" target="_blank">Макеты печатные</a></li>
+						<li><a href="https://disk.yandex.ru/d/_MsaQHBq6RLC4A" target="_blank">Макеты печатные</a></li>
 						<li><a href="https://disk.yandex.ru/d/_G5bIHExwxfUlw" target="_blank">Макеты для инсты</a></li>
 						<li><a href="https://disk.yandex.ru/d/gYdjTyCWu_bU3A" target="_blank">Макеты на НГ 2023-2024</a></li>
 					</ul>
 				</li>
 				<li><a href="https://disk.yandex.ru/d/ODcgMSK8CtAh9A" target="_blank">Видео на ТВ</a></li>
-				<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
 				<li>
 					<span class="opener">Заявки</span>
 					<ul>
