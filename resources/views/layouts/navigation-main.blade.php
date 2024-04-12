@@ -49,6 +49,7 @@
                         <li><a target="_blank" href="https://youtu.be/6cy9sEyNDXU?si=3x0R0pmKIRHM08YO">ЭВОТОР. Настройка цен</a></li>
                     </ul>
                 </li>
+                <li><a href="https://mysoda.ru/page/service-bot">Сервис пропущенных звонков</a></li>
                 <li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
                 <li><a href="https://docs.google.com/spreadsheets/d/1EllHBxOGbK61fOl7rMqenM7oCF59e3_30F_JA3xTAw8/" target="_blank">Таблица оплаты телефонии</a></li>
                 <li>
