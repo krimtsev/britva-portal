@@ -517,26 +517,30 @@ class YclientsService
 
             foreach ($response["data"] as $one) {
                 if (!is_array($one["services"]) || count($one["services"]) === 0 ||
-                    (!$one["client"] || !$one["client"]["id"])
-                )
+                    !is_array($one["client"]) || !array_key_exists("id", $one["client"]))
                     continue;
 
-                $clientId = $one["client"]["id"];
+                try {
+                    $clientId = $one["client"]["id"];
 
-                if (!array_key_exists($clientId, $result)) {
-                    $result[$clientId] = [
-                        "id"       => $clientId,
-                        "name"     => $one["client"]["name"],
-                        "phone"    => $one["client"]["phone"],
-                        "services" => array_map(function($service) { return $service["title"]; }, $one["services"]),
-                    ];
+                    if (!array_key_exists($clientId, $result)) {
+                        $result[$clientId] = [
+                            "id"       => $clientId,
+                            "name"     => $one["client"]["name"],
+                            "phone"    => $one["client"]["phone"],
+                            "services" => array_map(function($service) { return $service["title"]; }, $one["services"]),
+                        ];
+                    }
+                } catch (Throwable $e) {
+                    report(json_encode($one));
+                    continue;
                 }
             }
 
             return $result;
 
         } catch (Throwable $e) {
-            report($e->getMessage());
+            report($e);
             return false;
         }
     }

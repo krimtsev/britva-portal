@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Throwable;
+use App\Utils\Telnums;
 
 class YclientsController extends Controller
 {
@@ -18,44 +19,56 @@ class YclientsController extends Controller
             $params = [
                 "start_date" => $date,
                 "end_date"   => $date,
-                "company_id" => 41120
             ];
 
             $client = new YclientsService($params);
 
-            $records = $client->getRecordsList();
-
-            if (!is_array($records)) return [
-                "error" => "Ошибка получения списка записей"
-            ];
-
-            $recordsIds = [];
-            foreach ($records as $record) {
-                $recordsIds[] = $record["id"];
-            }
-
-            $visits = $client->getVisitedForPeriod($recordsIds);
+            $partners = Telnums::getTelnumsList();
 
             $result = [];
 
-            foreach ($visits as $visit) {
-                if (!array_key_exists("last_visit_date", $visit) ||
-                    Carbon::parse($visit["last_visit_date"])->diffInDays($date, false) < 0
-                ) {
-                    continue;
+            foreach ($partners as $key => $partner) {
+                if (!array_key_exists("send_visits", $partner) || $partner["send_visits"] !== true) continue;
+
+                $client->setCompanyId($partner["company_id"]);
+
+                $records = $client->getRecordsList();
+
+                if (!is_array($records)) return [
+                    "error" => "Ошибка получения списка записей"
+                ];
+
+                $recordsIds = [];
+
+                foreach ($records as $record) {
+                    $recordsIds[] = $record["id"];
                 }
 
-                $id = $visit["id"];
+                $visits = $client->getVisitedForPeriod($recordsIds);
 
-                $result[] = [
-                    "id"              => $id,
-                    "name"            => $visit["name"],
-                    "phone"           => $visit["phone"],
-                    "visits_count"    => $visit["visits_count"],
-                    "services"        => array_key_exists($id, $records)
-                                            ? $records[$id]["services"]
-                                            : [],
-                ];
+                foreach ($visits as $visit) {
+                    if (!array_key_exists("last_visit_date", $visit) ||
+                        Carbon::parse($visit["last_visit_date"])->diffInDays($date, false) < 0
+                    ) {
+                        continue;
+                    }
+
+                    $id = $visit["id"];
+
+                    $tg_chat_id = $partner["tg_chat_id"];
+
+                    $result[$tg_chat_id][] = [
+                        "id"              => $id,
+                        "name"            => $visit["name"],
+                        "phone"           => $visit["phone"],
+                        "visits_count"    => $visit["visits_count"],
+                        "services"        => array_key_exists($id, $records)
+                            ? $records[$id]["services"]
+                            : [],
+                        "partner_name"    => $partner["name"]
+                    ];
+                }
+
             }
 
             return $result;
