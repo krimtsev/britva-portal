@@ -56,8 +56,9 @@ class YclientsController extends Controller
                     $id = $visit["id"];
 
                     $tg_chat_id = $partner["tg_chat_id"];
+                    $company_id = $partner["company_id"];
 
-                    $result[$tg_chat_id][] = [
+                    $result[$tg_chat_id][$company_id][] = [
                         "id"              => $id,
                         "name"            => $visit["name"],
                         "phone"           => $visit["phone"],
