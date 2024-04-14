@@ -537,7 +537,6 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e->getMessage());
-            dd($e->getMessage());
             return false;
         }
     }
@@ -552,7 +551,9 @@ class YclientsService
                 "fields"     => [
                     "id",
                     "name",
-                    "phone"
+                    "phone",
+                    "visits_count",
+                    "last_visit_date"
                 ],
                 "filters"    => [
                     [
