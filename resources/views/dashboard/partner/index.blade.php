@@ -3,6 +3,11 @@
 
     <section>
         <div class="mb-2 flex justify-content-end">
+            @if ($is_disabled)
+                <a href="{{ route('d.partner.index') }}" class="button mr-2">{{ __('Показать активные') }}</a>
+            @else
+                <a href="{{ route('d.partner.index', ["disabled" => true]) }}" class="button mr-2">{{ __('Показать отключенные') }}</a>
+            @endif
             <a href="{{ route('d.partner.create') }}" class="button">{{ __('Добавить') }}</a>
         </div>
 
@@ -22,7 +27,11 @@
                 </thead>
                 <tbody	>
                     @foreach ($partners as $partner)
-                        <tr>
+                        <tr
+                            @if ($partner->disabled)
+                                style="background: rgba(141, 60, 173, 0.1)"
+                            @endif
+                        >
                             <td> {{ $partner->name }}</td>
                             <td> {{ $partner->organization }}</td>
                             <td class="text-center"> {{ $partner->inn }}</td>

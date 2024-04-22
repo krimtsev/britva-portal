@@ -12,7 +12,7 @@ class MissedCallsController extends Controller
     public function index()
     {
         $partners = Partner::select("id", "name", "yclients_id", "tg_active", "tg_chat_id", "tg_pay_end")
-            ->orderBy('name', 'ASC')
+            ->orderBy('name', 'asc')
             ->paginate(200);
 
         return view('dashboard.missed-calls.index', compact('partners'));

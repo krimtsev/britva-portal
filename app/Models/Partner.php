@@ -24,6 +24,7 @@ class Partner extends Model
         'mango_telnum',
         'address',
         'start_at',
+        'disabled',
 
         'tg_active',
         'tg_chat_id',

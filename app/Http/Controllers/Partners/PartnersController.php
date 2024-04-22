@@ -10,11 +10,15 @@ use Illuminate\Support\Facades\Auth;
 class PartnersController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $partners = Partner::orderBy('name', 'ASC')->paginate(200);
+        $is_disabled = (bool) $request->query("disabled");
 
-        return view('dashboard.partner.index', compact('partners'));
+        $partners = Partner::orderBy('name', 'ASC')
+            ->where('disabled', '=', $is_disabled)
+            ->paginate(200);
+
+        return view('dashboard.partner.index', compact('partners', 'is_disabled'));
     }
 
     public function create()
@@ -39,6 +43,8 @@ class PartnersController extends Controller
         ]);
 
         $data["telnums"] = json_encode($data["telnums"]);
+
+        $data['disabled'] = !is_null($request->disabled) ? true : false;
 
         Partner::create($data);
 
@@ -78,6 +84,8 @@ class PartnersController extends Controller
             $data["telnums"] = null;
         }
 
+        $data['disabled'] = !is_null($request->disabled) ? true : false;
+
         $partner->update($data);
 
         return redirect()->route('d.partner.index');
@@ -95,6 +103,40 @@ class PartnersController extends Controller
         $partners = Partner::orderBy('id', 'DESC')->paginate(200);
 
         return view('profile.partners.index', compact('partners'));
+    }
+
+    public function contacts() {
+        $result = Partner::select('id', 'name', 'telnums')
+            ->where('disabled', '=', false)
+            ->get();
+
+        $partners = [];
+
+        foreach ($result as $one) {
+            $id = $one->id;
+            $partners[$id] = [
+                "name" => $one->name,
+                "telnums" => []
+            ];
+
+            if (!is_null($one->telnums)) {
+                $telnums = json_decode($one->telnums, true);
+
+                foreach ($telnums as $telnum) {
+
+
+                    if (!is_null($telnum["number"])) {
+                        $partners[$id]["telnums"][] = [
+                            "number" => $telnum["number"],
+                            "name" => $telnum["name"]
+                        ];
+                    }
+                }
+            }
+
+        }
+
+        return view('static.contact-franchise', compact('partners'));
     }
 
 

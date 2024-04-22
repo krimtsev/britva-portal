@@ -141,6 +141,12 @@
                 </div>
 
                 <div class="col-12">
+                    <h5>Статус партнера</h5>
+                    <input type="checkbox" id="disabled" name="disabled"  {{ $partner->disabled ? 'checked' : ''}}>
+                    <label for="disabled">Партнер заблокирован</label>
+                </div>
+
+                <div class="col-12">
                     <button type="submit" class="fit primary ">Обновить</button>
                 </div>
             </div>
