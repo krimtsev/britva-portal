@@ -30,18 +30,22 @@ class YclientsService
     {
         $this->app_token = env('YCLIENTS_APP_TOKEN', '');
         $this->partner_token = env('YCLIENTS_PARTNER_TOKEN', '');
-        $this->company_id = $params["company_id"];
+
+        if (array_key_exists('company_id', $params)) {
+            $this->company_id = $params["company_id"];
+        }
 
         if (array_key_exists('start_date', $params)) {
             $this->start_date = $params["start_date"];
         }
+
         if (array_key_exists('end_date', $params)) {
             $this->end_date = $params["end_date"];
         }
     }
 
-    public function updateCompanyId($company_id) {
-        $this->company_id = $company_id;
+    public function setCompanyId($id) {
+        $this->company_id = $id;
     }
 
     private function httpWithHeaders() {
@@ -295,9 +299,9 @@ class YclientsService
             // Услуги
 
             $FILTER_IDS = [
-			
+
 				// BRITVA
-			
+
                 // 5778125,  // ACUMEN
 				// 1846923,  // BLACK MASK
 				// 9771809,  // DEPOT
@@ -334,7 +338,7 @@ class YclientsService
 				// 6540050,  // ТОНИРОВАНИЕ БОРОДЫ
 				// 6540052,  // ТОНИРОВАНИЕ ГОЛОВЫ
 				// 1510473,  // УКЛАДКА БЕЗ СТРИЖКИ
-				
+
 				// SODA
 
                 // НОГТЕВОЙ СЕРВИС
@@ -464,15 +468,15 @@ class YclientsService
                 12846293, // УХОДЫ KEVIN MURPHY ДЛЯ ОКРАШЕННЫХ ВОЛОС В ДЕНЬ ОКРАШИВАНИЯ (КОРОТКИЕ)
                 12846294, // УХОДЫ KEVIN MURPHY ДЛЯ ОКРАШЕННЫХ ВОЛОС В ДЕНЬ ОКРАШИВАНИЯ (СРЕДНИЕ)
                 12846295, // УХОДЫ KEVIN MURPHY ДЛЯ ОКРАШЕННЫХ ВОЛОС В ДЕНЬ ОКРАШИВАНИЯ (ДЛИННЫЕ)
-				
+
             ];
 
             // Услуги в комплексе
 
             $SERVICES_COST = [
-				
+
 				// BRITVA
-			
+
                 // 5855572 => 1600, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК - 1600 рублей
                 // 5855566 => 400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК - 400 рулей
                 // 13458944 => 2800, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT - 2800 рублей
@@ -497,7 +501,7 @@ class YclientsService
                 // 12320307 => 2800, // МУЖСКАЯ СТРИЖКА + DEPOT // ЭКСПЕРТ - 2800 рублей
                 // 12320304 => 3200, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК // ЭКСПЕРТ - 3200 рублей
                 // 12320306 => 400, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // ЭКСПЕРТ - 400 рублей
-				
+
 				// НОГТЕВОЙ СЕРВИС
 
                 13821260 => 1200, // СНЯТИЕ ГЕЛЬ-ЛАКА + МАНИКЮР + УКРЕПЛЕНИЕ ГЕЛЕМ + ПОКРЫТИЕ ГЕЛЬ-ЛАКОМ
@@ -561,7 +565,7 @@ class YclientsService
             $total = 0;
 
             foreach ($response["data"] as $one) {
-                if (!is_array($one["services"]) && count($one["services"]) === 0)
+                if (!is_array($one["services"]) || count($one["services"]) === 0)
                     continue;
 
                 foreach ($one["services"] as $service) {
@@ -643,22 +647,119 @@ class YclientsService
                 return false;
             }
 
-            $resullt = [];
+            $result = [];
 
             foreach ($response["data"] as $one) {
-                if (!is_array($one["services"]) && count($one["services"]) === 0)
+                if (!is_array($one["services"]) || count($one["services"]) === 0)
                     continue;
 
                 $date = Carbon::parse($one["date"])->format('Y-m-d');
 
-                if (!array_key_exists($date, $resullt)){
-                    $resullt[$date] = 1;
+                if (!array_key_exists($date, $result)){
+                    $result[$date] = 1;
                 } else {
-                    $resullt[$date] += 1;
+                    $result[$date] += 1;
                 }
             }
 
-            return $resullt;
+            return $result;
+
+        } catch (Throwable $e) {
+            report($e->getMessage());
+            return false;
+        }
+    }
+
+    public function getRecordsList() {
+        try {
+            $query = http_build_query([
+                "start_date" => $this->start_date,
+                "end_date"   => $this->end_date,
+                "count"      => $this->count,
+            ]);
+
+            $url = sprintf("https://api.yclients.com/api/v1/records/%s?%s", $this->company_id, $query);
+
+            $response = $this->httpWithHeaders()->get($url);
+
+            $response = $response->json($key = null);
+
+            if(!$response["success"]) {
+                return false;
+            }
+
+            $result = [];
+
+            foreach ($response["data"] as $one) {
+                if (!is_array($one["services"]) || count($one["services"]) === 0 ||
+                    !is_array($one["client"]) || !array_key_exists("id", $one["client"]))
+                    continue;
+
+                try {
+                    $clientId = $one["client"]["id"];
+
+                    if (!array_key_exists($clientId, $result)) {
+                        $result[$clientId] = [
+                            "id"       => $clientId,
+                            "name"     => $one["client"]["name"],
+                            "phone"    => $one["client"]["phone"],
+                            "services" => array_map(function($service) { return $service["title"]; }, $one["services"]),
+                        ];
+                    }
+                } catch (Throwable $e) {
+                    report(json_encode($one));
+                    continue;
+                }
+            }
+
+            return $result;
+
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
+    }
+
+    public function getVisitedForPeriod($ids) {
+        try {
+            $values = array_unique($ids);
+
+            $body = json_encode([
+                "page"       => 1,
+                "page_size"  => $this->count,
+                "fields"     => [
+                    "id",
+                    "name",
+                    "phone",
+                    "visits_count",
+                    "last_visit_date"
+                ],
+                "filters"    => [
+                    [
+                        "type"   => "id",
+                        "state"  => [
+                            "value" => $values
+                        ],
+                    ]
+                ],
+                "order_by"   => "last_visit_date",
+                "order_by_direction" => "desc",
+                "operation"  => "AND"
+            ]);
+
+            $url = sprintf("https://api.yclients.com/api/v1/company/%s/clients/search", $this->company_id);
+
+            $response = $this->httpWithHeaders()
+                ->withBody($body, 'application/json')
+                ->post($url);
+
+            $response = $response->json($key = null);
+
+            if(!$response["success"]) {
+                return false;
+            }
+
+            return $response["data"];
 
         } catch (Throwable $e) {
             report($e->getMessage());

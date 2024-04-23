@@ -13,6 +13,7 @@ Route::group(['prefix' => 'partners'], function () {
 
     Route::get('/{partner}/edit', [PartnersController::class, 'edit'])->name('d.partner.edit');
     Route::patch('/{partner}', [PartnersController::class, 'update'])->name('d.partner.update');
+    Route::get('/{partner}', function () { return redirect()->route('d.partner.index'); });
 
     Route::delete('/{partner}', [PartnersController::class, 'destroy'])->name('d.partner.delete');
 

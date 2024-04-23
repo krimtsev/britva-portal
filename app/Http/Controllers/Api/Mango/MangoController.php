@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Throwable;
+use App\Utils\Telnums;
 
 class MangoController extends Controller
 {
@@ -48,7 +49,7 @@ class MangoController extends Controller
 
         list($cachedTelnumsList, $ids) = self::getCachedTelnums($start_date);
 
-        $telnumsList = $this->getTelnumsList();
+        $telnumsList = Telnums::getTelnumsList();
 
         if (count($data) !== 0) {
             foreach ($data[0]["list"] as $one) {
@@ -195,7 +196,7 @@ class MangoController extends Controller
 
         if (count($data) !== 0) {
             $table = [];
-            $telnumsList = $this->getTelnumsList();
+            $telnumsList = Telnums::getTelnumsList();
 
             foreach ($telnumsList as $telnum => $value) {
                 $table[$telnum] = [
@@ -232,43 +233,6 @@ class MangoController extends Controller
                     "isActive" => $value["isActive"],
                 ];
             }
-        }
-
-        return $result;
-    }
-
-    protected function getTelnumsList() {
-        $partnerName = env('PARTNER_NAME', '');
-        $folder = sprintf("mango/%s/telnums.json", $partnerName);
-
-        $list = storage_path($folder);
-
-        if (is_string($list)) {
-            if (!file_exists($list)) {
-                throw new Error(sprintf('file "%s" does not exist', $list));
-            }
-
-            $json = file_get_contents($list);
-
-            if (!$list = json_decode($json, true)) {
-                throw new Error('invalid json for auth config');
-            }
-
-            return $list;
-        }
-
-        return [];
-    }
-
-    protected function getPartnersList() {
-        $list = $this->getTelnumsList();
-        $result = [];
-
-        foreach ($list as $value) {
-            $result[$value['tg_chat_id']][] = [
-                "name"       => $value["name"],
-                "isActive"   => array_key_exists("active", $value) ? $value["active"] : false,
-            ];
         }
 
         return $result;

@@ -2,16 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Mango\MangoController;
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+use App\Http\Controllers\Api\Yclients\YclientsController;
+use App\Utils\Telnums;
+
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
@@ -21,5 +14,7 @@ Route::group(['middleware' => ['api_token']], function () {
     Route::get('/mango', [MangoController::class, 'index']);
     Route::get('/mango/test', [MangoController::class, 'test']);
     Route::get('/mango/statistics', [MangoController::class, 'getStatisticsForPastDay']);
-    Route::get('/mango/partners-list', [MangoController::class, 'getPartnersList']);
+    Route::get('/mango/partners-list', [Telnums::class, 'getPartnersList']);
+
+    Route::get('/yclients/visited', [YclientsController::class, 'getVisitsMonthAgo']);
 });
