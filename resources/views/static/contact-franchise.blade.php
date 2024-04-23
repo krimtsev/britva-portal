@@ -2,13 +2,13 @@
     <x-header-section title="Контакты владельцев франшиз" />
     <section>
 		<table id="table-franchise" class="table">
-			<col width="30%" valign="top">
-			<col width="45%" valign="top">
+			<col width="50%" valign="top">
+			<col width="50%" valign="top">
 
 			<thead>
 				<tr>
 					<th>Филиал</th>
-					<th>Телефон</th>
+					<th>Контакты партнеров и их руководителей</th>
 				</tr>
 			</thead>
             @foreach ($partners as $partner)
@@ -16,11 +16,11 @@
                     <td>{{ $partner["name"] }}</td>
                     <td>
                         @foreach ($partner["telnums"] as $telnum)
+                            <a href="https://wa.me/{{ $telnum["number"] }}">+{{ $telnum["number"] }}</a>
                             @if($telnum["name"])
-                                {{ $telnum["name"]  }},
+                                {{ $telnum["name"]  }}
+							</br>
                             @endif
-                            {{ $telnum["number"] }}
-                            <br />
                         @endforeach
                     </td>
                 </tr>
