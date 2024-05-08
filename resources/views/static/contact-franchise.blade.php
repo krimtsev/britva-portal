@@ -2,8 +2,8 @@
     <x-header-section title="Контакты владельцев франшиз" />
     <section>
 		<table id="table-franchise" class="table">
-			<col width="30%" valign="top">
-			<col width="45%" valign="top">
+			<col width="50%" valign="top">
+			<col width="50%" valign="top">
 
 			<thead>
 				<tr>

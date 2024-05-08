@@ -26,11 +26,19 @@ class YclientsService
     /** Дата окончания выборки */
     private $end_date;
 
-    public function __construct($params)
+    public function __construct($params = [])
     {
         $this->app_token = env('YCLIENTS_APP_TOKEN', '');
         $this->partner_token = env('YCLIENTS_PARTNER_TOKEN', '');
 
+        $this->updateParams($params);
+    }
+
+    public function setCompanyId($id) {
+        $this->company_id = $id;
+    }
+
+    public function updateParams($params) {
         if (array_key_exists('company_id', $params)) {
             $this->company_id = $params["company_id"];
         }
@@ -42,10 +50,6 @@ class YclientsService
         if (array_key_exists('end_date', $params)) {
             $this->end_date = $params["end_date"];
         }
-    }
-
-    public function setCompanyId($id) {
-        $this->company_id = $id;
     }
 
     private function httpWithHeaders() {
