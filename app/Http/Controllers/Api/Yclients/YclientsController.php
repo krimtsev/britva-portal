@@ -52,9 +52,9 @@ class YclientsController extends Controller
                 $visits = $client->getVisitedForPeriod($recordsIds);
 
                 foreach ($visits as $visit) {
-                    if (!array_key_exists("last_visit_date", $visit) &&
-                        Carbon::parse($visit["last_visit_date"])->diffInDays($date, false) < 0 &&
-                        ($clients_key === "new_client_days" && $visit["visits_count"] != 1)
+                    if (!array_key_exists("last_visit_date", $visit) ||
+                        Carbon::parse($visit["last_visit_date"])->diffInDays($date, false) < 0 ||
+                        $clients_key === "new_client_days" && $visit["visits_count"] != 1
                     ) continue;
 
                     $id = $visit["id"];
