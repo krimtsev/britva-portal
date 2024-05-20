@@ -8,9 +8,7 @@ use App\Models\Partner;
 use App\Utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Throwable;
 
 class ShowController extends Controller {
@@ -48,11 +46,19 @@ class ShowController extends Controller {
                     $client->setCompanyId($partner->yclients_id);
                     $companyStats = $client->getCompanyStats();
 
-                    $table[] = [
-                        "name" => $partner->name,
-                        "income_total" => number_format($companyStats["income_total"], 2, ',', ' '),
-                        "sum" => number_format(self::getPercentageOfSum($companyStats["income_total"]), 2, ',', ' ')
-                    ];
+                    if (is_array($companyStats) && array_key_exists("income_total", $companyStats)) {
+                        $table[] = [
+                            "name" => $partner->name,
+                            "income_total" => number_format($companyStats["income_total"], 2, ',', ' '),
+                            "sum" => number_format(self::getPercentageOfSum($companyStats["income_total"]), 2, ',', ' ')
+                        ];
+                    } else {
+                        $table[] = [
+                            "name" => $partner->name,
+                            "income_total" => "-",
+                            "sum" => "-"
+                        ];
+                    }
                 }
 
                 Cache::put($cacheKey, $table, Carbon::now()->addMinutes(5));
@@ -69,6 +75,7 @@ class ShowController extends Controller {
             ));
 
         } catch (Throwable $e) {
+            dd($e);
             report($e);
 
             return [];
