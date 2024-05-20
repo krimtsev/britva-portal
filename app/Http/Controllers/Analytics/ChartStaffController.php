@@ -48,7 +48,11 @@ class ChartStaffController extends Controller
 
         $months = Utils::getMonthArray();
 
-        $partners = Partner::select("name", "yclients_id")->orderBy("name")->get();
+        $partners = Partner::select("name", "yclients_id")
+            ->where('yclients_id', '<>', "")
+            ->where('disabled', '<>', 1)
+            ->orderBy("name")
+            ->get();
 
         $selected_period = json_encode(array_map(function($date) {
             return Utils::dateToMothAndYear($date["start_date"]);

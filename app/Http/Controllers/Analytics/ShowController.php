@@ -45,7 +45,11 @@ class ShowController extends Controller
 
         $months = Utils::getMonthArray();
 
-        $partners = Partner::select("name", "yclients_id")->orderBy("name")->get();
+        $partners = Partner::select("name", "yclients_id")
+            ->where('yclients_id', '<>', "")
+            ->where('disabled', '<>', 1)
+            ->orderBy("name")
+            ->get();
 
         $selected_month = $end_date;
 

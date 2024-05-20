@@ -74,6 +74,8 @@ class ShowController extends Controller {
             $daysList = array_reverse(Utils::getListDaysByPeriod($start_date, $end_date));
 
             $partners = Partner::select("name", "yclients_id")
+                ->where('yclients_id', '<>', "")
+                ->where('disabled', '<>', 1)
                 ->orderBy("name")
                 ->get();
 
