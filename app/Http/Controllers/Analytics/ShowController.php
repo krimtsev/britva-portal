@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Analytics;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Analytics\TableReport;
-use App\Models\User;
+use App\Models\Partner;
 use App\Providers\RouteServiceProvider;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
@@ -26,7 +26,16 @@ class ShowController extends Controller
 
         // Если ID филиала не указан, берем его у авторизированного пользователя
         if (!$company_id) {
-            $company_id = Auth::user()->yclients_id;
+            $partner_id = Auth::user()->partner_id;
+            $partner = Partner::select("yclients_id")->where('id', $partner_id)->first();
+            if ($partner->yclients_id) {
+                $company_id = $partner->yclients_id;
+            } else {
+                $company_id_not_found = true;
+
+                // возвращаем ошибку если ID партнера не найден
+                return view("analytics.show", compact("company_id_not_found"));
+            }
         }
 
         // Признак принудительного одновдения из yclients
@@ -36,11 +45,11 @@ class ShowController extends Controller
 
         $months = Utils::getMonthArray();
 
-        $users = User::select("login", "name", "yclients_id")->orderBy("name")->get();
+        $partners = Partner::select("name", "yclients_id")->orderBy("name")->get();
 
         $selected_month = $end_date;
 
-        $selected_user = $company_id;
+        $selected_partner = $company_id;
 
         if($table instanceof Collection) {
             $table = $table->sortBy([["income_total", "desc"]]);
@@ -57,8 +66,8 @@ class ShowController extends Controller
             "total",
             "months",
             "selected_month",
-            "users",
-            "selected_user",
+            "partners",
+            "selected_partner",
             "isDashboard"
         ));
     }

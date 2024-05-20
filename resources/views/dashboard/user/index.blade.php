@@ -8,15 +8,16 @@
         </div>
 
         <div class="table-wrapper">
-            <table>
+            <table style="font-size: 0.8em;">
                 <thead>
                     <tr>
                         <th>№</th>
                         <th>Логин</th>
+                        <th>Имя</th>
                         <th>Роль</th>
-                        <th>Статус</th>
-                        <th>ID филиала</th>
+                        <th>Филиал</th>
                         <th>Последняя активность</th>
+                        <th>Статус</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
@@ -30,26 +31,49 @@
                             @endif
                         >
                             <td> {{ $user->id }}</td>
+
                             <td> <a href="{{ route('d.user.show', $user->id) }}"> {{ $user->login }} </a></td>
-                            <td> {{ $user->userRole() }}</td>
-                            <td> {{ $user->is_disabled ? 'Заблокирован' : 'Активен' }}</td>
 
                             <td>
                                 <div>
-                                    @if (empty($user->yclients_id))
-                                        Не указан
+                                    @if (empty($user->name))
+                                        -
                                     @else
-                                        <a href="https://yclients.com/timetable/{{ $user->yclients_id }}">{{ $user->yclients_id }}</a>
-                                    @endif
-                                </div>
-                                <div style="color: gray;">
-                                    @if ($user->partner_yclients_id)
-                                        {{ $user->partner_yclients_id }}
+                                        {{ $user->name }}
                                     @endif
                                 </div>
                             </td>
 
-                            <td> {{ $user->last_activity }}</td>
+                            <td> {{ $user->userRole() }}</td>
+
+                            <td>
+                                <div>
+                                    @if (empty($user->partner_name))
+                                        -
+                                    @else
+                                        <a href="{{ route('d.partner.edit', $user->partner_id) }}">{{ $user->partner_name }}</a>
+                                    @endif
+                                </div>
+                            </td>
+
+                            <td>
+                                <div>
+                                    @if (empty($user->last_activity))
+                                        -
+                                    @else
+                                        {{ $user->last_activity }}
+                                    @endif
+                                </div>
+                            </td>
+
+                            <td class="text-center">
+                                @if (!$user->is_disabled)
+                                    <i class="fa fa-check color-success"></i>
+                                @else
+                                    <i class="fa fa-ban color-danger"></i>
+                                @endif
+                            </td>
+
                             <td>
                                 @if (Route::has('d.user.edit'))
                                     <a href="{{ route('d.user.edit', $user->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>
