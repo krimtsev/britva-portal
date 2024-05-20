@@ -11,7 +11,7 @@ class IndexController extends Controller
     public function __invoke()
     {
         $users = User::leftJoin('partners', 'users.partner_id', '=', 'partners.id')
-            ->select('users.*', 'partners.yclients_id as partner_yclients_id')
+            ->select('users.*', 'partners.name as partner_name', "partners.id as partner_id")
             ->orderBy('id', 'DESC')
             ->paginate(250);
 

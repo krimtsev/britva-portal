@@ -5,7 +5,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        @if (empty($selected_user) && !Auth::user()->isAccessRightAdminOrHigher())
+        @if (empty($selected_partner) && !Auth::user()->isAccessRightAdminOrHigher())
             <x-data-empty description="Не указан индентификатор филиала" />
         @else
             <x-wrapper-content-loader>
@@ -17,8 +17,8 @@
                         <x-analytics-form
                             :months="$months"
                             :selectedMonth="$selected_month"
-                            :users="$users"
-                            :selectedUser="$selected_user"
+                            :partners="$partners"
+                            :selectedPartner="$selected_partner"
                             :isDashboard="$isDashboard"
                         />
                     </form>
@@ -27,7 +27,7 @@
                         @csrf
 
                         <input type="text" style="display: none;" value="{{ $selected_month }}" name="month" />
-                        <input type="text" style="display: none;" value="{{ $selected_user }}" name="company_id" />
+                        <input type="text" style="display: none;" value="{{ $selected_partner }}" name="company_id" />
 
                         <div class="flex justify-content-start mb-2">
                             <div class="col-3 ">

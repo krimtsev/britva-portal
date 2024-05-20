@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Royalty;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Analytics\Throwable;
 use App\Http\Services\YclientsService;
-use App\Models\User;
+use App\Models\Partner;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Throwable;
 
 class ShowController extends Controller {
 
@@ -25,7 +25,16 @@ class ShowController extends Controller {
 
         // Если ID филиала не указан, берем его у авторизированного пользователя
         if (!$company_id) {
-            $company_id = Auth::user()->yclients_id;
+            $partner_id = Auth::user()->partner_id;
+            $partner = Partner::select("yclients_id")->where('id', $partner_id)->first();
+            if ($partner->yclients_id) {
+                $company_id = $partner->yclients_id;
+            } else {
+                $company_id_not_found = true;
+
+                // возвращаем ошибку если ID партнера не найден
+                return view("royalty.show", compact("company_id_not_found"));
+            }
         }
 
         try {
@@ -64,11 +73,13 @@ class ShowController extends Controller {
 
             $daysList = array_reverse(Utils::getListDaysByPeriod($start_date, $end_date));
 
-            $users = User::select("login", "name", "yclients_id")->orderBy("name")->get();
+            $partners = Partner::select("name", "yclients_id")
+                ->orderBy("name")
+                ->get();
 
             $selected_month = $end_date;
 
-            $selected_user = $company_id;
+            $selected_partner = $company_id;
 
             $total = [];
 
@@ -93,8 +104,8 @@ class ShowController extends Controller {
             return view("royalty.show", compact(
                 "months",
                 "selected_month",
-                "users",
-                "selected_user",
+                "partners",
+                "selected_partner",
                 "daysList",
                 "table",
                 "total"

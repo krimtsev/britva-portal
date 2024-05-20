@@ -21,7 +21,6 @@ class User extends Authenticatable
         'name',
         'password',
         'role_id',
-        'yclients_id',
         'is_disabled',
         'last_activity',
         'partner_id'

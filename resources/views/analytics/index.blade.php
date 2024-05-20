@@ -5,7 +5,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        @if (empty($selected_user) && Auth::user()->isUser())
+        @if (isset($company_id_not_found) || (empty($selected_partner) && Auth::user()->isUser()))
             <x-data-empty description="Не указан индентификатор филиала" />
         @else
             <x-wrapper-content-loader>
@@ -16,8 +16,8 @@
                         <x-analytics-form
                             :months="$months"
                             :selectedMonth="$selected_month"
-                            :users="$users"
-                            :selectedUser="$selected_user"
+                            :partners="$partners"
+                            :selectedPartner="$selected_partner"
                             :isDashboard="$isDashboard"
                         />
                     </form>
