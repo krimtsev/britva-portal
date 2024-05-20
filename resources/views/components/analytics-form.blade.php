@@ -1,4 +1,4 @@
-@props(['months', 'selectedMonth', 'users' => null, 'selectedUser' => null, 'staffId' => null, 'isDashboard' => null])
+@props(['months', 'selectedMonth', 'partners', 'selectedPartner', 'staffId' => null, 'isDashboard' => null])
 
 <div style="display: flex; gap: 1em;">
     <div style="min-width: 13em">
@@ -14,29 +14,25 @@
         </select>
     </div>
 
-    @if(!empty($users) && !empty($selectedUser))
-        @if((Auth::user()->isSysAdmin() || Auth::user()->isAdmin()) && empty($staffId))
-            <div style="min-width: 18em">
-                <select name="company_id" id="company_id" data-id="analytics-users">
-                    @foreach ($users as $user)
-                        @if (!empty($user->yclients_id))
-                            <option
-                                value="{{ $user->yclients_id }}"
-                                {{ $user->yclients_id == $selectedUser ? 'selected' : '' }}
-                            >
-                                @if (isset($user->name) && $user->name !== '')
-                                    {{ $user->name }}
-                                @else
-                                    {{ $user->login }}
-                                @endif
-                            </option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-        @else
-            <input type="hidden" value="{{ $selectedUser }}" name="company_id" />
-        @endif
+    @if((Auth::user()->isSysAdmin() || Auth::user()->isAdmin()) && empty($staffId))
+        <div style="min-width: 18em">
+            <select name="company_id" id="company_id" data-id="analytics-users">
+                @foreach ($partners as $partner)
+                    @if (!empty($partner->yclients_id))
+                        <option
+                            value="{{ $partner->yclients_id }}"
+                            {{ $partner->yclients_id == $selectedPartner ? 'selected' : '' }}
+                        >
+                            @if (isset($partner->name) && $partner->name !== '')
+                                {{ $partner->name }}
+                            @endif
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+    @else
+        <input type="hidden" value="{{ $selectedPartner }}" name="company_id" />
     @endif
 
     @if(!empty($staffId))

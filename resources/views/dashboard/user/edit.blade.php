@@ -31,13 +31,13 @@
                     </div>
 
                     <div class="col-12">
-                        <h5>Название филиала</h5>
+                        <h5>Имя пользователя</h5>
                         <input
                             id="name"
                             type="text"
                             name="name"
                             value="{{ $user->name }}"
-                            placeholder="Название филиала"
+                            placeholder="Имя пользователя"
                         />
                     </div>
 
@@ -59,17 +59,6 @@
                         <h5>Статус пользователя</h5>
                         <input type="checkbox" id="is_disabled" name="is_disabled"  {{ $user->is_disabled ? 'checked' : ''}}>
                         <label for="is_disabled">Пользователь заблокирован</label>
-                    </div>
-
-                    <div class="col-12">
-                        <h5>Yclients ID</h5>
-                        <input
-                            id="yclients_id"
-                            type="text"
-                            name="yclients_id"
-                            value="{{ $user->yclients_id }}"
-                            placeholder="Yclients ID"
-                        />
                     </div>
 
                     <div class="col-12">

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Jobs;
 
+use App\Models\Partner;
 use Illuminate\Http\Request;
 use App\Jobs\GenerateAnalyticsJob;
-use App\Models\User;
 use App\Utils\Utils;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -50,14 +50,17 @@ class IndexController extends Controller
             dd($e);
         }
 
-        $users = User::select("name", "yclients_id")->where('yclients_id', '<>', "")->orderBy("name")->get();
+        $partners = Partner::select("name", "yclients_id")
+            ->where('yclients_id', '<>', "")
+            ->orderBy("name")
+            ->get();
 
-        foreach ($users as $user) {
+        foreach ($partners as $partner) {
             GenerateAnalyticsJob::dispatch(
                 false,
                 $date["start_date"],
                 $date["end_date"],
-                $user->yclients_id
+                $partner->yclients_id
             )->onConnection('database')->onQueue("analytics");
         }
 

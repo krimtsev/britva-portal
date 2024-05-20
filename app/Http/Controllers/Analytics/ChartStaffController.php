@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Analytics;
 
-use App\Http\Controllers\Analytics\TableReport;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Partner;
 use App\Providers\RouteServiceProvider;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
@@ -19,7 +18,7 @@ class ChartStaffController extends Controller
         $selected_month = $request->input("month");
 
         // ID филиала
-        $selected_user = $request->input("company_id");
+        $selected_partner = $request->input("company_id");
 
         // ID сотрудника
         $staff_id = $request->input("staff_id");
@@ -32,7 +31,7 @@ class ChartStaffController extends Controller
         $table_list = [];
 
         foreach ($dates as $date) {
-            list($table, $total) = TableReport::get($isSync, $date["start_date"], $date["end_date"], $selected_user);
+            list($table, $total) = TableReport::get($isSync, $date["start_date"], $date["end_date"], $selected_partner);
 
             if($table instanceof Collection) {
                 $table_list[] = array_merge(...$table->where("staff_id", $staff_id)->toArray());
@@ -49,7 +48,11 @@ class ChartStaffController extends Controller
 
         $months = Utils::getMonthArray();
 
-        $users = User::select("login", "name", "yclients_id")->orderBy("name")->get();
+        $partners = Partner::select("name", "yclients_id")
+            ->where('yclients_id', '<>', "")
+            ->where('disabled', '<>', 1)
+            ->orderBy("name")
+            ->get();
 
         $selected_period = json_encode(array_map(function($date) {
             return Utils::dateToMothAndYear($date["start_date"]);
@@ -87,8 +90,8 @@ class ChartStaffController extends Controller
             "total",
             "months",
             "selected_month",
-            "users",
-            "selected_user",
+            "partners",
+            "selected_partner",
             "selected_period",
             "staff_id",
             "isDashboard"

@@ -16,7 +16,6 @@ class UpdateController extends Controller
             'login'       => 'required|string|min:3|max:50|unique:users,login,'.$user->id,
             'role_id'     => 'required|integer|regex:/[1-3]{1}/',
             'is_disabled' => 'nullable|string',
-            'yclients_id' => 'nullable|string|max:255',
             'partner_id'  => 'nullable|string',
         ]);
 

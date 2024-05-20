@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Analytics;
 
 use App\Http\Controllers\Analytics\TableReport;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Partner;
 use App\Providers\RouteServiceProvider;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
@@ -17,24 +17,28 @@ class ChartCompanyController extends Controller
         $selected_month = $request->input("month");
 
         // ID филиала
-        $selected_user = $request->input("company_id");
+        $selected_partner = $request->input("company_id");
 
         // Признак принудительного одновдения из yclients
         $isSync = $request->input("sync");
 
-        $dates = Utils::getPeriodMonthArray($selected_month, 4);
+        $dates = Utils::getPeriodMonthArray($selected_month, 6);
 
         $total_list = [];
 
         foreach ($dates as $date) {
-            list($table, $total) = TableReport::get($isSync, $date["start_date"], $date["end_date"], $selected_user);
+            list($table, $total) = TableReport::get($isSync, $date["start_date"], $date["end_date"], $selected_partner);
 
             $total_list[] = $total;
         }
 
         $months = Utils::getMonthArray();
 
-        $users = User::select("login", "name", "yclients_id")->orderBy("name")->get();
+        $partners = Partner::select("name", "yclients_id")
+            ->where('yclients_id', '<>', "")
+            ->where('disabled', '<>', 1)
+            ->orderBy("name")
+            ->get();
 
         $total_list = json_encode(array_reverse($total_list));
 
@@ -48,8 +52,8 @@ class ChartCompanyController extends Controller
             "total_list",
             "months",
             "selected_month",
-            "users",
-            "selected_user",
+            "partners",
+            "selected_partner",
             "selected_period",
             "isDashboard"
         ));
