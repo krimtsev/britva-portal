@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Royalty\Soda;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Analytics\Throwable;
 use App\Http\Services\YclientsService;
-use App\Models\User;
+use App\Models\Partner;
 use App\Utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Throwable;
 
 class ShowController extends Controller {
 
@@ -33,19 +33,23 @@ class ShowController extends Controller {
 
             $client = new YclientsService($params);
 
-            $users = User::select("name", "yclients_id")->where('yclients_id', '<>', "")->orderBy("name")->get();
+            $partners = Partner::select("name", "yclients_id")
+                ->where('yclients_id', '<>', "")
+                ->where('disabled', '<>', 1)
+                ->orderBy("name")
+                ->get();
 
             $table = [];
 
             if(Cache::has($cacheKey)) {
                 $table = Cache::get($cacheKey);
             } else {
-                foreach ($users as $user) {
-                    $client->updateCompanyId($user->yclients_id);
+                foreach ($partners as $partner) {
+                    $client->setCompanyId($partner->yclients_id);
                     $companyStats = $client->getCompanyStats();
 
                     $table[] = [
-                        "name" => $user->name,
+                        "name" => $partner->name,
                         "income_total" => number_format($companyStats["income_total"], 2, ',', ' '),
                         "sum" => number_format(self::getPercentageOfSum($companyStats["income_total"]), 2, ',', ' ')
                     ];
