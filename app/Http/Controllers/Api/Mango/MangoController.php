@@ -91,6 +91,8 @@ class MangoController extends Controller
                     "call_duration"      => $one["duration"],
                     "tg_chat_id"         => $telnumsList[$called_number]["tg_chat_id"],
                     "isActive"           => array_key_exists("active", $telnumsList[$called_number])
+                        ? $telnumsList[$called_number]["active"]
+                        : false
                 ];
             }
         }
