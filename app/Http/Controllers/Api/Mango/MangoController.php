@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Mango;
 
 use App\Http\Services\MangoService;
 use App\Http\Controllers\Controller;
+use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -40,7 +41,7 @@ class MangoController extends Controller
 
             $data = $service->get();
         } catch (Throwable $e) {
-            report("[MANGO] [ERROR] get: " . $e->getMessage());
+            ReportService::send("[MANGO] get", $e->getMessage());
         }
 
         if (array_key_exists("error", $data)) return $data;
@@ -79,7 +80,7 @@ class MangoController extends Controller
                         $start_date
                     );
                 } catch (Throwable $e) {
-                    report("[YCLIENTS] [ERROR] getClientName: " . $e->getMessage());
+                    ReportService::send("[YCLIENTS] getClientName", $e->getMessage());
                 }
 
                 $table[] = [
@@ -174,70 +175,73 @@ class MangoController extends Controller
     }
 
     public function getStatisticsForPastDay() {
-        $start_date = Carbon::today()->format('d.m.Y H:i:s');
-        $end_date = Carbon::tomorrow()->format('d.m.Y H:i:s');
-        $params = [
-            "start_date" => $start_date,
-            "end_date"   => $end_date,
-            "limit"      => 5000,
-        ];
-
-        $data = [];
         try {
+            $start_date = Carbon::today()->format('d.m.Y H:i:s');
+            $end_date = Carbon::tomorrow()->format('d.m.Y H:i:s');
+            $params = [
+                "start_date" => $start_date,
+                "end_date"   => $end_date,
+                "limit"      => 5000,
+            ];
+
+            $data = [];
+
             $service = new MangoService($params);
 
             $data = $service->get();
 
+            if (array_key_exists("error", $data)) return $data;
+
+            $result = [];
+
+            if (count($data) !== 0) {
+                $table = [];
+                $telnumsList = Telnums::getTelnumsList();
+
+                foreach ($telnumsList as $telnum => $value) {
+                    $table[$telnum] = [
+                        "total"      => 0,
+                        "missed"     => 0,
+                        "received"   => 0,
+                        "name"       => $value["name"],
+                        "tg_chat_id" => $value["tg_chat_id"],
+                        "isActive"   => array_key_exists("active", $value) ? $value["active"] : false
+                    ];
+                }
+
+                foreach ($data[0]["list"] as $one) {
+                    $called_number = $one["called_number"];
+
+                    if (!array_key_exists($called_number, $table)) {
+                        continue;
+                    }
+
+                    if ($one["context_status"] === 0) {
+                        $table[$called_number]["missed"] += 1;
+                    } else {
+                        $table[$called_number]["received"] += 1;
+                    }
+                    $table[$called_number]["total"] += 1;
+                }
+
+                foreach ($table as $value) {
+                    $result[$value['tg_chat_id']][] = [
+                        "missed"   => $value["missed"],
+                        "received" => $value["received"],
+                        "total"    => $value["total"],
+                        "name"     => $value["name"],
+                        "isActive" => $value["isActive"],
+                    ];
+                }
+            }
+
+            return $result;
+
         } catch (Throwable $e) {
-            report("[MANGO] [ERROR] getStatisticsForPastDay: " . $e->getMessage());
+            ReportService::send("[MANGO] getStatisticsForPastDay", $e->getMessage());
+
+            return [];
         }
-
-        if (array_key_exists("error", $data)) return $data;
-
-        $result = [];
-
-        if (count($data) !== 0) {
-            $table = [];
-            $telnumsList = Telnums::getTelnumsList();
-
-            foreach ($telnumsList as $telnum => $value) {
-                $table[$telnum] = [
-                    "total"      => 0,
-                    "missed"     => 0,
-                    "received"   => 0,
-                    "name"       => $value["name"],
-                    "tg_chat_id" => $value["tg_chat_id"],
-                    "isActive"   => array_key_exists("active", $value) ? $value["active"] : false
-                ];
-            }
-
-            foreach ($data[0]["list"] as $one) {
-                $called_number = $one["called_number"];
-
-                if (!array_key_exists($called_number, $table)) {
-                    continue;
-                }
-
-                if ($one["context_status"] === 0) {
-                    $table[$called_number]["missed"] += 1;
-                } else {
-                    $table[$called_number]["received"] += 1;
-                }
-                $table[$called_number]["total"] += 1;
-            }
-
-            foreach ($table as $value) {
-                $result[$value['tg_chat_id']][] = [
-                    "missed"   => $value["missed"],
-                    "received" => $value["received"],
-                    "total"    => $value["total"],
-                    "name"     => $value["name"],
-                    "isActive" => $value["isActive"],
-                ];
-            }
-        }
-
-        return $result;
     }
 
     public function test() {

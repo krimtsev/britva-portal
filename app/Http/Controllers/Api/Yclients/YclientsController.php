@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api\Yclients;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Throwable;
 use App\Utils\Telnums;
@@ -78,7 +77,7 @@ class YclientsController extends Controller
 
             return $result;
         } catch (Throwable $e) {
-            report($e->getMessage());
+            ReportService::send("getClientsVisits {$clients_key}", $e->getMessage());
             return false;
         }
     }
