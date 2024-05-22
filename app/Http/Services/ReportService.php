@@ -12,7 +12,9 @@ class ReportService
     static function send($id, $msg)
     {
         try {
-            $message = "[ERROR] {$id} {$msg}";
+            $partnerName = env('PARTNER_NAME', '');
+
+            $message = "[ERROR] [{$partnerName}] {$id} {$msg}";
 
             // Native report
             report($message);
