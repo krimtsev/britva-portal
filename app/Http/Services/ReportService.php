@@ -14,7 +14,7 @@ class ReportService
         try {
             $partnerName = env('PARTNER_NAME', '');
 
-            $message = "[ERROR] [{$partnerName}] {$id} {$msg}";
+            $message = substr("[ERROR] [{$partnerName}] {$id} {$msg}", 0, 400);
 
             // Native report
             report($message);
