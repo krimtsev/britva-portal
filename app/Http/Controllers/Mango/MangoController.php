@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Api\Mango;
+namespace App\Http\Controllers\Mango;
 
-use App\Http\Services\MangoService;
 use App\Http\Controllers\Controller;
+use App\Http\Services\MangoService;
 use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
+use App\Utils\Telnums;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Carbon\Carbon;
 use Throwable;
-use App\Utils\Telnums;
 
 class MangoController extends Controller
 {
-    protected $cacheMangoKey = "mango_last_telnums_call";
-    protected $cacheYclientsKey = "yclients_last_names_call";
-
-    protected $testCallKey = "mango_test_call";
+    const CACHE_MANGO_KEY = "mango_last_telnums_call";
+    const CACHE_YCLIENTS_KEY = "yclients_last_names_call";
+    const TEST_CALL_KEY = "mango_test_call";
 
     public function index(Request $request)
     {
@@ -98,14 +97,14 @@ class MangoController extends Controller
             }
         }
 
-        Cache::put($this->cacheMangoKey, $cachedTelnumsList, Carbon::now()->addMinutes(40));
+        Cache::put(self::CACHE_MANGO_KEY, $cachedTelnumsList, Carbon::now()->addMinutes(40));
 
         /*
          * Добавляем тестовый звонок
          */
-        if(Cache::has($this->testCallKey)) {
-            $table[] = Cache::get($this->testCallKey);
-            Cache::forget($this->testCallKey);
+        if(Cache::has(self::TEST_CALL_KEY)) {
+            $table[] = Cache::get(self::TEST_CALL_KEY);
+            Cache::forget(self::TEST_CALL_KEY);
         }
 
         return $table;
@@ -114,7 +113,7 @@ class MangoController extends Controller
     protected function getCachedTelnums($start_date): array
     {
         $timestamp = Carbon::parse($start_date);
-        $cached_list = Cache::get($this->cacheMangoKey, []);
+        $cached_list = Cache::get(self::CACHE_MANGO_KEY, []);
 
         $telnums_list = [];
         $ids = [];
@@ -136,7 +135,7 @@ class MangoController extends Controller
 
     protected function getClientName($company_id, $caller_number, $start_date) {
         $timestamp = Carbon::parse($start_date);
-        $cached_list = Cache::get($this->cacheYclientsKey, []);
+        $cached_list = Cache::get(self::CACHE_YCLIENTS_KEY, []);
         $telnums_list = [];
         $name = "";
 
@@ -169,7 +168,7 @@ class MangoController extends Controller
             "timestamp" => Carbon::now()->timestamp
         ];
 
-        Cache::put($this->cacheYclientsKey, $telnums_list, Carbon::now()->addMinutes(30));
+        Cache::put(self::CACHE_YCLIENTS_KEY, $telnums_list, Carbon::now()->addMinutes(30));
 
         return $name;
     }
@@ -258,7 +257,7 @@ class MangoController extends Controller
             "isActive"           => true
         ];
 
-        Cache::put($this->testCallKey, $data, Carbon::now()->addMinutes(30));
+        Cache::put(self::TEST_CALL_KEY, $data, Carbon::now()->addMinutes(30));
 
         return true;
     }

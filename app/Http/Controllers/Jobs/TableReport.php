@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Jobs;
 
 use App\Models\Partner;
 use Illuminate\Http\Request;
-use App\Jobs\GenerateAnalyticsJob;
+use App\Jobs\AnalyticsJob;
 use App\Utils\Utils;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Throwable;
 use App\Config\Constants;
 
-class IndexController extends Controller
+class TableReport extends Controller
 {
     public function __invoke(Request $request)
     {
@@ -56,7 +56,7 @@ class IndexController extends Controller
             ->get();
 
         foreach ($partners as $partner) {
-            GenerateAnalyticsJob::dispatch(
+            AnalyticsJob::dispatch(
                 false,
                 $date["start_date"],
                 $date["end_date"],

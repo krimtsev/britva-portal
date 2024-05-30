@@ -1,0 +1,2 @@
+api/yclients/lost-clients ==> api/lost-clients
+api/yclients/new-clients ==> api/new-clients
