@@ -94,7 +94,7 @@ class MangoService
             ];
 
             /** ПОЛУЧЕНИЕ ДАННЫХ ПО ЗВОНКАМ */
-            sleep(20);
+            sleep(30);
 
             $url = "https://app.mango-office.ru/vpbx/stats/calls/result";
 
