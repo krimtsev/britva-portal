@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api\Yclients;
+namespace App\Http\Controllers\Analytics;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
+use App\Utils\Telnums;
 use Carbon\Carbon;
 use Throwable;
-use App\Utils\Telnums;
 
-class YclientsController extends Controller
+class ClientsVisitsController extends Controller
 {
+    const LOST_CLIENTS = "lost_client_days";
+    const NEW_CLIENTS = "new_client_days";
+
     private function getClientsVisits($clients_key)
     {
         try {
@@ -53,7 +56,7 @@ class YclientsController extends Controller
                 foreach ($visits as $visit) {
                     if (!array_key_exists("last_visit_date", $visit) ||
                         Carbon::parse($visit["last_visit_date"])->diffInDays($date, false) < 0 ||
-                        ($clients_key === "new_client_days" && $visit["visits_count"] != 1)
+                        ($clients_key === self::NEW_CLIENTS && $visit["visits_count"] != 1)
                     ) continue;
 
                     $id = $visit["id"];
@@ -83,10 +86,10 @@ class YclientsController extends Controller
     }
 
     public function getLostClients() {
-        return $this->getClientsVisits("lost_client_days");
+        return $this->getClientsVisits(self::LOST_CLIENTS);
     }
 
     public function getNewClients() {
-        return $this->getClientsVisits("new_client_days");
+        return $this->getClientsVisits(self::NEW_CLIENTS);
     }
 }

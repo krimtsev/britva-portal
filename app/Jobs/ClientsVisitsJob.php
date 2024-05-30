@@ -8,28 +8,28 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Http\Controllers\Analytics\TableReport;
+use Throwable;
 
-class GenerateAnalyticsJob implements ShouldQueue, ShouldBeUnique
+class ClientsVisitsJob implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $isSync;
-    protected $start_date;
-    protected $end_date;
+    protected $subDay;
     protected $company_id;
+    protected $type;
+    protected $tg_chat_id;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($isSync, $start_date, $end_date, $company_id)
+    public function __construct($subDay, $type, $company_id, $tg_chat_id)
     {
-        $this->isSync = $isSync;
-        $this->start_date = $start_date;
-        $this->end_date = $end_date;
+        $this->subDay = $subDay;
+        $this->type = $type;
         $this->company_id = $company_id;
+        $this->tg_chat_id = $tg_chat_id;
     }
 
     /**
@@ -48,7 +48,7 @@ class GenerateAnalyticsJob implements ShouldQueue, ShouldBeUnique
      */
     public function retryUntil()
     {
-        return now()->addMinutes(100);
+        return now()->addMinutes(5);
     }
 
     /**
@@ -58,7 +58,7 @@ class GenerateAnalyticsJob implements ShouldQueue, ShouldBeUnique
      */
     public function uniqueId()
     {
-        return $this->company_id;
+        return sprintf("%s_%s", $this->type, $this->company_id);
     }
 
     /**
@@ -69,13 +69,13 @@ class GenerateAnalyticsJob implements ShouldQueue, ShouldBeUnique
     public function handle()
     {
         try {
-            TableReport::get(
+           /* TableReport::get(
                 $this->isSync,
                 $this->start_date,
                 $this->end_date,
                 $this->company_id,
-            );
-        } catch (Exception $exception) {
+            );*/
+        } catch (Throwable $exception) {
             $this->release($this->attempts() * 5);
         }
     }
