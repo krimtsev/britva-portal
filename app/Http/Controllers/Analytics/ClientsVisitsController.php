@@ -65,15 +65,17 @@ class ClientsVisitsController extends Controller
                     $company_id = $partner["company_id"];
 
                     $result[$tg_chat_id][$company_id][] = [
-                        "id"           => $id,
-                        "name"         => $visit["name"],
-                        "phone"        => $visit["phone"],
-                        "visits_count" => $visit["visits_count"],
-                        "services"     => array_key_exists($id, $records)
+                        "id"            => $id,
+                        "name"          => $visit["name"],
+                        "phone"         => $visit["phone"],
+                        "visits_count"  => $visit["visits_count"],
+                        "services"      => array_key_exists($id, $records)
                             ? $records[$id]["services"]
                             : [],
-                        "partner_name" => $partner["name"],
-                        "days"         => $client_days
+                        "partner_name"  => $partner["name"],
+                        "days"          => $client_days,
+                        "selected_date" => $date,
+                        "company_id"    => $company_id
                     ];
                 }
             }
