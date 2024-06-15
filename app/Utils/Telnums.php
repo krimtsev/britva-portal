@@ -2,8 +2,6 @@
 
 namespace App\Utils;
 
-use App\Config\Constants;
-
 class Telnums
 {
     static public function getTelnumsList() {

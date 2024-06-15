@@ -4,6 +4,7 @@ namespace App\Utils;
 
 
 use App\Config\Constants;
+use Carbon\Carbon;
 
 class Utils
 {
@@ -33,13 +34,12 @@ class Utils
 
     public static function getMonthArray($start = null, $end = null) {
         $start_date = $start
-            ? date('Y-m-d', strtotime($start))
+            ? Carbon::now()->startOfMonth()->format('Y-m-d')
             : Constants::START_DATE;
 
         $end_date = $end
             ? date('Y-m-d', strtotime($end))
-            : date("Y-m-d", strtotime("-1 month",strtotime(date('Y-m-d'))));
-
+            : Carbon::now()->startOfMonth()->subMonth(1)->format('Y-m-d');
 
         $start_timestamp = self::dateToTimestamp($start_date);
         $end_timestamp = self::dateToTimestamp($end_date);

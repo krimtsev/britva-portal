@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\MangoService;
 use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
-use App\Utils\Telnums;
+use App\Models\Partner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -49,7 +49,7 @@ class MangoController extends Controller
 
         list($cachedTelnumsList, $ids) = self::getCachedTelnums($start_date);
 
-        $telnumsList = Telnums::getTelnumsList();
+        $telnumsList = self::getTelnumsList();
 
         if (count($data) !== 0) {
             foreach ($data[0]["list"] as $one) {
@@ -74,7 +74,7 @@ class MangoController extends Controller
                 $client_name = "";
                 try {
                     $client_name = $this->getClientName(
-                        $telnumsList[$called_number]["company_id"],
+                        $telnumsList[$called_number]["yclients_id"],
                         $one["caller_number"],
                         $start_date
                     );
@@ -90,8 +90,8 @@ class MangoController extends Controller
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"],
                     "tg_chat_id"         => $telnumsList[$called_number]["tg_chat_id"],
-                    "isActive"           => array_key_exists("active", $telnumsList[$called_number])
-                        ? $telnumsList[$called_number]["active"]
+                    "isActive"           => array_key_exists("tg_active", $telnumsList[$called_number])
+                        ? $telnumsList[$called_number]["tg_active"]
                         : false
                 ];
             }
@@ -126,6 +126,35 @@ class MangoController extends Controller
         }
 
         return [$telnums_list, $ids];
+    }
+
+    protected function getTelnumsList(): array
+    {
+        $telnumsList = [];
+
+        $tg_pay_end = Carbon::now()->format('Y-m-d');
+
+        $partners = Partner::select(
+            "name",
+            "yclients_id",
+            "mango_telnum",
+            "tg_chat_id",
+            "tg_active",
+            "lost_client_days",
+            "repeat_client_days",
+            "new_client_days",
+        )
+            ->where('yclients_id', '<>', "")
+            ->where('disabled', '<>', 1)
+            ->where("tg_active", 1)
+            ->where('tg_pay_end', '>', $tg_pay_end)
+            ->get();
+
+        foreach ($partners as $partner) {
+            $telnumsList[$partner->mango_telnum] = $partner->toArray();
+        }
+
+        return $telnumsList;
     }
 
     protected function createID($timestamp, $called_number): string
@@ -195,7 +224,7 @@ class MangoController extends Controller
 
             if (count($data) !== 0) {
                 $table = [];
-                $telnumsList = Telnums::getTelnumsList();
+                $telnumsList = self::getTelnumsList();
 
                 foreach ($telnumsList as $telnum => $value) {
                     $table[$telnum] = [
@@ -204,7 +233,7 @@ class MangoController extends Controller
                         "received"   => 0,
                         "name"       => $value["name"],
                         "tg_chat_id" => $value["tg_chat_id"],
-                        "isActive"   => array_key_exists("active", $value) ? $value["active"] : false
+                        "isActive"   => array_key_exists("tg_active", $value) ? $value["tg_active"] : false
                     ];
                 }
 
