@@ -64,8 +64,9 @@ class MessagesController extends Controller
             }
 
             $body = [
-                "msg" => $request->description,
-                "tg_ids" => $tg_ids
+                "msg"     => $request->description,
+                "tg_ids"  => $tg_ids,
+                "partner" => env('PARTNER_NAME', '')
             ];
 
             Http::withOptions([
