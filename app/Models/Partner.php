@@ -11,29 +11,33 @@ class Partner extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'partners';
+    protected $table = "partners";
 
     protected $fillable = [
-        'organization',
-        'inn',
-        'name',
-        'contract_number',
-        'email',
-        'telnums',
-        'yclients_id',
-        'mango_telnum',
-        'address',
-        'start_at',
-        'disabled',
+        "organization",
+        "inn",
+        "name",
+        "contract_number",
+        "email",
+        "telnums",
+        "yclients_id",
+        "mango_telnum",
+        "address",
+        "start_at",
+        "disabled",
 
-        'tg_active',
-        'tg_chat_id',
-        'tg_pay_end'
+        "tg_active",
+        "tg_chat_id",
+        "tg_pay_end",
+
+        "lost_client_days",
+        "repeat_client_days",
+        "new_client_days",
     ];
 
     public function user()
     {
-        return $this->belongsTo(Partner::class, 'partner_id');
+        return $this->belongsTo(Partner::class, "partner_id");
     }
 
 }

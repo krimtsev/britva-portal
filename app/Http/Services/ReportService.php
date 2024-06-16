@@ -14,6 +14,8 @@ class ReportService
         try {
             $partnerName = env('PARTNER_NAME', '');
 
+            //$str = explode($msg, "\r\n", 1);
+            //$message = sprintf("[ERROR] [%s] %s %s", $partnerName, $id, $str[0]);
             $message = substr("[ERROR] [{$partnerName}] {$id} {$msg}", 0, 400);
 
             // Native report

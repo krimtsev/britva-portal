@@ -45,6 +45,39 @@
                 </div>
 
                 <div class="col-12">
+                    <h5>Новые клиенты</h5>
+                    <input
+                        id="new_client_days"
+                        type="text"
+                        name="new_client_days"
+                        value="{{ $partner->new_client_days }}"
+                        placeholder="0"
+                    />
+                </div>
+
+                <div class="col-12">
+                    <h5>Повторные клиенты</h5>
+                    <input
+                        id="repeat_client_days"
+                        type="text"
+                        name="repeat_client_days"
+                        value="{{ $partner->repeat_client_days }}"
+                        placeholder="0"
+                    />
+                </div>
+
+                <div class="col-12">
+                    <h5>Потерянные клиенты</h5>
+                    <input
+                        id="lost_client_days"
+                        type="text"
+                        name="lost_client_days"
+                        value="{{ $partner->lost_client_days }}"
+                        placeholder="0"
+                    />
+                </div>
+
+                <div class="col-12">
                     <button type="submit" class="fit primary ">Обновить</button>
                 </div>
             </div>

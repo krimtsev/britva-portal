@@ -15,6 +15,7 @@
             <table style="font-size: 0.8em;">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Название филиала</th>
                         <th>Организация</th>
                         <th class="text-center">ИНН</th>
@@ -25,13 +26,14 @@
                         <th>Действия</th>
                     </tr>
                 </thead>
-                <tbody	>
+                <tbody>
                     @foreach ($partners as $partner)
                         <tr
                             @if ($partner->disabled)
                                 style="background: rgba(141, 60, 173, 0.1)"
                             @endif
                         >
+                            <td> {{ $loop->iteration }} </td>
                             <td> {{ $partner->name }}</td>
                             <td> {{ $partner->organization }}</td>
                             <td class="text-center"> {{ $partner->inn }}</td>

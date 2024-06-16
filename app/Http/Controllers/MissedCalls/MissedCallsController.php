@@ -11,7 +11,18 @@ class MissedCallsController extends Controller
 
     public function index()
     {
-        $partners = Partner::select("id", "name", "yclients_id", "tg_active", "tg_chat_id", "tg_pay_end")
+        $partners = Partner::select(
+            "id",
+            "name",
+            "yclients_id",
+            "tg_active",
+            "tg_chat_id",
+            "tg_pay_end",
+            "new_client_days",
+            "repeat_client_days",
+            "lost_client_days",
+        )
+            ->where("disabled", 0)
             ->orderBy('name', 'asc')
             ->paginate(200);
 
@@ -26,9 +37,12 @@ class MissedCallsController extends Controller
     public function update(Partner $partner, Request $request)
     {
         $data = $request->validate([
-            'tg_active'       => 'boolean',
-            'tg_chat_id'      => 'nullable|string|max:255',
-            'tg_pay_end'      => 'nullable|date_format:Y-m-d',
+            'tg_active'          => 'boolean',
+            'tg_chat_id'         => 'nullable|string|max:255',
+            'tg_pay_end'         => 'nullable|date_format:Y-m-d',
+            'new_client_days'    => 'required|integer',
+            'repeat_client_days' => 'required|integer',
+            'lost_client_days'   => 'required|integer'
         ]);
 
         $partner->update($data);
