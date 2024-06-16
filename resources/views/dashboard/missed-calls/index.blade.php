@@ -2,6 +2,10 @@
     <x-header-section title="Пропущенные звонки" />
 
     <section>
+        <div class="mb-2 flex justify-content-end">
+            <a href="{{ route('d.messages.index') }}" class="button mr-2">{{ __('Отправка сообщения') }}</a>
+        </div>
+
         <div class="table-wrapper">
             <table style="font-size: 0.8em;">
                 <thead>

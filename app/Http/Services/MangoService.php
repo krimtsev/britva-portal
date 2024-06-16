@@ -54,10 +54,6 @@ class MangoService
         return hash("sha256", $this->vpbx_api_key . $json . $this->salt);
     }
 
-    /**
-     * "context_status":
-     * "context_type": 1 - входящие, 2 - истодящие, 3 - внутренние.
-     */
     public function get() {
         try {
             /** ПОЛУЧЕНИЕ КЛЮЧА */
