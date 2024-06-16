@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', '
     require __DIR__ . '/dashboard/royalty.php';
     require __DIR__ . '/dashboard/partners.php';
     require __DIR__ . '/dashboard/missed-calls.php';
+    require __DIR__ . '/dashboard/messages.php';
 });
 
 /**

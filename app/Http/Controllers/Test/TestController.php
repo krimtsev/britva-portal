@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class TestController extends Controller {
 
-    public function updateTelnums(Request $request) {
+    public function updateTelnums() {
         $partners = Telnums::getTelnumsList();
 
         foreach ($partners as $key => $partner) {
