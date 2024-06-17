@@ -34,11 +34,11 @@ class Utils
 
     public static function getMonthArray($start = null, $end = null) {
         $start_date = $start
-            ? Carbon::now()->startOfMonth()->format('Y-m-d')
-            : Constants::START_DATE;
+            ? Carbon::parse($start)->startOfMonth()->format('Y-m-d')
+            : Carbon::parse(Constants::START_DATE)->startOfMonth()->format('Y-m-d');
 
         $end_date = $end
-            ? date('Y-m-d', strtotime($end))
+            ? Carbon::parse($end)->startOfMonth()->format('Y-m-d')
             : Carbon::now()->startOfMonth()->subMonth(1)->format('Y-m-d');
 
         $start_timestamp = self::dateToTimestamp($start_date);
@@ -47,7 +47,7 @@ class Utils
         $start_month_timestamp = strtotime(date('F Y', $start_timestamp));
         $current_month_timestamp = strtotime(date('F Y', $end_timestamp));
 
-        $arr_month = array();
+        $arr_month = [];
 
         while( $current_month_timestamp >= $start_month_timestamp ) {
             $arr_month[strtolower(date('Y-m-t', $end_timestamp))] = self::getMonth(date('n', $end_timestamp)) .' '. date('Y', $end_timestamp);

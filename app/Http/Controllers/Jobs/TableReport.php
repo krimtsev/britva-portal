@@ -52,6 +52,7 @@ class TableReport extends Controller
 
         $partners = Partner::select("name", "yclients_id")
             ->where('yclients_id', '<>', "")
+            ->where('disabled', '<>', 1)
             ->orderBy("name")
             ->get();
 
