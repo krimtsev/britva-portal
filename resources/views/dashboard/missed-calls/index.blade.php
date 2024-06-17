@@ -50,13 +50,6 @@
                                     {{ $partner->lost_client_days }}
                                 @endif
                             </td>
-                            <td class="text-center">
-                                @if ($partner->tg_pay_end <= 0)
-                                    -
-                                @else
-                                    {{ $partner->tg_pay_end }}
-                                @endif
-                            </td>
                             <td class="text-center"> {{ $partner->tg_pay_end }}</td>
                             <td class="text-center">
                                 @if ($partner->tg_active)
