@@ -70,10 +70,10 @@
                                     {{ $partner->id === $user->partner_id ? 'selected' : '' }}
                                     value="{{ $partner->id }}"
                                 >
-                                    @if ($partner->organization)
-                                        {{ $partner->organization }}
+                                    @if ($partner->name)
+                                        {{ $partner->name }}
                                     @endif
-                                    ({{ $partner->contract_number }})
+                                    ({{ $partner->organization }})
                                 </option>
                             @endforeach
                         </select>

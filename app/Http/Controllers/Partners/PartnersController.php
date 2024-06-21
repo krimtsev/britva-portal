@@ -100,7 +100,7 @@ class PartnersController extends Controller
 
 
     public function partnerIndex() {
-        $partners = Partner::orderBy('name')->paginate(200);
+        $partners = Partner::orderBy('id', 'DESC')->paginate(200);
 
         return view('profile.partners.index', compact('partners'));
     }
