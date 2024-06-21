@@ -6,8 +6,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ИП</th>
                         <th>Название филиала</th>
+                        <th>Организация</th>
                         <th>Номер договора</th>
                         <th>ID Yclients</th>
                         <th>Адрес</th>
@@ -17,6 +17,7 @@
                 <tbody>
                     @foreach ($partners as $partner)
                         <tr>
+                            <td> {{ $partner->name }}</td>
                             <td>
                                 @if($partner->organization)
                                     {{ $partner->organization }}
@@ -24,7 +25,6 @@
                                     -
                                 @endif
                             </td>
-                            <td> {{ $partner->name }}</td>
                             <td> {{ $partner->contract_number }}</td>
                             <td>
                                 @if (empty($partner->yclients_id))
