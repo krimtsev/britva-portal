@@ -22,8 +22,6 @@ Route::group(['middleware' => ['api_token']], function () {
 
     // Тестовые роуты
     Route::get('/update-telnums', [TestController::class, 'updateTelnums']);
-
-
-    Route::get('/staff', [StaffController::class, 'index']);
-    Route::post('/staff', [StaffController::class, 'index']);
 });
+
+Route::get('/staff', [StaffController::class, 'index']);

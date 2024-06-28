@@ -9,30 +9,49 @@ use Illuminate\Support\Facades\Http;
 
 class StaffController extends Controller
 {
+    const URL = "https://api.telegram.org";
+
+    private $chatId = "";
+
+    private function website() {
+        $token = env('TELEGRAM_BOT_TOKEN', '');
+        return sprintf("%s/%s", self::URL, $token);
+    }
+
+    function sendMessage($text) {
+        $query = http_build_query([
+            "chat_id"    => $this->chatId,
+            "text"       => $text,
+            "parse_mode" => "html"
+        ]);
+
+        $url =  sprintf("%s/sendMessage?%s", $this->website(), $query);
+
+        Http::get($url);
+    }
+
     function index(Request $request) {
-        $update = json_decode($request, true);
+        $message = $request->input("message");
 
-        ReportService::send($request);
-
-        if(!$update) {
+        if(!$message) {
             exit;
         }
 
-        if(isset($update["message"])) {
-            $message = $update["message"];
-            $chatId = $message["chat"]["id"];
+        $this->chatId = $message["chat"]["id"];
 
-            $website = "https://api.telegram.org/bot7318392454:AAF3IdsFqWSrnKv7PiKdsh_jHADeTfwED00";
+        $text = $message["text"];
 
-            $query = http_build_query([
-                "chat_id"    => $chatId,
-                "text"       => "Привет! Это приватный бот. Если ты хочешь подключить его себе, пиши Диме в WhatsApp (https://wa.me/79994845317)",
-                "parse_mode" => "html"
-            ]);
-
-            $url = $website . "/sendMessage?" . $query;
-
-            Http::get($url);
+        switch ($text) {
+            case "/start":
+                $this->actionStart();
+            case "/start2":
+                // function start2
+            default:
+                $this->sendMessage($text);
         }
+    }
+
+    function actionStart() {
+        $this->sendMessage("");
     }
 }
