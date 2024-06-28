@@ -12,7 +12,6 @@ class EditController extends Controller
     public function __invoke(User $user)
     {
         $partners = Partner::select("id", "name", "contract_number", "organization")
-            ->where('yclients_id', '<>', "")
             ->orderBy("name")
             ->get();
 

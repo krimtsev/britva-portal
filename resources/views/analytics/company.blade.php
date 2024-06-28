@@ -63,8 +63,8 @@
         const income_goods = []
 
         total_list.forEach(total => {
-            income_total.push(total.income_total)
-            income_goods.push(total.income_goods)
+            income_total.push(total.income_total || 0)
+            income_goods.push(total.income_goods || 0)
         })
 
         const colors = ["#B0CB1F","#8D3CAD", "#FEB019"];
