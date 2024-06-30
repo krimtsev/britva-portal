@@ -21,14 +21,10 @@ class Staff extends Model
         'action'
     ];
 
-    public static function addStaff($table) {
+    public static function add($table) {
         self::updateOrCreate(
             [
-                "name"        => $table["name"],
                 "tg_chat_id"  => $table["tg_chat_id"],
-                "yclients_id" => $table["yclients_id"],
-                "staff_id"    => $table["staff_id"],
-                "action"      => $table["action"],
             ],
             $table
         );

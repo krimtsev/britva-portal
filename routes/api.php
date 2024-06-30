@@ -24,4 +24,4 @@ Route::group(['middleware' => ['api_token']], function () {
     Route::get('/update-telnums', [TestController::class, 'updateTelnums']);
 });
 
-Route::match(['get', 'post'], '/staff', [StaffController::class, 'index']);
+Route::post('/staff', [StaffController::class, 'index']);
