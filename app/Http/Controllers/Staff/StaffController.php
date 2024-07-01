@@ -149,7 +149,7 @@ class StaffController extends Controller
         ]);
     }
 
-    function actionYclientsId() {
+    private function actionYclientsId() {
         $partner = Partner::select("name")
             ->where('yclients_id', $this->text)
             ->first();
@@ -168,7 +168,7 @@ class StaffController extends Controller
         }
     }
 
-    function actionStaffId() {
+    private function actionStaffId() {
         $staff = Staff::select("yclients_id")
             ->where('tg_chat_id', $this->chatId)
             ->first();
