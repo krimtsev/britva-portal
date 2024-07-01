@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Post;
 
+use App\Config\Constants;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
@@ -14,7 +15,7 @@ class StoreController extends Controller
         $data = request()->validate([
             'title' => 'required|string',
             'description' => 'required|string',
-            'image' => 'image|mimes:jpg,jpeg,png|max:2048'
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         if(array_key_exists('image', $data)) {

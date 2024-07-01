@@ -108,6 +108,37 @@ class YclientsService
     }
 
     /**
+     * Получение данных по сотруднику
+     * @return false | array<string[]>
+     */
+
+    public function getStaffData($staff) {
+        try {
+            $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff/%s", $this->company_id, $staff);
+
+            $response = $this->httpWithHeaders()->get($url);
+
+            $response = $response->json($key = null);
+
+            if(!$response["success"]) {
+                return false;
+            }
+
+            $data = $response["data"];
+
+            return [
+                "id"             => $data["id"],
+                "name"           => $data["name"],
+                "specialization" => $data["specialization"],
+            ];
+
+        } catch (Throwable $e) {
+            report($e->getMessage());
+            return false;
+        }
+    }
+
+    /**
      * Получить основные показатели компании по сотруднику ?
      * @return false | array<int, string, string>
      */

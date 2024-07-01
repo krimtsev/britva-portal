@@ -55,10 +55,10 @@
                             <option value="" disabled selected> --- </option>
                             @foreach($partners as $partner)
                                 <option value="{{ $partner->id }}">
-                                    @if ($partner->organization)
-                                        {{ $partner->organization }}
+                                    @if ($partner->name)
+                                        {{ $partner->name }}
                                     @endif
-                                    ({{ $partner->contract_number }})
+                                    ({{ $partner->organization }})
                                 </option>
                             @endforeach
                         </select>

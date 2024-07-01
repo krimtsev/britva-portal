@@ -3,6 +3,7 @@
 use App\Http\Controllers\Analytics\ClientsVisitsController;
 use App\Http\Controllers\Jobs\ClientsVisits;
 use App\Http\Controllers\Mango\MangoController;
+use App\Http\Controllers\Staff\StaffController;
 use App\Http\Controllers\Test\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,5 +22,6 @@ Route::group(['middleware' => ['api_token']], function () {
 
     // Тестовые роуты
     Route::get('/update-telnums', [TestController::class, 'updateTelnums']);
-
 });
+
+Route::post('/staff', [StaffController::class, 'index']);
