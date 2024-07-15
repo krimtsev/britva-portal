@@ -108,12 +108,12 @@ class User extends Authenticatable
         return self::accessValueByRoleId($this->role_id) >= $value;
     }
 
-    public function isSysAdmin()
+    public function isSysAdmin(): bool
     {
         return $this->role_id == $this->roleList['SYS_ADMIN']['ID'];
     }
 
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->role_id == $this->roleList['ADMIN']['ID'];
     }
@@ -121,6 +121,11 @@ class User extends Authenticatable
     public function isUser()
     {
         return $this->role_id == $this->roleList['USER']['ID'];
+    }
+
+    public function isAdminOrSysAdmin(): bool
+    {
+        return $this->isAdmin() || $this->isSysAdmin();
     }
 
     public function isAccessRightAdminOrHigher() {
