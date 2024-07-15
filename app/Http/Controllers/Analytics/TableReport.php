@@ -28,8 +28,8 @@ class TableReport extends Controller
         }
 
         if ($isSync || (count($table) == 0 || !$total)) {
-
-            list($table, $total) = BranchReport::get($start_date, $end_date, $company_id);
+            $branchReport = new BranchReport($start_date, $end_date, $company_id);
+            list($table, $total) = $branchReport->get();
 
             if (!empty($table)) {
                 foreach ($table as $one) {
