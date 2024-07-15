@@ -28,7 +28,6 @@
                     <li><a href="{{ route('d.home.index') }}">Панель администратора</a></li>
                     <li><a href="{{ route('d.post.index') }}">Записи</a></li>
                     <li><a href="{{ route('d.page.index') }}">Страницы</a></li>
-                    <li><a href="{{ route('d.analytics.index') }}">Аналитика</a></li>
                     <li><a href="{{ route('d.royalty.index') }}">Роялти</a></li>
                     <li><a href="{{ route('d.partner.index') }}">Партнеры</a></li>
                 </ul>
