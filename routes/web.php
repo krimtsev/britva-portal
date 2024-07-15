@@ -39,18 +39,21 @@ require __DIR__ . '/static.php';
 /**
  * Панель системиного администратора
  */
-Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
+Route::group(['middleware' => ['auth', 'isAdminOrSysAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
     require __DIR__ . '/dashboard/index.php';
     require __DIR__ . '/dashboard/posts.php';
-    require __DIR__ . '/dashboard/users.php';
     require __DIR__ . '/dashboard/pages.php';
-    require __DIR__ . '/dashboard/sheets.php';
-    require __DIR__ . '/dashboard/digests.php';
     require __DIR__ . '/dashboard/analytics.php';
-    require __DIR__ . '/dashboard/jobs.php';
-    require __DIR__ . '/dashboard/mango.php';
     require __DIR__ . '/dashboard/royalty.php';
     require __DIR__ . '/dashboard/partners.php';
+});
+
+Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
+    require __DIR__ . '/dashboard/users.php';
+    require __DIR__ . '/dashboard/sheets.php';
+    require __DIR__ . '/dashboard/digests.php';
+    require __DIR__ . '/dashboard/jobs.php';
+    require __DIR__ . '/dashboard/mango.php';
     require __DIR__ . '/dashboard/missed-calls.php';
     require __DIR__ . '/dashboard/messages.php';
 });
@@ -62,5 +65,4 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'profile', 'view' => 'profil
     require __DIR__ . '/profile/home.php';
     require __DIR__ . '/profile/user.php';
     require __DIR__ . '/profile/analytics.php';
-    require __DIR__ . '/profile/partners.php';
 });

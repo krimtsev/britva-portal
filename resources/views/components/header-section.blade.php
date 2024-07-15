@@ -18,14 +18,16 @@
                     <li><a href="{{ route('p.home.index') }}" class="border-none">{{ __('Профиль') }}</a></li>
                 @endif
 
-                @if(!Route::is('d.*'))
-                    @if (Auth::user()->isSysAdmin())
-                        <li><a href="{{ route('d.user.index') }}" class="border-none">{{ __('Консоль') }}</a></li>
-                    @endif
-                @endif
-
                 @if(Route::is('d.*') || Route::is('p.*'))
                     <li><a href="{{ route('post.index') }}" class="border-none">{{ __('Портал') }}</a></li>
+                @endif
+
+                @if(!Route::is('d.*'))
+                    @if (Auth::user()->isSysAdmin())
+                        <li><a href="{{ route('d.user.index') }}" class="border-none">{{ __('Панель администратора') }}</a></li>
+                    @elseif (Auth::user()->isAdmin())
+                        <li><a href="{{ route('d.home.index') }}" class="border-none">{{ __('Панель администратора') }}</a></li>
+                    @endif
                 @endif
             @endauth
 
