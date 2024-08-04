@@ -42,16 +42,24 @@ class ShowController extends Controller {
             if(Cache::has($cacheKey)) {
                 $table = Cache::get($cacheKey);
             } else {
+                $total_sum = 0;
+                $total_income = 0;
+
                 foreach ($partners as $partner) {
                     $client->setCompanyId($partner->yclients_id);
                     $companyStats = $client->getCompanyStats();
 
                     if (is_array($companyStats) && array_key_exists("income_total", $companyStats)) {
+                        $sum = self::getPercentageOfSum($companyStats["income_total"]);
                         $table[] = [
                             "name" => $partner->name,
                             "income_total" => number_format($companyStats["income_total"], 2, ',', ' '),
-                            "sum" => number_format(self::getPercentageOfSum($companyStats["income_total"]), 2, ',', ' ')
+                            "sum" => number_format($sum, 2, ',', ' ')
                         ];
+
+                        $total_income += $companyStats["income_total"];
+                        $total_sum += $sum;
+
                     } else {
                         $table[] = [
                             "name" => $partner->name,
@@ -61,7 +69,13 @@ class ShowController extends Controller {
                     }
                 }
 
-                Cache::put($cacheKey, $table, Carbon::now()->addMinutes(5));
+                $table[] = [
+                    "name" => "",
+                    "income_total" => number_format($total_income, 2, ',', ' '),
+                    "sum" => number_format($total_sum, 2, ',', ' '),
+                ];
+
+                Cache::put($cacheKey, $table, Carbon::now()->addMinutes(60));
             }
 
             $months = Utils::getMonthArray();

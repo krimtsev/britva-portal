@@ -34,9 +34,15 @@
                             <tbody>
                             @foreach ($table as $one)
                                 <tr>
-                                    <td> {{ $one["name"] }} </td>
-                                    <td> {{ $one["income_total"] }} </td>
-                                    <td> {{ $one["sum"] }} </td>
+                                    @if ($loop->last)
+                                        <td> <b> Итого </b> </td>
+                                        <td> <b> {{ $one["income_total"] }} </b> </td>
+                                        <td> <b> {{ $one["sum"] }} </b> </td>
+                                    @else
+                                        <td> {{ $one["name"] }} </td>
+                                        <td> {{ $one["income_total"] }} </td>
+                                        <td> {{ $one["sum"] }} </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

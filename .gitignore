@@ -16,3 +16,4 @@ yarn-error.log
 /.idea
 /.vscode
 .token_github
+/storage/framework/cache/
