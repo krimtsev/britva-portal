@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Staff;
 
+use App\Http\Controllers\Analytics\BranchReport;
 use App\Http\Controllers\Controller;
 use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
 use App\Models\Partner;
 use App\Models\Staff;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Throwable;
@@ -33,13 +35,16 @@ class StaffController extends Controller
             "Введите корректный ID филиала. Его можно узнать у Администратора в разделе Обзор > Сводка"
         ],
         "staff_success" => [
-            "Выбран сотрудник: " => "staff_name"
+            "Выбран сотрудник: " => "staff_name",
+            "Выберите дальнейшие действия"
         ],
         "staff_error" => [
             "Указан не правильный ID сотрудника.",
             "Введите корректный ID сотрудника. Его можно узнать у Администратора в разделе Настройки > Сотрудники > выбрать сотрудника > посмотреть ID в адресной строке"
         ],
     ];
+
+    public $customCommands = ["Личная статистика"];
 
     public $actions = [
         "yclients_id" => "yclients_id",
@@ -69,12 +74,36 @@ class StaffController extends Controller
         return sprintf("%s/%s", self::URL, $token);
     }
 
-    function sendMessage($text) {
-        $query = http_build_query([
+    private function getInlineKeyBoard($data) {
+        return json_encode([
+            "inline_keyboard" => $data,
+        ]);
+    }
+
+    private function getKeyBoard($data) {
+        return json_encode([
+            "keyboard" => $data,
+            "one_time_keyboard" => false,
+            "resize_keyboard" => true
+        ]);
+    }
+
+    function sendMessage($text, $args = []) {
+        $params = [
             "chat_id"    => $this->chatId,
             "text"       => $text,
-            "parse_mode" => "html"
-        ]);
+            "parse_mode" => "html",
+        ];
+
+        if (array_key_exists("inline_keyboard", $args)) {
+            $params["reply_markup"] = $this->getInlineKeyBoard($args["inline_keyboard"]);
+        }
+
+        if (array_key_exists("keyboard", $args)) {
+            $params["reply_markup"] = $this->getKeyBoard($args["keyboard"]);
+        }
+
+        $query = http_build_query($params);
 
         $url =  sprintf("%s/sendMessage?%s", $this->website(), $query);
 
@@ -90,6 +119,7 @@ class StaffController extends Controller
         try {
             //$content = json_decode(file_get_contents("php://input"), true);
             $message = $request->input("message");
+            //$callback_query = $request->input("callback_query");
 
             if(!$message) {
                 return $this->response();
@@ -101,34 +131,44 @@ class StaffController extends Controller
 
             $isCommand = str_starts_with($this->text, '/');
 
-            ReportService::send("request", json_encode($message));
+            ReportService::send("message", json_encode($message));
+            //ReportService::send("callback_query", json_encode($content));
 
             if ($isCommand) {
                 switch ($this->text) {
                     case "/start":
                         $this->actionStart();
                         break;
+                    case "/buttons":
+                        $this->showButtons();
+                        break;
                     default:
                         $this->sendMessage("DEFAULT");
                 }
             } else {
-                $data = Staff::select("action")
-                    ->where('tg_chat_id', $this->chatId)
-                    ->first();
+                if (in_array($this->text, $this->customCommands)) {
+                    switch ($this->text) {
+                        case "Личная статистика":
+                            $this->showStatistics();
+                            break;
+                    }
 
-                ReportService::send("action", json_encode($data->action));
+                } else {
+                    $data = Staff::select("action")
+                        ->where('tg_chat_id', $this->chatId)
+                        ->first();
 
-                if (!$data) exit;
+                    if (!$data) exit;
 
-                switch ($data->action) {
-                    case $this->actions["yclients_id"]:
-                        $this->actionYclientsId();
-                        break;
-                    case $this->actions["staff_id"]:
-                        $this->actionStaffId();
-                        break;
+                    switch ($data->action) {
+                        case $this->actions["yclients_id"]:
+                            $this->actionYclientsId();
+                            break;
+                        case $this->actions["staff_id"]:
+                            $this->actionStaffId();
+                            break;
+                    }
                 }
-
             }
         } catch (Throwable $e) {
             ReportService::send("api", $e->getMessage());
@@ -193,5 +233,32 @@ class StaffController extends Controller
         } else {
             $this->sendMessage($this->getMessages("staff_error"));
         }
+    }
+
+    private function showButtons() {
+        $this->sendMessage("text", [
+            "keyboard" => [
+                [
+                    ["text" => "Личная статистика"],
+                ],
+                [
+                    ["text" => "Button 6"],
+                ]
+            ]
+        ]);
+    }
+
+    private function showStatistics() {
+/*        $staff = Staff::select("yclients_id")
+            ->where('tg_chat_id', $this->chatId)
+            ->first();
+
+        $start_date = Carbon::now()->startOfDay()->format('Y-m-d');
+        $end_date = Carbon::now()->format('Y-m-d');
+        $company_id = $staff->yclients_id;
+
+        $branchReport = new BranchReport($start_date, $end_date, $company_id);
+
+        $this->sendMessage("showStatistics");*/
     }
 }
