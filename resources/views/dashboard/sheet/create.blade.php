@@ -37,7 +37,7 @@
 
                 <!-- Break -->
                 <div class="col-12">
-                    <input type="submit" value="Создать" class="primary"></li>
+                    <input type="submit" value="Создать" class="primary">
                 </div>
             </div>
         </form>

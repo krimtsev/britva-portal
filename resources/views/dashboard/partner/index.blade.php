@@ -6,7 +6,7 @@
             @if ($is_disabled)
                 <a href="{{ route('d.partner.index') }}" class="button mr-2">{{ __('Показать активные') }}</a>
             @else
-                <a href="{{ route('d.partner.index', ["disabled" => true]) }}" class="button mr-2">{{ __('Показать отключенные') }}</a>
+                <a href="{{ route('d.partner.index', ['disabled' => true]) }}" class="button mr-2">{{ __('Показать отключенные') }}</a>
             @endif
             <a href="{{ route('d.partner.create') }}" class="button">{{ __('Добавить') }}</a>
         </div>

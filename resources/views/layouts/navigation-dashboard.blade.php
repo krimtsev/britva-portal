@@ -22,6 +22,7 @@
                     <li><a href="{{ route('d.royalty.index') }}">Роялти</a></li>
                     <li><a href="{{ route('d.partner.index') }}">Партнеры</a></li>
                     <li><a href="{{ route('d.missed-calls.index') }}">Пропущенные звонки</a></li>
+                    <li><a href="{{ route('d.upload.index') }}">Файлы</a></li>
                 </ul>
             @elseif(Auth::user()->isAdmin())
                 <ul>

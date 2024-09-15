@@ -316,3 +316,11 @@ html body div#wrapper div#main div.inner header#header ul.icons li a.icon.solid.
 .royalty .royalty-day-of-week {
     background: rgba(141, 60, 173, 0.1);
 }
+
+.gap-1 {
+    gap: 8px
+}
+
+.gap-2 {
+    gap: 16px
+}
