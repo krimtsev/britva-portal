@@ -66,7 +66,15 @@
 						<li><a href="https://disk.yandex.ru/d/gYdjTyCWu_bU3A" target="_blank">Макеты на НГ 2023-2024</a></li>
 					</ul>
 				</li>
-				<li><a href="https://disk.yandex.ru/d/ODcgMSK8CtAh9A" target="_blank">Видео на ТВ</a></li>
+				<li>
+					<span class="opener">Видео на ТВ</span>
+					<ul>
+						<li><a href="https://disk.yandex.ru/d/ODcgMSK8CtAh9A" target="_blank">Файлы для флешки</a></li>
+						<li><a href="https://rutube.ru/channel/44286383/videos/" target="_blank">Смотреть на Rutube</a></li>
+						<li><a href="https://vk.com/video/@britvabarber" target="_blank">Смотреть на VK Video</a></li>
+
+					</ul>
+				</li>
 				<li>
 					<span class="opener">Заявки</span>
 					<ul>
