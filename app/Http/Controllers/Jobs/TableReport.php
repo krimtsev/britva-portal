@@ -56,6 +56,8 @@ class TableReport extends Controller
             ->orderBy("name")
             ->get();
 
+        $partnerNames = [];
+
         foreach ($partners as $partner) {
             AnalyticsJob::dispatch(
                 false,
@@ -63,9 +65,13 @@ class TableReport extends Controller
                 $date["end_date"],
                 $partner->yclients_id
             )->onConnection('database')->onQueue("analytics");
+            $partnerNames[] =  $partner->name;
         }
 
-        return view('dashboard.jobs.start', compact("date"));
+        return view('dashboard.jobs.start', compact(
+            "date",
+            "partnerNames"
+        ));
     }
 
 }
