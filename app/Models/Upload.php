@@ -23,7 +23,7 @@ class Upload extends Model
 
     public function category()
     {
-        return $this->belongsTo(UploadCategories::class, 'category_id');
+        return $this->belongsTo(UploadCategories::class, 'category_id', 'id');
     }
 
     public function files()

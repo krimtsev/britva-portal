@@ -13,6 +13,7 @@ use App\Models\UploadFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\DB;
 
 class UploadController extends Controller
 {
@@ -104,22 +105,73 @@ class UploadController extends Controller
         $categorySlug = $request->route('category');
         $folderId = $request->route('folder');
 
-        $category = UploadCategories::select("id", "name", "slug")
-            ->where("slug", $categorySlug)
-            ->firstOrFail();
+        $categories = [];
+        $breadcrumbs  = [
+            "all" => [
+                "title" => "Все документы",
+                "path" => []
+            ],
+        ];
 
-        $query = Upload::select("id", "title", "folder")
-            ->where("category_id", $category->id);
+        $db = UploadCategories::select("id", "name", "slug");
 
-        if ($folderId) {
-            $query->where("folder", $folderId);
+        if ($categorySlug) $db->where("slug", $categorySlug);
+
+        foreach ($db->get() as $category) {
+            $categories[$category->id] = [
+                "id"   => $category->id,
+                "name" => $category->name,
+                "slug" => $category->slug,
+            ];
+
+            if ($categorySlug) {
+                $breadcrumbs["category"] = [
+                    "title" => $category->name,
+                    "path" => ["category" => $category->slug]
+                ];
+            }
+
+            $db = Upload::select("id", "title", "folder")
+                ->where("category_id", $category->id);
+
+            if ($folderId) $db->where("folder", $folderId);
+
+            $folders = $db->get();
+
+            foreach ($folders as $folder) {
+                $categories[$category->id]["folders"][] = $folder;
+
+                if ($folderId == $folder->folder) {
+                    $breadcrumbs["folder"] = [
+                        "title" => $folder->title,
+                        "path" => ["category" => $category->slug, "folder" => $folder->folder]
+                    ];
+                }
+            }
         }
 
-        $folders = $query->get();
-
         return view("cloud.index", compact(
-            "category",
-            "folders",
+            "categories",
+            "breadcrumbs",
+            "categorySlug",
+            "folderId"
+        ));
+    }
+
+    public function showShort(Request $request)
+    {
+        $categorySlug = $request->route('category');
+        $folderId = $request->route('folder');
+
+        $db = UploadCategories::select("id", "name", "slug");
+
+        if ($categorySlug) $db->where("slug", $categorySlug);
+
+        $categories = $db->get();
+
+        return view("cloud.__index", compact(
+            "categories",
+            "categorySlug",
             "folderId"
         ));
     }

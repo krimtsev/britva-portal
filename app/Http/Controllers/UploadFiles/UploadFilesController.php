@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadFilesController extends Controller
 {
+    public static function index() {
+        $files = UploadFile::orderBy("downloads", "DESC")->paginate(30);
+
+        return view("dashboard.upload-files.index", compact("files"));
+    }
+
     public static function addFile($folder, $upload_id, $file): void
     {
         $path = Storage::disk(UploadFile::FOLDER)->put($folder, $file);

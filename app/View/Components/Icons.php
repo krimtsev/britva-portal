@@ -17,6 +17,7 @@ class Icons extends Component
         "doc"    => "doc",
         "docx"   => "doc",
         "xls"    => "xls",
+        "xlsx"   => "xls",
         "pdf"    => "pdf",
         "txt"    => "txt",
         "png"    => "image",

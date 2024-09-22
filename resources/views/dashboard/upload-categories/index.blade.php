@@ -3,8 +3,9 @@
 
     <section>
         <div class="mb-2 flex justify-content-end gap-2">
-            <a href="{{ route('d.upload.index') }}" class="button">{{ __('Файлы') }}</a>
-            <a href="{{ route('d.upload-categories.create') }}" class="button">{{ __('Добавить') }}</a>
+            <a href="{{ route('d.upload-files.index') }}" class="button"> Файлы </a>
+            <a href="{{ route('d.upload.index') }}" class="button"> Группы файлов </a>
+            <a href="{{ route('d.upload-categories.create') }}" class="button"> Добавить </a>
         </div>
 
         <div class="table-wrapper">

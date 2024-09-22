@@ -1,10 +1,11 @@
 <x-admin-layout>
-    <x-header-section title="Список файлов" />
+    <x-header-section title="Группы файлов" />
 
     <section>
         <div class="mb-2 flex justify-content-end gap-2">
-            <a href="{{ route('d.upload-categories.index') }}" class="button">{{ __('Категории') }}</a>
-            <a href="{{ route('d.upload.create') }}" class="button">{{ __('Добавить') }}</a>
+            <a href="{{ route('d.upload-files.index') }}" class="button"> Файлы </a>
+            <a href="{{ route('d.upload-categories.index') }}" class="button"> Категории </a>
+            <a href="{{ route('d.upload.create') }}" class="button"> Добавить </a>
         </div>
 
         <div class="table-wrapper">

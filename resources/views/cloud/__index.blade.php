@@ -4,13 +4,19 @@
     <section>
         <header class="main mb-2">
             <h3>
-                @foreach($breadcrumbs as $key => $breadcrumb)
-                    @if($loop->last)
-                        {{ $breadcrumb['title'] }}
+                @if(!$categorySlug)
+                   Все документы
+                @else
+                    <a class="color-main" href="{{ route('upload.cloud') }}"> Все документы </a> /
+
+                    @if(!$folderId)
+                        {{ $categories->first()->name }}
                     @else
-                        <a class="color-main" href="{{ route('upload.cloud', $breadcrumb['path']) }}"> {{ $breadcrumb['title'] }} </a> /
+                        <a class="color-main" href="{{ route('upload.cloud', ["category" => $categories->first()->slug]) }}"> {{ $categories->first()->name }} </a> /
+
+                        {{ $categories->first()->folders->first()->title }}
                     @endif
-                @endforeach
+                @endif
             </h3>
         </header>
 
@@ -18,18 +24,18 @@
             @foreach($categories as $category)
                 @if(!$categorySlug)
                     <div class="col-12 mb">
-                        <a href="{{ route('upload.cloud', ['category' => $category['slug']]) }}">
+                        <a href="{{ route('upload.cloud', ["category" => $category->slug]) }}">
                             <div class="flex gap-2 items-center">
                                 <x-icons name="folder" />
-                                <div> {{ $category['name'] }} </div>
+                                <div> {{ $category->name }} </div>
                             </div>
                         </a>
                     </div>
                 @else
-                    @foreach($category['folders'] as $folder)
+                    @foreach($category->folders as $folder)
                         @if($categorySlug && !$folderId)
                             <div class="col-12 mb">
-                                <a href="{{ route('upload.cloud', ["category" => $category['slug'], "folder" => $folder->folder]) }}">
+                                <a href="{{ route('upload.cloud', ["category" => $category->slug, "folder" => $folder->folder]) }}">
                                     <div class="flex gap-2 items-center">
                                         <x-icons name="folder" />
                                         <div> {{ $folder->title }} </div>

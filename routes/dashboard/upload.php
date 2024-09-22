@@ -28,6 +28,7 @@ Route::group(['prefix' => 'upload-categories'], function () {
 });
 
 Route::group(['prefix' => 'upload-files'], function () {
+    Route::get('/', [UploadFilesController::class, 'index'])->name('d.upload-files.index');
     Route::get('/{file}/edit', [UploadFilesController::class, 'edit'])->name('d.upload-files.edit');
     Route::patch('/{file}', [UploadFilesController::class, 'update'])->name('d.upload-files.update');
     Route::get('/{file}/delete', [UploadFilesController::class, 'destroy'])->name('d.upload-files.delete');

@@ -24,4 +24,12 @@ class UploadFile extends Model
         'upload_id',
     ];
 
+    public function folders()
+    {
+        return $this->belongsTo(Upload::class, 'id', 'upload_id');
+    }
+
+    public function folder() {
+        return $this->hasOne(Upload::class, 'id', 'upload_id');
+    }
 }

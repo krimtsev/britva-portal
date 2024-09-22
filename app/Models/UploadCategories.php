@@ -28,4 +28,9 @@ class UploadCategories extends Model
     {
         return $this->hasMany(UploadCategories::class)->with('upload_categories');
     }
+
+    public function folders()
+    {
+        return $this->hasMany(Upload::class, 'category_id', 'id');
+    }
 }
