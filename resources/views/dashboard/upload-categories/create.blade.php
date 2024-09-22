@@ -23,6 +23,17 @@
                             placeholder="Категория"
                         />
                     </div>
+
+                    <div class="col-12">
+                        <h5>Уникальная ссылка</h5>
+                        <input
+                            id="slug"
+                            type="text"
+                            name="slug"
+                            :value="old('slug')"
+                            placeholder="Уникальная ссылка"
+                        />
+                    </div>
                 </div>
             </div>
 

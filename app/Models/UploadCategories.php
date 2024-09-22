@@ -16,6 +16,7 @@ class UploadCategories extends Model
     protected $fillable = [
         'name',
         'category_id',
+        'slug',
     ];
 
     public function categories()

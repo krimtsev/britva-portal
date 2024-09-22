@@ -101,18 +101,18 @@ class UploadController extends Controller
 
     public function show(Request $request)
     {
-        $categoryId = $request->route('category');
+        $categorySlug = $request->route('category');
         $folderId = $request->route('folder');
 
-        $category = UploadCategories::select("id", "name")
-            ->where("id", $categoryId)
+        $category = UploadCategories::select("id", "name", "slug")
+            ->where("slug", $categorySlug)
             ->firstOrFail();
 
         $query = Upload::select("id", "title", "folder")
-            ->where("category_id", $categoryId);
+            ->where("category_id", $category->id);
 
         if ($folderId) {
-            $query->where("id", $folderId);
+            $query->where("folder", $folderId);
         }
 
         $folders = $query->get();

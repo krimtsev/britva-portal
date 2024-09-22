@@ -7,7 +7,7 @@
                 @if(!$folderId)
                     {{ $category->name }}
                 @else
-                    <a class="color-main" href="{{ route('upload.cloud', $category->id) }}"> {{ $category->name }} </a>
+                    <a class="color-main" href="{{ route('upload.cloud', $category->slug) }}"> {{ $category->name }} </a>
                 @endif
 
                 @if($folderId)
@@ -21,7 +21,7 @@
 
                 @if(!$folderId)
                     <div class="col-12 mb">
-                        <a href="{{ route('upload.cloud', ["category" => $category->id, "folder" => $folder->id]) }}">
+                        <a href="{{ route('upload.cloud', ["category" => $category->slug, "folder" => $folder->folder]) }}">
                             <div class="flex gap-2 items-center">
                                 <x-icons
                                     name="folder"

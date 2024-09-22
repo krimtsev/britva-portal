@@ -16,6 +16,7 @@ class CreateUploadFilesTable extends Migration
         Schema::create('upload_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -31,7 +31,7 @@
 					<span class="opener">Документация</span>
 					<ul>
 						<li><a href="https://disk.yandex.ru/d/y3CMh7Hi8A3pyA" target="_blank">Облако документов</a></li>
-						<li><a href="/cloud/3">Облако документов (L)</a></li>
+						<li><a href="/cloud/first-category">Облако документов (L)</a></li>
 						<li><a href="/page/subscription">Абонементы</a></li>
 						<li><a href="/page/certificate">Сертификаты</a></li>
 						<li><a href="/page/rospotrebnadzor">Роспотребнадзор</a></li>
