@@ -37,6 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::get('sheet/{slug}', [PageSheetController::class, '__invoke'])
         ->name('sheet.index');
 
+    Route::get('cloud', function () {
+        return redirect()->route('post.index');
+    });
+
     Route::get('cloud/{category}/{folder?}', [UploadController::class, 'show'])
         ->name('upload.cloud');
 
