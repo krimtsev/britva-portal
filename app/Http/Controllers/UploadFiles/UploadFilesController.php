@@ -15,8 +15,8 @@ class UploadFilesController extends Controller
         $path = Storage::disk(UploadFile::FOLDER)->put($folder, $file);
 
         $origin = $file->getClientOriginalName();
-        $title = pathinfo($origin, PATHINFO_FILENAME);
         $ext = pathinfo($origin, PATHINFO_EXTENSION);
+        $title = str_replace(".".$ext, "", $origin);
 
         UploadFile::create([
             "title"     => $title,

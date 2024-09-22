@@ -20,7 +20,7 @@ class UploadUpdateRequest extends FormRequest
         return [
             'title'              => ['required', $unique],
             'category'           => ['required'],
-            'files.*'            => ['nullable', 'mimes:image,jpg,jpeg,png,tif,pdf,doc,docx,zip,xlsx'],
+            'files.*'            => ['nullable', 'mimes:image,jpg,jpeg,png,tif,pdf,doc,docx,zip,xlsx,xls,txt'],
         ];
     }
 }
