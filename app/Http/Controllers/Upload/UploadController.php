@@ -11,7 +11,6 @@ use App\Models\UploadCategories;
 use App\Models\Upload;
 use App\Models\UploadFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 
@@ -19,16 +18,16 @@ class UploadController extends Controller
 {
     public function index()
     {
-        $uploads = Upload::orderBy('id', 'DESC')->paginate(30);
+        $uploads = Upload::orderBy("id", "DESC")->paginate(30);
 
-        return view('dashboard.upload.index', compact('uploads'));
+        return view("dashboard.upload.index", compact("uploads"));
     }
 
     public function create()
     {
         $categories = UploadCategories::select("id", "name")->get();
 
-        return view('dashboard.upload.create', compact('categories'));
+        return view("dashboard.upload.create", compact("categories"));
     }
 
     public function store(UploadStoreRequest $request)
@@ -43,13 +42,13 @@ class UploadController extends Controller
             "category_id" => $validated["category"],
         ]);
 
-        if (array_key_exists('files', $validated)) {
-            foreach ($validated['files'] as $file) {
+        if (array_key_exists("files", $validated)) {
+            foreach ($validated["files"] as $file) {
                 UploadFilesController::addFile($folder, $upload->id, $file);
             }
         }
 
-        return redirect()->route('d.upload.index');
+        return redirect()->route("d.upload.index");
     }
 
     public function edit(Upload $upload)
@@ -60,13 +59,13 @@ class UploadController extends Controller
             ->get();
 
         foreach ($files as $file) {
-            $file["url"] = URL::signedRoute('upload.download', [
+            $file["url"] = URL::signedRoute("upload.download", [
                 "folder" => $upload->folder,
                 "file"   => $file->name
             ]);
         }
 
-        return view('dashboard.upload.edit', compact(
+        return view("dashboard.upload.edit", compact(
             "upload",
             "categories",
             "files"
@@ -84,24 +83,44 @@ class UploadController extends Controller
 
         $upload->save();
 
-        if (array_key_exists('files', $validated)) {
-            foreach ($validated['files'] as $file) {
+        if (array_key_exists("files", $validated)) {
+            foreach ($validated["files"] as $file) {
                 UploadFilesController::addFile($upload->folder, $upload->id, $file);
             }
         }
 
-        return redirect()->route('d.upload.index');
+        return redirect()->route("d.upload.index");
     }
 
     public function destroy(Upload $upload)
     {
         // TODO: Добавить логику удаления записи и связанных файлов
         // $file->delete();
-        // return redirect()->route('d.upload.index');
+        // return redirect()->route("d.upload.index");
     }
 
     public function show(Request $request)
     {
-        return view('cloud.index');
+        $categoryId = $request->route('category');
+        $folderId = $request->route('folder');
+
+        $category = UploadCategories::select("id", "name")
+            ->where("id", $categoryId)
+            ->firstOrFail();
+
+        $query = Upload::select("id", "title", "folder")
+            ->where("category_id", $categoryId);
+
+        if ($folderId) {
+            $query->where("id", $folderId);
+        }
+
+        $folders = $query->get();
+
+        return view("cloud.index", compact(
+            "category",
+            "folders",
+            "folderId"
+        ));
     }
 }

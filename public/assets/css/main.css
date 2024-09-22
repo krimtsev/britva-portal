@@ -3119,3 +3119,7 @@ button:disabled,
     font-size: 1.5em;
     margin-right: 0px !important;
 }
+
+.icon-files {
+    width: 100%;
+}
