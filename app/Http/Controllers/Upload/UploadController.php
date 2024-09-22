@@ -49,7 +49,7 @@ class UploadController extends Controller
             }
         }
 
-        return redirect()->route("d.upload.index");
+        return redirect()->route("d.upload.update", $upload->id);
     }
 
     public function edit(Upload $upload)
@@ -90,7 +90,7 @@ class UploadController extends Controller
             }
         }
 
-        return redirect()->route("d.upload.index");
+        return redirect()->route("d.upload.update", $upload->id);
     }
 
     public function destroy(Upload $upload)
