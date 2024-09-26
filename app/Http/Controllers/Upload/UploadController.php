@@ -26,7 +26,8 @@ class UploadController extends Controller
 
     public function create()
     {
-        $categories = UploadCategories::select("id", "name")->get();
+        $categories = Upload::select("id", "name")
+            ->get();
 
         return view("dashboard.upload.create", compact("categories"));
     }
@@ -35,17 +36,16 @@ class UploadController extends Controller
     {
         $validated = $request->validated();
 
-        $folder = Str::orderedUuid();
-
         $upload = Upload::create([
-            "title"       => $validated["title"],
-            "folder"      => $folder,
-            "category_id" => $validated["category"],
+            "name"          => $validated["name"],
+            "slug"          => $validated["slug"],
+            "category_id"   => $validated["category_id"],
+            "folder"        => Str::orderedUuid(),
         ]);
 
         if (array_key_exists("files", $validated)) {
             foreach ($validated["files"] as $file) {
-                UploadFilesController::addFile($folder, $upload->id, $file);
+                UploadFilesController::addFile($upload->folder, $upload->id, $file);
             }
         }
 
@@ -54,7 +54,10 @@ class UploadController extends Controller
 
     public function edit(Upload $upload)
     {
-        $categories = UploadCategories::select("id", "name")->get();
+        $categories = Upload::whereNull('category_id')
+            ->with('children')
+            ->get();
+
         $files = UploadFile::select("id", "name", "downloads", "title", "ext")
             ->where("upload_id", $upload->id)
             ->get();
@@ -78,8 +81,9 @@ class UploadController extends Controller
         $validated = $request->validated();
 
         $upload->fill([
-            "title"       => $validated["title"],
-            "category_id" => $validated["category"],
+            "name"         => $validated["name"],
+            "slug"         => $validated["slug"],
+            "category_id"  => $validated["category_id"],
         ]);
 
         $upload->save();

@@ -13,25 +13,16 @@ class CreateUploadFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('upload_categories', function (Blueprint $table) {
+        Schema::create('upload', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('folder')->unique();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('category_id')->references('id')->on('upload_categories');
-        });
-
-        Schema::create('upload', function (Blueprint $table) {
-            $table->id();
-            $table->string('title')->unique();
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('folder')->unique();
-            $table->timestamps();
-
-            $table->foreign('category_id')->on('upload_categories')->references('id');
+            $table->foreign('category_id')->references('id')->on('upload');
         });
 
         Schema::create('upload_files', function (Blueprint $table) {
@@ -59,6 +50,5 @@ class CreateUploadFilesTable extends Migration
     {
         Schema::dropIfExists('upload_files');
         Schema::dropIfExists('upload');
-        Schema::dropIfExists('upload_categories');
     }
 }

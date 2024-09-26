@@ -18,9 +18,10 @@ class UploadStoreRequest extends FormRequest
         $unique = Rule::unique('upload');
 
         return [
-            'title'              => ['required', $unique],
-            'category'           => ['required'],
-            'files.*'            => ['nullable', 'mimes:image,jpg,jpeg,png,tif,pdf,doc,docx,zip,xlsx,xls,txt'],
+            'name'         => ['required', 'min:3', $unique],
+            'category_id'  => ['nullable'],
+            'slug'         => ['required', 'alpha_dash', 'max:255', $unique],
+            'files.*'      => ['nullable', 'mimes:image,jpg,jpeg,png,tif,pdf,doc,docx,zip,xlsx,xls,txt'],
         ];
     }
 }

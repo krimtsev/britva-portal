@@ -2,10 +2,8 @@
     <x-header-section title="Список файлов" />
 
     <section>
-        <div class="mb-2 flex justify-content-end gap-2">
-            <a href="{{ route('d.upload-files.index') }}" class="button"> Файлы </a>
-            <a href="{{ route('d.upload.index') }}" class="button"> Группы файлов </a>
-            <a href="{{ route('d.upload-categories.index') }}" class="button"> Категории </a>
+        <div class="mb-2 flex justify-between gap-2">
+            <a href="{{ route('d.upload.index') }}" class="button"> Файлы </a>
         </div>
 
         <div class="table-wrapper">

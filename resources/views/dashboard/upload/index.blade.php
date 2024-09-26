@@ -2,9 +2,8 @@
     <x-header-section title="Группы файлов" />
 
     <section>
-        <div class="mb-2 flex justify-content-end gap-2">
-            <a href="{{ route('d.upload-files.index') }}" class="button"> Файлы </a>
-            <a href="{{ route('d.upload-categories.index') }}" class="button"> Категории </a>
+        <div class="mb-2 flex justify-between gap-2">
+            <a href="{{ route('d.upload-files.index') }}" class="button"> Список </a>
             <a href="{{ route('d.upload.create') }}" class="button"> Добавить </a>
         </div>
 
@@ -23,8 +22,14 @@
                     @foreach ($uploads as $upload)
                     <tr>
                         <td> {{ $upload->id }}</td>
-                        <td> {{ $upload->title }} </td>
-                        <td> {{ $upload->category->name }} </td>
+                        <td> {{ $upload->name }} </td>
+                        <td>
+                            @if (!$upload->category_id)
+                                Без категории
+                            @else
+                                {{ $upload->category->name }}
+                            @endif
+                        </td>
                         <td> {{ $upload->created_at }}</td>
                         <td>
                             @if (Route::has('d.upload.edit'))

@@ -12,7 +12,8 @@ class Upload extends Model
     protected $table = 'upload';
 
     protected $fillable = [
-        'title',
+        'name',
+        'slug',
         'folder',
         'category_id',
     ];
@@ -23,7 +24,17 @@ class Upload extends Model
 
     public function category()
     {
-        return $this->belongsTo(UploadCategories::class, 'category_id', 'id');
+        return $this->belongsTo(Upload::class, 'category_id', 'id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Upload::class, 'category_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Upload::class, 'category_id');
     }
 
     public function files()

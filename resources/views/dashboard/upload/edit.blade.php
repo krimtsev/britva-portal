@@ -17,17 +17,35 @@
                     <div class="col-12">
                         <h5>Название</h5>
                         <input
-                            id="title"
+                            id="name"
                             type="text"
-                            name="title"
-                            value="{{ $upload->title }}"
-                            placeholder="Заголовок"
+                            name="name"
+                            value="{{ $upload->name }}"
+                            placeholder="Название"
                         />
                     </div>
 
                     <div class="col-12">
+                        <h5>Уникальная ссылка</h5>
+                        <input
+                            id="slug"
+                            type="text"
+                            name="slug"
+                            value="{{ $upload->slug }}"
+                            placeholder="Уникальная ссылка"
+                        />
+                    </div>
+
+                    @foreach ($categories as $category)
+                        @foreach ($category->children as $child)
+                            {{ $child->name }} |
+                        @endforeach
+                    @endforeach
+
+
+                    <div class="col-12">
                         <h5>Категория</h5>
-                        <select id="category" name="category" >
+                        <select id="category_id" name="category_id" >
                             @foreach($categories as $category)
                                 <option
                                     value="{{ $category->id }}"
