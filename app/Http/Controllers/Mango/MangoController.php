@@ -88,6 +88,10 @@ class MangoController extends Controller
                     ReportService::send("[YCLIENTS] getClientName", $e->getMessage());
                 }
 
+                $tg_pay_end = array_key_exists("tg_pay_end", $telnumsList[$called_number])
+                    ? $telnumsList[$called_number]["tg_pay_end"]
+                    : "";
+
                 $table[] = [
                     "name"               => $telnumsList[$called_number]["name"],
                     "client_name"        => $client_name,
@@ -96,9 +100,7 @@ class MangoController extends Controller
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"],
                     "tg_chat_id"         => $telnumsList[$called_number]["tg_chat_id"],
-                    "isActive"           => array_key_exists("tg_pay_end", $telnumsList[$called_number])
-                        ? Carbon::parse($telnumsList[$called_number]["tg_pay_end"]) >= Carbon::now()
-                        : false
+                    "isActive"           => $tg_pay_end && Carbon::parse($tg_pay_end) >= Carbon::now()
                 ];
             }
         }
@@ -144,6 +146,7 @@ class MangoController extends Controller
             "mango_telnum",
             "tg_chat_id",
             "tg_active",
+            "tg_pay_end",
             "lost_client_days",
             "repeat_client_days",
             "new_client_days",
