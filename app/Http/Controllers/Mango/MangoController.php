@@ -318,7 +318,9 @@ class MangoController extends Controller
     }
 
     public function checkNumberInBlacklist($search) {
-        $list = MangoBlacklist::all()->toArray();
+        $list = MangoBlacklist::where("is_disabled", 0)
+            ->all()
+            ->toArray();
 
         return self::findNumber($search, $list);
     }
@@ -327,7 +329,9 @@ class MangoController extends Controller
         $data = [];
         if (!is_array($list) || count($list) == 0) return $data;
 
-        $blacklist = MangoBlacklist::all()->toArray();
+        $blacklist = MangoBlacklist::where("is_disabled", 0)
+            ->all()
+            ->toArray();
 
         foreach($list as $one) {
             if (!self::findNumber($one["caller_number"], $blacklist)) {
