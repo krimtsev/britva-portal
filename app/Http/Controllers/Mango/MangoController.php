@@ -102,7 +102,7 @@ class MangoController extends Controller
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"],
                     "tg_chat_id"         => $telnumsList[$called_number]["tg_chat_id"],
-                    "isActive"           => $tg_pay_end && $tg_pay_end->greaterThan($current_date)
+                    "isActive"           => $tg_pay_end && $tg_pay_end->gte($current_date)
                 ];
             }
         }
