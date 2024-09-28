@@ -96,8 +96,8 @@ class MangoController extends Controller
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"],
                     "tg_chat_id"         => $telnumsList[$called_number]["tg_chat_id"],
-                    "isActive"           => array_key_exists("tg_active", $telnumsList[$called_number])
-                        ? $telnumsList[$called_number]["tg_active"]
+                    "isActive"           => array_key_exists("tg_pay_end", $telnumsList[$called_number])
+                        ? Carbon::parse($telnumsList[$called_number]["tg_pay_end"]) >= Carbon::now()
                         : false
                 ];
             }
