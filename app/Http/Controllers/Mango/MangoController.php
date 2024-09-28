@@ -58,6 +58,8 @@ class MangoController extends Controller
                 ? self::filterBlacklist($data[0]["list"])
                 : $data[0]["list"];
 
+            $current_date = Carbon::now()->format('Y-m-d');
+
             foreach ($data as $one) {
                 $called_number = $one["called_number"];
 
@@ -89,7 +91,7 @@ class MangoController extends Controller
                 }
 
                 $tg_pay_end = array_key_exists("tg_pay_end", $telnumsList[$called_number])
-                    ? $telnumsList[$called_number]["tg_pay_end"]
+                    ? Carbon::parse($telnumsList[$called_number]["tg_pay_end"])
                     : "";
 
                 $table[] = [
@@ -100,7 +102,7 @@ class MangoController extends Controller
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"],
                     "tg_chat_id"         => $telnumsList[$called_number]["tg_chat_id"],
-                    "isActive"           => $tg_pay_end && Carbon::parse($tg_pay_end)->greaterThan(Carbon::now())
+                    "isActive"           => $tg_pay_end && $tg_pay_end->greaterThan($current_date)
                 ];
             }
         }
