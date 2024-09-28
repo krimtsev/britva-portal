@@ -138,8 +138,6 @@ class MangoController extends Controller
     {
         $telnumsList = [];
 
-        $tg_pay_end = Carbon::now()->format('Y-m-d');
-
         $partners = Partner::select(
             "name",
             "yclients_id",
@@ -153,7 +151,6 @@ class MangoController extends Controller
             ->where('yclients_id', '<>', "")
             ->where('disabled', '<>', 1)
             ->where("tg_active", 1)
-            ->where('tg_pay_end', '>', $tg_pay_end)
             ->get();
 
         foreach ($partners as $partner) {
