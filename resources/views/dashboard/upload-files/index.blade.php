@@ -19,7 +19,7 @@
                     @foreach ($files as $file)
                     <tr>
                         <td> {{ $file->title }}.{{$file->ext}} </td>
-                        <td> {{ $file->folder->title }} </td>
+                        <td> {{ $file->folder->name }} </td>
                         <td> {{ $file->downloads }} </td>
                     </tr>
                     @endforeach

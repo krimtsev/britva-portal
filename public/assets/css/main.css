@@ -3123,3 +3123,8 @@ button:disabled,
 .icon-files {
     width: 100%;
 }
+
+.breadcrumbs-item:before {
+    content: "\00BB";
+    margin: 0px 4px;
+}

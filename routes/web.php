@@ -37,11 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::get('sheet/{slug}', [PageSheetController::class, '__invoke'])
         ->name('sheet.index');
 
-    Route::get('cloud/{category?}/{folder?}', [UploadController::class, 'show'])
+    Route::get('cloud/{slug?}', [UploadController::class, 'show'])
         ->name('upload.cloud');
-
-    Route::get('__cloud/{category?}/{folder?}', [UploadController::class, 'showShort'])
-        ->name('__upload.cloud');
 
     Route::get('download/{folder}/{file}', [UploadFilesController::class, 'download'])
         ->name('upload.download');

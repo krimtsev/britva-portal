@@ -41,5 +41,4 @@ class Upload extends Model
     {
         return $this->hasMany(UploadFile::class, 'upload_id', 'id');
     }
-
 }

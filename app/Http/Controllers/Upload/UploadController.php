@@ -19,9 +19,19 @@ class UploadController extends Controller
 {
     public function index()
     {
-        $uploads = Upload::orderBy("id", "DESC")->paginate(30);
+        $uploads = Upload::whereNull('category_id')
+            ->with('children')
+            ->orderBy("id", "ASC")
+            ->get();
 
         return view("dashboard.upload.index", compact("uploads"));
+    }
+
+    public function table()
+    {
+        $uploads = Upload::orderBy("id", "DESC")->paginate(30);
+
+        return view("dashboard.upload.table", compact("uploads"));
     }
 
     public function create()
@@ -83,7 +93,6 @@ class UploadController extends Controller
         $upload->fill([
             "name"         => $validated["name"],
             "slug"         => $validated["slug"],
-            "category_id"  => $validated["category_id"],
         ]);
 
         $upload->save();
@@ -100,83 +109,39 @@ class UploadController extends Controller
     public function destroy(Upload $upload)
     {
         // TODO: Добавить логику удаления записи и связанных файлов
-        // $file->delete();
-        // return redirect()->route("d.upload.index");
+        if (count($upload->children) != 0) {
+            return back()->withErrors('Нельзя удалить вложенную категорию');
+        }
+
+        foreach ($upload->files as $file) {
+            $file->delete();
+        }
+
+        $upload->delete();
+
+        return redirect()->route("d.upload.index");
     }
 
     public function show(Request $request)
     {
-        $categorySlug = $request->route('category');
-        $folderId = $request->route('folder');
+        $slug = $request->route('slug');
 
-        $categories = [];
-        $breadcrumbs  = [
-            "all" => [
-                "title" => "Все документы",
-                "path" => []
-            ],
-        ];
+        $db = Upload::select(
+            "id",
+            "name",
+            "slug",
+            "folder",
+            "category_id"
+        );
 
-        $db = UploadCategories::select("id", "name", "slug");
+        if ($slug) $db->where("slug", $slug);
+        else $db->where("category_id", "=", null);
 
-        if ($categorySlug) $db->where("slug", $categorySlug);
-
-        foreach ($db->get() as $category) {
-            $categories[$category->id] = [
-                "id"   => $category->id,
-                "name" => $category->name,
-                "slug" => $category->slug,
-            ];
-
-            if ($categorySlug) {
-                $breadcrumbs["category"] = [
-                    "title" => $category->name,
-                    "path" => ["category" => $category->slug]
-                ];
-            }
-
-            $db = Upload::select("id", "title", "folder")
-                ->where("category_id", $category->id);
-
-            if ($folderId) $db->where("folder", $folderId);
-
-            $folders = $db->get();
-
-            foreach ($folders as $folder) {
-                $categories[$category->id]["folders"][] = $folder;
-
-                if ($folderId == $folder->folder) {
-                    $breadcrumbs["folder"] = [
-                        "title" => $folder->title,
-                        "path" => ["category" => $category->slug, "folder" => $folder->folder]
-                    ];
-                }
-            }
-        }
+        $uploads = $db->get();
 
         return view("cloud.index", compact(
-            "categories",
-            "breadcrumbs",
-            "categorySlug",
-            "folderId"
-        ));
-    }
-
-    public function showShort(Request $request)
-    {
-        $categorySlug = $request->route('category');
-        $folderId = $request->route('folder');
-
-        $db = UploadCategories::select("id", "name", "slug");
-
-        if ($categorySlug) $db->where("slug", $categorySlug);
-
-        $categories = $db->get();
-
-        return view("cloud.__index", compact(
-            "categories",
-            "categorySlug",
-            "folderId"
+            "slug",
+            "uploads"
         ));
     }
 }

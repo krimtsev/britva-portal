@@ -4,55 +4,56 @@
     <section>
         <header class="main mb-2">
             <h3>
-                @foreach($breadcrumbs as $key => $breadcrumb)
-                    @if($loop->last)
-                        {{ $breadcrumb['title'] }}
-                    @else
-                        <a class="color-main" href="{{ route('upload.cloud', $breadcrumb['path']) }}"> {{ $breadcrumb['title'] }} </a> /
-                    @endif
-                @endforeach
+                @if(!$slug)
+                    <span>Все документы</span>
+                @else
+                    <a class="color-main" href="{{ route('upload.cloud', "") }}"> Все документы </a>
+
+                    @include('components.breadcrumbs', ['upload' => $uploads[0], 'slug' => $slug])
+                @endif
             </h3>
         </header>
 
         <div class="row">
-            @foreach($categories as $category)
-                @if(!$categorySlug)
+            @foreach($uploads as $upload)
+                @if($upload->slug != $slug)
                     <div class="col-12 mb">
-                        <a href="{{ route('upload.cloud', ['category' => $category['slug']]) }}">
-                            <div class="flex gap-2 items-center">
-                                <x-icons name="folder" />
-                                <div> {{ $category['name'] }} </div>
-                            </div>
+                        <a
+                            class="inline-flex gap-2 items-center border-none"
+                            href="{{ route('upload.cloud', ['slug' => $upload['slug']]) }}"
+                        >
+                            <x-icons name="folder" />
+                            <span> {{ $upload['name'] }} </span>
                         </a>
                     </div>
                 @else
-                    @foreach($category['folders'] as $folder)
-                        @if($categorySlug && !$folderId)
-                            <div class="col-12 mb">
-                                <a href="{{ route('upload.cloud', ["category" => $category['slug'], "folder" => $folder->folder]) }}">
-                                    <div class="flex gap-2 items-center">
-                                        <x-icons name="folder" />
-                                        <div> {{ $folder->title }} </div>
-                                    </div>
+                    @foreach($upload->children as $children)
+                        <div class="col-12 mb">
+                            <a
+                                class="inline-flex gap-2 items-center border-none"
+                                href="{{ route('upload.cloud', ["slug" => $children->slug]) }}"
+                            >
+                                <x-icons name="folder" />
+                                <span> {{ $children->name }} </span>
+                            </a>
+                        </div>
+                    @endforeach
+                @endif
+
+                @if($slug)
+                    <div class="col-12">
+                        @foreach($upload->files as $file)
+                            <div class="col-12" style="margin-bottom: 0.5em">
+                                <a
+                                    class="inline-flex gap-2 items-center border-none"
+                                    href="{{ route('upload.download', ["folder" => $upload->folder, "file" => $file->name]) }}"
+                                >
+                                    <x-icons name="{{ $file->ext }}" />
+                                    <div> {{ $file->title }}.{{ $file->ext }} </div>
                                 </a>
                             </div>
-                        @else
-                            @if($folder->folder == $folderId)
-                                <div class="col-12">
-                                    @foreach($folder->files as $file)
-                                        <div class="col-12 mb">
-                                            <a href="{{ route('upload.download', ["folder" => $folder->folder, "file" => $file->name]) }}">
-                                                <div class="flex gap-2 items-center">
-                                                    <x-icons name="{{ $file->ext }}" />
-                                                    <div> {{ $file->title }}.{{ $file->ext }} </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                        @endif
-                    @endforeach
+                        @endforeach
+                    </div>
                 @endif
             @endforeach
         </div>

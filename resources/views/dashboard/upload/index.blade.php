@@ -7,42 +7,15 @@
             <a href="{{ route('d.upload.create') }}" class="button"> Добавить </a>
         </div>
 
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Заголовок</th>
-                        <th>Категория</th>
-                        <th>Дата создания</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($uploads as $upload)
-                    <tr>
-                        <td> {{ $upload->id }}</td>
-                        <td> {{ $upload->name }} </td>
-                        <td>
-                            @if (!$upload->category_id)
-                                Без категории
-                            @else
-                                {{ $upload->category->name }}
-                            @endif
-                        </td>
-                        <td> {{ $upload->created_at }}</td>
-                        <td>
-                            @if (Route::has('d.upload.edit'))
-                            <a href="{{ route('d.upload.edit', $upload->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <header class="main mb-2">
+            <h3> Файлы и папки </h3>
+        </header>
+
+        <div>
+            @foreach ($uploads as $upload)
+                @include('components.categories', ['upload' => $upload])
+            @endforeach
         </div>
     </section>
-    <div class="align-center">
-        {{ $uploads->links() }}
-    </div>
+
 </x-admin-layout>

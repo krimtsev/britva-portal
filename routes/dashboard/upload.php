@@ -7,6 +7,10 @@ use App\Http\Controllers\UploadFiles\UploadFilesController;
 
 
 Route::group(['prefix' => 'upload'], function () {
+    // Альтернативная вид списка
+    Route::get('/table', [UploadController::class, 'table'])
+        ->name('d.upload.table');
+
     Route::get('/', [UploadController::class, 'index'])->name('d.upload.index');
     Route::get('/create', [UploadController::class, 'create'])->name('d.upload.create');
     Route::post('/', [UploadController::class, 'store'])->name('d.upload.store');
@@ -15,7 +19,7 @@ Route::group(['prefix' => 'upload'], function () {
     Route::get('/{upload}', function ($upload) {
         return redirect()->route('d.upload.edit', $upload);
     });
-    // Route::delete('/{upload}', [UploadController::class, 'destroy'])->name('d.upload.delete');
+    Route::delete('/{upload}', [UploadController::class, 'destroy'])->name('d.upload.delete');
 });
 
 Route::group(['prefix' => 'upload-categories'], function () {
