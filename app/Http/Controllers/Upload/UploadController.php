@@ -7,13 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\UploadFiles\UploadFilesController;
 use App\Http\Requests\UploadFile\UploadStoreRequest;
 use App\Http\Requests\UploadFile\UploadUpdateRequest;
-use App\Models\UploadCategories;
 use App\Models\Upload;
 use App\Models\UploadFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\DB;
 
 class UploadController extends Controller
 {
@@ -118,6 +117,8 @@ class UploadController extends Controller
         }
 
         $upload->delete();
+
+        Storage::disk(UploadFile::FOLDER)->deleteDirectory($upload->folder);
 
         return redirect()->route("d.upload.index");
     }
