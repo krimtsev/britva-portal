@@ -4,7 +4,12 @@
             {{ $upload->name }}
         </a>
         @if (Route::has('d.upload.edit'))
-            <a href="{{ route('upload.cloud', $upload->slug) }}" class="ml-1 icon small solid fa-external-link-square-alt"> Просмотр </a>
+            <a
+                href="{{ route('upload.cloud', $upload->slug) }}"
+                target="_blank"
+                class="ml-1 icon small solid fa-external-link-square-alt"
+            >
+            </a>
         @endif
     </li>
 
