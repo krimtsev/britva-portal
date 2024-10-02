@@ -7,7 +7,7 @@ use App\Http\Controllers\Digest\StoreController;
 use App\Http\Controllers\Digest\ShowController;
 use App\Http\Controllers\Digest\EditController;
 use App\Http\Controllers\Digest\UpdateController;
-use App\Http\Controllers\Digest\DestroyController;
+// use App\Http\Controllers\Digest\DestroyController;
 
 
 Route::group(['prefix' => 'digests'], function () {

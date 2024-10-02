@@ -2,11 +2,14 @@
 
 namespace App\Http\Services;
 
+use App\Utils\Utils;
 use Illuminate\Support\Facades\Http;
 use Throwable;
 
 class MangoService
 {
+    const URL = "https://app.mango-office.ru";
+
     /** API KEY */
     private $vpbx_api_key;
 
@@ -28,12 +31,16 @@ class MangoService
      */
     private $context_status;
 
-    public function __construct($params)
+    public function __construct($params = [])
     {
         $this->vpbx_api_key = env("MANGO_VPBX_API_KEY", "");
         $this->salt = env("MANGO_SALT", "");
-        $this->start_date = $params["start_date"];
-        $this->end_date = $params["end_date"];
+
+        if (array_key_exists("start_date", $params) &&
+            array_key_exists("end_date", $params)) {
+            $this->start_date = $params["start_date"];
+            $this->end_date = $params["end_date"];
+        }
 
         if (array_key_exists("limit", $params)) {
             $this->limit = $params["limit"];
@@ -58,7 +65,7 @@ class MangoService
         try {
             /** ПОЛУЧЕНИЕ КЛЮЧА */
 
-            $url = "https://app.mango-office.ru/vpbx/stats/calls/request";
+            $url = Utils::joinPath(self::URL, "vpbx/stats/calls/request");
 
             $params = [
                 "start_date"     => $this->start_date,
@@ -92,7 +99,7 @@ class MangoService
             /** ПОЛУЧЕНИЕ ДАННЫХ ПО ЗВОНКАМ */
             sleep(30);
 
-            $url = "https://app.mango-office.ru/vpbx/stats/calls/result";
+            $url = Utils::joinPath(self::URL, "vpbx/stats/calls/result");
 
             $json = json_encode([
                 "key" => $response["key"],
@@ -128,5 +135,26 @@ class MangoService
                 "error" => "runtime error MangoService"
             ];
         }
+    }
+
+    public function blacklist () {
+        $url = Utils::joinPath(self::URL, "vpbx/bwlists/numbers");
+
+        $sign = $this->getHash("[]");
+
+        $response = self::httpWithHeaders()->post($url, [
+            "sign" => $sign,
+            "vpbx_api_key" => $this->vpbx_api_key,
+            "json" => "[]"
+        ]);
+
+        $response = $response->json();
+
+        return array_key_exists("data", $response)
+            ? $response["data"]
+            : [
+                "error" => "Ошибка получения черного списка",
+                "response" => $response,
+            ];
     }
 }

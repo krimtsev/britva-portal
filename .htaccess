@@ -1,5 +1,7 @@
-DirectoryIndex index.php
+# Переадресация всех запросов на публичную папку Laravel
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-RewriteEngine On 
-RewriteRule ^$ public/index.php [L]
-RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
+    # Убедитесь, что запрос направлен в папку public
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

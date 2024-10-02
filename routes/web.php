@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Post\BlogController;
 use App\Http\Controllers\Page\PageController;
 use App\Http\Controllers\Sheet\PageSheetController;
-use App\Http\Middleware\RoleAdminValue;
+use App\Http\Controllers\Upload\UploadController;
+use App\Http\Controllers\UploadFiles\UploadFilesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +28,20 @@ Route::get('/radio', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [BlogController::class, '__invoke'])->name('post.index');
+    Route::get('/', [BlogController::class, '__invoke'])
+        ->name('post.index');
 
-    Route::get('page/{slug}', [PageController::class, '__invoke'])->name('page.index');
-    Route::get('sheet/{slug}', [PageSheetController::class, '__invoke'])->name('sheet.index');
+    Route::get('/page/{slug}', [PageController::class, '__invoke'])
+        ->name('page.index');
+
+    Route::get('/sheet/{slug}', [PageSheetController::class, '__invoke'])
+        ->name('sheet.index');
+
+    Route::get('/cloud/{slug?}', [UploadController::class, 'show'])
+        ->name('upload.cloud');
+
+    Route::get('/download/{folder}/{file}', [UploadFilesController::class, 'download'])
+        ->name('upload.download');
 });
 
 require __DIR__ . '/auth.php';
@@ -56,6 +68,7 @@ Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', '
     require __DIR__ . '/dashboard/mango.php';
     require __DIR__ . '/dashboard/missed-calls.php';
     require __DIR__ . '/dashboard/messages.php';
+    require __DIR__ . '/dashboard/upload.php';
 });
 
 /**

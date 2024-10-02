@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\MangoService;
 use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
+use App\Models\MangoBlacklist;
 use App\Models\Partner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class MangoController extends Controller
     const CACHE_MANGO_KEY = "mango_last_telnums_call";
     const CACHE_YCLIENTS_KEY = "yclients_last_names_call";
     const TEST_CALL_KEY = "mango_test_call";
+    const BLACKLIST_ENABLED = true;
 
     public function index(Request $request)
     {
@@ -52,7 +54,13 @@ class MangoController extends Controller
         $telnumsList = self::getTelnumsList();
 
         if (count($data) !== 0) {
-            foreach ($data[0]["list"] as $one) {
+            $data = self::BLACKLIST_ENABLED
+                ? self::filterBlacklist($data[0]["list"])
+                : $data[0]["list"];
+
+            $current_date = Carbon::now()->format('Y-m-d');
+
+            foreach ($data as $one) {
                 $called_number = $one["called_number"];
 
                 if (!array_key_exists($called_number, $telnumsList)) {
@@ -82,6 +90,10 @@ class MangoController extends Controller
                     ReportService::send("[YCLIENTS] getClientName", $e->getMessage());
                 }
 
+                $tg_pay_end = array_key_exists("tg_pay_end", $telnumsList[$called_number])
+                    ? Carbon::parse($telnumsList[$called_number]["tg_pay_end"])
+                    : "";
+
                 $table[] = [
                     "name"               => $telnumsList[$called_number]["name"],
                     "client_name"        => $client_name,
@@ -90,9 +102,7 @@ class MangoController extends Controller
                     "context_start_time" => Carbon::createFromTimestamp($one["context_start_time"])->format('d.m.Y H:i:s'),
                     "call_duration"      => $one["duration"],
                     "tg_chat_id"         => $telnumsList[$called_number]["tg_chat_id"],
-                    "isActive"           => array_key_exists("tg_active", $telnumsList[$called_number])
-                        ? $telnumsList[$called_number]["tg_active"]
-                        : false
+                    "isActive"           => $tg_pay_end && $tg_pay_end->gte($current_date)
                 ];
             }
         }
@@ -132,14 +142,13 @@ class MangoController extends Controller
     {
         $telnumsList = [];
 
-        $tg_pay_end = Carbon::now()->format('Y-m-d');
-
         $partners = Partner::select(
             "name",
             "yclients_id",
             "mango_telnum",
             "tg_chat_id",
             "tg_active",
+            "tg_pay_end",
             "lost_client_days",
             "repeat_client_days",
             "new_client_days",
@@ -147,7 +156,6 @@ class MangoController extends Controller
             ->where('yclients_id', '<>', "")
             ->where('disabled', '<>', 1)
             ->where("tg_active", 1)
-            ->where('tg_pay_end', '>', $tg_pay_end)
             ->get();
 
         foreach ($partners as $partner) {
@@ -272,7 +280,71 @@ class MangoController extends Controller
         }
     }
 
-    public function test() {
+    public static function updateBlacklist() {
+        try {
+            $service = new MangoService();
+
+            $data = $service->blacklist();
+
+            if (array_key_exists("error", $data)) return $data;
+
+            foreach ($data["black"]["numbers"] as $one) {
+                $tmp_table = [
+                    "number_id"   => $one["number_id"],
+                    "number"      => $one["number"],
+                    "number_type" => $one["number_type"],
+                    "comment"     => $one["comment"],
+                ];
+
+                MangoBlacklist::addRecord($tmp_table);
+            }
+
+            return json_encode(["info" => "Список обновлен"]);
+
+        } catch (Throwable $e) {
+            ReportService::send("[MANGO] blacklist", $e->getMessage());
+
+            return [];
+        }
+    }
+
+    public function findNumber($search, $list) {
+        // TODO: Сейчас обрататывается только крайний случай патерна, где * только в правой части номера
+        foreach ($list as $one) {
+            list($number) = explode("*", $one["number"]);
+            if (str_starts_with($search, $number)) {
+                return $number;
+            }
+        }
+        return false;
+    }
+
+    public function checkNumberInBlacklist($search) {
+        $list = MangoBlacklist::where("is_disabled", 0)
+            ->get()
+            ->toArray();
+
+        return self::findNumber($search, $list);
+    }
+
+    public function filterBlacklist($list): array {
+        $data = [];
+        if (!is_array($list) || count($list) == 0) return $data;
+
+        $blacklist = MangoBlacklist::where("is_disabled", 0)
+            ->get()
+            ->toArray();
+
+        foreach($list as $one) {
+            if (!self::findNumber($one["caller_number"], $blacklist)) {
+                $data[] = $one;
+            }
+        }
+
+        return $data;
+    }
+
+    public function test(): bool {
         $partnerName = env('PARTNER_NAME', '');
 
         $data = [
