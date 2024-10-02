@@ -33,7 +33,6 @@
 						<li><a href="https://disk.yandex.ru/d/y3CMh7Hi8A3pyA" target="_blank">Облако документов</a></li>
 						<li><a href="/page/subscription">Абонементы</a></li>
 						<li><a href="/page/certificate">Сертификаты</a></li>
-						<li><a href="/page/rospotrebnadzor">Роспотребнадзор</a></li>
 						<li><a href="/page/fines">Штрафы</a></li>
 						<li><a href="/page/fines-audit">Штрафы по аудиту</a></li>
 						<li><a href="page/mango-audit">Балльная система по манго-аудиту </a></li>
@@ -90,6 +89,7 @@
 
 					</ul>
 				</li>
+				<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeqcM5AKcoTWECLfA_kDPZEHGpUQv_iFIx1uCVtros447ubHQ/viewform">KPI франшизы (регионы)</a></li>
 				<li><a href="/page/discounts">Корпоративные скидки</a></li>
 				<li><a href="https://britva.tech/britva/" target="_blank">Страница для администраторов</a></li>
 				<li>
