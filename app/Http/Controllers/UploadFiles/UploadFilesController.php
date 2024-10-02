@@ -37,7 +37,7 @@ class UploadFilesController extends Controller
 
     public function edit(UploadFile $file)
     {
-        $upload = Upload::select("id", "title")
+        $upload = Upload::select("id", "name")
             ->where("id", $file->upload_id)
             ->first();
 

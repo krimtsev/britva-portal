@@ -18,7 +18,7 @@
                         <h5>Группа файлов</h5>
                         <input
                             type="text"
-                            value="{{ $upload->title  }}"
+                            value="{{ $upload->name }}"
                             disabled
                         />
                     </div>
