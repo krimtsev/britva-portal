@@ -39,6 +39,7 @@ class Upload extends Model
 
     public function files()
     {
-        return $this->hasMany(UploadFile::class, 'upload_id', 'id');
+        return $this->hasMany(UploadFile::class, 'upload_id', 'id')
+            ->orderBy("title", "ASC");
     }
 }

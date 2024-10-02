@@ -67,14 +67,17 @@
 <script>
     $(document).ready( function () {
         const $items = $(".link-item")
-        const $search = $("#search")
 
-        $search.bind("input", function() {
-            const search = $(this).val().toLowerCase()
+        $("#search").bind("input", function() {
+            const search = $(this).val()
+                .trim()
+                .toLowerCase()
 
             $items.each(item => {
                 const $item = $($items[item]);
-                const text = $item.find(".link-item-name").text().trim().toLowerCase()
+                const text = $item.find(".link-item-name").text()
+                    .trim()
+                    .toLowerCase()
 
                 if (!search || text.includes(search)) {
                     $item.show()
