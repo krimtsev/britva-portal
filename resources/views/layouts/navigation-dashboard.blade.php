@@ -14,21 +14,26 @@
                     <li><a href="{{ route('d.home.index') }}">Панель администратора</a></li>
                     <li><a href="{{ route('d.post.index') }}">Записи</a></li>
                     <li><a href="{{ route('d.page.index') }}">Страницы</a></li>
+                    <li><a href="{{ route('d.upload.index') }}">Файлы</a></li>
                     <li><a href="{{ route('d.digest.index') }}">Блок дайджестов</a></li>
-                    <li><a href="{{ route('d.sheet.index') }}">Интеграция с Google-документами</a></li>
                     <li><a href="{{ route('d.user.index') }}">Пользователи</a></li>
-                    <li><a href="{{ route('d.analytics.index') }}">Аналитика</a></li>
-                    <li><a href="{{ route('d.jobs.status-company') }}">Задачи</a></li>
-                    <li><a href="{{ route('d.royalty.index') }}">Роялти</a></li>
                     <li><a href="{{ route('d.partner.index') }}">Партнеры</a></li>
 					<li>
-					<span class="opener">Сервис пропущенных звонков</span>
+						<span class="opener">Сервис аналитики</span>
+						<ul>
+							<li><a href="{{ route('d.analytics.index') }}">Срез данных</a></li>
+							<li><a href="{{ route('d.jobs.status-company') }}">Синхронизация</a></li>
+						</ul>
+					</li>
+					<li>
+						<span class="opener">Сервис пропущенных звонков</span>
 						<ul>
 							<li><a href="{{ route('d.missed-calls.index') }}">Биллинг</a></li>
 							<li><a href="{{ route('d.blacklist.index') }}">Черный список</a></li>
 						</ul>
 					</li>
-                    <li><a href="{{ route('d.upload.index') }}">Файлы</a></li>
+                    <li><a href="{{ route('d.royalty.index') }}">Роялти</a></li>
+                    <li><a href="{{ route('d.sheet.index') }}">Интеграция с Google-документами</a></li>
                 </ul>
             @elseif(Auth::user()->isAdmin())
                 <ul>

@@ -27,12 +27,13 @@
 						<li style="font-size: 10px; color: black;"><br>Если вам необходимо передать ссылку на курс сотруднику, нажмите на ссылку ПКМ (правая кнопка мыши) и "Копировать ссылку". А после отправьте своему сотруднику.</li>
 					</ul>
 				</li>
+				<li><a href="/cloud/">Облако файлов</a></li>
 				<li>
 					<span class="opener">Документация</span>
 					<ul>
-						<li><a href="https://disk.yandex.ru/d/y3CMh7Hi8A3pyA" target="_blank">Облако документов</a></li>
-						<li><a href="/page/subscription">Абонементы</a></li>
-						<li><a href="/page/certificate">Сертификаты</a></li>
+						<!-- <li><a href="https://disk.yandex.ru/d/y3CMh7Hi8A3pyA" target="_blank">Облако документов</a></li>-->
+						<li><a href="/page/subscription">Система работы абонементов</a></li>
+						<li><a href="/page/certificate">Система работы сертификатов</a></li>
 						<li><a href="/page/fines">Штрафы</a></li>
 						<li><a href="/page/fines-audit">Штрафы по аудиту</a></li>
 						<li><a href="page/mango-audit">Балльная система по манго-аудиту </a></li>
@@ -52,23 +53,25 @@
 					<ul>
 						<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
 						<li><a href="https://mybritva.ru/page/service-bot">Сервис пропущенных звонков</a></li>
+						<li><a href="/profile/analytics">Сервис аналитики показателей</a></li>
 					</ul>
 				</li>
 				<li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1ka8_eTE18gQNr-LCCiKYKd_u0rG6dJ5R7oGFTQg6pdM/" target="_blank">Таблица маркет.сбора</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1Y9zxXV-NZZvFHJNnESGBDiipCMNM1jjqQEzHqj8KRg0" target="_blank">Таблица оплаты телефонии</a></li>
-				<li>
+				<!-- <li>
 					<span class="opener">Макеты</span>
 					<ul>
 						<li><a href="https://disk.yandex.ru/d/_MsaQHBq6RLC4A" target="_blank">Макеты печатные</a></li>
 						<li><a href="https://disk.yandex.ru/d/_G5bIHExwxfUlw" target="_blank">Макеты для инсты</a></li>
 						<li><a href="https://disk.yandex.ru/d/gYdjTyCWu_bU3A" target="_blank">Макеты на НГ 2023-2024</a></li>
 					</ul>
-				</li>
+				</li> -->
 				<li>
 					<span class="opener">Видео на ТВ</span>
 					<ul>
-						<li><a href="https://disk.yandex.ru/d/ODcgMSK8CtAh9A" target="_blank">Файлы для флешки</a></li>
+						<!-- <li><a href="https://disk.yandex.ru/d/ODcgMSK8CtAh9A" target="_blank">Файлы для флешки</a></li> -->
+						<li><a href="/cloud/video">Файлы для флешки</a></li>
 						<li><a href="https://rutube.ru/channel/44286383/videos/" target="_blank">Смотреть на Rutube</a></li>
 						<li><a href="https://vk.com/video/@britvabarber" target="_blank">Смотреть на VK Video</a></li>
 
