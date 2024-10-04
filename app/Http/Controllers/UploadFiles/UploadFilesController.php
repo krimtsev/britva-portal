@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class UploadFilesController extends Controller
 {
 
-    const RULES_ALLOW_TYPES = 'mimes:image,jpg,jpeg,png,tif,pdf,doc,docx,zip,xlsx,xls,txt,ai,pptx';
+    const RULES_ALLOW_TYPES = 'mimes:image,jpg,jpeg,png,tif,pdf,doc,docx,zip,xlsx,xls,txt,ai,pptx,mp4,mov,avi,m4a,ogg';
 
     public static function index() {
         $files = UploadFile::orderBy("downloads", "DESC")->paginate(30);

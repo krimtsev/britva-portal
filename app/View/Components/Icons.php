@@ -27,6 +27,12 @@ class Icons extends Component
         "ppt"    => "ppt",
         "zip"    => "zip",
         "7zip"   => "zip",
+        "mp3"    => "music",
+        "ogg"    => "music",
+        "avi"    => "video",
+        "mp4"    => "video",
+        "mov"    => "video",
+        "m4a"    => "voice"
     ];
 
     public function __construct($name = self::DEFAULT_FILE, $size = self::DEFAULT_SIZE)

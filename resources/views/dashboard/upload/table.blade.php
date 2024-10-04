@@ -11,7 +11,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Заголовок</th>
                         <th>Категория</th>
                         <th>Дата создания</th>
