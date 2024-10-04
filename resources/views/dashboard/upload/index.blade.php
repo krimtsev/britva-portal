@@ -3,7 +3,7 @@
 
     <section>
         <div class="mb-2 flex justify-between gap-2">
-            <a href="{{ route('d.upload-files.index') }}" class="button"> Список </a>
+            <a href="{{ route('d.upload-files.index') }}" class="button"> Статистика </a>
             <a href="{{ route('d.upload.create') }}" class="button"> Добавить </a>
         </div>
 
