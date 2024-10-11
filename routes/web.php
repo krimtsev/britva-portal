@@ -77,5 +77,5 @@ Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', '
 Route::group(['middleware' => ['auth'], 'prefix' => 'profile', 'view' => 'profile'], function () {
     require __DIR__ . '/profile/home.php';
     require __DIR__ . '/profile/user.php';
-    require __DIR__ . '/profile/analytics.php';
+    // require __DIR__ . '/profile/analytics.php';
 });
