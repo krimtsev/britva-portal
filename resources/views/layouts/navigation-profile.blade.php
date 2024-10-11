@@ -8,7 +8,9 @@
             </div>
             <ul>
                 <li><a href="{{ route('p.home.index') }}">Профиль</a></li>
-                <!-- <li><a href="{{ route('p.analytics.index') }}">Аналитика</a></li> -->
+                @if (Route::has('p.analytics.index'))
+                    <li><a href="{{ route('p.analytics.index') }}">Аналитика</a></li>
+                @endif
                 <li><a href="{{ route('p.user.password.index') }}">Смена пароля</a></li>
             </ul>
         </nav>
