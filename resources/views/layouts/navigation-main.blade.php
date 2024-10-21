@@ -52,13 +52,14 @@
 					<span class="opener">Дополнительные услуги</span>
 					<ul>
 						<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
+						<li><a href="page/subscription-yandex-2gis" target="_blank">Подписка Яндекс.Карты и 2GIS</a></li>
 						<li><a href="https://mybritva.ru/page/service-bot">Сервис пропущенных звонков</a></li>
 						<li><a href="/profile/analytics">Сервис аналитики показателей</a></li>
 					</ul>
 				</li>
 				<li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
-				<li><a href="https://docs.google.com/spreadsheets/d/1ka8_eTE18gQNr-LCCiKYKd_u0rG6dJ5R7oGFTQg6pdM/" target="_blank">Таблица маркет.сбора</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1Y9zxXV-NZZvFHJNnESGBDiipCMNM1jjqQEzHqj8KRg0" target="_blank">Таблица оплаты телефонии</a></li>
+				<li><a href="https://docs.google.com/spreadsheets/d/1ka8_eTE18gQNr-LCCiKYKd_u0rG6dJ5R7oGFTQg6pdM/" target="_blank">Таблица маркет.сбора</a></li>
 				<!-- <li>
 					<span class="opener">Макеты</span>
 					<ul>
@@ -80,15 +81,15 @@
 				<li>
 					<span class="opener">Заявки</span>
 					<ul>
-						<li><a href="https://forms.gle/vStrvEx5uw9NqicR6">Заявка на дизайн</a></li>
-						<li><a href="https://docs.google.com/forms/d/1730Zt5Ect9gdMhOjjRvZBHc-cz3cG5WHzoPhp8Ep_24/viewform?edit_requested=true" target="_blank">Заявка на сертификат</a></li>
-						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdEPHKl637KqNBoeRJM70SG4RAa_Fkq7Kz24DEZe18yDtdTwQ/viewform?usp=sf_link" target="_blank">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
-						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLScvCdbQqAQ9XF6I1fftLZ0Fuc3F_Kqe-dfNFkpOuLhfv2A_hw/viewform" target="_blank">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
-						<li><a href="https://docs.google.com/forms/d/1c5WIiAyJhyThcNNofdQpuwTz_LE_xaI5JiFws1ZvWDs/viewform?edit_requested=true#responses" target="_blank">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
-						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSerYr5kXeZs6XahEbxZMTdMLNJy71row8M3Bw1xx1jsTqr_bw/viewform" target="_blank">ЗАЯВКА НА ЭКСПЕРТА</a></li>
-						<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdxA6Q4fpN85PEVsIrI3HCFu_-XLuVV2_XLBU3bXouA7SQeXg/viewform" target="_blank">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
-						<li><a href="https://docs.google.com/forms/d/1xlCBolWdb4HEmWJD-7vowf2GDpU_ywi1PW6cT1W6Pys/viewform" target="_blank">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
-						<li><a href="https://forms.yandex.ru/u/664eb0cf73cee73b2057ce86/" target="_blank">ПОДАТЬ ИДЕЮ</a></li>
+						<li><a target="_blank" href="https://forms.gle/vStrvEx5uw9NqicR6">Заявка на дизайн</a></li>
+						<li><a target="_blank" href="https://docs.google.com/forms/d/1730Zt5Ect9gdMhOjjRvZBHc-cz3cG5WHzoPhp8Ep_24/viewform?edit_requested=true">Заявка на сертификат</a></li>
+						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdEPHKl637KqNBoeRJM70SG4RAa_Fkq7Kz24DEZe18yDtdTwQ/viewform?usp=sf_link">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
+						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScvCdbQqAQ9XF6I1fftLZ0Fuc3F_Kqe-dfNFkpOuLhfv2A_hw/viewform">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
+						<li><a target="_blank" href="https://docs.google.com/forms/d/1c5WIiAyJhyThcNNofdQpuwTz_LE_xaI5JiFws1ZvWDs/viewform?edit_requested=true#responses">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
+						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSerYr5kXeZs6XahEbxZMTdMLNJy71row8M3Bw1xx1jsTqr_bw/viewform">ЗАЯВКА НА ЭКСПЕРТА</a></li>
+						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdxA6Q4fpN85PEVsIrI3HCFu_-XLuVV2_XLBU3bXouA7SQeXg/viewform">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
+						<li><a target="_blank" href="https://docs.google.com/forms/d/1xlCBolWdb4HEmWJD-7vowf2GDpU_ywi1PW6cT1W6Pys/viewform">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
+						<li><a target="_blank" href="https://forms.yandex.ru/u/664eb0cf73cee73b2057ce86/">ПОДАТЬ ИДЕЮ</a></li>
 
 					</ul>
 				</li>
