@@ -16,7 +16,7 @@ class CreateMangoBlacklistTable extends Migration
         Schema::create('mango_blacklist', function (Blueprint $table) {
             $table->id();
             $table->integer('number_id');
-            $table->string('number')->unique();
+            $table->string('number');
             $table->string('number_type')->nullable();
             $table->string('comment')->nullable();
             $table->boolean('is_disabled')->default(0);

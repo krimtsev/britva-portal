@@ -288,6 +288,8 @@ class MangoController extends Controller
 
             if (array_key_exists("error", $data)) return $data;
 
+            $number_ids = [];
+
             foreach ($data["black"]["numbers"] as $one) {
                 $tmp_table = [
                     "number_id"   => $one["number_id"],
@@ -296,8 +298,12 @@ class MangoController extends Controller
                     "comment"     => $one["comment"],
                 ];
 
+                $number_ids[] = $one["number_id"];
+
                 MangoBlacklist::addRecord($tmp_table);
             }
+
+            MangoBlacklist::whereNotIn('number_id', $number_ids)->delete();
 
             return json_encode(["info" => "Список обновлен"]);
 
