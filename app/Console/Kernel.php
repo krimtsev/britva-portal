@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         $schedule->command('blacklist:update')
-            ->daily()
+            ->hourly()
             ->onFailure(function (Stringable $output) {
                 ReportService::send("[command] mango blacklist update", $output);
             });;
