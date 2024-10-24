@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
             ->hourly()
             ->onFailure(function (Stringable $output) {
                 ReportService::send("[command] mango blacklist update", $output);
-            });;
+            });
     }
 
     /**

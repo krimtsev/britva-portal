@@ -52,7 +52,7 @@ class ClientsVisitsController extends Controller
                 $records = $client->getRecordsList();
 
                 if (!is_array($records)) {
-                    ReportService::send("getClientsVisits {$clients_key}", $partner->yclients_id);
+                    ReportService::send("getClientsVisits {$clients_key} not found records", $partner->yclients_id);
                     continue;
                 }
 
@@ -63,6 +63,11 @@ class ClientsVisitsController extends Controller
                 }
 
                 $visits = $client->getVisitedForPeriod($recordsIds);
+
+                if (!is_array($visits)) {
+                    ReportService::send("getClientsVisits {$clients_key} not found visits", $partner->yclients_id);
+                    continue;
+                }
 
                 foreach ($visits as $visit) {
                     if (!array_key_exists("last_visit_date", $visit) ||
