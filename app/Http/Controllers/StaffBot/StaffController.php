@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Staff;
+namespace App\Http\Controllers\StaffBot;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\ReportService;
@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Throwable;
 
-class StaffController extends Controller
+class StaffBotController extends Controller
 {
     const URL = "https://api.telegram.org";
 
