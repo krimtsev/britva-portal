@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Staff extends Model
+class StaffBot extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'staff';
+    protected $table = 'staff_bot';
 
     protected $fillable = [
         'name',

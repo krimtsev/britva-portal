@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Analytics\ClientsVisitsController;
 use App\Http\Controllers\Mango\MangoController;
-use App\Http\Controllers\Staff\StaffController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['api_token']], function () {
@@ -19,4 +18,3 @@ Route::group(['middleware' => ['api_token']], function () {
     Route::get('/telnums-list', [MangoController::class, 'getTelnumsList']);
 });
 
-Route::post('/staff', [StaffController::class, 'index']);

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
 use App\Models\Partner;
-use App\Models\Staff;
+use App\Models\StaffBot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Throwable;
@@ -112,7 +112,7 @@ class StaffController extends Controller
                         $this->sendMessage("DEFAULT");
                 }
             } else {
-                $data = Staff::select("action")
+                $data = StaffBot::select("action")
                     ->where('tg_chat_id', $this->chatId)
                     ->first();
 
@@ -140,7 +140,7 @@ class StaffController extends Controller
     function actionStart() {
         $this->sendMessage($this->getMessages("start"));
 
-        Staff::add([
+        StaffBot::add([
             "tg_chat_id"  => $this->chatId,
             "action"      => $this->actions["yclients_id"],
             "name"        => "",
@@ -155,7 +155,7 @@ class StaffController extends Controller
             ->first();
 
         if ($partner) {
-            Staff::where("tg_chat_id", $this->chatId)->update([
+            StaffBot::where("tg_chat_id", $this->chatId)->update([
                 "yclients_id" => $this->text,
                 "action"      => $this->actions["staff_id"],
             ]);
@@ -169,7 +169,7 @@ class StaffController extends Controller
     }
 
     private function actionStaffId() {
-        $staff = Staff::select("yclients_id")
+        $staff = StaffBot::select("yclients_id")
             ->where('tg_chat_id', $this->chatId)
             ->first();
 
@@ -185,7 +185,7 @@ class StaffController extends Controller
                 "staff_name" => $staffData["name"]
             ]));
 
-            Staff::where("tg_chat_id", $this->chatId)->update([
+            StaffBot::where("tg_chat_id", $this->chatId)->update([
                 "action"   => "",
                 "staff_id" => $staffData["id"],
                 "name"     => $staffData["name"],
