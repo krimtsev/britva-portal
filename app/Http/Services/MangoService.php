@@ -128,7 +128,7 @@ class MangoService
             return $result;
 
         } catch (Throwable $e) {
-            ReportService::send("[MangoService] get", $e->getMessage());
+            ReportService::error("[MangoService] get", $e->getMessage());
             report($e->getMessage());
 
             return [

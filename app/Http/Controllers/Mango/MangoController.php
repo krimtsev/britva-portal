@@ -42,7 +42,7 @@ class MangoController extends Controller
 
             $data = $service->get();
         } catch (Throwable $e) {
-            ReportService::send("[MANGO] get", $e->getMessage());
+            ReportService::error("[MANGO] get", $e->getMessage());
         }
 
         if (array_key_exists("error", $data)) return $data;
@@ -87,7 +87,7 @@ class MangoController extends Controller
                         $start_date
                     );
                 } catch (Throwable $e) {
-                    ReportService::send("[YCLIENTS] getClientName", $e->getMessage());
+                    ReportService::error("[YCLIENTS] getClientName", $e->getMessage());
                 }
 
                 $tg_pay_end = array_key_exists("tg_pay_end", $telnumsList[$called_number])
@@ -274,7 +274,7 @@ class MangoController extends Controller
             return $result;
 
         } catch (Throwable $e) {
-            ReportService::send("[MANGO] getStatisticsForPastDay", $e->getMessage());
+            ReportService::error("[MANGO] getStatisticsForPastDay", $e->getMessage());
 
             return [];
         }
@@ -308,7 +308,7 @@ class MangoController extends Controller
             return json_encode(["info" => "Список обновлен"]);
 
         } catch (Throwable $e) {
-            ReportService::send("[MANGO] blacklist", $e->getMessage());
+            ReportService::error("[MANGO] blacklist", $e->getMessage());
 
             return [];
         }

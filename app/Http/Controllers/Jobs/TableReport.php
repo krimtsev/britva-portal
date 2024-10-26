@@ -50,11 +50,7 @@ class TableReport extends Controller
             dd($e);
         }
 
-        $partners = Partner::select("name", "yclients_id")
-            ->where('yclients_id', '<>', "")
-            ->where('disabled', '<>', 1)
-            ->orderBy("name")
-            ->get();
+        $partners = Partner::available();
 
         $partnerNames = [];
 

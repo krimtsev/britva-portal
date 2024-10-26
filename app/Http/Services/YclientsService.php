@@ -97,6 +97,7 @@ class YclientsService
                 $staff[$id]["id"] = $one["id"];
                 $staff[$id]["name"] = $one["name"];
                 $staff[$id]["specialization"] = $one["specialization"];
+                $staff[$id]["fired"] = $one["fired"];
             }
 
             return $staff;

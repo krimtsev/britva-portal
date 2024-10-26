@@ -34,6 +34,9 @@
 					</li>
                     <li><a href="{{ route('d.royalty.index') }}">Роялти</a></li>
                     <li><a href="{{ route('d.sheet.index') }}">Интеграция с Google-документами</a></li>
+                    @if(Route::has('d.audit.index'))
+                        <li><a href="{{ route('d.audit.index') }}">Аудит</a></li>
+                    @endif
                 </ul>
             @elseif(Auth::user()->isAdmin())
                 <ul>

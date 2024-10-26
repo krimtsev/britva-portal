@@ -101,7 +101,7 @@ class StaffBotController extends Controller
 
             $isCommand = str_starts_with($this->text, '/');
 
-            ReportService::send("request", json_encode($message));
+            ReportService::error("request", json_encode($message));
 
             if ($isCommand) {
                 switch ($this->text) {
@@ -116,7 +116,7 @@ class StaffBotController extends Controller
                     ->where('tg_chat_id', $this->chatId)
                     ->first();
 
-                ReportService::send("action", json_encode($data->action));
+                ReportService::error("action", json_encode($data->action));
 
                 if (!$data) exit;
 
@@ -131,7 +131,7 @@ class StaffBotController extends Controller
 
             }
         } catch (Throwable $e) {
-            ReportService::send("api", $e->getMessage());
+            ReportService::error("api", $e->getMessage());
         }
 
         return $this->response();

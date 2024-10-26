@@ -20,7 +20,14 @@ class Kernel extends ConsoleKernel
         $schedule->command('blacklist:update')
             ->hourly()
             ->onFailure(function (Stringable $output) {
-                ReportService::send("[command] mango blacklist update", $output);
+                ReportService::error("[command] mango blacklist update", $output);
+            });
+
+        $schedule->command('staff:update')
+            ->withoutOverlapping()
+            ->twiceDailyAt(10, 0, 7)
+            ->onFailure(function (Stringable $output) {
+                ReportService::error("[command] staff update", $output);
             });
     }
 

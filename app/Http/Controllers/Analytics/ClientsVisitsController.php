@@ -52,7 +52,7 @@ class ClientsVisitsController extends Controller
                 $records = $client->getRecordsList();
 
                 if (!is_array($records)) {
-                    ReportService::send("getClientsVisits {$clients_key} not found records", $partner->yclients_id);
+                    ReportService::error("getClientsVisits {$clients_key} not found records", $partner->yclients_id);
                     continue;
                 }
 
@@ -65,7 +65,7 @@ class ClientsVisitsController extends Controller
                 $visits = $client->getVisitedForPeriod($recordsIds);
 
                 if (!is_array($visits)) {
-                    ReportService::send("getClientsVisits {$clients_key} not found visits", $partner->yclients_id);
+                    ReportService::error("getClientsVisits {$clients_key} not found visits", $partner->yclients_id);
                     continue;
                 }
 
@@ -98,7 +98,7 @@ class ClientsVisitsController extends Controller
 
             return $result;
         } catch (Throwable $e) {
-            ReportService::send("getClientsVisits {$clients_key}", $e->getMessage());
+            ReportService::error("getClientsVisits {$clients_key}", $e->getMessage());
             return false;
         }
     }
