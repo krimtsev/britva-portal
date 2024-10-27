@@ -45,8 +45,7 @@ class StaffController extends Controller
     {
         $quiet = filter_var($request->input("quiet"), FILTER_VALIDATE_BOOLEAN);
 
-        $partners = Partner::where("yclients_id", "41120")->get();
-        //$partners = Partner::available();
+        $partners = Partner::available();
 
         foreach ($partners as $partner) {
             self::update($partner->yclients_id, $quiet);
@@ -131,11 +130,7 @@ class StaffController extends Controller
 
                     ReportService::msg(self::TYPE, $msg, $data);
                 }
-
-
             }
-
-            dd($one);
         }
 
         return true;
