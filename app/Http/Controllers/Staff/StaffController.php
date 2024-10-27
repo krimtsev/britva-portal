@@ -132,7 +132,10 @@ class StaffController extends Controller
                     ReportService::msg(self::TYPE, $msg, $data);
                 }
 
+
             }
+
+            dd($one);
         }
 
         return true;
