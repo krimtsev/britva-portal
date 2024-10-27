@@ -45,7 +45,8 @@ class StaffController extends Controller
     {
         $quiet = filter_var($request->input("quiet"), FILTER_VALIDATE_BOOLEAN);
 
-        $partners = Partner::available();
+        $partners = Partner::where("yclients_id", "41120")->get();
+        //$partners = Partner::available();
 
         foreach ($partners as $partner) {
             self::update($partner->yclients_id, $quiet);
@@ -117,6 +118,13 @@ class StaffController extends Controller
 
                 if (!$quiet) {
                     $msg = "Изменены настройки";
+
+                    // Доп. данные если добавлен новый сотрудник
+                    if (empty($data_old)) {
+                        $data_new["avatar"] = $one["avatar_big"];
+                        $data_new["isNew"] = true;
+                    }
+
                     ReportService::msg(self::TYPE, $msg, $data_new);
                 }
             }

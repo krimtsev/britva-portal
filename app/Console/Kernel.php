@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('staff:update')
             ->withoutOverlapping()
-            ->twiceDailyAt(10, 0, 7)
+            ->twiceDailyAt(13, 20, 0)
             ->onFailure(function (Stringable $output) {
                 ReportService::error("[command] staff update", $output);
             });
