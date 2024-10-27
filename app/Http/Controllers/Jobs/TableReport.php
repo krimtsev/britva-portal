@@ -60,7 +60,8 @@ class TableReport extends Controller
                 $date["start_date"],
                 $date["end_date"],
                 $partner->yclients_id
-            )->onConnection('database')->onQueue("analytics");
+            );
+
             $partnerNames[] =  $partner->name;
         }
 

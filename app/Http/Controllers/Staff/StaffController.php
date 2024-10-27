@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers\Staff;
 
-use App\Http\Controllers\Audit\AuditController;
 use App\Http\Controllers\Controller;
 use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
 use App\Jobs\StaffJob;
 use App\Models\Partner;
 use App\Models\Staff;
+use App\Models\Audit;
 use Illuminate\Http\Request;
 use Throwable;
 
 class StaffController extends Controller
 {
-    private $quiet = false;
-
     const TYPE = "staff";
 
     /**
@@ -27,9 +25,7 @@ class StaffController extends Controller
 
         try {
             foreach ($partners as $partner) {
-                StaffJob::dispatch($partner->yclients_id)
-                    ->onConnection('database')
-                    ->onQueue(self::TYPE);
+                StaffJob::dispatch($partner->yclients_id);
             }
 
             return json_encode(["info" => "Задачи обновления сотрудников поставлены"]);
@@ -41,30 +37,27 @@ class StaffController extends Controller
         }
     }
 
-    static function isDevelop(): bool {
-        return filter_var(env('IS_DEVELOP', false), FILTER_VALIDATE_BOOLEAN);
-    }
-
     /*
      * Обновить информацию по сотрудникам
      * quiet - Обновить базу без уволеных, отправка уведомлений отключена.
      */
     public function sync(Request $request)
     {
-        $quiet = $request->input("quiet");
-
-        if ($quiet === true) {
-            $this->quiet = true;
-        }
+        $quiet = filter_var($request->input("quiet"), FILTER_VALIDATE_BOOLEAN);
 
         $partners = Partner::available();
 
         foreach ($partners as $partner) {
-            self::update($partner->yclients_id);
+            self::update($partner->yclients_id, $quiet);
         }
     }
 
-    public function update($company_id): bool
+    /**
+     * @param $company_id
+     * @param bool $quiet
+     * @return bool
+     */
+    static function update($company_id, bool $quiet = false): bool
     {
         $client = new YclientsService([
             "company_id" => $company_id,
@@ -83,7 +76,10 @@ class StaffController extends Controller
             return false;
         }
 
-        if ($this->quiet) {
+        /**
+         * В режиме $quiet обновляем данные без учета уволенных
+         */
+        if ($quiet) {
             $staff = array_filter($staff, function($val) {
                 return !$val["fired"];
             });
@@ -113,13 +109,13 @@ class StaffController extends Controller
             if (!empty($data_diff)) {
                 Staff::addRecord($data_new);
 
-                if (!$this->quiet && !self::isDevelop()) {
-                    AuditController::create([
-                        "type" => self::TYPE,
-                        "new"  => $data_new,
-                        "old"  => $data_old,
-                    ]);
+                Audit::create([
+                    "type" => Audit::STAFF_TYPE,
+                    "new"  => $data_new,
+                    "old"  => $data_old,
+                ]);
 
+                if (!$quiet) {
                     $msg = "Изменены настройки";
                     ReportService::msg(self::TYPE, $msg, $data_new);
                 }
@@ -129,7 +125,13 @@ class StaffController extends Controller
         return true;
     }
 
-    private function prepareData($data, $company_id = null): array
+    /**
+     * Нормализация данных для записи в базу и сравнения
+     * @param $data
+     * @param $company_id
+     * @return array
+     */
+    static function prepareData($data, $company_id = null): array
     {
         $company_id = array_key_exists("company_id", $data)
             ? $data["company_id"]
