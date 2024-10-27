@@ -119,13 +119,17 @@ class StaffController extends Controller
                 if (!$quiet) {
                     $msg = "Изменены настройки";
 
+                    $data = [];
+                    $data["new"] = $data_new;
+                    $data["old"] = $data_old;
+
                     // Доп. данные если добавлен новый сотрудник
                     if (empty($data_old)) {
-                        $data_new["avatar"] = $one["avatar_big"];
-                        $data_new["isNew"] = true;
+                        $data["avatar"] = $one["avatar_big"];
+                        $data["isNew"] = true;
                     }
 
-                    ReportService::msg(self::TYPE, $msg, $data_new);
+                    ReportService::msg(self::TYPE, $msg, $data);
                 }
 
             }
