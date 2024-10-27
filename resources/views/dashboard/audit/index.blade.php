@@ -8,8 +8,8 @@
                     <tr>
                         <th>Id</th>
                         <th>Type</th>
-                        <th>New</th>
-                        <th>Old</th>
+                        <th style="width: 400px; word-break: break-word;">New</th>
+                        <th style="width: 400px; word-break: break-word;">Old</th>
                         <th>Date</th>
                     </tr>
                 </thead>
@@ -18,8 +18,8 @@
                     <tr>
                         <td> {{ $one->id }}</td>
                         <td> {{ $one->type }}</td>
-                        <td> {{ $one->new }}</td>
-                        <td> {{ $one->old }}</td>
+                        <td style="width: 400px; word-break: break-word;"> {{ $one->new }}</td>
+                        <td style="width: 400px; word-break: break-word;"> {{ $one->old }}</td>
                         <td> {{ $one->created_at }}</td>
                     </tr>
                     @endforeach

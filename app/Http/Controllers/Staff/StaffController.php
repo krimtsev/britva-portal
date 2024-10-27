@@ -93,7 +93,7 @@ class StaffController extends Controller
         $staff_old = [];
 
         foreach ($_staff as $one) {
-            $id = $one["id"] = $one["staff_id"];
+            $id = $one["id"] = (string)$one["staff_id"];
             $staff_old[$id] = $one;
         }
 
@@ -112,8 +112,8 @@ class StaffController extends Controller
 
                 Audit::create([
                     "type" => Audit::STAFF_TYPE,
-                    "new"  => $data_new,
-                    "old"  => $data_old,
+                    "new"  => json_encode($data_new, JSON_UNESCAPED_UNICODE),
+                    "old"  => json_encode($data_old, JSON_UNESCAPED_UNICODE),
                 ]);
 
                 if (!$quiet) {
@@ -127,6 +127,7 @@ class StaffController extends Controller
 
                     ReportService::msg(self::TYPE, $msg, $data_new);
                 }
+
             }
         }
 

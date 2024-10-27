@@ -13,7 +13,8 @@ class Audit extends Model
 
     protected $fillable = [
         'type',
-        'changes',
+        'new',
+        'old',
     ];
 
     const STAFF_TYPE = 'staff';
