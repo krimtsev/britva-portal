@@ -40,13 +40,11 @@ class ReportService
 
             $message = "[{$partner}] {$msg}";
 
-            $body = [
+            Http::post(self::URL, [
                 "type" => $id,
                 "msg"  => $message,
                 "data" => $data
-            ];
-
-            Http::post(self::URL, $body);
+            ]);
         } catch (Throwable $e) {
             report($e->getMessage());
         }
