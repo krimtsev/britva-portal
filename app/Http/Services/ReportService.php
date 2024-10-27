@@ -40,15 +40,13 @@ class ReportService
 
             $message = "[{$partner}] {$msg}";
 
-            $query = http_build_query([
+            $body = [
                 "type" => $id,
                 "msg"  => $message,
                 "data" => $data
-            ]);
+            ];
 
-            $url = sprintf("%s?%s", self::URL, $query);
-
-            Http::post($url);
+            Http::post(self::URL, $body);
         } catch (Throwable $e) {
             report($e->getMessage());
         }
