@@ -118,9 +118,14 @@ class StaffController extends Controller
                 if (!$quiet) {
                     $msg = "Изменены настройки";
 
+                    $partner = Partner::select("name")
+                        ->where("yclients_id", $company_id)
+                        ->first();
+
                     $data = [];
                     $data["new"] = $data_new;
                     $data["old"] = $data_old;
+                    $data["company_name"] = $partner["name"];
 
                     // Доп. данные если добавлен новый сотрудник
                     if (empty($data_old)) {
