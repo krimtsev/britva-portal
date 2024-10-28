@@ -50,11 +50,7 @@ class TableReport extends Controller
             dd($e);
         }
 
-        $partners = Partner::select("name", "yclients_id")
-            ->where('yclients_id', '<>', "")
-            ->where('disabled', '<>', 1)
-            ->orderBy("name")
-            ->get();
+        $partners = Partner::available();
 
         $partnerNames = [];
 
@@ -64,7 +60,8 @@ class TableReport extends Controller
                 $date["start_date"],
                 $date["end_date"],
                 $partner->yclients_id
-            )->onConnection('database')->onQueue("analytics");
+            );
+
             $partnerNames[] =  $partner->name;
         }
 

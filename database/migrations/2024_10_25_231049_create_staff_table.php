@@ -15,14 +15,13 @@ class CreateStaffTable extends Migration
     {
         Schema::create('staff', function (Blueprint $table) {
             $table->id();
-
-            $table->string('name');
-            $table->string('tg_chat_id')->unique();
-            $table->string('yclients_id');
             $table->string('staff_id');
-            $table->string('action');
+            $table->string('company_id');
+            $table->string('name');
+            $table->string('specialization');
 
             $table->timestamps();
+
             $table->softDeletes();
         });
     }

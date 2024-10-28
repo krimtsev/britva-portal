@@ -17,6 +17,7 @@ Route::group(['middleware' => ['api_token']], function () {
     Route::get('/repeat-clients', [ClientsVisitsController::class, 'getRepeatClients']);
 
     Route::get('/telnums-list', [MangoController::class, 'getTelnumsList']);
+
+    Route::get('/staff-update', [StaffController::class, 'sync']);
 });
 
-Route::post('/staff', [StaffController::class, 'index']);

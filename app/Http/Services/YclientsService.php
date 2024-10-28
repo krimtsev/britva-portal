@@ -65,7 +65,8 @@ class YclientsService
     /**
      * Фильтр уволенных сотрудников, удаленных сотрудников, лист ожидания. 2191383
      */
-    private function isRemoveStaff($data) {
+    private function isRemoveStaff($data): bool
+    {
         return $data["is_fired"] || $data["is_deleted"] ; // || strtoupper($data["name"]) == "ЛИСТ ОЖИДАНИЯ"
     }
 
@@ -97,6 +98,13 @@ class YclientsService
                 $staff[$id]["id"] = $one["id"];
                 $staff[$id]["name"] = $one["name"];
                 $staff[$id]["specialization"] = $one["specialization"];
+                $staff[$id]["avatar_big"] = $one["avatar_big"];
+
+                if (isset($one["user"]["phone"])) {
+                    $staff[$id]["phone"] = $one["user"]["phone"];
+                } else {
+                    $staff[$id]["phone"] = "";
+                }
             }
 
             return $staff;
@@ -605,7 +613,7 @@ class YclientsService
 
                 foreach ($one["services"] as $service) {
                     if (in_array($service["id"], $FILTER_IDS)) {
-                        $total += $service["cost_to_pay"];
+                        $total += $service["manual_cost"];
                     }
 
                     if (in_array($service["id"], $SERVICES_COST_IDS)) {

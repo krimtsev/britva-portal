@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMangoBlacklistTable extends Migration
+class CreateStaffBotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,17 @@ class CreateMangoBlacklistTable extends Migration
      */
     public function up()
     {
-        Schema::create('mango_blacklist', function (Blueprint $table) {
+        Schema::create('staff_bot', function (Blueprint $table) {
             $table->id();
-            $table->integer('number_id');
-            $table->string('number');
-            $table->string('number_type')->nullable();
-            $table->string('comment')->nullable();
-            $table->boolean('is_disabled')->default(0);
+
+            $table->string('name');
+            $table->string('tg_chat_id')->unique();
+            $table->string('yclients_id');
+            $table->string('staff_id');
+            $table->string('action');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -31,6 +34,6 @@ class CreateMangoBlacklistTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mango_blacklist');
+        Schema::dropIfExists('staff_bot');
     }
 }

@@ -17,13 +17,18 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-
         $schedule->command('blacklist:update')
-            ->daily()
+            ->hourly()
             ->onFailure(function (Stringable $output) {
-                ReportService::send("[command] mango blacklist update", $output);
-            });;
+                ReportService::error("[command] mango blacklist update", $output);
+            });
+
+        $schedule->command('staff:update')
+            ->withoutOverlapping()
+            ->twiceDailyAt(13, 20, 0)
+            ->onFailure(function (Stringable $output) {
+                ReportService::error("[command] staff update", $output);
+            });
     }
 
     /**

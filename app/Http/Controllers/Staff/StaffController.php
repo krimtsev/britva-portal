@@ -5,193 +5,158 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
+use App\Jobs\StaffJob;
 use App\Models\Partner;
 use App\Models\Staff;
+use App\Models\Audit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Throwable;
 
 class StaffController extends Controller
 {
-    const URL = "https://api.telegram.org";
+    const TYPE = "staff";
 
-    private $chatId = "";
-    private $text = "";
+    /**
+     * Устанавливаем задачи (Queues) для каждого парнера
+     * setJobs -> StaffJob -> update
+     */
+    static function setJobs() {
+        $partners = Partner::available();
 
-    public $messages = [
-        "start" => [
-            "Добро пожаловать в BRITVA STATS BOT!",
-            "Здесь можно узнать информацию по своей карточке сотрудника и сравнить её с коллегами в своем филиале.",
-            "Для регистрации введите ID филиала:"
-        ],
-        "yclients_success" => [
-            "Выбран филиал: " => "yclients_name",
-            "Введите ID сотрудника:"
-        ],
-        "yclients_error" => [
-            "Указан не правильный ID филиала.",
-            "Введите корректный ID филиала. Его можно узнать у Администратора в разделе Обзор > Сводка"
-        ],
-        "staff_success" => [
-            "Выбран сотрудник: " => "staff_name"
-        ],
-        "staff_error" => [
-            "Указан не правильный ID сотрудника.",
-            "Введите корректный ID сотрудника. Его можно узнать у Администратора в разделе Настройки > Сотрудники > выбрать сотрудника > посмотреть ID в адресной строке"
-        ],
-    ];
-
-    public $actions = [
-        "yclients_id" => "yclients_id",
-        "staff_id"    => "staff_id",
-    ];
-
-    public function getMessages($key, $values = []) {
-        $message= "";
-
-        if (!array_key_exists($key, $this->messages)) {
-            return $message;
-        }
-
-        foreach ($this->messages[$key] as $str => $val) {
-            if (array_key_exists($val, $values)) {
-                $message .= $str . $values[$val] . "\n";
-            } else {
-                $message .= $val . "\n";
-            }
-        }
-
-        return $message;
-    }
-
-    private function website() {
-        $token = env('TELEGRAM_BOT_TOKEN', '');
-        return sprintf("%s/%s", self::URL, $token);
-    }
-
-    function sendMessage($text) {
-        $query = http_build_query([
-            "chat_id"    => $this->chatId,
-            "text"       => $text,
-            "parse_mode" => "html"
-        ]);
-
-        $url =  sprintf("%s/sendMessage?%s", $this->website(), $query);
-
-        Http::get($url);
-        //file_get_contents($url);
-    }
-
-    function response() {
-        return response("1", 200);
-    }
-
-    function index(Request $request) {
         try {
-            //$content = json_decode(file_get_contents("php://input"), true);
-            $message = $request->input("message");
-
-            if(!$message) {
-                return $this->response();
+            foreach ($partners as $partner) {
+                StaffJob::dispatch($partner->yclients_id);
             }
 
-            $this->chatId = $message["chat"]["id"];
+            return json_encode(["info" => "Задачи обновления сотрудников поставлены"]);
 
-            $this->text = $message["text"];
-
-            $isCommand = str_starts_with($this->text, '/');
-
-            ReportService::send("request", json_encode($message));
-
-            if ($isCommand) {
-                switch ($this->text) {
-                    case "/start":
-                        $this->actionStart();
-                        break;
-                    default:
-                        $this->sendMessage("DEFAULT");
-                }
-            } else {
-                $data = Staff::select("action")
-                    ->where('tg_chat_id', $this->chatId)
-                    ->first();
-
-                ReportService::send("action", json_encode($data->action));
-
-                if (!$data) exit;
-
-                switch ($data->action) {
-                    case $this->actions["yclients_id"]:
-                        $this->actionYclientsId();
-                        break;
-                    case $this->actions["staff_id"]:
-                        $this->actionStaffId();
-                        break;
-                }
-
-            }
         } catch (Throwable $e) {
-            ReportService::send("api", $e->getMessage());
-        }
+            ReportService::error("[StaffController] setJobs", $e->getMessage());
 
-        return $this->response();
+            return [];
+        }
     }
 
-    function actionStart() {
-        $this->sendMessage($this->getMessages("start"));
+    /*
+     * Обновить информацию по сотрудникам
+     * quiet - Обновить базу без уволеных, отправка уведомлений отключена.
+     */
+    public function sync(Request $request)
+    {
+        $quiet = filter_var($request->input("quiet"), FILTER_VALIDATE_BOOLEAN);
 
-        Staff::add([
-            "tg_chat_id"  => $this->chatId,
-            "action"      => $this->actions["yclients_id"],
-            "name"        => "",
-            "yclients_id" => "",
-            "staff_id"    => "",
+        $partners = Partner::available();
+
+        foreach ($partners as $partner) {
+            self::update($partner->yclients_id, $quiet);
+        }
+    }
+
+    /**
+     * @param $company_id
+     * @param bool $quiet
+     * @return bool
+     */
+    static function update($company_id, bool $quiet = false): bool
+    {
+        $client = new YclientsService([
+            "company_id" => $company_id,
         ]);
+
+        // Список сотрудников
+        $staff = $client->getStaff();
+
+        if (!is_array($staff)) {
+            ReportService::error("[Staff] update", "bad request, partner: {$company_id}");
+            return false;
+        }
+
+        if (count($staff) == 0) {
+            ReportService::error("[Staff] update", "staff is empty, partner: {$company_id}");
+            return false;
+        }
+
+        $_staff = Staff::whereIn("staff_id", array_keys($staff))
+            ->get()
+            ->toArray();
+
+        $staff_old = [];
+
+        foreach ($_staff as $one) {
+            $id = $one["id"] = (string)$one["staff_id"];
+            $staff_old[$id] = $one;
+        }
+
+        foreach ($staff as $id => $one) {
+            $data_new = self::prepareData($one, $company_id);
+            $data_old = [];
+
+            if (array_key_exists($id, $staff_old)) {
+                $data_old = self::prepareData($staff_old[$id], $company_id);
+            }
+
+            $data_diff = array_diff($data_new, $data_old);
+
+            if (!empty($data_diff)) {
+                Staff::addRecord($data_new);
+
+                Audit::create([
+                    "type" => Audit::STAFF_TYPE,
+                    "new"  => json_encode($data_new, JSON_UNESCAPED_UNICODE),
+                    "old"  => json_encode($data_old, JSON_UNESCAPED_UNICODE),
+                ]);
+
+                if (!$quiet) {
+                    self::sendMessage($company_id, $one, $data_new, $data_old);
+                }
+            }
+        }
+
+        return true;
     }
 
-    private function actionYclientsId() {
+    static function sendMessage($company_id, $staff, $data_new, $data_old) {
+        $msg = "Изменены данные сотрудника";
+
         $partner = Partner::select("name")
-            ->where('yclients_id', $this->text)
+            ->where("yclients_id", $company_id)
             ->first();
 
-        if ($partner) {
-            Staff::where("tg_chat_id", $this->chatId)->update([
-                "yclients_id" => $this->text,
-                "action"      => $this->actions["staff_id"],
-            ]);
+        $data = [];
+        $data["new"] = $data_new;
+        $data["old"] = $data_old;
+        $data["company_name"] = $partner["name"];
 
-            $this->sendMessage($this->getMessages("yclients_success", [
-                "yclients_name" => $partner->name
-            ]));
-        } else {
-            $this->sendMessage($this->getMessages("yclients_error"));
+        // Доп. данные если добавлен новый сотрудник
+        if (empty($data_old)) {
+            $data["avatar"] = $staff["avatar_big"];
+            $data["isNew"] = true;
         }
+
+        // Номер телефона не логируем и не проверяем изменения
+        // Отправляем текущий телефон для уведомления
+        $data["phone"] = $staff["phone"];
+
+        ReportService::msg(self::TYPE, $msg, $data);
     }
 
-    private function actionStaffId() {
-        $staff = Staff::select("yclients_id")
-            ->where('tg_chat_id', $this->chatId)
-            ->first();
+    /**
+     * Нормализация данных для записи в базу и сравнения
+     * @param $data
+     * @param $company_id
+     * @return array
+     */
+    static function prepareData($data, $company_id = null): array
+    {
+        $company_id = array_key_exists("company_id", $data)
+            ? $data["company_id"]
+            : $company_id;
 
-        $params = [
-            "company_id" => $staff->yclients_id
+        return [
+            "staff_id"       => $data["id"],
+            "company_id"     => $company_id,
+            "name"           => $data["name"],
+            "specialization" => $data["specialization"]
         ];
-
-        $client = new YclientsService($params);
-        $staffData = $client->getStaffData($this->text);
-
-        if (is_array($staffData)) {
-            $this->sendMessage($this->getMessages("staff_success", [
-                "staff_name" => $staffData["name"]
-            ]));
-
-            Staff::where("tg_chat_id", $this->chatId)->update([
-                "action"   => "",
-                "staff_id" => $staffData["id"],
-                "name"     => $staffData["name"],
-            ]);
-        } else {
-            $this->sendMessage($this->getMessages("staff_error"));
-        }
     }
 }
