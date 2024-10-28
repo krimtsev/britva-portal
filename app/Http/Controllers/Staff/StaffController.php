@@ -108,7 +108,7 @@ class StaffController extends Controller
             }
 
             // Отправляем сообщение, если есть изменения без учета уволенных
-            unset($data_diff['fired']);
+            unset($data_diff['is_fired']);
             if (!empty($data_diff) && !$quiet) {
                 self::sendMessage($company_id, $one, $data_new, $data_old);
             }
