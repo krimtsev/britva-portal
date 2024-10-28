@@ -19,7 +19,7 @@ class CreateStaffTable extends Migration
             $table->string('company_id');
             $table->string('name');
             $table->string('specialization');
-            $table->boolean('fired');
+            $table->boolean('is_fired');
 
             $table->timestamps();
 

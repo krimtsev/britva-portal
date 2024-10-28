@@ -18,7 +18,7 @@ class Staff extends Model
         'company_id',
         'name',
         'specialization',
-        'fired',
+        'is_fired',
     ];
 
     public static function addRecord($table) {

@@ -64,7 +64,7 @@ class StaffController extends Controller
         ]);
 
         // Список сотрудников
-        $staff = $client->getStaff();
+        $staff = $client->getStaff(["fired"]);
 
         if (!is_array($staff)) {
             ReportService::error("[Staff] update", "bad request, partner: {$company_id}");
@@ -74,15 +74,6 @@ class StaffController extends Controller
         if (count($staff) == 0) {
             ReportService::error("[Staff] update", "staff is empty, partner: {$company_id}");
             return false;
-        }
-
-        /**
-         * В режиме $quiet обновляем данные без учета уволенных
-         */
-        if ($quiet) {
-            $staff = array_filter($staff, function($val) {
-                return !$val["fired"];
-            });
         }
 
         $_staff = Staff::whereIn("staff_id", array_keys($staff))
@@ -114,35 +105,41 @@ class StaffController extends Controller
                     "new"  => json_encode($data_new, JSON_UNESCAPED_UNICODE),
                     "old"  => json_encode($data_old, JSON_UNESCAPED_UNICODE),
                 ]);
+            }
 
-                if (!$quiet) {
-                    $msg = "Изменены настройки";
-
-                    $partner = Partner::select("name")
-                        ->where("yclients_id", $company_id)
-                        ->first();
-
-                    $data = [];
-                    $data["new"] = $data_new;
-                    $data["old"] = $data_old;
-                    $data["company_name"] = $partner["name"];
-
-                    // Доп. данные если добавлен новый сотрудник
-                    if (empty($data_old)) {
-                        $data["avatar"] = $one["avatar_big"];
-                        $data["isNew"] = true;
-                    }
-
-                    // Номер телефона не логируем и не проверяем изменения
-                    // Отправляем текущий телефон для уведомления
-                    $data["phone"] = $data_new["phone"];
-
-                    ReportService::msg(self::TYPE, $msg, $data);
-                }
+            // Отправляем сообщение, если есть изменения без учета уволенных
+            unset($data_diff['fired']);
+            if (!empty($data_diff) && !$quiet) {
+                self::sendMessage($company_id, $one, $data_new, $data_old);
             }
         }
 
         return true;
+    }
+
+    static function sendMessage($company_id, $staff, $data_new, $data_old) {
+        $msg = "Изменены данные сотрудника";
+
+        $partner = Partner::select("name")
+            ->where("yclients_id", $company_id)
+            ->first();
+
+        $data = [];
+        $data["new"] = $data_new;
+        $data["old"] = $data_old;
+        $data["company_name"] = $partner["name"];
+
+        // Доп. данные если добавлен новый сотрудник
+        if (empty($data_old)) {
+            $data["avatar"] = $staff["avatar_big"];
+            $data["isNew"] = true;
+        }
+
+        // Номер телефона не логируем и не проверяем изменения
+        // Отправляем текущий телефон для уведомления
+        $data["phone"] = $staff["phone"];
+
+        ReportService::msg(self::TYPE, $msg, $data);
     }
 
     /**
@@ -162,7 +159,7 @@ class StaffController extends Controller
             "company_id"     => $company_id,
             "name"           => $data["name"],
             "specialization" => $data["specialization"],
-            "fired"          => $data["fired"],
+            "is_fired"       => $data["is_fired"],
         ];
     }
 }
