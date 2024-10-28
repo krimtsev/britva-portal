@@ -75,7 +75,7 @@ class YclientsService
      * @return false | array<string[]>
      */
 
-    public function getStaff($filter = []) {
+    public function getStaff() {
         try {
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff", $this->company_id);
 
@@ -87,12 +87,10 @@ class YclientsService
                 return false;
             }
 
-            $filterFired = in_array("fired", $filter);
-
             $staff = [];
 
             foreach ($response["data"] as $one) {
-                if(!$filterFired && $this->isRemoveStaff($one)) {
+                if($this->isRemoveStaff($one)) {
                     continue;
                 }
                 $id = $one["id"];
@@ -100,7 +98,6 @@ class YclientsService
                 $staff[$id]["id"] = $one["id"];
                 $staff[$id]["name"] = $one["name"];
                 $staff[$id]["specialization"] = $one["specialization"];
-                $staff[$id]["is_fired"] = $one["is_fired"];
                 $staff[$id]["avatar_big"] = $one["avatar_big"];
 
                 if (isset($one["user"]["phone"])) {

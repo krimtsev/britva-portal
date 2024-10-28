@@ -64,7 +64,7 @@ class StaffController extends Controller
         ]);
 
         // Список сотрудников
-        $staff = $client->getStaff(["fired"]);
+        $staff = $client->getStaff();
 
         if (!is_array($staff)) {
             ReportService::error("[Staff] update", "bad request, partner: {$company_id}");
@@ -105,12 +105,10 @@ class StaffController extends Controller
                     "new"  => json_encode($data_new, JSON_UNESCAPED_UNICODE),
                     "old"  => json_encode($data_old, JSON_UNESCAPED_UNICODE),
                 ]);
-            }
 
-            // Отправляем сообщение, если есть изменения без учета уволенных
-            unset($data_diff['is_fired']);
-            if (!empty($data_diff) && !$data_new["is_fired"] && !$quiet) {
-                self::sendMessage($company_id, $one, $data_new, $data_old);
+                if (!$quiet) {
+                    self::sendMessage($company_id, $one, $data_new, $data_old);
+                }
             }
         }
 
@@ -158,8 +156,7 @@ class StaffController extends Controller
             "staff_id"       => $data["id"],
             "company_id"     => $company_id,
             "name"           => $data["name"],
-            "specialization" => $data["specialization"],
-            "is_fired"       => $data["is_fired"],
+            "specialization" => $data["specialization"]
         ];
     }
 }
