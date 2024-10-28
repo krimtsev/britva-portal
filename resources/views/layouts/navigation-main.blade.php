@@ -29,14 +29,13 @@
 						<li style="font-size: 10px; color: black;"><br>Если вам необходимо передать ссылку на курс сотруднику, нажмите на ссылку ПКМ (правая кнопка мыши) и "Копировать ссылку". А после отправьте своему сотруднику.</li>
                     </ul>
                 </li>
+				<li><a href="/cloud/">Облако файлов</a></li>
                 <li>
                     <span class="opener">Документация</span>
                     <ul>
-                        <li><a href="https://disk.yandex.ru/d/ULIeIC7SnSRLGA" target="_blank">Облако документов</a></li>
-                        <!-- <li><a href="/page/subscription">Абонементы</a></li>
-                        <li><a href="/page/certificate">Сертификаты</a></li>
-                        <li><a href="/page/price-list">Прайс-лист</a></li>
-                        <li><a href="/page/rospotrebnadzor">Роспотребнадзор</a></li> -->
+
+                        <!-- <li><a href="/page/price-list">Прайс-лист</a></li> -->
+                        <li><a href="/page/certificate">Система работы сертификатов</a></li>
                         <li><a href="/page/fines-audit">Штрафы по аудиту</a></li>
                         <li><a href="/page/fines">Штрафы</a></li>
                         <li><a href="/page/mango-audit">Балльная система по манго-аудиту</a></li>
@@ -51,31 +50,30 @@
                         <li><a target="_blank" href="https://youtu.be/6cy9sEyNDXU?si=3x0R0pmKIRHM08YO">ЭВОТОР. Настройка цен</a></li>
                     </ul>
                 </li>
-                <li><a href="https://mysoda.ru/page/service-bot">Сервис пропущенных звонков</a></li>
+                <li>
+					<span class="opener">Дополнительные услуги</span>
+					<ul>
+						<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
+						<li><a href="page/subscription-yandex-2gis">Подписка Яндекс.Карты и 2GIS</a></li>
+						<li><a href="https://mybritva.ru/page/service-bot">Сервис пропущенных звонков</a></li>
+					</ul>
+				</li>
                 <li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
                 <li><a href="https://docs.google.com/spreadsheets/d/1EllHBxOGbK61fOl7rMqenM7oCF59e3_30F_JA3xTAw8/" target="_blank">Таблица оплаты телефонии</a></li>
                 <li>
-                    <span class="opener">Макеты</span>
-                    <ul>
-                        <!-- <li><a href="https://disk.yandex.ru/d/I_GTnZygB632BA" target="_blank">Макеты печатные</a></li> -->
-                        <li><a href="https://disk.yandex.ru/d/QlK_B4ArlUdxHQ" target="_blank">Макеты печатные</a></li>
-                        <li><a href="https://disk.yandex.ru/d/gYdjTyCWu_bU3A" target="_blank">Макеты на НГ 2023-2024</a></li>
-                    </ul>
-                </li>
-                <li><a href="/upload/co-price.pdf" target="_blank">ПЛАТНЫЕ УСЛУГИ ЦО</a></li>
-                <li>
                     <span class="opener">Заявки</span>
                     <ul>
-                        <li><a href="https://forms.gle/vStrvEx5uw9NqicR6">Заявка на дизайн</a></li>
+                        <li><a target="_blank" href="https://forms.gle/vStrvEx5uw9NqicR6">Заявка на дизайн</a></li>
                         <li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSey7nWdiT1diYpgpMYapsWLxFlppWFnAUjGnq8cyroQOjctQA/viewform">ЗАЯВКА ПО СЕРТИФИКАТУ</a></li>
                         <li><a target="_blank" href="https://docs.google.com/forms/d/1VVrRX_w9_V7h6_CXPRjt39l-LmAHVPgvAqDOIJTzx8c/viewform?edit_requested=true">ЗАЯВКА НА ТОП-СТИЛИСТА</a></li>
-                        <li><a href="https://docs.google.com/forms/d/1SlR0SpPsqwQ2bRozL83KeDiWY7eq_aLeHx2M-L-gjek/edit">ЗАЯВКА НА ТОП-БРОВИСТА</a></li>
+                        <li><a target="_blank" href="https://docs.google.com/forms/d/1SlR0SpPsqwQ2bRozL83KeDiWY7eq_aLeHx2M-L-gjek/edit">ЗАЯВКА НА ТОП-БРОВИСТА</a></li>
                         <li><a target="_blank" href="https://docs.google.com/forms/d/1mgmKAS_qtQZ1fSpsRD2IJ63q07Bmbw1VWqgt3zRCol0/viewform?edit_requested=true">ЗАЯВКА НА ТОП-МАСТЕРА МАНИКЮРА</a></li>
-                        <li><a href="https://docs.google.com/forms/d/1WJJW7ihNhNz-xMG2rhoQ42zutwcAn-Wh0wGEe7anCb8/edit">ЗАЯВКА НА БРЕНД-МАСТЕРА МАНИКЮРА</a></li>
-                        <li><a href="https://docs.google.com/forms/d/1d3nUJEG1bDynQMPm4EeKOk-gkLVxJyuN1VX3su9G6VE/viewform" target="_blank">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
-                        <li><a href="https://docs.google.com/forms/d/1d7uw_rRJ3Ofw8GY5vg0yobMpYlvugO-KO6k9flBKYZE/viewform" target="_blank">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
+                        <li><a target="_blank" href="https://docs.google.com/forms/d/1WJJW7ihNhNz-xMG2rhoQ42zutwcAn-Wh0wGEe7anCb8/edit">ЗАЯВКА НА БРЕНД-МАСТЕРА МАНИКЮРА</a></li>
+                        <li><a target="_blank" href="https://docs.google.com/forms/d/1d3nUJEG1bDynQMPm4EeKOk-gkLVxJyuN1VX3su9G6VE/viewform" target="_blank">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
+                        <li><a target="_blank" href="https://docs.google.com/forms/d/1d7uw_rRJ3Ofw8GY5vg0yobMpYlvugO-KO6k9flBKYZE/viewform" target="_blank">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
                     </ul>
                 </li>
+				<li><a href="https://docs.google.com/forms/d/19-nRP02iMz7gbtViZ599YYZY9lK5eWTdE-mBcqVrRA0/viewform?edit_requested=true">KPI франшизы (регионы)</a></li>
                 <li><a href="/page/discounts">Корпоративные скидки</a></li>
                 <li><a target="_blank" href="https://britva.tech/soda/">Страница для администраторов</a></li>
                 <li>
@@ -84,6 +82,7 @@
                         <li><a href="/page/contact-office">Сотрудников ЦО</a></li>
                         <li><a href="/contact-franchise">Владельцев франшиз</a></li>
                         <li><a href="/page/contact-partner">Партнеров</a></li>
+                        <li><a href="/page/contents-brands">Торговые марки (ногтевой сервис)</a></li>
                         <li><a href="/sheet/contact-outstaff">Полезные контакты</a></li>
                     </ul>
                 </li>
