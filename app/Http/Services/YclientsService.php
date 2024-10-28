@@ -65,7 +65,8 @@ class YclientsService
     /**
      * Фильтр уволенных сотрудников, удаленных сотрудников, лист ожидания. 2191383
      */
-    private function isRemoveStaff($data) {
+    private function isRemoveStaff($data): bool
+    {
         return $data["is_fired"] || $data["is_deleted"] ; // || strtoupper($data["name"]) == "ЛИСТ ОЖИДАНИЯ"
     }
 
