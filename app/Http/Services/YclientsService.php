@@ -99,6 +99,12 @@ class YclientsService
                 $staff[$id]["specialization"] = $one["specialization"];
                 $staff[$id]["fired"] = $one["fired"];
                 $staff[$id]["avatar_big"] = $one["avatar_big"];
+
+                if (isset($one["user"]["phone"])) {
+                    $staff[$id]["phone"] = $one["user"]["phone"];
+                } else {
+                    $staff[$id]["phone"] = "";
+                }
             }
 
             return $staff;

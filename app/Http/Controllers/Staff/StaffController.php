@@ -133,6 +133,10 @@ class StaffController extends Controller
                         $data["isNew"] = true;
                     }
 
+                    // Номер телефона не логируем и не проверяем изменения
+                    // Отправляем текущий телефон для уведомления
+                    $data["phone"] = $data_new["phone"];
+
                     ReportService::msg(self::TYPE, $msg, $data);
                 }
             }
