@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth', 'isAdminOrSysAdmin'], 'prefix' => 'dashbo
     require __DIR__ . '/dashboard/analytics.php';
     require __DIR__ . '/dashboard/royalty.php';
     require __DIR__ . '/dashboard/partners.php';
+    require __DIR__ . '/dashboard/upload.php';
 });
 
 Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
@@ -68,7 +69,6 @@ Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', '
     require __DIR__ . '/dashboard/mango.php';
     require __DIR__ . '/dashboard/missed-calls.php';
     require __DIR__ . '/dashboard/messages.php';
-    require __DIR__ . '/dashboard/upload.php';
     require __DIR__ . '/dashboard/audit.php';
 });
 
