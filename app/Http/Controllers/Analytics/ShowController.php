@@ -15,6 +15,9 @@ class ShowController extends Controller
 {
     public function __invoke(Request $request)
     {
+        // Признак принудительного обновления из yclients
+        $isSync = !!$request->input("sync");
+
         // Дата окончания (передается из формы)
         $end_date = $request->input("month");
 
@@ -37,9 +40,6 @@ class ShowController extends Controller
                 return view("analytics.show", compact("company_id_not_found"));
             }
         }
-
-        // Признак принудительного одновдения из yclients
-        $isSync = $request->input("sync");
 
         list($table, $total) = TableReport::get($isSync, $start_date, $end_date, $company_id);
 

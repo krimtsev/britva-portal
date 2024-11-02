@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 
 class TableReport extends Controller
 {
-    public static function get($isSync, $start_date, $end_date, $company_id)
+    public static function get($isSync, $start_date, $end_date, $company_id): array
     {
         $table = [];
         $total = [];
