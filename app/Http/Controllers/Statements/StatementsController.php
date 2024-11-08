@@ -8,6 +8,7 @@ use App\Models\Statement\Statement;
 use App\Models\Statement\StatementCategory;
 use App\Models\Statement\StatementMessage;
 use App\Utils\Utils;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,19 @@ class StatementsController extends Controller
     public function isDashboard($request): bool
     {
         return $request->route()->getAction("view") == "dashboard";
+    }
+
+    public function dateDiff($statement): \DateInterval
+    {
+        $created = new Carbon($statement->created_at);
+
+        if (in_array($statement->state, [4,5,6])) {
+            $updated = Carbon::now($statement->updated_at);
+            return $created->diff($updated);
+        }
+
+        $now = Carbon::now();
+        return $created->diff($now);
     }
 
     public function index(Request $request)
@@ -48,6 +62,12 @@ class StatementsController extends Controller
         }
 
         $statements = $sql->paginate(30);
+
+        foreach ($statements as $id => $statement) {
+            $date = self::dateDiff($statement);
+            $statement->daysInWork = $date->days;
+            $statement->dayName = $date->days."d ".$date->h.":".$date->i;
+        }
 
         $stateList = [];
         $categories = [];
