@@ -3,7 +3,7 @@
 
     <section>
         <div class="mb-2 flex justify-content-start">
-            <a href="{{ route('d.statements.index') }}" class="button"> Назад </a>
+            <a href="{{ route('p.statements.index') }}" class="button"> Назад </a>
         </div>
 
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
@@ -17,7 +17,6 @@
                     <div class="col-12">
                         <div> <b>Тема запроса:</b> {{ $statement->title }}</div>
                         <div> <b>Отдел:</b> {{ $statement->category->title }}</div>
-                        <div> <b>Филиал:</b> {{ $statement->partner->name }}</div>
                         <div> <b>Статус:</b> {{ $stateList[$statement->state] }}</div>
                      </div>
 
@@ -28,7 +27,7 @@
 
                         @foreach($messages as $message)
                             <div class="col-12">
-                                <div class="statement-message_user"> > {{ $message->user->login }} ({{ $message->created_at }})</div>
+                                <div class="statement-message_user"> > {{ $message->user->name }} ({{ $message->created_at }})</div>
                                 <div class="statement-message_text">{{ $message->text }}</div>
 
                                 @if(count($message->files))
@@ -82,7 +81,7 @@
 
                 <input
                     type="submit"
-                    value="{{ $statement->state == 1 ? 'Закрыть заявление' : 'Открыть заявление' }}"
+                    value="{{ $statement->state == 1 ? 'Закрыть заявку' : 'Открыть заявку' }}"
                     class="danger"
                 />
             </form>

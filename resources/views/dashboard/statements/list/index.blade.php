@@ -4,7 +4,7 @@
     <section>
         <div class="mb-2 flex justify-between">
             @if (Route::has('d.statements.create'))
-                <a href="{{ route('d.statements.create') }}" class="button"> Добавить </a>
+                <a href="{{ route('d.statements.create') }}" class="button"> Добавить заявку  </a>
             @endif
             @if (Route::has('d.statements-categories.index'))
                 <a href="{{ route('d.statements-categories.index') }}" class="button ml-2"> Отделы </a>

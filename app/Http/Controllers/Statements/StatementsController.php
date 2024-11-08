@@ -129,25 +129,37 @@ class StatementsController extends Controller
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $isDashboard = $this->isDashboard($request);
-
-        $validated = request()->validate([
-            'title'       => ['required', 'string'],
-            'category_id' => ['required', 'string'],
-            'partner_id'  => ['required', 'string'],
-            'text'        => ['required', 'string'],
-            'files.*'     => ['nullable', StatementsFilesController::RULES_ALLOW_TYPES]
-        ]);
-
         $user = Auth::user();
+        $partner_id = $user->partner_id;
 
-        if (!$isDashboard && $validated['partner_id'] != $user->partner_id) {
+        if (!$isDashboard && !$partner_id) {
             return redirect()->route('p.statements.index');
         }
+
+        $rules = [
+            'title'       => ['required', 'string'],
+            'category_id' => ['required', 'string'],
+            'text'        => ['required', 'string'],
+            'files.*'     => ['nullable', StatementsFilesController::RULES_ALLOW_TYPES]
+        ];
+
+        // Для панели администратора передача partner_id обязательна
+        if ($isDashboard) {
+            $rules['partner_id'] = ['required', 'string'];
+        }
+
+        $validated = request()->validate($rules);
+
+        if (array_key_exists('partner_id', $validated)) {
+            $partner_id = $validated['partner_id'];
+        }
+
+        $user = Auth::user();
 
         $statement = Statement::create([
             'title'       => $validated['title'],
             'category_id' => $validated['category_id'],
-            'partner_id'  => $validated['partner_id'],
+            'partner_id'  => $partner_id,
             'user_id'     => $user->id,
         ]);
 
@@ -164,7 +176,7 @@ class StatementsController extends Controller
         }
 
         if (!$isDashboard) {
-            redirect()->route('p.statements.edit', $statement->id);
+            return redirect()->route('p.statements.edit', $statement->id);
         }
 
         return redirect()->route('d.statements.edit', $statement->id);
