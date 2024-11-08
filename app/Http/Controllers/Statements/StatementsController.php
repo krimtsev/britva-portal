@@ -49,10 +49,13 @@ class StatementsController extends Controller
 
         $statements = $sql->paginate(30);
 
+        $stateList = [];
         $categories = [];
         $partners = [];
 
         if ($isDashboard) {
+            $stateList = Statement::stateList;
+
             $categories =  StatementCategory::select('id', 'title')
                 ->orderBy('title', 'ASC')
                 ->get();
@@ -71,7 +74,8 @@ class StatementsController extends Controller
             'statements',
             'filter',
             'categories',
-            'partners'
+            'partners',
+            'stateList'
         ));
     }
 
@@ -160,13 +164,36 @@ class StatementsController extends Controller
             ->orderBy('id', 'ASC')
             ->get();
 
-        if (!$isDashboard) {
-            return view('profile.statements.list.edit', compact('statement', 'messages'));
+        $categories = [];
+
+        if ($isDashboard) {
+            $categories = StatementCategory::select("id", "title")
+                ->get();
+
+            $partners = Partner::available();
         }
 
-        return view('dashboard.statements.list.edit', compact('statement', 'messages'));
+
+        $stateList = Statement::stateList;
+
+        if (!$isDashboard) {
+            return view('profile.statements.list.edit', compact(
+                'statement',
+                'messages',
+                'stateList'
+            ));
+        }
+
+        return view('dashboard.statements.list.edit', compact(
+            'statement',
+            'messages',
+            'stateList',
+            'categories',
+            'partners'
+        ));
     }
 
+    // Обнопить данные записи
     public function update(Statement $statement, Request $request)
     {
         $isDashboard = $this->isDashboard($request);
@@ -177,13 +204,42 @@ class StatementsController extends Controller
         }
 
         $validated = request()->validate([
-            'title'   => ['required', 'string'],
-            'text'    => ['required', 'string'],
-            'files.*' => ['nullable', StatementsFilesController::RULES_ALLOW_TYPES]
+            'title'       => ['required', 'string'],
+            'state'       => ['required', 'string'],
+            'category_id' => ['required', 'string'],
+            'partner_id'  => ['required', 'string'],
+        ], [
+            'title.required' => 'Тема запроса обязательна для заполнения'
         ]);
 
         $statement->update([
-            'title' => $validated['title'],
+            'title'       => $validated['title'],
+            'state'       => $validated['state'],
+            'category_id' => $validated['category_id'],
+            'partner_id'  => $validated['partner_id'],
+        ]);
+
+        if (!$isDashboard) {
+            return redirect()->route('p.statements.edit', $statement->id);
+        }
+
+        return redirect()->route('d.statements.edit', $statement->id);
+    }
+
+    public function updateMessage(Statement $statement, Request $request)
+    {
+        $isDashboard = $this->isDashboard($request);
+        $user = Auth::user();
+
+        if (!$isDashboard && $statement->partner_id != $user->partner_id) {
+            return redirect()->route('p.statements.index');
+        }
+
+        $validated = request()->validate([
+            'text'    => ['required', 'string'],
+            'files.*' => ['nullable', StatementsFilesController::RULES_ALLOW_TYPES]
+        ], [
+            'text.required' => 'Сообщение обязательно для заполнения'
         ]);
 
         $statement_message = StatementMessage::create([
@@ -191,7 +247,6 @@ class StatementsController extends Controller
             'statement_id' => $statement->id,
             'user_id'      => $user->id,
         ]);
-
 
         if (Utils::isNotEmptyArrayKey($validated, 'files')) {
             foreach ($validated["files"] as $file) {

@@ -14,44 +14,75 @@
 
             <div class="mb-2">
                 <div class="row gtr-uniform">
-                    <div class="col-12">
-                        <h5>Название</h5>
+                    <div class="col-6 col-12-xsmall">
+                        <h5>Тема запроса</h5>
                         <input
                             id="title"
                             type="text"
                             name="title"
                             value="{{ $statement->title }}"
                             placeholder=""
-                            disabled
                         />
+                    </div>
+
+                    <div class="col-6 col-12-xsmall">
+                        <h5>Статус</h5>
+
+                        <select name="state" id="state">
+                            @foreach($stateList as $id => $value)
+                                <option {{ $id == $statement->state ? 'selected' : '' }} value="{{ $id }}">
+                                    {{ $value }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-6 col-12-xsmall">
+                        <h5>Отдел</h5>
+
+                        <select name="category_id" id="category_id">
+                            @foreach($categories as $category)
+                                <option {{ $category->id == $statement->category_id ? 'selected' : '' }} value="{{ $category->id }}">
+                                    {{ $category->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-6 col-12-xsmall">
+                        <h5>Филиал</h5>
+
+                        <select name="partner_id" id="partner_id">
+                            @foreach($partners as $partner)
+                                <option {{ $partner->id == $statement->partner_id ? 'selected' : '' }} value="{{ $partner->id }}">
+                                    {{ $partner->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="col-12">
-                        <h5>Категория заявления</h5>
                         <input
-                            id="category_id"
-                            type="text"
-                            value="{{ $statement->category->title }}"
-                            placeholder=""
-                            disabled
+                            type="submit"
+                            value="Обновить данные"
+                            class="primary"
                         />
                     </div>
+                </div>
+            </div>
+        </form>
 
-                    <div class="col-12">
-                        <h5>Партнер</h5>
+        <hr class="major">
 
-                        <input
-                            id="category_id"
-                            type="text"
-                            value="{{ $statement->partner->name }}"
-                            placeholder=""
-                            disabled
-                        />
-                    </div>
+        <form action="{{ route('d.statements.update-message', $statement->id) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('patch')
 
+            <div class="mb-2">
+                <div class="row gtr-uniform">
                     @if(count($messages))
                         <div class="col-12">
-                            <h5>Предыдущие сообщения: </h5>
+                            <h5>Сообщения: </h5>
                         </div>
 
                         @foreach($messages as $message)
@@ -92,29 +123,18 @@
                             multiple="multiple"
                         />
                     </div>
+
+                    <div class="col-12">
+                        <input
+                            type="submit"
+                            value="Отправить сообщение"
+                            class="primary"
+                        />
+                    </div>
                 </div>
             </div>
 
-            <div style="float: left">
-                <input
-                    type="submit"
-                    value="Отправить"
-                    class="primary"
-                />
-            </div>
+
         </form>
-
-        <div style="float: right">
-            <form action="{{ route('d.statement.state', $statement->id) }}" method="post" enctype="multipart/form-data">
-                @csrf
-
-                <button
-                    type="submit"
-                    class="danger"
-                >
-                    {{ $statement->state == 1 ? 'Закрыть заявление' : 'Открыть заявление' }}
-                </button>
-            </form>
-        </div>
     </section>
 </x-admin-layout>

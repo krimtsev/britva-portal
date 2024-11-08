@@ -10,6 +10,6 @@ Route::group(['prefix' => 'statements'], function () {
     Route::post('/', [StatementsController::class, 'store'])->name('p.statements.store');
     // Route::get('/{sheet}', [ShowController::class, 'show'])->name('d.statements.show');
     Route::get('/{statement}/edit', [StatementsController::class, 'edit'])->name('p.statements.edit');
-    Route::patch('/{statement}', [StatementsController::class, 'update'])->name('p.statements.update');
+    Route::patch('/{statement}/message', [StatementsController::class, 'updateMessage'])->name('p.statements.update-message');
     Route::post('/{statement}/state', [StatementsController::class, 'state'])->name('p.statement.state');
 });

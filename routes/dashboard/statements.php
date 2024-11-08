@@ -11,8 +11,8 @@ Route::group(['prefix' => 'statements'], function () {
     // Route::get('/{sheet}', [ShowController::class, 'show'])->name('d.statements.show');
     Route::get('/{statement}/edit', [StatementsController::class, 'edit'])->name('d.statements.edit');
     Route::patch('/{statement}', [StatementsController::class, 'update'])->name('d.statements.update');
+    Route::patch('/{statement}/message', [StatementsController::class, 'updateMessage'])->name('d.statements.update-message');
     // Route::delete('/{sheet}', [DestroyController::class, 'delete'])->name('d.statements.delete');
-    Route::post('/{statement}/state', [StatementsController::class, 'state'])->name('d.statement.state');
 });
 
 Route::group(['prefix' => 'statements-categories'], function () {

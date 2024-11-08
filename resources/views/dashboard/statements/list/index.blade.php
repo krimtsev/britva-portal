@@ -7,7 +7,7 @@
                 <a href="{{ route('d.statements.create') }}" class="button"> Добавить </a>
             @endif
             @if (Route::has('d.statements-categories.index'))
-                <a href="{{ route('d.statements-categories.index') }}" class="button ml-2"> Категории </a>
+                <a href="{{ route('d.statements-categories.index') }}" class="button ml-2"> Отделы </a>
             @endif
         </div>
 
@@ -15,7 +15,7 @@
             <form action="{{ route('d.statements.index') }}" method="get">
                 <div class="row gtr-uniform">
                     <div class="col-3">
-                        <h5>Категории</h5>
+                        <h5>Отделы</h5>
                         <select name="filter_category" id="filter_category">
                             <option value=""> Все </option>
                             @foreach($categories as $category)
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="col-3">
-                        <h5>Партнеры</h5>
+                        <h5>Филиалы</h5>
                         <select name="filter_partner" id="filter_partner">
                             <option value=""> Все </option>
                             @foreach($partners as $partner)
@@ -38,14 +38,17 @@
                         <h5>Статусы</h5>
                         <select name="filter_state" id="filter_state">
                             <option value=""> Все </option>
-                            <option value="1" {{ $filter['state'] == 1 ? 'selected' : '' }}> Выполняется </option>
-                            <option value="2" {{ $filter['state'] == 2 ? 'selected' : '' }}> Готово </option>
+                            @foreach($stateList as $id => $value)
+                                <option {{ $id == $filter['state'] ? 'selected' : '' }} value="{{ $id }}">
+                                    {{ $value }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
 
                     <div class="col-3">
                         <h5> &emsp; </h5>
-                        <input type="submit" value="Фильтр" class="primary" />
+                        <input type="submit" value="Показать" class="primary" />
                     </div>
                 </div>
             </form>
@@ -55,11 +58,12 @@
             <table>
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Заголовок</th>
-                    <th>Категория</th>
-                    <th>Партнер</th>
+                    <th>#</th>
+                    <th>Тема запроса</th>
+                    <th>Отдел</th>
+                    <th>Филиал</th>
                     <th>Статус</th>
+                    <th>Дата создания</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
@@ -67,13 +71,14 @@
                 @foreach ($statements as $statement)
                     <tr>
                         <td> {{ $statement->id }}</td>
-                        <td> {{ $statement->title }} </td>
+                        <td> <a href="{{ route('d.statements.edit', $statement->id) }}">{{ $statement->title }} </a></td>
                         <td> {{ $statement->category->title }}</td>
                         <td> {{ $statement->partner->name }}</td>
                         <td> {{ $statement->stateName() }}</td>
+                        <td> {{ $statement->created_at }}</td>
                         <td>
                             @if (Route::has('d.statements.edit'))
-                                <a href="{{ route('d.statements.edit', $statement->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>
+                                <a href="{{ route('d.statements.edit', $statement->id) }}" class="button primary icon small solid fa-edit">Открыть</a>
                             @endif
                             @if (Route::has('d.statements.delete'))
                                 <form action="{{ route('d.statements.delete', $statement->id) }}" method="post" class="inline-block ma-0">

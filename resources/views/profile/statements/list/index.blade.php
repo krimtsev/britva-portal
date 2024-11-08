@@ -17,6 +17,7 @@
                     <th>Категория</th>
                     <th>Партнер</th>
                     <th>Статус</th>
+                    <th>Дата создания</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
@@ -28,6 +29,7 @@
                         <td> {{ $statement->category->title }}</td>
                         <td> {{ $statement->partner->name }}</td>
                         <td> {{ $statement->stateName() }}</td>
+                        <td> {{ $statement->created_at }}</td>
                         <td>
                             @if (Route::has('p.statements.edit'))
                                 <a href="{{ route('p.statements.edit', $statement->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>

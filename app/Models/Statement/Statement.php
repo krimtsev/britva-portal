@@ -22,9 +22,13 @@ class Statement extends Model
         'state'
     ];
 
-    public $stateList = [
-        1 => "Выполняется",
-        2 => "Готово"
+    public const stateList = [
+        1 => "Новый",
+        2 => "В работе",
+        3 => "Ожидание",
+        4 => "Решено",
+        5 => "Закрыт",
+        6 => "Отклонен"
     ];
 
     public function category() {
@@ -36,6 +40,6 @@ class Statement extends Model
     }
 
     public function stateName() {
-        return $this->stateList[$this->state];
+        return self::stateList[$this->state];
     }
 }

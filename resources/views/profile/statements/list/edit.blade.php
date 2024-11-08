@@ -8,50 +8,22 @@
 
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form action="{{ route('d.statements.update', $statement->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('p.statements.update-message', $statement->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('patch')
 
             <div class="mb-2">
                 <div class="row gtr-uniform">
                     <div class="col-12">
-                        <h5>Название</h5>
-                        <input
-                            id="title"
-                            type="text"
-                            name="title"
-                            value="{{ $statement->title }}"
-                            placeholder=""
-                            disabled
-                        />
-                    </div>
-
-                    <div class="col-12">
-                        <h5>Категория заявления</h5>
-                        <input
-                            id="category_id"
-                            type="text"
-                            value="{{ $statement->category->title }}"
-                            placeholder=""
-                            disabled
-                        />
-                    </div>
-
-                    <div class="col-12">
-                        <h5>Партнер</h5>
-
-                        <input
-                            id="category_id"
-                            type="text"
-                            value="{{ $statement->partner->name }}"
-                            placeholder=""
-                            disabled
-                        />
-                    </div>
+                        <div> <b>Тема запроса:</b> {{ $statement->title }}</div>
+                        <div> <b>Отдел:</b> {{ $statement->category->title }}</div>
+                        <div> <b>Филиал:</b> {{ $statement->partner->name }}</div>
+                        <div> <b>Статус:</b> {{ $stateList[$statement->state] }}</div>
+                     </div>
 
                     @if(count($messages))
                         <div class="col-12">
-                            <h5>Предыдущие сообщения: </h5>
+                            <h5>Сообщения: </h5>
                         </div>
 
                         @foreach($messages as $message)
@@ -74,7 +46,7 @@
                                     </div>
                                 @endif
                             </div>
-                         @endforeach
+                        @endforeach
                     @endif
 
                     <div class="col-12">
@@ -98,7 +70,7 @@
             <div style="float: left">
                 <input
                     type="submit"
-                    value="Отправить"
+                    value="Отправить сообщение"
                     class="primary"
                 />
             </div>
