@@ -69,7 +69,16 @@
                 </thead>
                 <tbody>
                 @foreach ($statements as $statement)
-                    <tr>
+                    <tr
+                        data-id="{{ $daysInWork = $statement->daysInWork() }}"
+                        @if ($daysInWork == 1)
+                            style="background: rgba(60, 173, 122, 0.1)"
+                        @elseif ($daysInWork < 7)
+                            style="background: rgba(173, 156, 60, 0.2)"
+                        @elseif ($daysInWork > 7)
+                            style="background: rgba(141, 60, 173, 0.1)"
+                        @endif
+                    >
                         <td> {{ $statement->id }}</td>
                         <td> <a href="{{ route('d.statements.edit', $statement->id) }}">{{ $statement->title }} </a></td>
                         <td> {{ $statement->category->title }}</td>
