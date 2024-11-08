@@ -69,22 +69,21 @@
                 </thead>
                 <tbody>
                 @foreach ($statements as $statement)
-                    <tr
-                        data-id="{{ $daysInWork = $statement->daysInWork() }}"
-                        @if ($daysInWork == 1)
-                            style="background: rgba(60, 173, 122, 0.1)"
-                        @elseif ($daysInWork < 7)
-                            style="background: rgba(173, 156, 60, 0.2)"
-                        @elseif ($daysInWork > 7)
-                            style="background: rgba(141, 60, 173, 0.1)"
-                        @endif
-                    >
+                    <tr data-id="{{ $daysInWork = $statement->daysInWork() }}">
                         <td> {{ $statement->id }}</td>
                         <td> <a href="{{ route('d.statements.edit', $statement->id) }}">{{ $statement->title }} </a></td>
                         <td> {{ $statement->category->title }}</td>
                         <td> {{ $statement->partner->name }}</td>
                         <td> {{ $statement->stateName() }}</td>
-                        <td> {{ $statement->daysInWork() }}</td>
+                        <td
+                            @if ($daysInWork == 1)
+                                style="color: rgb(71, 219, 4)"
+                            @elseif ($daysInWork < 7)
+                                style="color: rgb(248, 139, 37)"
+                            @elseif ($daysInWork > 7)
+                                style="color: rgb(219, 4, 68)"
+                            @endif
+                        > {{ $statement->daysInWork() }}</td>
                         <td>
                             @if (Route::has('d.statements.edit'))
                                 <a href="{{ route('d.statements.edit', $statement->id) }}" class="button primary icon small solid fa-edit">Открыть</a>
