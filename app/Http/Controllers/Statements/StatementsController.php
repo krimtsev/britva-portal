@@ -28,7 +28,7 @@ class StatementsController extends Controller
         $sql = Statement::orderBy('id', 'DESC');
 
         if (!$isDashboard) {
-            $sql->where('id', $partnerId);
+            $sql->where('partner_id', $partnerId);
         }
 
         $filter['category'] = $request->input("filter_category");
@@ -57,9 +57,7 @@ class StatementsController extends Controller
                 ->orderBy('title', 'ASC')
                 ->get();
 
-            $partners =  Partner::select('id', 'name')
-                ->orderBy('name', 'ASC')
-                ->get();
+            $partners =  Partner::available();
         }
 
         if (!$isDashboard) {
