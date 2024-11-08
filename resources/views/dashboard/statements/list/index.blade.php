@@ -76,7 +76,7 @@
                         <td> {{ $statement->partner->name }}</td>
                         <td> {{ $statement->stateName() }}</td>
                         <td
-                            @if ($statement->daysInWork == 1)
+                            @if ($statement->daysInWork == 0)
                                 style="color: rgb(71, 219, 4)"
                             @elseif ($statement->daysInWork < 7)
                                 style="color: rgb(248, 139, 37)"

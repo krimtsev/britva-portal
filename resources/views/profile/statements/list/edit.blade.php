@@ -81,7 +81,7 @@
 
                 <input
                     type="submit"
-                    value="{{ $statement->state == 1 ? 'Закрыть заявку' : 'Открыть заявку' }}"
+                    value="{{ $statement->state == 1 || $statement->state == 2 || $statement->state == 3 ? 'Закрыть заявку' : 'Открыть заявку' }}"
                     class="danger"
                 />
             </form>

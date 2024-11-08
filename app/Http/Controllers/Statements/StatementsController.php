@@ -66,7 +66,7 @@ class StatementsController extends Controller
         foreach ($statements as $id => $statement) {
             $date = self::dateDiff($statement);
             $statement->daysInWork = $date->days;
-            $statement->dayName = $date->days."d ".$date->h.":".$date->i;
+            $statement->dayName = $date->days."д. ".$date->h.":".$date->i;
         }
 
         $stateList = [];
@@ -302,9 +302,7 @@ class StatementsController extends Controller
             return redirect()->route('p.statements.index');
         }
 
-        $state = $statement->state == 1
-            ? 2  // Готово
-            : 1; // Выполняется
+        $state = in_array($statement->state, Statement::stateIdsClosed) ? 1 : 5;
 
         $statement->fill([
             'state' => $state

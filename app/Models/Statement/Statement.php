@@ -32,6 +32,8 @@ class Statement extends Model
         6 => "Отклонено"
     ];
 
+    public const stateIdsClosed = [4, 5, 6];
+
     public function category() {
         return $this->belongsTo(StatementCategory::class, 'category_id');
     }
