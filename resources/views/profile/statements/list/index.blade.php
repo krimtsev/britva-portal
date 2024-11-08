@@ -3,7 +3,7 @@
 
     <section>
         <div class="mb-2 flex justify-between">
-            @if (Route::has('p.statements.create'))
+            @if ($partnerId && Route::has('p.statements.create'))
                 <a href="{{ route('p.statements.create') }}" class="button"> Добавить </a>
             @endif
         </div>
