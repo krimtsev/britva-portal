@@ -171,4 +171,13 @@ class Utils
 
         return join("/", $paths);
     }
+
+    public static function isNotEmptyArrayKey($arr, $key): bool
+    {
+        if (is_array($arr) && array_key_exists($key, $arr) && !empty($arr[$key])) {
+            return true;
+        }
+
+        return false;
+    }
 }

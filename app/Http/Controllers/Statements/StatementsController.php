@@ -1,0 +1,236 @@
+<?php
+
+namespace App\Http\Controllers\Statements;
+
+use App\Http\Controllers\Controller;
+use App\Models\Partner;
+use App\Models\Statement\Statement;
+use App\Models\Statement\StatementCategory;
+use App\Models\Statement\StatementMessage;
+use App\Utils\Utils;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class StatementsController extends Controller
+{
+
+    public function isDashboard($request): bool
+    {
+        return $request->route()->getAction("view") == "dashboard";
+    }
+
+    public function index(Request $request)
+    {
+        $isDashboard = $this->isDashboard($request);
+        $user = Auth::user();
+        $partnerId = $user->partner_id;
+
+        $sql = Statement::orderBy('id', 'DESC');
+
+        if (!$isDashboard) {
+            $sql->where('id', $partnerId);
+        }
+
+        $filter['category'] = $request->input("filter_category");
+        $filter['partner'] = $request->input("filter_partner");
+        $filter['state'] = $request->input("filter_state");
+
+        if ($filter['category']) {
+            $sql->where("category_id", $filter['category']);
+        }
+
+        if ($filter['partner']) {
+            $sql->where("partner_id", $filter['partner']);
+        }
+
+        if ($filter['state']) {
+            $sql->where("state", $filter['state']);
+        }
+
+        $statements = $sql->paginate(30);
+
+        $categories = [];
+        $partners = [];
+
+        if ($isDashboard) {
+            $categories =  StatementCategory::select('id', 'title')
+                ->orderBy('title', 'ASC')
+                ->get();
+
+            $partners =  Partner::select('id', 'name')
+                ->orderBy('name', 'ASC')
+                ->get();
+        }
+
+        if (!$isDashboard) {
+            return view('profile.statements.list.index', compact(
+                'statements',
+                'partnerId',
+            ));
+        }
+
+        return view('dashboard.statements.list.index', compact(
+            'statements',
+            'filter',
+            'categories',
+            'partners'
+        ));
+    }
+
+    public function create(Request $request)
+    {
+        $isDashboard = $this->isDashboard($request);
+        $user = Auth::user();
+
+        if (!$isDashboard && !$user->partner_id) {
+            return redirect()->route('p.statements.index');
+        }
+
+        $categories = StatementCategory::whereNull('deleted_at')
+            ->get();
+
+        $sql = Partner::select("id", "name");
+
+        if ($user->partner_id || !$isDashboard) {
+            $sql->where('id', $user->partner_id);
+        }
+
+        $partners = $sql->get();
+
+        if (!$isDashboard) {
+            return view('profile.statements.list.create', compact('categories', 'partners'));
+        }
+
+        return view('dashboard.statements.list.create', compact('categories', 'partners'));
+    }
+
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $isDashboard = $this->isDashboard($request);
+
+        $validated = request()->validate([
+            'title'       => ['required', 'string'],
+            'category_id' => ['required', 'string'],
+            'partner_id'  => ['required', 'string'],
+            'text'        => ['required', 'string'],
+            'files.*'     => ['nullable', StatementsFilesController::RULES_ALLOW_TYPES]
+        ]);
+
+        $user = Auth::user();
+
+        if (!$isDashboard && $validated['partner_id'] != $user->partner_id) {
+            return redirect()->route('p.statements.index');
+        }
+
+        $statement = Statement::create([
+            'title'       => $validated['title'],
+            'category_id' => $validated['category_id'],
+            'partner_id'  => $validated['partner_id'],
+            'user_id'     => $user->id,
+        ]);
+
+        $statement_message = StatementMessage::create([
+            'text'         => $validated['text'],
+            'statement_id' => $statement->id,
+            'user_id'      => $user->id,
+        ]);
+
+        if (array_key_exists("files", $validated)) {
+            foreach ($validated["files"] as $file) {
+                StatementsFilesController::addFile($statement->id, $statement_message->id, $file);
+            }
+        }
+
+        if (!$isDashboard) {
+            redirect()->route('p.statements.edit', $statement->id);
+        }
+
+        return redirect()->route('d.statements.edit', $statement->id);
+    }
+
+    public function edit(Statement $statement, Request $request)
+    {
+        $isDashboard = $this->isDashboard($request);
+        $user = Auth::user();
+
+        if (!$isDashboard && $statement->partner_id != $user->partner_id) {
+            return redirect()->route('p.statements.index');
+        }
+
+        $messages = StatementMessage::where('statement_id', $statement->id)
+            ->whereNull('deleted_at')
+            ->orderBy('id', 'ASC')
+            ->get();
+
+        if (!$isDashboard) {
+            return view('profile.statements.list.edit', compact('statement', 'messages'));
+        }
+
+        return view('dashboard.statements.list.edit', compact('statement', 'messages'));
+    }
+
+    public function update(Statement $statement, Request $request)
+    {
+        $isDashboard = $this->isDashboard($request);
+        $user = Auth::user();
+
+        if (!$isDashboard && $statement->partner_id != $user->partner_id) {
+            return redirect()->route('p.statements.index');
+        }
+
+        $validated = request()->validate([
+            'title'   => ['required', 'string'],
+            'text'    => ['required', 'string'],
+            'files.*' => ['nullable', StatementsFilesController::RULES_ALLOW_TYPES]
+        ]);
+
+        $statement->update([
+            'title' => $validated['title'],
+        ]);
+
+        $statement_message = StatementMessage::create([
+            'text'         => $validated['text'],
+            'statement_id' => $statement->id,
+            'user_id'      => $user->id,
+        ]);
+
+
+        if (Utils::isNotEmptyArrayKey($validated, 'files')) {
+            foreach ($validated["files"] as $file) {
+                StatementsFilesController::addFile($statement->id, $statement_message->id, $file);
+            }
+        }
+
+        if (!$isDashboard) {
+            return redirect()->route('p.statements.edit', $statement->id);
+        }
+
+        return redirect()->route('d.statements.edit', $statement->id);
+    }
+
+    public function state(Statement $statement, Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $isDashboard = $this->isDashboard($request);
+        $user = Auth::user();
+
+        if (!$isDashboard && $statement->partner_id != $user->partner_id) {
+            return redirect()->route('p.statements.index');
+        }
+
+        $state = $statement->state == 1
+            ? 2  // Готово
+            : 1; // Выполняется
+
+        $statement->fill([
+            'state' => $state
+        ]);
+
+        $statement->save();
+
+        if (!$isDashboard) {
+            return redirect()->route('p.statements.edit', $statement->id);
+        }
+
+        return redirect()->route('d.statements.edit', $statement->id);
+    }
+}

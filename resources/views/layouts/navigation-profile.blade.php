@@ -10,6 +10,7 @@
                 <li><a href="{{ route('p.home.index') }}">Профиль</a></li>
                 <li><a href="{{ route('p.analytics.index') }}">Аналитика</a></li>
                 <li><a href="{{ route('p.user.password.index') }}">Смена пароля</a></li>
+                <li><a href="{{ route('p.statements.index') }}">Заявки</a></li>
             </ul>
         </nav>
     </div>

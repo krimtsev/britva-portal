@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\UploadFile;
 
-use App\Http\Controllers\UploadFiles\UploadFilesController;
+use App\Http\Controllers\Upload\UploadFilesController;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

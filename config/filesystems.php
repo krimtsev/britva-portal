@@ -50,6 +50,14 @@ return [
             'download'   => env('APP_URL').'/download',
         ],
 
+        'statements' => [
+            'driver'     => 'local',
+            'root'       => storage_path('statements'),
+            'url'        => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'download'   => env('APP_URL').'/download-statements',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

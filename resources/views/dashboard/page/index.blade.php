@@ -2,8 +2,8 @@
     <x-header-section title="Страницы" />
 
     <section>
-        <div class="mb-2 flex justify-content-end">
-            <a href="{{ route('d.page.create') }}" class="button">{{ __('Добавить') }}</a>
+        <div class="mb-2 flex justify-between">
+            <a href="{{ route('d.page.create') }}" class="button"> Добавить </a>
         </div>
 
         <div class="table-wrapper">

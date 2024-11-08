@@ -2,13 +2,14 @@
     <x-header-section title="Партнеры" />
 
     <section>
-        <div class="mb-2 flex justify-content-end">
+        <div class="mb-2 flex justify-between">
+            <a href="{{ route('d.partner.create') }}" class="button"> Добавить </a>
             @if ($is_disabled)
-                <a href="{{ route('d.partner.index') }}" class="button mr-2">{{ __('Показать активные') }}</a>
+                <a href="{{ route('d.partner.index') }}" class="button"> Показать активные </a>
             @else
-                <a href="{{ route('d.partner.index', ['disabled' => true]) }}" class="button mr-2">{{ __('Показать отключенные') }}</a>
+                <a href="{{ route('d.partner.index', ['disabled' => true]) }}" class="button"> Показать отключенные </a>
             @endif
-            <a href="{{ route('d.partner.create') }}" class="button">{{ __('Добавить') }}</a>
+
         </div>
 
         <div class="table-wrapper">
