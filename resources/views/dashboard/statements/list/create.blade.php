@@ -14,20 +14,20 @@
             <div class="mb-2">
                 <div class="row gtr-uniform">
                     <div class="col-12">
-                        <h5>Название</h5>
+                        <h5>Тема запроса</h5>
                         <input
                             id="title"
                             type="text"
                             name="title"
                             :value="old('title')"
-                            placeholder="Название"
+                            placeholder="Тема запроса"
                         />
                     </div>
 
                     <div class="col-12">
-                        <h5>Категория заявления</h5>
+                        <h5>Отдел</h5>
                         <select name="category_id" id="category_id">
-                            <option value=""> Выберите категорию заявления </option>
+                            <option value=""> - </option>
 
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="col-12">
-                        <h5>Партнер</h5>
+                        <h5>Филиал</h5>
 
                         @if(count($partners) == 1)
                             <select name="partner_id" id="partner_id" disabled>
@@ -47,7 +47,7 @@
                             </select>
                         @else
                             <select name="partner_id" id="partner_id">
-                                <option value="" selected> Выберите партнера </option>
+                                <option value="" selected> - </option>
 
                                 @foreach($partners as $partner)
                                     <option value="{{ $partner->id }}">
