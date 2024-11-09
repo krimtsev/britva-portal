@@ -13,41 +13,51 @@
             @method('patch')
 
             <div class="mb-2">
-                <div class="row gtr-uniform">
-                    <div class="col-12">
-                        <div> <b>Тема запроса:</b> {{ $statement->title }}</div>
-                        <div> <b>Отдел:</b> {{ $statement->category->title }}</div>
-                        <div> <b>Статус:</b> {{ $stateList[$statement->state]['title'] }}</div>
-                     </div>
+                <div class="mb-2">
+                    <div> <b>Тема запроса:</b> {{ $statement->title }}</div>
+                    <div> <b>Отдел:</b> {{ $statement->category->title }}</div>
+                    <div> <b>Статус:</b> {{ $stateList[$statement->state]['title'] }}</div>
+                </div>
 
-                    @if(count($messages))
-                        <div class="col-12">
-                            <h5>Сообщения: </h5>
-                        </div>
-
-                        @foreach($messages as $message)
+                <div class="statement-wrapper">
+                    <div class="row gtr-uniform">
+                        @if(count($messages))
                             <div class="col-12">
-                                <div class="statement-message_user"> > {{ $message->user->name }} ({{ $message->created_at }})</div>
-                                <div class="statement-message_text">{{ $message->text }}</div>
-
-                                @if(count($message->files))
-                                    <div class="statement-message_files">
-                                        <div class="ma-0">Прикрепленные файлы:</div>
-                                        <ul class="ma-0">
-                                            @foreach($message->files as $file)
-                                                <li>
-                                                    <a href="{{ route('statement.download', ["folder" => $statement->id, "file" => $file->name]) }}">
-                                                        {{ $file->origin }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
+                                <h5>Сообщения: </h5>
                             </div>
-                        @endforeach
-                    @endif
 
+                            @foreach($messages as $message)
+                                <div class="col-12">
+                                    <div class="statement-box {{ $message->user_id != $statement->user_id ? 'other' : '' }}">
+                                        <div class="statement">
+                                            <div class="statement-user"> {{ $message->user->name }} ({{ $message->created_at }})</div>
+                                            <div class="statement-content">
+                                                <div class="statement-text">{{ $message->text }}</div>
+                                                @if(count($message->files))
+                                                    <br/>
+                                                    <div class="statement-files">
+                                                        <div>Прикрепленные файлы:</div>
+                                                        <ul class="ma-0">
+                                                            @foreach($message->files as $file)
+                                                                <li>
+                                                                    <a href="{{ route('statement.download', ["folder" => $statement->id, "file" => $file->name]) }}">
+                                                                        {{ $file->origin }}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+
+                <div class="row gtr-uniform">
                     <div class="col-12">
                         <h5>Добавить сообщение</h5>
                         <textarea name="text" id="text" rows="5">{{ old('text') }}</textarea>

@@ -28,7 +28,7 @@
                     @foreach ($statements as $statement)
                         <tr>
                             <td> {{ $statement->id }}</td>
-                            <td> {{ $statement->title }} </td>
+                            <td> <a href="{{ route('p.statements.edit', $statement->id) }}">{{ $statement->title }} </a></td>
                             <td> {{ $statement->category->title }}</td>
                             <td> {{ $statement->stateName() }}</td>
                             <td>
