@@ -19,7 +19,7 @@
                             id="title"
                             type="text"
                             name="title"
-                            :value="old('name')"
+                            :value="old('title')"
                             placeholder="Название"
                         />
                     </div>
