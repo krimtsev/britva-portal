@@ -3129,26 +3129,47 @@ button:disabled,
     margin: 0px 4px;
 }
 
-.statement-message_user {
-    font-family: "Courier New", monospace;
-    font-size: 0.8em;
+.statement-wrapper {
+    padding: 1em;
+    background: rgba(73, 83, 94, 0.05);
+    margin-bottom: 1em;
+    border-radius: 0.375em;
+}
+
+.statement {
+    width: 70%;
+}
+
+.statement-box.other {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.statement-user {
     text-transform: capitalize;
     padding: 0.25em 0.65em;
 }
 
-.statement-message_text {
-    font-family: "Courier New", monospace;
-    font-size: 0.9em;
+.statement-content {
     border-radius: 0.375em;
-    border: solid 1px rgba(210, 215, 217, 0.75);
-    background: rgba(230, 235, 237, 0.25);
+    border: solid 1px rgb(203, 248, 255);
+    background: #E0F7FA;
+    color: #00796B;
     padding: 0.25em 0.65em;
+}
+
+.statement-text {
     white-space: break-spaces;
 }
 
-.statement-message_files {
-    font-family: "Courier New", monospace;
-    font-size: 0.9em;
-    margin-top: 1em;
-    margin-bottom: 0;
+.statement-files {
+    padding-bottom: 1em;
 }
+
+.statement-box.other .statement-content {
+    border: solid 1px #cefdc5;
+    background: #e4fae0;
+    color: #3b6c37;
+}
+

@@ -24,12 +24,30 @@ class Statement extends Model
     ];
 
     public const stateList = [
-        1 => "Новый",
-        2 => "В работе",
-        3 => "Ожидание",
-        4 => "Решено",
-        5 => "Закрыт",
-        6 => "Отклонено"
+        1 => [
+            "title" => "Новый",
+            "key"   => "new",
+        ],
+        2 => [
+            "title" => "В работе",
+            "key"   => "work",
+        ],
+        3 => [
+            "title" => "Ожидание",
+            "key"   => "wait",
+        ],
+        4 => [
+            "title" => "Решено",
+            "key"   => "success",
+        ],
+        5 => [
+            "title" => "Закрыто",
+            "key"   => "close",
+        ],
+        6 => [
+            "title" => "Отклонено",
+            "key"   => "cancel",
+        ],
     ];
 
     public const stateIdsClosed = [4, 5, 6];
@@ -43,6 +61,6 @@ class Statement extends Model
     }
 
     public function stateName() {
-        return self::stateList[$this->state];
+        return self::stateList[$this->state]["title"];
     }
 }

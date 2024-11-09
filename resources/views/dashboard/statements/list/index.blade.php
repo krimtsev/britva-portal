@@ -40,7 +40,7 @@
                             <option value=""> Все </option>
                             @foreach($stateList as $id => $value)
                                 <option {{ $id == $filter['state'] ? 'selected' : '' }} value="{{ $id }}">
-                                    {{ $value }}
+                                    {{ $value['title'] }}
                                 </option>
                             @endforeach
                         </select>
@@ -74,7 +74,9 @@
                         <td> <a href="{{ route('d.statements.edit', $statement->id) }}">{{ $statement->title }} </a></td>
                         <td> {{ $statement->category->title }}</td>
                         <td> {{ $statement->partner->name }}</td>
-                        <td> {{ $statement->stateName() }}</td>
+                        <td>
+                            <span class="state {{ $stateList[$statement->state]["key"] }}">{{ $statement->stateName() }}</span>
+                        </td>
                         <td
                             @if ($statement->daysInWork == 0)
                                 style="color: rgb(71, 219, 4)"
@@ -83,7 +85,9 @@
                             @elseif ($statement->daysInWork > 7)
                                 style="color: rgb(219, 4, 68)"
                             @endif
-                        > {{ $statement->dayName }}</td>
+                        >
+                            {{ $statement->dayName }}
+                        </td>
                         <td>
                             @if (Route::has('d.statements.edit'))
                                 <a href="{{ route('d.statements.edit', $statement->id) }}" class="button primary icon small solid fa-edit">Открыть</a>

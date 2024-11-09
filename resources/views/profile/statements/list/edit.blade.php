@@ -17,7 +17,7 @@
                     <div class="col-12">
                         <div> <b>Тема запроса:</b> {{ $statement->title }}</div>
                         <div> <b>Отдел:</b> {{ $statement->category->title }}</div>
-                        <div> <b>Статус:</b> {{ $stateList[$statement->state] }}</div>
+                        <div> <b>Статус:</b> {{ $stateList[$statement->state]['title'] }}</div>
                      </div>
 
                     @if(count($messages))

@@ -20,17 +20,16 @@ class StatementsController extends Controller
         return $request->route()->getAction("view") == "dashboard";
     }
 
-    public function dateDiff($statement): \DateInterval
+    public function dateDiff($statement)
     {
-        $created = new Carbon($statement->created_at);
-
-        if (in_array($statement->state, [4,5,6])) {
-            $updated = new Carbon($statement->updated_at);
-            return $created->diff($updated);
-        }
-
         $now = Carbon::now();
-        return $created->diff($now);
+        $latestMessages = StatementMessage::where('statement_id', $statement->id)
+            ->latest('created_at')
+            ->first();
+
+        if (!$latestMessages) return $now;
+
+        return $latestMessages->created_at->diff($now);
     }
 
     public function index(Request $request)

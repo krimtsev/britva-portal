@@ -6,6 +6,35 @@
     --color-danger-light: #b73636;
 }
 
+.state {
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.state.new {
+    background: #2196F3;
+}
+
+.state.work {
+    background: #FFC107;
+}
+
+.state.wait {
+    background: #FF9800;
+}
+
+.state.success {
+    background: #4CAF50;
+}
+
+.state.close {
+    background: #9E9E9E;
+}
+
+.state.cancel {
+    background: #F44336;
+}
+
 body {
     color: #111111;
 }
