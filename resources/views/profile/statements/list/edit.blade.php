@@ -19,13 +19,11 @@
                     <div> <b>Статус:</b> {{ $stateList[$statement->state]['title'] }}</div>
                 </div>
 
+                <hr>
+
                 <div class="statement-wrapper">
                     <div class="row gtr-uniform">
                         @if(count($messages))
-                            <div class="col-12">
-                                <h5>Сообщения: </h5>
-                            </div>
-
                             @foreach($messages as $message)
                                 <div class="col-12">
                                     <div class="statement-box {{ $message->user_id != $statement->user_id ? 'other' : '' }}">
@@ -59,8 +57,7 @@
 
                 <div class="row gtr-uniform">
                     <div class="col-12">
-                        <h5>Добавить сообщение</h5>
-                        <textarea name="text" id="text" rows="5">{{ old('text') }}</textarea>
+                        <textarea name="text" id="text" rows="5" placeholder="Новое соощбение">{{ old('text') }}</textarea>
                     </div>
 
                     <div class="col-12">
