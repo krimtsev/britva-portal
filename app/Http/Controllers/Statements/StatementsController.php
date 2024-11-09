@@ -110,7 +110,7 @@ class StatementsController extends Controller
         $categories = StatementCategory::whereNull('deleted_at')
             ->get();
 
-        $sql = Partner::select("id", "name");
+        $sql = Partner::sqlAvailable();
 
         if ($user->partner_id || !$isDashboard) {
             $sql->where('id', $user->partner_id);

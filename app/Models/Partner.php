@@ -40,11 +40,14 @@ class Partner extends Model
         return $this->belongsTo(Partner::class, "partner_id");
     }
 
-    static function available() {
+    static function sqlAvailable() {
         return Partner::select("id", "name", "yclients_id")
             ->where('yclients_id', '<>', "")
             ->where('disabled', '<>', 1)
-            ->orderBy("name")
-            ->get();
+            ->orderBy("name");
+    }
+
+    static function available() {
+        return self::sqlAvailable()->get();
     }
 }
