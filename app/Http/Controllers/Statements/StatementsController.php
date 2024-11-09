@@ -25,7 +25,7 @@ class StatementsController extends Controller
         $created = new Carbon($statement->created_at);
 
         if (in_array($statement->state, [4,5,6])) {
-            $updated = Carbon::now($statement->updated_at);
+            $updated = new Carbon($statement->updated_at);
             return $created->diff($updated);
         }
 
@@ -63,10 +63,10 @@ class StatementsController extends Controller
 
         $statements = $sql->paginate(30);
 
-        foreach ($statements as $id => $statement) {
+        foreach ($statements as $statement) {
             $date = self::dateDiff($statement);
             $statement->daysInWork = $date->days;
-            $statement->dayName = $date->days."д. ".$date->h.":".$date->i;
+            $statement->dayName = $date->format('%dд. %H:%I');
         }
 
         $stateList = [];
