@@ -54,57 +54,61 @@
             </form>
         </div>
 
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Тема запроса</th>
-                    <th>Отдел</th>
-                    <th>Филиал</th>
-                    <th>Статус</th>
-                    <th>Задержка</th>
-                    <th>Действия</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($statements as $statement)
+        @if(!count($statements))
+            <x-data-empty description="Заявок на данный момент нет" />
+        @else
+            <div class="table-wrapper">
+                <table>
+                    <thead>
                     <tr>
-                        <td> {{ $statement->id }}</td>
-                        <td> <a href="{{ route('d.statements.edit', $statement->id) }}">{{ $statement->title }} </a></td>
-                        <td> {{ $statement->category->title }}</td>
-                        <td> {{ $statement->partner->name }}</td>
-                        <td>
-                            <span class="state {{ $stateList[$statement->state]["key"] }}">{{ $statement->stateName() }}</span>
-                        </td>
-                        <td
-                            @if ($statement->daysInWork == 0)
-                                style="color: rgb(71, 219, 4)"
-                            @elseif ($statement->daysInWork < 7)
-                                style="color: rgb(248, 139, 37)"
-                            @elseif ($statement->daysInWork > 7)
-                                style="color: rgb(219, 4, 68)"
-                            @endif
-                        >
-                            {{ $statement->dayName }}
-                        </td>
-                        <td>
-                            @if (Route::has('d.statements.edit'))
-                                <a href="{{ route('d.statements.edit', $statement->id) }}" class="button primary icon small solid fa-edit">Открыть</a>
-                            @endif
-                            @if (Route::has('d.statements.delete'))
-                                <form action="{{ route('d.statements.delete', $statement->id) }}" method="post" class="inline-block ma-0">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="button primary icon small solid fa-trash"> Удалить </button>
-                                </form>
-                            @endif
-                        </td>
+                        <th>#</th>
+                        <th>Тема запроса</th>
+                        <th>Отдел</th>
+                        <th>Филиал</th>
+                        <th>Статус</th>
+                        <th>Задержка</th>
+                        <th>Действия</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                    @foreach ($statements as $statement)
+                        <tr>
+                            <td> {{ $statement->id }}</td>
+                            <td> <a href="{{ route('d.statements.edit', $statement->id) }}">{{ $statement->title }} </a></td>
+                            <td> {{ $statement->category->title }}</td>
+                            <td> {{ $statement->partner->name }}</td>
+                            <td>
+                                <span class="state {{ $stateList[$statement->state]["key"] }}">{{ $statement->stateName() }}</span>
+                            </td>
+                            <td
+                                @if ($statement->daysInWork == 0)
+                                    style="color: rgb(71, 219, 4)"
+                                @elseif ($statement->daysInWork < 7)
+                                    style="color: rgb(248, 139, 37)"
+                                @elseif ($statement->daysInWork > 7)
+                                    style="color: rgb(219, 4, 68)"
+                                @endif
+                            >
+                                {{ $statement->dayName }}
+                            </td>
+                            <td>
+                                @if (Route::has('d.statements.edit'))
+                                    <a href="{{ route('d.statements.edit', $statement->id) }}" class="button primary icon small solid fa-edit">Открыть</a>
+                                @endif
+                                @if (Route::has('d.statements.delete'))
+                                    <form action="{{ route('d.statements.delete', $statement->id) }}" method="post" class="inline-block ma-0">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="button primary icon small solid fa-trash"> Удалить </button>
+                                    </form>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
     </section>
     <div class="align-center">
         {{ $statements->links() }}

@@ -10,6 +10,8 @@
 
         @if(!$partnerId)
             <x-data-empty description="Не указан индентификатор филиала" />
+        @elseif(!count($statements))
+            <x-data-empty description="Заявок на данный момент нет" />
         @else
             <div class="table-wrapper">
                 <table>

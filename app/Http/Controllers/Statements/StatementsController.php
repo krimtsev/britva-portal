@@ -147,7 +147,13 @@ class StatementsController extends Controller
             $rules['partner_id'] = ['required', 'string'];
         }
 
-        $validated = request()->validate($rules);
+        $errors = [
+            'title.required' => 'Укажите тему запроса',
+            'category_id.required' => 'Выберите отдел',
+            'text.required' => 'Сообщение не может быть пустым',
+        ];
+
+        $validated = request()->validate($rules, $errors);
 
         if (array_key_exists('partner_id', $validated)) {
             $partner_id = $validated['partner_id'];
