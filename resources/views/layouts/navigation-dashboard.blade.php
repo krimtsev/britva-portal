@@ -14,6 +14,7 @@
                     <li><a href="{{ route('d.home.index') }}">Панель администратора</a></li>
                     <li><a href="{{ route('d.post.index') }}">Записи</a></li>
                     <li><a href="{{ route('d.page.index') }}">Страницы</a></li>
+					<li><a href="{{ route('d.upload.index') }}">Файлы</a></li>
                     <li><a href="{{ route('d.digest.index') }}">Блок дайджестов</a></li>
                     <li><a href="{{ route('d.user.index') }}">Пользователи</a></li>
                     <li><a href="{{ route('d.partner.index') }}">Партнеры</a></li>
