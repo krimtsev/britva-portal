@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Upload;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\UploadFiles\UploadFilesController;
 use App\Http\Requests\UploadFile\UploadStoreRequest;
 use App\Http\Requests\UploadFile\UploadUpdateRequest;
 use App\Models\Upload;
 use App\Models\UploadFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class UploadController extends Controller
 {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Analytics;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\ReportService;
 use App\Http\Services\YclientsService;
 use Illuminate\Support\Str;
 use Throwable;
@@ -19,7 +20,8 @@ if(\Cache::has($companyStatsByStaff_id)) {
 
 class BranchReport extends Controller
 {
-    static function get($start_date, $end_date, $company_id) {
+    static function get($start_date, $end_date, $company_id): array
+    {
         try {
             $params = [
                 "start_date" => $start_date,
@@ -145,6 +147,7 @@ class BranchReport extends Controller
             return [$table, $total];
 
         } catch (Throwable $e) {
+            ReportService::error("BranchReport get", $e->getMessage());
             report($e->getMessage());
 
             return [[],[]];

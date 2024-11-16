@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Upload\UploadController;
-use App\Http\Controllers\UploadCategories\UploadCategoriesController;
-use App\Http\Controllers\UploadFiles\UploadFilesController;
+use App\Http\Controllers\Upload\UploadFilesController;
+use Illuminate\Support\Facades\Route;
 
 
 Route::group(['prefix' => 'upload'], function () {
@@ -20,15 +19,6 @@ Route::group(['prefix' => 'upload'], function () {
         return redirect()->route('d.upload.edit', $upload);
     });
     Route::delete('/{upload}', [UploadController::class, 'destroy'])->name('d.upload.delete');
-});
-
-Route::group(['prefix' => 'upload-categories'], function () {
-    Route::get('/', [UploadCategoriesController::class, 'index'])->name('d.upload-categories.index');
-    Route::get('/create', [UploadCategoriesController::class, 'create'])->name('d.upload-categories.create');
-    Route::post('/', [UploadCategoriesController::class, 'store'])->name('d.upload-categories.store');
-    Route::get('/{category}/edit', [UploadCategoriesController::class, 'edit'])->name('d.upload-categories.edit');
-    Route::patch('/{category}', [UploadCategoriesController::class, 'update'])->name('d.upload-categories.update');
-    // Route::delete('/{category}', [UploadCategoriesController::class, 'destroy'])->name('d.upload-categories.delete');
 });
 
 Route::group(['prefix' => 'upload-files'], function () {

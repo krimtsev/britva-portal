@@ -23,6 +23,12 @@ class IndexController extends Controller
 
         if (Auth::user()->isUser()) {
             $partner_id = Auth::user()->partner_id;
+
+            if (!$partner_id) {
+                $company_id_not_found = true;
+                return view("analytics.index", compact("company_id_not_found"));
+            }
+
             $partner = Partner::select("yclients_id")->where('id', $partner_id)->first();
             if ($partner->yclients_id) {
                 $selected_partner = $partner->yclients_id;

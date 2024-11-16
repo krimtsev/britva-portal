@@ -1,11 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Post\BlogController;
 use App\Http\Controllers\Page\PageController;
+use App\Http\Controllers\Post\BlogController;
 use App\Http\Controllers\Sheet\PageSheetController;
 use App\Http\Controllers\Upload\UploadController;
-use App\Http\Controllers\UploadFiles\UploadFilesController;
+use App\Http\Controllers\Upload\UploadFilesController;
+use App\Http\Controllers\Tickets\TicketsController;
+use App\Http\Controllers\Tickets\TicketsFilesController;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -37,11 +39,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/sheet/{slug}', [PageSheetController::class, '__invoke'])
         ->name('sheet.index');
 
+    // Публичный метод для облака файлов
     Route::get('/cloud/{slug?}', [UploadController::class, 'show'])
         ->name('upload.cloud');
 
     Route::get('/download/{folder}/{file}', [UploadFilesController::class, 'download'])
         ->name('upload.download');
+
+    // Публичный метод для заявок
+    Route::get('/download-ticket/{folder}/{file}', [TicketsFilesController::class, 'download'])
+        ->name('ticket.download');
 });
 
 require __DIR__ . '/auth.php';
@@ -59,6 +66,7 @@ Route::group(['middleware' => ['auth', 'isAdminOrSysAdmin'], 'prefix' => 'dashbo
     require __DIR__ . '/dashboard/royalty.php';
     require __DIR__ . '/dashboard/partners.php';
     require __DIR__ . '/dashboard/upload.php';
+    require __DIR__ . '/dashboard/tickets.php';
 });
 
 Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
@@ -79,4 +87,5 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'profile', 'view' => 'profil
     require __DIR__ . '/profile/home.php';
     require __DIR__ . '/profile/user.php';
     // require __DIR__ . '/profile/analytics.php';
+    require __DIR__ . '/profile/tickets.php';
 });

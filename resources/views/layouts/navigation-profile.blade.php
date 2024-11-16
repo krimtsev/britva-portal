@@ -8,6 +8,7 @@
             </div>
             <ul>
                 <li><a href="{{ route('p.home.index') }}">Профиль</a></li>
+                <li><a href="{{ route('p.tickets.index') }}">Заявки</a></li>
                 @if (Route::has('p.analytics.index'))
                     <li><a href="{{ route('p.analytics.index') }}">Аналитика</a></li>
                 @endif

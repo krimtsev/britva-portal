@@ -19,6 +19,8 @@ class TableReport extends Controller
             $selected_month = Utils::getPreviousStartMonth();
             $date =  Utils::getPeriodMonthArray($selected_month, 1)[0];
 
+            $sync = !!$request->input("sync");
+
             if($request->input("period")) {
                 $start = Carbon::createFromFormat("Y-m-d", $request->input("period"))->startOfMonth();
                 $end = Carbon::createFromFormat("Y-m-d", $request->input("period"))->endOfMonth();
@@ -56,11 +58,11 @@ class TableReport extends Controller
 
         foreach ($partners as $partner) {
             AnalyticsJob::dispatch(
-                false,
+                $sync,
                 $date["start_date"],
                 $date["end_date"],
                 $partner->yclients_id
-            );
+            )->onQueue("analytics");
 
             $partnerNames[] =  $partner->name;
         }
