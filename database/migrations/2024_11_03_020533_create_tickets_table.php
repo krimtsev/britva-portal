@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
-class CreateStatementsTable extends Migration
+class CreateTicketsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +13,7 @@ class CreateStatementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('statements_categories', function (Blueprint $table) {
+        Schema::create('tickets_categories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
 
@@ -22,7 +21,7 @@ class CreateStatementsTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('statements', function (Blueprint $table) {
+        Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->unsignedBigInteger('category_id');
@@ -34,7 +33,7 @@ class CreateStatementsTable extends Migration
             $table->softDeletes();
 
             $table->index('category_id');
-            $table->foreign('category_id')->on('statements_categories')->references('id');
+            $table->foreign('category_id')->on('tickets_categories')->references('id');
 
             $table->index('partner_id');
             $table->foreign('partner_id')->on('partners')->references('id');
@@ -43,23 +42,23 @@ class CreateStatementsTable extends Migration
             $table->foreign('user_id')->on('users')->references('id');
         });
 
-        Schema::create('statements_messages', function (Blueprint $table) {
+        Schema::create('tickets_messages', function (Blueprint $table) {
             $table->id();
             $table->text('text');
-            $table->unsignedBigInteger('statement_id');
+            $table->unsignedBigInteger('ticket_id');
             $table->unsignedBigInteger('user_id');
 
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('statement_id');
-            $table->foreign('statement_id')->on('statements')->references('id');
+            $table->index('ticket_id');
+            $table->foreign('ticket_id')->on('tickets')->references('id');
 
             $table->index('user_id');
             $table->foreign('user_id')->on('users')->references('id');
         });
 
-        Schema::create('statements_files', function (Blueprint $table) {
+        Schema::create('tickets_files', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('name');
@@ -67,11 +66,11 @@ class CreateStatementsTable extends Migration
             $table->string('path');
             $table->string('type');
             $table->string('ext');
-            $table->unsignedBigInteger('statement_message_id');
+            $table->unsignedBigInteger('ticket_message_id');
             $table->timestamps();
 
-            $table->index('statement_message_id');
-            $table->foreign('statement_message_id')->on('statements_messages')->references('id');
+            $table->index('ticket_message_id');
+            $table->foreign('ticket_message_id')->on('tickets_messages')->references('id');
         });
     }
 
@@ -82,8 +81,8 @@ class CreateStatementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('statements_messages');
-        Schema::dropIfExists('statements_categories');
-        Schema::dropIfExists('statements');
+        Schema::dropIfExists('tickets_messages');
+        Schema::dropIfExists('tickets_categories');
+        Schema::dropIfExists('tickets');
     }
 }

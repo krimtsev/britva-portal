@@ -50,12 +50,12 @@ return [
             'download'   => env('APP_URL').'/download',
         ],
 
-        'statements' => [
+        'tickets' => [
             'driver'     => 'local',
-            'root'       => storage_path('statements'),
+            'root'       => storage_path('tickets'),
             'url'        => env('APP_URL').'/storage',
             'visibility' => 'public',
-            'download'   => env('APP_URL').'/download-statements',
+            'download'   => env('APP_URL').'/download-tickets',
         ],
 
         's3' => [

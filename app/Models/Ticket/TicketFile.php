@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models\Statement;
+namespace App\Models\Ticket;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StatementFile extends Model
+class TicketFile extends Model
 {
     use HasFactory;
 
-    protected $table = 'statements_files';
+    protected $table = 'tickets_files';
 
-    const FOLDER = 'statements';
+    const FOLDER = 'tickets';
 
     protected $fillable = [
         'title',
@@ -20,6 +20,6 @@ class StatementFile extends Model
         'path',
         'type',
         'ext',
-        'statement_message_id',
+        'ticket_message_id',
     ];
 }

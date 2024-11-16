@@ -3,42 +3,42 @@
 
     <section>
         <div class="mb-2 flex justify-content-start">
-            <a href="{{ route('p.statements.index') }}" class="button"> Назад </a>
+            <a href="{{ route('p.tickets.index') }}" class="button"> Назад </a>
         </div>
 
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form action="{{ route('p.statements.update-message', $statement->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('p.tickets.update-message', $ticket->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('patch')
 
             <div class="mb-2">
                 <div class="mb-2">
-                    <div> <b>Тема запроса:</b> {{ $statement->title }}</div>
-                    <div> <b>Отдел:</b> {{ $statement->category->title }}</div>
-                    <div> <b>Статус:</b> {{ $stateList[$statement->state]['title'] }}</div>
+                    <div> <b>Тема запроса:</b> {{ $ticket->title }}</div>
+                    <div> <b>Отдел:</b> {{ $ticket->category->title }}</div>
+                    <div> <b>Статус:</b> {{ $stateList[$ticket->state]['title'] }}</div>
                 </div>
 
                 <hr>
 
-                <div class="statement-wrapper">
+                <div class="ticket-wrapper">
                     <div class="row gtr-uniform">
                         @if(count($messages))
                             @foreach($messages as $message)
                                 <div class="col-12">
-                                    <div class="statement-box {{ $message->user_id != $statement->user_id ? 'other' : '' }}">
-                                        <div class="statement">
-                                            <div class="statement-user"> {{ $message->user->name }} ({{ $message->created_at }})</div>
-                                            <div class="statement-content">
-                                                <div class="statement-text">{{ $message->text }}</div>
+                                    <div class="ticket-box {{ $message->user_id != $ticket->user_id ? 'other' : '' }}">
+                                        <div class="ticket">
+                                            <div class="ticket-user"> {{ $message->user->name }} ({{ $message->created_at }})</div>
+                                            <div class="ticket-content">
+                                                <div class="ticket-text">{{ $message->text }}</div>
                                                 @if(count($message->files))
                                                     <br/>
-                                                    <div class="statement-files">
+                                                    <div class="ticket-files">
                                                         <div>Прикрепленные файлы:</div>
                                                         <ul class="ma-0">
                                                             @foreach($message->files as $file)
                                                                 <li>
-                                                                    <a href="{{ route('statement.download', ["folder" => $statement->id, "file" => $file->name]) }}">
+                                                                    <a href="{{ route('ticket.download', ["folder" => $ticket->id, "file" => $file->name]) }}">
                                                                         {{ $file->origin }}
                                                                     </a>
                                                                 </li>
@@ -83,12 +83,12 @@
         </form>
 
         <div style="float: right">
-            <form action="{{ route('p.statement.state', $statement->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('p.ticket.state', $ticket->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <input
                     type="submit"
-                    value="{{ $statement->state == 1 || $statement->state == 2 || $statement->state == 3 ? 'Закрыть заявку' : 'Открыть заявку' }}"
+                    value="{{ $ticket->state == 1 || $ticket->state == 2 || $ticket->state == 3 ? 'Закрыть заявку' : 'Открыть заявку' }}"
                     class="danger"
                 />
             </form>

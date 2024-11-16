@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Models\Statement;
+namespace App\Models\Ticket;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class StatementMessage extends Model
+class TicketMessage extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'statements_messages';
+    protected $table = 'tickets_messages';
 
     protected $fillable = [
         'text',
-        'statement_id',
+        'ticket_id',
         'user_id',
     ];
 
@@ -26,6 +26,6 @@ class StatementMessage extends Model
     }
 
     public function files() {
-        return $this->hasMany(StatementFile::class, 'statement_message_id', 'id');
+        return $this->hasMany(TicketFile::class, 'ticket_message_id', 'id');
     }
 }

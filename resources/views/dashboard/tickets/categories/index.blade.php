@@ -3,11 +3,11 @@
 
     <section>
         <div class="mb-2 flex justify-content-end">
-            @if (Route::has('d.statements-categories.create'))
-                <a href="{{ route('d.statements-categories.create') }}" class="button"> Добавить </a>
+            @if (Route::has('d.tickets-categories.create'))
+                <a href="{{ route('d.tickets-categories.create') }}" class="button"> Добавить </a>
             @endif
-            @if (Route::has('d.statements.index'))
-                <a href="{{ route('d.statements.index') }}" class="button ml-2"> Заявки </a>
+            @if (Route::has('d.tickets.index'))
+                <a href="{{ route('d.tickets.index') }}" class="button ml-2"> Заявки </a>
             @endif
         </div>
 
@@ -28,11 +28,11 @@
                         <td> {{ $category->title }} </td>
                         <td> {{ $category->created_at }}</td>
                         <td>
-                            @if (Route::has('d.statements-categories.edit'))
-                                <a href="{{ route('d.statements-categories.edit', $category->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>
+                            @if (Route::has('d.tickets-categories.edit'))
+                                <a href="{{ route('d.tickets-categories.edit', $category->id) }}" class="button primary icon small solid fa-edit">Редактировать</a>
                             @endif
-                            @if (Route::has('d.statements-categories.delete'))
-                                <form action="{{ route('d.statements-categories.delete', $category->id) }}" method="post" class="inline-block ma-0">
+                            @if (Route::has('d.tickets-categories.delete'))
+                                <form action="{{ route('d.tickets-categories.delete', $category->id) }}" method="post" class="inline-block ma-0">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="button primary icon small solid fa-trash"> Удалить </button>

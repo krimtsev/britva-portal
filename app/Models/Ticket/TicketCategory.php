@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models\Statement;
+namespace App\Models\Ticket;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class StatementCategory extends Model
+class TicketCategory extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'statements_categories';
+    protected $table = 'tickets_categories';
 
     protected $fillable = [
         'title',

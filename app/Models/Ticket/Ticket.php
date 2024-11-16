@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Statement;
+namespace App\Models\Ticket;
 
 use App\Models\Partner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
-class Statement extends Model
+class Ticket extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'statements';
+    protected $table = 'tickets';
 
     protected $fillable = [
         'title',
@@ -53,7 +53,7 @@ class Statement extends Model
     public const stateIdsClosed = [4, 5, 6];
 
     public function category() {
-        return $this->belongsTo(StatementCategory::class, 'category_id');
+        return $this->belongsTo(TicketCategory::class, 'category_id');
     }
 
     public function partner() {

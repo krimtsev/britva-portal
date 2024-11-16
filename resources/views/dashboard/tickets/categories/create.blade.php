@@ -3,12 +3,12 @@
 
     <section>
         <div class="mb-2 flex justify-content-start">
-            <a href="{{ route('d.statements-categories.index') }}" class="button"> Назад </a>
+            <a href="{{ route('d.tickets-categories.index') }}" class="button"> Назад </a>
         </div>
 
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form action="{{ route('d.statements-categories.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('d.tickets-categories.store') }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-2">

@@ -3,16 +3,16 @@
 
     <section>
         <div class="mb-2 flex justify-between">
-            @if (Route::has('d.statements.create'))
-                <a href="{{ route('d.statements.create') }}" class="button"> Добавить заявку  </a>
+            @if (Route::has('d.tickets.create'))
+                <a href="{{ route('d.tickets.create') }}" class="button"> Добавить заявку  </a>
             @endif
-            @if (Route::has('d.statements-categories.index'))
-                <a href="{{ route('d.statements-categories.index') }}" class="button ml-2"> Отделы </a>
+            @if (Route::has('d.tickets-categories.index'))
+                <a href="{{ route('d.tickets-categories.index') }}" class="button ml-2"> Отделы </a>
             @endif
         </div>
 
         <div>
-            <form action="{{ route('d.statements.index') }}" method="get">
+            <form action="{{ route('d.tickets.index') }}" method="get">
                 <div class="row gtr-uniform">
                     <div class="col-3">
                         <h5>Отделы</h5>
@@ -54,7 +54,7 @@
             </form>
         </div>
 
-        @if(!count($statements))
+        @if(!count($tickets))
             <x-data-empty description="Заявок на данный момент нет" />
         @else
             <div class="table-wrapper">
@@ -71,32 +71,32 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($statements as $statement)
+                    @foreach ($tickets as $ticket)
                         <tr>
-                            <td> {{ $statement->id }}</td>
-                            <td> <a href="{{ route('d.statements.edit', $statement->id) }}">{{ $statement->title }} </a></td>
-                            <td> {{ $statement->category->title }}</td>
-                            <td> {{ $statement->partner->name }}</td>
+                            <td> {{ $ticket->id }}</td>
+                            <td> <a href="{{ route('d.tickets.edit', $ticket->id) }}">{{ $ticket->title }} </a></td>
+                            <td> {{ $ticket->category->title }}</td>
+                            <td> {{ $ticket->partner->name }}</td>
                             <td>
-                                <span class="state {{ $stateList[$statement->state]["key"] }}">{{ $statement->stateName() }}</span>
+                                <span class="state {{ $stateList[$ticket->state]["key"] }}">{{ $ticket->stateName() }}</span>
                             </td>
                             <td
-                                @if ($statement->daysInWork == 0)
+                                @if ($ticket->daysInWork == 0)
                                     style="color: rgb(71, 219, 4)"
-                                @elseif ($statement->daysInWork < 7)
+                                @elseif ($ticket->daysInWork < 7)
                                     style="color: rgb(248, 139, 37)"
-                                @elseif ($statement->daysInWork > 7)
+                                @elseif ($ticket->daysInWork > 7)
                                     style="color: rgb(219, 4, 68)"
                                 @endif
                             >
-                                {{ $statement->dayName }}
+                                {{ $ticket->dayName }}
                             </td>
                             <td>
-                                @if (Route::has('d.statements.edit'))
-                                    <a href="{{ route('d.statements.edit', $statement->id) }}" class="button primary icon small solid fa-edit">Открыть</a>
+                                @if (Route::has('d.tickets.edit'))
+                                    <a href="{{ route('d.tickets.edit', $ticket->id) }}" class="button primary icon small solid fa-edit">Открыть</a>
                                 @endif
-                                @if (Route::has('d.statements.delete'))
-                                    <form action="{{ route('d.statements.delete', $statement->id) }}" method="post" class="inline-block ma-0">
+                                @if (Route::has('d.tickets.delete'))
+                                    <form action="{{ route('d.tickets.delete', $ticket->id) }}" method="post" class="inline-block ma-0">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="button primary icon small solid fa-trash"> Удалить </button>
@@ -111,6 +111,6 @@
         @endif
     </section>
     <div class="align-center">
-        {{ $statements->links() }}
+        {{ $tickets->links() }}
     </div>
 </x-admin-layout>

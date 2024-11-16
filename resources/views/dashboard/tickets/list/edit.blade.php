@@ -3,12 +3,12 @@
 
     <section>
         <div class="mb-2 flex justify-content-start">
-            <a href="{{ route('d.statements.index') }}" class="button"> Назад </a>
+            <a href="{{ route('d.tickets.index') }}" class="button"> Назад </a>
         </div>
 
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form action="{{ route('d.statements.update', $statement->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('d.tickets.update', $ticket->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('patch')
 
@@ -20,7 +20,7 @@
                             id="title"
                             type="text"
                             name="title"
-                            value="{{ $statement->title }}"
+                            value="{{ $ticket->title }}"
                             placeholder=""
                         />
                     </div>
@@ -30,7 +30,7 @@
 
                         <select name="state" id="state">
                             @foreach($stateList as $id => $value)
-                                <option {{ $id == $statement->state ? 'selected' : '' }} value="{{ $id }}">
+                                <option {{ $id == $ticket->state ? 'selected' : '' }} value="{{ $id }}">
                                     {{ $value['title'] }}
                                 </option>
                             @endforeach
@@ -42,7 +42,7 @@
 
                         <select name="category_id" id="category_id">
                             @foreach($categories as $category)
-                                <option {{ $category->id == $statement->category_id ? 'selected' : '' }} value="{{ $category->id }}">
+                                <option {{ $category->id == $ticket->category_id ? 'selected' : '' }} value="{{ $category->id }}">
                                     {{ $category->title }}
                                 </option>
                             @endforeach
@@ -54,7 +54,7 @@
 
                         <select name="partner_id" id="partner_id">
                             @foreach($partners as $partner)
-                                <option {{ $partner->id == $statement->partner_id ? 'selected' : '' }} value="{{ $partner->id }}">
+                                <option {{ $partner->id == $ticket->partner_id ? 'selected' : '' }} value="{{ $partner->id }}">
                                     {{ $partner->name }}
                                 </option>
                             @endforeach
@@ -74,28 +74,28 @@
 
         <hr>
 
-        <form action="{{ route('d.statements.update-message', $statement->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('d.tickets.update-message', $ticket->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('patch')
             <div>
-                <div class="statement-wrapper">
+                <div class="ticket-wrapper">
                     <div class="row gtr-uniform">
                         @if(count($messages))
                             @foreach($messages as $message)
                                 <div class="col-12">
-                                    <div class="statement-box {{ $message->user_id != $statement->user_id ? 'other' : '' }}">
-                                        <div class="statement">
-                                            <div class="statement-user"> {{ $message->user->name }} ({{ $message->created_at }})</div>
-                                            <div class="statement-content">
-                                                <div class="statement-text">{{ $message->text }}</div>
+                                    <div class="ticket-box {{ $message->user_id != $ticket->user_id ? 'other' : '' }}">
+                                        <div class="ticket">
+                                            <div class="ticket-user"> {{ $message->user->name }} ({{ $message->created_at }})</div>
+                                            <div class="ticket-content">
+                                                <div class="ticket-text">{{ $message->text }}</div>
                                                 @if(count($message->files))
                                                     <br/>
-                                                    <div class="statement-files">
+                                                    <div class="ticket-files">
                                                         <div>Прикрепленные файлы:</div>
                                                         <ul class="ma-0">
                                                             @foreach($message->files as $file)
                                                                 <li>
-                                                                    <a href="{{ route('statement.download', ["folder" => $statement->id, "file" => $file->name]) }}">
+                                                                    <a href="{{ route('ticket.download', ["folder" => $ticket->id, "file" => $file->name]) }}">
                                                                         {{ $file->origin }}
                                                                     </a>
                                                                 </li>

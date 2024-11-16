@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Statements;
+namespace App\Http\Controllers\Tickets;
 
 use App\Http\Controllers\Controller;
 use App\Models\Partner;
-use App\Models\Statement\Statement;
-use App\Models\Statement\StatementCategory;
-use App\Models\Statement\StatementMessage;
+use App\Models\Ticket\Ticket;
+use App\Models\Ticket\TicketCategory;
+use App\Models\Ticket\TicketMessage;
 use App\Utils\Utils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class StatementsController extends Controller
+class TicketsController extends Controller
 {
 
     public function isDashboard($request): bool
@@ -20,10 +20,10 @@ class StatementsController extends Controller
         return $request->route()->getAction("view") == "dashboard";
     }
 
-    public function dateDiff($statement)
+    public function dateDiff($ticket)
     {
         $now = Carbon::now();
-        $latestMessages = StatementMessage::where('statement_id', $statement->id)
+        $latestMessages = TicketMessage::where('ticket_id', $ticket->id)
             ->latest('created_at')
             ->first();
 
@@ -38,7 +38,7 @@ class StatementsController extends Controller
         $user = Auth::user();
         $partnerId = $user->partner_id;
 
-        $sql = Statement::orderBy('id', 'DESC');
+        $sql = Ticket::orderBy('id', 'DESC');
 
         if (!$isDashboard) {
             $sql->where('partner_id', $partnerId);
@@ -60,12 +60,12 @@ class StatementsController extends Controller
             $sql->where("state", $filter['state']);
         }
 
-        $statements = $sql->paginate(30);
+        $tickets = $sql->paginate(30);
 
-        foreach ($statements as $statement) {
-            $date = self::dateDiff($statement);
-            $statement->daysInWork = $date->days;
-            $statement->dayName = $date->format('%dд. %H:%I');
+        foreach ($tickets as $ticket) {
+            $date = self::dateDiff($ticket);
+            $ticket->daysInWork = $date->days;
+            $ticket->dayName = $date->format('%dд. %H:%I');
         }
 
         $stateList = [];
@@ -73,9 +73,9 @@ class StatementsController extends Controller
         $partners = [];
 
         if ($isDashboard) {
-            $stateList = Statement::stateList;
+            $stateList = Ticket::stateList;
 
-            $categories =  StatementCategory::select('id', 'title')
+            $categories =  TicketCategory::select('id', 'title')
                 ->orderBy('title', 'ASC')
                 ->get();
 
@@ -83,14 +83,14 @@ class StatementsController extends Controller
         }
 
         if (!$isDashboard) {
-            return view('profile.statements.list.index', compact(
-                'statements',
+            return view('profile.tickets.list.index', compact(
+                'tickets',
                 'partnerId',
             ));
         }
 
-        return view('dashboard.statements.list.index', compact(
-            'statements',
+        return view('dashboard.tickets.list.index', compact(
+            'tickets',
             'filter',
             'categories',
             'partners',
@@ -104,10 +104,10 @@ class StatementsController extends Controller
         $user = Auth::user();
 
         if (!$isDashboard && !$user->partner_id) {
-            return redirect()->route('p.statements.index');
+            return redirect()->route('p.tickets.index');
         }
 
-        $categories = StatementCategory::whereNull('deleted_at')
+        $categories = TicketCategory::whereNull('deleted_at')
             ->get();
 
         $sql = Partner::sqlAvailable();
@@ -119,10 +119,10 @@ class StatementsController extends Controller
         $partners = $sql->get();
 
         if (!$isDashboard) {
-            return view('profile.statements.list.create', compact('categories', 'partners'));
+            return view('profile.tickets.list.create', compact('categories', 'partners'));
         }
 
-        return view('dashboard.statements.list.create', compact('categories', 'partners'));
+        return view('dashboard.tickets.list.create', compact('categories', 'partners'));
     }
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
@@ -132,14 +132,14 @@ class StatementsController extends Controller
         $partner_id = $user->partner_id;
 
         if (!$isDashboard && !$partner_id) {
-            return redirect()->route('p.statements.index');
+            return redirect()->route('p.tickets.index');
         }
 
         $rules = [
             'title'       => ['required', 'string'],
             'category_id' => ['required', 'string'],
             'text'        => ['required', 'string'],
-            'files.*'     => ['nullable', StatementsFilesController::RULES_ALLOW_TYPES]
+            'files.*'     => ['nullable', TicketsFilesController::RULES_ALLOW_TYPES]
         ];
 
         // Для панели администратора передача partner_id обязательна
@@ -161,42 +161,42 @@ class StatementsController extends Controller
 
         $user = Auth::user();
 
-        $statement = Statement::create([
+        $ticket = Ticket::create([
             'title'       => $validated['title'],
             'category_id' => $validated['category_id'],
             'partner_id'  => $partner_id,
             'user_id'     => $user->id,
         ]);
 
-        $statement_message = StatementMessage::create([
+        $ticket_message = TicketMessage::create([
             'text'         => $validated['text'],
-            'statement_id' => $statement->id,
+            'ticket_id' => $ticket->id,
             'user_id'      => $user->id,
         ]);
 
         if (array_key_exists("files", $validated)) {
             foreach ($validated["files"] as $file) {
-                StatementsFilesController::addFile($statement->id, $statement_message->id, $file);
+                TicketsFilesController::addFile($ticket->id, $ticket_message->id, $file);
             }
         }
 
         if (!$isDashboard) {
-            return redirect()->route('p.statements.edit', $statement->id);
+            return redirect()->route('p.tickets.edit', $ticket->id);
         }
 
-        return redirect()->route('d.statements.edit', $statement->id);
+        return redirect()->route('d.tickets.edit', $ticket->id);
     }
 
-    public function edit(Statement $statement, Request $request)
+    public function edit(Ticket $ticket, Request $request)
     {
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $statement->partner_id != $user->partner_id) {
-            return redirect()->route('p.statements.index');
+        if (!$isDashboard && $ticket->partner_id != $user->partner_id) {
+            return redirect()->route('p.tickets.index');
         }
 
-        $messages = StatementMessage::where('statement_id', $statement->id)
+        $messages = TicketMessage::where('ticket_id', $ticket->id)
             ->whereNull('deleted_at')
             ->orderBy('id', 'ASC')
             ->get();
@@ -204,25 +204,25 @@ class StatementsController extends Controller
         $categories = [];
 
         if ($isDashboard) {
-            $categories = StatementCategory::select("id", "title")
+            $categories = TicketCategory::select("id", "title")
                 ->get();
 
             $partners = Partner::available();
         }
 
 
-        $stateList = Statement::stateList;
+        $stateList = Ticket::stateList;
 
         if (!$isDashboard) {
-            return view('profile.statements.list.edit', compact(
-                'statement',
+            return view('profile.tickets.list.edit', compact(
+                'ticket',
                 'messages',
                 'stateList'
             ));
         }
 
-        return view('dashboard.statements.list.edit', compact(
-            'statement',
+        return view('dashboard.tickets.list.edit', compact(
+            'ticket',
             'messages',
             'stateList',
             'categories',
@@ -231,13 +231,13 @@ class StatementsController extends Controller
     }
 
     // Обнопить данные записи
-    public function update(Statement $statement, Request $request)
+    public function update(Ticket $ticket, Request $request)
     {
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $statement->partner_id != $user->partner_id) {
-            return redirect()->route('p.statements.index');
+        if (!$isDashboard && $ticket->partner_id != $user->partner_id) {
+            return redirect()->route('p.tickets.index');
         }
 
         $validated = request()->validate([
@@ -249,7 +249,7 @@ class StatementsController extends Controller
             'title.required' => 'Тема запроса обязательна для заполнения'
         ]);
 
-        $statement->update([
+        $ticket->update([
             'title'       => $validated['title'],
             'state'       => $validated['state'],
             'category_id' => $validated['category_id'],
@@ -257,68 +257,68 @@ class StatementsController extends Controller
         ]);
 
         if (!$isDashboard) {
-            return redirect()->route('p.statements.edit', $statement->id);
+            return redirect()->route('p.tickets.edit', $ticket->id);
         }
 
-        return redirect()->route('d.statements.edit', $statement->id);
+        return redirect()->route('d.tickets.edit', $ticket->id);
     }
 
-    public function updateMessage(Statement $statement, Request $request)
+    public function updateMessage(Ticket $ticket, Request $request)
     {
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $statement->partner_id != $user->partner_id) {
-            return redirect()->route('p.statements.index');
+        if (!$isDashboard && $ticket->partner_id != $user->partner_id) {
+            return redirect()->route('p.tickets.index');
         }
 
         $validated = request()->validate([
             'text'    => ['required', 'string'],
-            'files.*' => ['nullable', StatementsFilesController::RULES_ALLOW_TYPES]
+            'files.*' => ['nullable', TicketsFilesController::RULES_ALLOW_TYPES]
         ], [
             'text.required' => 'Сообщение обязательно для заполнения'
         ]);
 
-        $statement_message = StatementMessage::create([
+        $ticket_message = TicketMessage::create([
             'text'         => $validated['text'],
-            'statement_id' => $statement->id,
+            'ticket_id' => $ticket->id,
             'user_id'      => $user->id,
         ]);
 
         if (Utils::isNotEmptyArrayKey($validated, 'files')) {
             foreach ($validated["files"] as $file) {
-                StatementsFilesController::addFile($statement->id, $statement_message->id, $file);
+                TicketsFilesController::addFile($ticket->id, $ticket_message->id, $file);
             }
         }
 
         if (!$isDashboard) {
-            return redirect()->route('p.statements.edit', $statement->id);
+            return redirect()->route('p.tickets.edit', $ticket->id);
         }
 
-        return redirect()->route('d.statements.edit', $statement->id);
+        return redirect()->route('d.tickets.edit', $ticket->id);
     }
 
-    public function state(Statement $statement, Request $request): \Illuminate\Http\RedirectResponse
+    public function state(Ticket $ticket, Request $request): \Illuminate\Http\RedirectResponse
     {
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $statement->partner_id != $user->partner_id) {
-            return redirect()->route('p.statements.index');
+        if (!$isDashboard && $ticket->partner_id != $user->partner_id) {
+            return redirect()->route('p.tickets.index');
         }
 
-        $state = in_array($statement->state, Statement::stateIdsClosed) ? 1 : 5;
+        $state = in_array($ticket->state, Ticket::stateIdsClosed) ? 1 : 5;
 
-        $statement->fill([
+        $ticket->fill([
             'state' => $state
         ]);
 
-        $statement->save();
+        $ticket->save();
 
         if (!$isDashboard) {
-            return redirect()->route('p.statements.edit', $statement->id);
+            return redirect()->route('p.tickets.edit', $ticket->id);
         }
 
-        return redirect()->route('d.statements.edit', $statement->id);
+        return redirect()->route('d.tickets.edit', $ticket->id);
     }
 }

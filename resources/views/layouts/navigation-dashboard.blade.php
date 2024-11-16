@@ -37,8 +37,8 @@
                     @if(Route::has('d.audit.index'))
                         <li><a href="{{ route('d.audit.index') }}">Аудит</a></li>
                     @endif
-                    @if(Route::has('d.statements.index'))
-                        <li><a href="{{ route('d.statements.index') }}">Заявки</a></li>
+                    @if(Route::has('d.tickets.index'))
+                        <li><a href="{{ route('d.tickets.index') }}">Заявки</a></li>
                     @endif
                 </ul>
             @elseif(Auth::user()->isAdmin())
@@ -50,8 +50,8 @@
                     <li><a href="{{ route('d.analytics.index') }}">Аналитика</a></li>
                     <li><a href="{{ route('d.royalty.index') }}">Роялти</a></li>
                     <li><a href="{{ route('d.partner.index') }}">Партнеры</a></li>
-                    @if(Route::has('d.statements.index'))
-                        <li><a href="{{ route('d.statements.index') }}">Заявки</a></li>
+                    @if(Route::has('d.tickets.index'))
+                        <li><a href="{{ route('d.tickets.index') }}">Заявки</a></li>
                     @endif
                 </ul>
             @endif
