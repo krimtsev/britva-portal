@@ -77,7 +77,8 @@
         <form action="{{ route('d.tickets.update-message', $ticket->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('patch')
-            <div>
+
+            <div class="mb-2">
                 <div class="ticket-wrapper">
                     <div class="row gtr-uniform">
                         @if(count($messages))
@@ -126,16 +127,25 @@
                             multiple="multiple"
                         />
                     </div>
-
-                    <div class="col-12">
-                        <input
-                            type="submit"
-                            value="Отправить сообщение"
-                            class="primary"
-                        />
-                    </div>
                 </div>
             </div>
+
+            <div style="float: left">
+                <input
+                    type="submit"
+                    value="Отправить сообщение"
+                    class="primary"
+                />
+            </div>
         </form>
+
+        <div style="float: right">
+            <form action="{{ route('d.tickets.delete', $ticket->id) }}" method="post">
+                @csrf
+                @method('delete')
+
+                <button type="submit" class="danger"> Добавить в архив </button>
+            </form>
+        </div>
     </section>
 </x-admin-layout>

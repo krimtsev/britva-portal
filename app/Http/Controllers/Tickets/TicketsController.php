@@ -321,4 +321,11 @@ class TicketsController extends Controller
 
         return redirect()->route('d.tickets.edit', $ticket->id);
     }
+
+    public function delete(Ticket $ticket): \Illuminate\Http\RedirectResponse
+    {
+        $ticket->delete();
+
+        return redirect()->route('d.tickets.index');
+    }
 }

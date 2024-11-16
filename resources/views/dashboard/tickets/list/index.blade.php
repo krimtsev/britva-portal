@@ -95,13 +95,6 @@
                                 @if (Route::has('d.tickets.edit'))
                                     <a href="{{ route('d.tickets.edit', $ticket->id) }}" class="button primary icon small solid fa-edit">Открыть</a>
                                 @endif
-                                @if (Route::has('d.tickets.delete'))
-                                    <form action="{{ route('d.tickets.delete', $ticket->id) }}" method="post" class="inline-block ma-0">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="button primary icon small solid fa-trash"> Удалить </button>
-                                    </form>
-                                @endif
                             </td>
                         </tr>
                     @endforeach
