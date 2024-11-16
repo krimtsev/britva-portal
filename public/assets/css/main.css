@@ -3128,3 +3128,48 @@ button:disabled,
     content: "\00BB";
     margin: 0px 4px;
 }
+
+.ticket-wrapper {
+    padding: 1em;
+    background: rgba(73, 83, 94, 0.05);
+    margin-bottom: 1em;
+    border-radius: 0.375em;
+}
+
+.ticket {
+    width: 70%;
+}
+
+.ticket-box.other {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.ticket-user {
+    text-transform: capitalize;
+    padding: 0.25em 0.65em;
+}
+
+.ticket-content {
+    border-radius: 0.375em;
+    border: solid 1px rgba(141, 60, 173, 0.75);
+    background: rgba(141, 60, 173, 0.25);
+    color: #333;
+    padding: 0.25em 0.65em;
+}
+
+.ticket-text {
+    white-space: break-spaces;
+}
+
+.ticket-files {
+    padding-bottom: 0.4em;
+}
+
+.ticket-box.other .ticket-content {
+    border: solid 1px rgba(176, 203, 31, 0.75);
+    background: rgba(176, 203, 31, 0.25);
+    color: #333;
+}
+

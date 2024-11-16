@@ -2,9 +2,9 @@
     <x-header-section title="Пользователи" />
 
     <section >
-        <div class="mb-2 flex justify-content-end">
-            <a href="{{ route('d.user.create-group.index') }}" class="button mr-2">{{ __('Добавить группу') }}</a>
-            <a href="{{ route('d.user.create') }}" class="button">{{ __('Добавить') }}</a>
+        <div class="mb-2 flex justify-between">
+            <a href="{{ route('d.user.create') }}" class="button"> Добавить </a>
+            <a href="{{ route('d.user.create-group.index') }}" class="button"> Добавить группу </a>
         </div>
 
         <div class="table-wrapper">

@@ -3,6 +3,36 @@
     --color-main-dark: #70308A;
     --color-danger: #990000;
     --color-success: #009900;
+    --color-danger-light: #b73636;
+}
+
+.state {
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.state.new {
+    background: #2196F3;
+}
+
+.state.work {
+    background: #FFC107;
+}
+
+.state.wait {
+    background: #FF9800;
+}
+
+.state.success {
+    background: #4CAF50;
+}
+
+.state.close {
+    background: #9E9E9E;
+}
+
+.state.cancel {
+    background: #F44336;
 }
 
 body {
@@ -58,6 +88,24 @@ input[type="button"].primary:hover,
 button.primary:hover,
 .button.primary:hover {
     background-color: var(--color-main-dark);
+}
+
+input[type="submit"].danger,
+input[type="reset"].danger,
+input[type="button"].danger,
+button.danger,
+.button.danger {
+    color: white !important;
+    background-color: var(--color-danger-light);
+    box-shadow: inset 0 0 0 2px var(--color-danger-light);
+}
+
+input[type="submit"].danger:hover,
+input[type="reset"].danger:hover,
+input[type="button"].danger:hover,
+button.danger:hover,
+.button.danger:hover {
+    background-color: var(--color-danger);
 }
 
 a.icon-single,
@@ -331,4 +379,8 @@ html body div#wrapper div#main div.inner header#header ul.icons li a.icon.solid.
 
 .gap-2 {
     gap: 16px
+}
+
+.gap-x-1 {
+    column-gap: 10px;
 }
