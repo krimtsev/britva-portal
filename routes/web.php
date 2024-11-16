@@ -5,7 +5,6 @@ use App\Http\Controllers\Post\BlogController;
 use App\Http\Controllers\Sheet\PageSheetController;
 use App\Http\Controllers\Upload\UploadController;
 use App\Http\Controllers\Upload\UploadFilesController;
-use App\Http\Controllers\Tickets\TicketsController;
 use App\Http\Controllers\Tickets\TicketsFilesController;
 use Illuminate\Support\Facades\Route;
 
