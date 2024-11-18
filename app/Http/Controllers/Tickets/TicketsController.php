@@ -143,7 +143,6 @@ class TicketsController extends Controller
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
         $partner_id = $user->partner_id;
-        $isTopic = $topic && TicketsQuestions::isExist($topic);
 
         if (!$isDashboard && !$partner_id) {
             return redirect()->route('p.tickets.index');
@@ -167,7 +166,7 @@ class TicketsController extends Controller
             'text.required' => 'Сообщение не может быть пустым',
         ];
 
-        if ($isTopic) {
+        if (TicketsQuestions::isExist($topic)) {
             foreach (TicketsQuestions::getQuestions($topic) as $question) {
                 $rules[$question["key"]] = $question['rules'];
                 $errors[$question["key"].".required"] = "Необходимо заполнить: {$question['text']}";
@@ -191,13 +190,16 @@ class TicketsController extends Controller
             'user_id'     => $user->id,
         ]);
 
-        $text = "";
-        if ($isTopic) {
+        $list = [];
+        if (TicketsQuestions::isExist($topic)) {
             foreach (TicketsQuestions::getQuestions($topic) as $question) {
-                $text .= $question["text"] . ": " . $validated[$question["key"]] . "\n";
+                $list[] = $question["text"];
+                $list[] = $validated[$question["key"]] . "\n";
             }
         }
-        $text .= $validated['text'];
+        $list[] = $validated['text'];
+
+        $text = implode("\n", $list);
 
         $ticket_message = TicketMessage::create([
             'text'         => $text,
