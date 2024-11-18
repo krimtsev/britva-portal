@@ -98,7 +98,10 @@ class TicketsController extends Controller
         ));
     }
 
-    public function create(Request $request)
+    /**
+     * $topic - slug для шаблона TicketsQuestions
+     */
+    public function create(Request $request, $topic = null)
     {
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
@@ -118,18 +121,29 @@ class TicketsController extends Controller
 
         $partners = $sql->get();
 
+        $questions = [];
+        if ($topic) {
+            $questions = TicketsQuestions::getQuestions($topic);
+        }
+
         if (!$isDashboard) {
-            return view('profile.tickets.list.create', compact('categories', 'partners'));
+            return view('profile.tickets.list.create', compact(
+                'categories',
+                'partners',
+                'questions',
+                'topic'
+            ));
         }
 
         return view('dashboard.tickets.list.create', compact('categories', 'partners'));
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request, $topic = null): \Illuminate\Http\RedirectResponse
     {
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
         $partner_id = $user->partner_id;
+        $isTopic = $topic && TicketsQuestions::isExist($topic);
 
         if (!$isDashboard && !$partner_id) {
             return redirect()->route('p.tickets.index');
@@ -137,7 +151,7 @@ class TicketsController extends Controller
 
         $rules = [
             'title'       => ['required', 'string'],
-            'category_id' => ['required', 'string'],
+            'category_id' => ['required'],
             'text'        => ['required', 'string'],
             'files.*'     => ['nullable', TicketsFilesController::RULES_ALLOW_TYPES]
         ];
@@ -152,6 +166,15 @@ class TicketsController extends Controller
             'category_id.required' => 'Выберите отдел',
             'text.required' => 'Сообщение не может быть пустым',
         ];
+
+        if ($isTopic) {
+            foreach (TicketsQuestions::getQuestions($topic) as $question) {
+                $rules[$question["key"]] = $question['rules'];
+                $errors[$question["key"].".required"] = "Необходимо заполнить: {$question['text']}";
+            }
+
+            request()->merge(['category_id' => TicketsQuestions::getCategory($topic)]);
+        }
 
         $validated = request()->validate($rules, $errors);
 
@@ -168,9 +191,17 @@ class TicketsController extends Controller
             'user_id'     => $user->id,
         ]);
 
+        $text = "";
+        if ($isTopic) {
+            foreach (TicketsQuestions::getQuestions($topic) as $question) {
+                $text .= $question["text"] . ": " . $validated[$question["key"]] . "\n";
+            }
+        }
+        $text .= $validated['text'];
+
         $ticket_message = TicketMessage::create([
-            'text'         => $validated['text'],
-            'ticket_id' => $ticket->id,
+            'text'         => $text,
+            'ticket_id'    => $ticket->id,
             'user_id'      => $user->id,
         ]);
 
