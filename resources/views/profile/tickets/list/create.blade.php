@@ -13,18 +13,22 @@
 
             <div class="mb-2">
                 <div class="row gtr-uniform">
-                    <div class="col-12">
-                        <h5>Тема запроса *</h5>
-                        <input
-                            id="title"
-                            type="text"
-                            name="title"
-                            :value="old('title')"
-                            placeholder="Название"
-                        />
-                    </div>
+                    @if($title)
+                        <h4> {{ $title }} </h4>
+                    @endif
 
                     @if(!count($questions))
+                        <div class="col-12">
+                            <h5>Тема запроса *</h5>
+                            <input
+                                id="title"
+                                type="text"
+                                name="title"
+                                :value="old('title')"
+                                placeholder="Название"
+                            />
+                        </div>
+
                         <div class="col-12">
                             <h5>Отдел *</h5>
                             <select name="category_id" id="category_id">

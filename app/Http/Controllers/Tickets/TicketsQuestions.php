@@ -5,17 +5,18 @@ namespace App\Http\Controllers\Tickets;
 class TicketsQuestions
 {
     public const templates = [
-        "key" => [
+        "slug" => [
             "category_id" => 1,
+            "title" => "Заголовок 1",
             "questions" => [
                 [
                     "key"  => "question_1",
-                    "text" => "Все нормально?",
+                    "text" => "Вопрос 1?",
                     "rules" => ["required", "string"],
                 ],
                 [
                     "key"   => "question_2",
-                    "text"  => "Это второй вопрос?",
+                    "text"  => "Вопрос 2?",
                     "rules" => ["required", "string"]
                 ]
             ],
@@ -34,6 +35,14 @@ class TicketsQuestions
     {
         if (array_key_exists($key, self::templates)) {
             return self::templates[$key]["category_id"];
+        }
+        return null;
+    }
+
+    public static function getTitle($key)
+    {
+        if (array_key_exists($key, self::templates)) {
+            return self::templates[$key]["title"];
         }
         return null;
     }

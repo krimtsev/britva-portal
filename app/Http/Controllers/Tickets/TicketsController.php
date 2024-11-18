@@ -122,8 +122,10 @@ class TicketsController extends Controller
         $partners = $sql->get();
 
         $questions = [];
+        $title = null;
         if ($topic) {
             $questions = TicketsQuestions::getQuestions($topic);
+            $title = TicketsQuestions::getTitle($topic);
         }
 
         if (!$isDashboard) {
@@ -131,7 +133,8 @@ class TicketsController extends Controller
                 'categories',
                 'partners',
                 'questions',
-                'topic'
+                'topic',
+                'title'
             ));
         }
 
@@ -173,6 +176,7 @@ class TicketsController extends Controller
             }
 
             request()->merge(['category_id' => TicketsQuestions::getCategory($topic)]);
+            request()->merge(['title' => TicketsQuestions::getTitle($topic)]);
         }
 
         $validated = request()->validate($rules, $errors);
