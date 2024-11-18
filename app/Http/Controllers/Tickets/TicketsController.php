@@ -197,7 +197,7 @@ class TicketsController extends Controller
         $list = [];
         if (TicketsQuestions::isExist($topic)) {
             foreach (TicketsQuestions::getQuestions($topic) as $question) {
-                $list[] = $question["text"];
+                $list[] = "<b>" . $question["text"] . "</b>";
                 $list[] = $validated[$question["key"]] . "\n";
             }
         }

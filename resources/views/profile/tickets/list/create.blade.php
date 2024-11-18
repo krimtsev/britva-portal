@@ -19,7 +19,7 @@
 
                     @if(!count($questions))
                         <div class="col-12">
-                            <h5>Тема запроса *</h5>
+                            <h5>Тема запроса</h5>
                             <input
                                 id="title"
                                 type="text"
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="col-12">
-                            <h5>Отдел *</h5>
+                            <h5>Отдел</h5>
                             <select name="category_id" id="category_id">
                                 <option value=""> - </option>
 
@@ -47,7 +47,7 @@
                     @if($questions)
                         @foreach($questions as $question)
                             <div class="col-12">
-                                <h5>{{ $question["text"] }} *</h5>
+                                <h5>{{ $question["text"] }}</h5>
                                 <input
                                     id="{{ $question["key"] }}"
                                     type="text"
@@ -59,7 +59,7 @@
                     @endif
 
                     <div class="col-12">
-                        <h5>Сообщение *</h5>
+                        <h5>Сообщение</h5>
                         <textarea name="text" id="text" rows="5">{{ old('text') }}</textarea>
                     </div>
 

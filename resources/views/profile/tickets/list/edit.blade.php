@@ -30,7 +30,7 @@
                                         <div class="ticket">
                                             <div class="ticket-user"> {{ $message->user->name }} ({{ $message->created_at }})</div>
                                             <div class="ticket-content">
-                                                <div class="ticket-text">{{ $message->text }}</div>
+                                                <div class="ticket-text">{!! $message->text !!}</div>
                                                 @if(count($message->files))
                                                     <br/>
                                                     <div class="ticket-files">
