@@ -8,35 +8,55 @@
 
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form action="{{ route('p.tickets.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('p.tickets.store', ["topic" => $topic]) }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-2">
                 <div class="row gtr-uniform">
-                    <div class="col-12">
-                        <h5>Тема запроса</h5>
-                        <input
-                            id="title"
-                            type="text"
-                            name="title"
-                            :value="old('title')"
-                            placeholder="Название"
-                        />
-                    </div>
+                    @if($title)
+                        <h4> {{ $title }} </h4>
+                    @endif
 
-                    <div class="col-12">
-                        <h5>Отдел</h5>
-                        <select name="category_id" id="category_id">
-                            <option value=""> - </option>
+                    @if(!count($questions))
+                        <div class="col-12">
+                            <h5>Тема запроса</h5>
+                            <input
+                                id="title"
+                                type="text"
+                                name="title"
+                                :value="old('title')"
+                                placeholder="Название"
+                            />
+                        </div>
 
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">
-                                    {{ $category->title }}
-                                </option>
-                            @endforeach
+                        <div class="col-12">
+                            <h5>Отдел</h5>
+                            <select name="category_id" id="category_id">
+                                <option value=""> - </option>
 
-                        </select>
-                    </div>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">
+                                        {{ $category->title }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    @endif
+
+                    @if($questions)
+                        @foreach($questions as $question)
+                            <div class="col-12">
+                                <h5>{{ $question["text"] }}</h5>
+                                <input
+                                    id="{{ $question["key"] }}"
+                                    type="text"
+                                    name="{{ $question["key"] }}"
+                                    :value="old('{{ $question["key"] }}')"
+                                />
+                            </div>
+                        @endforeach
+                    @endif
 
                     <div class="col-12">
                         <h5>Сообщение</h5>
