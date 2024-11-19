@@ -22,7 +22,7 @@
                     @if(array_key_exists("description", $questions))
                         <div class="col-12">
                             @foreach($questions["description"] as $one)
-                                <div> {{ $one }} </div>
+                                <div> {!! $one !!} </div>
                             @endforeach
                         </div>
                     @endif
