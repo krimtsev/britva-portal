@@ -12,6 +12,12 @@ class TicketsQuestions
                 [
                     "key"  => "q1",
                     "text" => "Контактный номер телефона и имя?",
+                    "description" => [
+                        "Регламент для занесения:",
+                        "1. ...",
+                        "2. ...",
+                        "3. ...",
+                    ],
                     "rules" => ["required", "string"],
                 ],
 				[

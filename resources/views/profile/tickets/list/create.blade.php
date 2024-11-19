@@ -48,6 +48,15 @@
                         @foreach($questions as $question)
                             <div class="col-12">
                                 <h5>{{ $question["text"] }}</h5>
+
+                                @if(array_key_exists("description", $question))
+                                    <div class="mb">
+                                        @foreach($question["description"] as $one)
+                                            <div> {{ $one }} </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
                                 <input
                                     id="{{ $question["key"] }}"
                                     type="text"
