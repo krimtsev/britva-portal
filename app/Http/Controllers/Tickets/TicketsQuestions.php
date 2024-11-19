@@ -25,15 +25,12 @@ class TicketsQuestions
                 ],
 				[
                     "text"  => "Укажите требования к макету. Формат, для чего будет использоватьяс, необходимый размер и цвета? \nЕсли Вам необходим стартовый набор, напишите в поле СТАРТОВЫЙ НАБОР.",
-                    "rules" => ["required", "string"]
                 ],
 				[
                     "text"  => "Укажите данные филиала. Ссылка на страницу сайта, ссылка на онлайн-запись, ссылка на Яндекс.Карты и 2ГИС, а так же Instagram.",
-                    "rules" => ["required", "string"]
                 ],
 				[
                     "text"  => "Укажите условия акции. Промокод, срок действия акции, размер скидки? \nЕсли Вам необходим стартовый набор, напишите в поле СТАРТОВЫЙ НАБОР.",
-                    "rules" => ["required", "string"]
                 ]
             ],
         ],
@@ -46,6 +43,11 @@ class TicketsQuestions
 
             $template["questions"] = array_map(function($question, $index) {
                 $question["key"] = sprintf("question_%s", $index);
+
+                if (!array_key_exists("rules", $question)) {
+                    $question["rules"] = ["required", "string"];
+                }
+
                 return $question;
             }, $template["questions"], array_keys($template["questions"]));
 
