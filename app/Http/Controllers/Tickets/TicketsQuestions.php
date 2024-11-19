@@ -6,28 +6,31 @@ class TicketsQuestions
 {
     public const templates = [
         "maket" => [
-			"title" => "Заявка на макет",
             "category_id" => 7,
+			"title" => "Заявка на макет",
+            "description" => [
+                "Регламент для занесения:",
+                "1. ...",
+                "2. ...",
+            ],
             "questions" => [
                 [
-                    "key"  => "q1",
                     "text" => "Контактный номер телефона и имя?",
+                    "description" => [
+                        "Регламент для занесения:",
+                        "1. ...",
+                        "2. ...",
+                    ],
                     "rules" => ["required", "string"],
                 ],
 				[
-                    "key"   => "q2",
                     "text"  => "Укажите требования к макету. Формат, для чего будет использоватьяс, необходимый размер и цвета? \nЕсли Вам необходим стартовый набор, напишите в поле СТАРТОВЫЙ НАБОР.",
-                    "rules" => ["required", "string"]
                 ],
 				[
-                    "key"   => "q3",
                     "text"  => "Укажите данные филиала. Ссылка на страницу сайта, ссылка на онлайн-запись, ссылка на Яндекс.Карты и 2ГИС, а так же Instagram.",
-                    "rules" => ["required", "string"]
                 ],
 				[
-                    "key"   => "q4",
                     "text"  => "Укажите условия акции. Промокод, срок действия акции, размер скидки? \nЕсли Вам необходим стартовый набор, напишите в поле СТАРТОВЫЙ НАБОР.",
-                    "rules" => ["required", "string"]
                 ]
             ],
         ],
@@ -36,8 +39,21 @@ class TicketsQuestions
     public static function getData($key): array
     {
         if (array_key_exists($key, self::templates)) {
-            return self::templates[$key];
+            $template = self::templates[$key];
+
+            $template["questions"] = array_map(function($question, $index) {
+                $question["key"] = sprintf("question_%s", $index);
+
+                if (!array_key_exists("rules", $question)) {
+                    $question["rules"] = ["required", "string"];
+                }
+
+                return $question;
+            }, $template["questions"], array_keys($template["questions"]));
+
+            return $template;
         }
+
         return [];
     }
 
@@ -57,10 +73,19 @@ class TicketsQuestions
         return null;
     }
 
+    public static function getDescription($key)
+    {
+        if (array_key_exists($key, self::templates)) {
+            return self::templates[$key]["description"];
+        }
+        return null;
+    }
+
     public static function getQuestions($key)
     {
         if (array_key_exists($key, self::templates)) {
-            return self::templates[$key]["questions"];
+            $template = self::getData($key);
+            return $template["questions"];
         }
         return [];
     }
