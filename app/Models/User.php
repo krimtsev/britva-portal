@@ -45,6 +45,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function nameOrLogin() {
+        if ($this->name) return $this->name;
+        return $this->login;
+    }
+
     protected $roleList = [
         'USER' => [
             'ID' => 1,

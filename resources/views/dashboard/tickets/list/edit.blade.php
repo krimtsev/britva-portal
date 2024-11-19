@@ -86,7 +86,7 @@
                                 <div class="col-12">
                                     <div class="ticket-box {{ $message->user_id != $ticket->user_id ? 'other' : '' }}">
                                         <div class="ticket">
-                                            <div class="ticket-user"> {{ $message->user->name }} ({{ $message->created_at }})</div>
+                                            <div class="ticket-user"> {{ $message->user->nameOrLogin() }} ({{ $message->created_at }})</div>
                                             <div class="ticket-content">
                                                 <div class="ticket-text">{!! $message->text !!}</div>
                                                 @if(count($message->files))
