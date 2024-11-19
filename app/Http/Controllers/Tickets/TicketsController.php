@@ -122,10 +122,8 @@ class TicketsController extends Controller
         $partners = $sql->get();
 
         $questions = [];
-        $title = null;
         if ($topic) {
-            $questions = TicketsQuestions::getQuestions($topic);
-            $title = TicketsQuestions::getTitle($topic);
+            $questions = TicketsQuestions::getData($topic);
         }
 
         if (!$isDashboard) {
@@ -134,7 +132,6 @@ class TicketsController extends Controller
                 'partners',
                 'questions',
                 'topic',
-                'title'
             ));
         }
 

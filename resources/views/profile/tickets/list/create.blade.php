@@ -13,11 +13,21 @@
 
             <div class="mb-2">
                 <div class="row gtr-uniform">
-                    @if($title)
-                        <h4> {{ $title }} </h4>
+                    @if(array_key_exists("title", $questions))
+                        <div class="col-12">
+                            <h4> {{ $questions["title"] }} </h4>
+                        </div>
                     @endif
 
-                    @if(!count($questions))
+                    @if(array_key_exists("description", $questions))
+                        <div class="col-12">
+                            @foreach($questions["description"] as $one)
+                                <div> {{ $one }} </div>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    @if(!array_key_exists("questions", $questions))
                         <div class="col-12">
                             <h5>Тема запроса</h5>
                             <input
@@ -44,8 +54,8 @@
                         </div>
                     @endif
 
-                    @if($questions)
-                        @foreach($questions as $question)
+                    @if(array_key_exists("questions", $questions))
+                        @foreach($questions["questions"] as $question)
                             <div class="col-12">
                                 <h5>{{ $question["text"] }}</h5>
 
