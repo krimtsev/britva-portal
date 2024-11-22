@@ -26,9 +26,6 @@ class TicketsQuestions
         ],
 		"maket" => [
 			"title" => "Заявка на макет",
-			"description" => [
-                "Время рассмотрения заявки может занимать до 2-х недель",
-            ],
 			"category_id" => 7,
 			"questions" => [
 				[
@@ -47,9 +44,6 @@ class TicketsQuestions
 		],
 		"cert" => [
 			"title" => "Заявка на получение денег за сертификат",
-			"description" => [
-                "Время рассмотрения заявки может занимать до 2-х недель.",
-            ],
 			"category_id" => 7,
 			"questions" => [
 				[

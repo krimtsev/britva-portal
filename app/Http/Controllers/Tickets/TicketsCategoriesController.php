@@ -10,7 +10,7 @@ class TicketsCategoriesController extends Controller
 
     public function index()
     {
-        $categories = TicketCategory::orderBy('id', 'DESC')->paginate(30);
+        $categories = TicketCategory::orderBy('id', 'ASC')->paginate(30);
 
         return view('dashboard.tickets.categories.index', compact('categories'));
     }

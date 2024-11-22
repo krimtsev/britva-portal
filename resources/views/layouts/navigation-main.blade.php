@@ -81,7 +81,7 @@
 				<li>
 					<span class="opener">Заявки</span>
 					<ul>
-						<li><a target="_blank" href="https://forms.gle/vStrvEx5uw9NqicR6">Заявка на дизайн</a></li>
+						<!-- <li><a target="_blank" href="https://forms.gle/vStrvEx5uw9NqicR6">Заявка на дизайн</a></li>
 						<li><a target="_blank" href="https://docs.google.com/forms/d/1730Zt5Ect9gdMhOjjRvZBHc-cz3cG5WHzoPhp8Ep_24/viewform?edit_requested=true">Заявка на сертификат</a></li>
 						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdEPHKl637KqNBoeRJM70SG4RAa_Fkq7Kz24DEZe18yDtdTwQ/viewform?usp=sf_link">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
 						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScvCdbQqAQ9XF6I1fftLZ0Fuc3F_Kqe-dfNFkpOuLhfv2A_hw/viewform">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
@@ -89,8 +89,16 @@
 						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSerYr5kXeZs6XahEbxZMTdMLNJy71row8M3Bw1xx1jsTqr_bw/viewform">ЗАЯВКА НА ЭКСПЕРТА</a></li>
 						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdxA6Q4fpN85PEVsIrI3HCFu_-XLuVV2_XLBU3bXouA7SQeXg/viewform">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
 						<li><a target="_blank" href="https://docs.google.com/forms/d/1xlCBolWdb4HEmWJD-7vowf2GDpU_ywi1PW6cT1W6Pys/viewform">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
-						<li><a target="_blank" href="https://forms.yandex.ru/u/664eb0cf73cee73b2057ce86/">ПОДАТЬ ИДЕЮ</a></li>
-
+						<li><a target="_blank" href="https://forms.yandex.ru/u/664eb0cf73cee73b2057ce86/">ПОДАТЬ ИДЕЮ</a></li> -->
+						<li><a href="./profile/tickets/create/maket">ЗАЯВКА НА ДИЗАЙН</a></li>
+						<li><a href="./profile/tickets/create/cert">ЗАЯВКА НА СЕРТИФИКАТ</a></li>
+						<li><a href="./profile/tickets/create/top">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
+						<li><a href="./profile/tickets/create/brand">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
+						<li><a href="./profile/tickets/create/brandplus">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
+						<li><a href="./profile/tickets/create/expert">ЗАЯВКА НА ЭКСПЕРТА</a></li>
+						<li><a href="./profile/tickets/create/blacklist">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
+						<li><a href="./profile/tickets/create">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
+						<li><a href="./profile/tickets/create">ПОДАТЬ ИДЕЮ</a></li>
 					</ul>
 				</li>
 				<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeqcM5AKcoTWECLfA_kDPZEHGpUQv_iFIx1uCVtros447ubHQ/viewform">KPI франшизы (регионы)</a></li>
