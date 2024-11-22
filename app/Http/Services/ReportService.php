@@ -40,6 +40,8 @@ class ReportService
 
             $message = "[{$partner}] {$msg}";
 
+            $data["partner"] = $partner;
+
             Http::post(self::URL, [
                 "type" => $id,
                 "msg"  => $message,
