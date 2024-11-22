@@ -6,7 +6,7 @@ use App\Http\Controllers\Tickets\TicketsCategoriesController;
 
 Route::group(['prefix' => 'tickets'], function () {
     Route::get('/', [TicketsController::class, 'index'])->name('p.tickets.index');
-    Route::get('/create/{topic?}', [TicketsController::class, 'create'])->name('p.tickets.create');
+    Route::get('/create/{topic?}', [TicketsController::class, 'create'])->name('p.tickets.create-template');
     Route::get('/create', [TicketsController::class, 'create'])->name('p.tickets.create');
     Route::post('/{topic?}', [TicketsController::class, 'store'])->name('p.tickets.store');
     // Route::get('/{sheet}', [ShowController::class, 'show'])->name('d.tickets.show');
