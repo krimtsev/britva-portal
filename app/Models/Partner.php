@@ -41,7 +41,7 @@ class Partner extends Model
     }
 
     static function sqlAvailable() {
-        return Partner::select("id", "name", "yclients_id")
+        return Partner::select("id", "name", "organization", "yclients_id")
             ->where('yclients_id', '<>', "")
             ->where('disabled', '<>', 1)
             ->orderBy("name");

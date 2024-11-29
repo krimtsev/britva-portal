@@ -67,6 +67,7 @@
                         <th>Филиал</th>
                         <th>Статус</th>
                         <th>Задержка</th>
+                        <th>Дата создания</th>
                         <th>Действия</th>
                     </tr>
                     </thead>
@@ -91,6 +92,7 @@
                             >
                                 {{ $ticket->dayName }}
                             </td>
+                            <td> {{ $ticket->created_at }} </td>
                             <td>
                                 @if (Route::has('d.tickets.edit'))
                                     <a href="{{ route('d.tickets.edit', $ticket->id) }}" class="button primary icon small solid fa-edit">Открыть</a>

@@ -16,6 +16,7 @@
                 <div class="mb-2">
                     <div> <b>Тема запроса:</b> {{ $ticket->title }}</div>
                     <div> <b>Отдел:</b> {{ $ticket->category->title }}</div>
+                    <div> <b>Филиал:</b> {{ $ticket->partner->name }}</div>
                     <div> <b>Статус:</b> {{ $stateList[$ticket->state]['title'] }}</div>
                 </div>
 

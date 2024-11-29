@@ -19,6 +19,15 @@
                         </div>
                     @endif
 
+                    <div class="col-12">
+                        <h5>Филиал</h5>
+                        <input
+                            value="{{ Auth::user()->partner->name }}"
+                            type="text"
+                            disabled
+                        />
+                    </div>
+
                     @if(array_key_exists("description", $questions))
                         <div class="col-12">
                             @foreach($questions["description"] as $one)
