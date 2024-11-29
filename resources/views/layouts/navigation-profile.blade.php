@@ -4,10 +4,13 @@
         <!-- Menu -->
         <nav id="menu">
             <div class="logo">
-                <img src="{{ asset('images/static/logo.png') }}" />
+                <img src="{{ asset('images/static/logo.svg') }}" />
             </div>
             <ul>
                 <li><a href="{{ route('post.index') }}">← НАЗАД НА ГЛАВНУЮ САЙТА</a></li>
+				@if (Route::has('p.analytics.index'))
+                    <li><a href="{{ route('p.analytics.index') }}">АНАЛИТИКА ПО ФИЛИАЛУ</a></li>
+                @endif
                 <li><a href="{{ route('p.home.index') }}">ОБО МНЕ</a></li>
 				<li><a href="{{ route('p.tickets.index') }}">МОИ ЗАЯВКИ</a></li>
                 <li>
