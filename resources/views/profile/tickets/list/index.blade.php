@@ -21,6 +21,7 @@
                         <th>Тема запроса</th>
                         <th>Отдел</th>
                         <th>Статус</th>
+                        <th>Дата создания</th>
                         <th>Действия</th>
                     </tr>
                     </thead>
@@ -31,6 +32,7 @@
                             <td> <a href="{{ route('p.tickets.edit', $ticket->id) }}">{{ $ticket->title }} </a></td>
                             <td> {{ $ticket->category->title }}</td>
                             <td> {{ $ticket->stateName() }}</td>
+                            <td> {{ $ticket->created_at }} </td>
                             <td>
                                 @if (Route::has('p.tickets.edit'))
                                     <a href="{{ route('p.tickets.edit', $ticket->id) }}" class="button primary icon small solid fa-edit">Открыть</a>

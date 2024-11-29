@@ -10,10 +10,7 @@ class CreateController extends Controller
 
     public function __invoke()
     {
-        $partners = Partner::select("id", "name", "contract_number", "organization")
-            ->where('yclients_id', '<>', "")
-            ->orderBy("name")
-            ->get();
+        $partners = Partner::available();
 
         return view('dashboard.user.create', compact('partners'));
     }

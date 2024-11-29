@@ -158,6 +158,7 @@ class TicketsController extends Controller
         // Для панели администратора передача partner_id обязательна
         if ($isDashboard) {
             $rules['partner_id'] = ['required', 'string'];
+            $errors['partner_id.required'] = "Выберите филиал";
         }
 
         $errors = [
@@ -174,6 +175,11 @@ class TicketsController extends Controller
 
             request()->merge(['category_id' => TicketsQuestions::getCategory($topic)]);
             request()->merge(['title' => TicketsQuestions::getTitle($topic)]);
+
+            /**
+             * Если заявка пришла не из топика с вопросам, тогда поле text не обязательное для заполенения
+             */
+            $rules['text'] = [];
         }
 
         $validated = request()->validate($rules, $errors);
@@ -198,7 +204,10 @@ class TicketsController extends Controller
                 $list[] = $validated[$question["key"]] . "\n";
             }
         }
-        $list[] = $validated['text'];
+
+        if (array_key_exists('text', $validated)) {
+            $list[] = $validated['text'];
+        }
 
         $text = implode("\n", $list);
 

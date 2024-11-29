@@ -86,5 +86,27 @@
                 }
             })
         })
+
+        /*
+            data-image=""
+            const $previewImage = $('<img class="preview-image">').appendTo('body');
+            $('[data-image]').on({
+                mouseenter: function () {
+                    const imageUrl = $(this).data('image');
+                    console.log(imageUrl)
+                    $previewImage.attr('src', imageUrl).show();
+                },
+                mousemove: function (event) {
+                    $previewImage.css({
+                        top: event.pageY + 10 + 'px',
+                        left: event.pageX + 10 + 'px'
+                    });
+                },
+                mouseleave: function () {
+                    $previewImage.hide();
+                }
+            });
+         */
+
     });
 </script>

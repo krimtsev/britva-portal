@@ -137,6 +137,10 @@ class User extends Authenticatable
         return self::checkAccessRoleValue(self::accessValueByRoleName('ADMIN'));
     }
 
+    public function partner() {
+        return $this->belongsTo(Partner::class, 'partner_id');
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'user_id', 'id');
