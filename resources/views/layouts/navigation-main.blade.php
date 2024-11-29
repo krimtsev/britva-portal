@@ -63,14 +63,17 @@
                 <li>
                     <span class="opener">Заявки</span>
                     <ul>
-                        <li><a target="_blank" href="https://forms.gle/vStrvEx5uw9NqicR6">Заявка на дизайн</a></li>
-                        <li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSey7nWdiT1diYpgpMYapsWLxFlppWFnAUjGnq8cyroQOjctQA/viewform">ЗАЯВКА ПО СЕРТИФИКАТУ</a></li>
-                        <li><a target="_blank" href="https://docs.google.com/forms/d/1VVrRX_w9_V7h6_CXPRjt39l-LmAHVPgvAqDOIJTzx8c/viewform?edit_requested=true">ЗАЯВКА НА ТОП-СТИЛИСТА</a></li>
-                        <li><a target="_blank" href="https://docs.google.com/forms/d/1SlR0SpPsqwQ2bRozL83KeDiWY7eq_aLeHx2M-L-gjek/edit">ЗАЯВКА НА ТОП-БРОВИСТА</a></li>
-                        <li><a target="_blank" href="https://docs.google.com/forms/d/1mgmKAS_qtQZ1fSpsRD2IJ63q07Bmbw1VWqgt3zRCol0/viewform?edit_requested=true">ЗАЯВКА НА ТОП-МАСТЕРА МАНИКЮРА</a></li>
-                        <li><a target="_blank" href="https://docs.google.com/forms/d/1WJJW7ihNhNz-xMG2rhoQ42zutwcAn-Wh0wGEe7anCb8/edit">ЗАЯВКА НА БРЕНД-МАСТЕРА МАНИКЮРА</a></li>
-                        <li><a target="_blank" href="https://docs.google.com/forms/d/1d3nUJEG1bDynQMPm4EeKOk-gkLVxJyuN1VX3su9G6VE/viewform" target="_blank">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
-                        <li><a target="_blank" href="https://docs.google.com/forms/d/1d7uw_rRJ3Ofw8GY5vg0yobMpYlvugO-KO6k9flBKYZE/viewform" target="_blank">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'maket') }}">ЗАЯВКА НА ДИЗАЙН</a></li>
+                        <li><a href="{{ route('p.tickets.create-template', 'cert') }}">ЗАЯВКА НА СЕРТИФИКАТ</a></li>
+                        <li><a href="{{ route('p.tickets.create-template', 'admin') }}">ЗАЯВКА НА АТТЕСТАЦИЮ АДМИНИСТРАТОРА</a></li>
+                        <li><a href="{{ route('p.tickets.create-template', 'tophair') }}">ЗАЯВКА НА ТОП-СТИЛИСТА</a></li>
+                        <li><a href="{{ route('p.tickets.create-template', 'topbrow') }}">ЗАЯВКА НА ТОП-БРОВИСТА</a></li>
+                        <li><a href="{{ route('p.tickets.create-template', 'topnail') }}">ЗАЯВКА НА ТОП-МАСТЕРА НОГТЕВОГО СЕРВИСА</a></li>
+                        <li><a href="{{ route('p.tickets.create-template', 'brandbrow') }}">ЗАЯВКА НА БРЕНД-БРОВИСТА</a></li>
+                        <li><a href="{{ route('p.tickets.create-template', 'brandnail') }}">ЗАЯВКА НА БРЕНД-МАСТЕРА НОГТЕВОГО СЕРВИСА</a></li>
+                        <li><a href="{{ route('p.tickets.create-template', 'blacklist') }}">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
+                        <li><a href="{{ route('p.tickets.create') }}">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
+                        <li><a href="{{ route('p.tickets.create') }}">ПОДАТЬ ИДЕЮ</a></li>
                     </ul>
                 </li>
 				<li><a href="https://docs.google.com/forms/d/19-nRP02iMz7gbtViZ599YYZY9lK5eWTdE-mBcqVrRA0/viewform?edit_requested=true">KPI франшизы (регионы)</a></li>
@@ -83,7 +86,6 @@
                         <li><a href="/contact-franchise">Владельцев франшиз</a></li>
                         <li><a href="/page/contact-partner">Партнеров</a></li>
                         <li><a href="/page/contents-brands">Торговые марки (ногтевой сервис)</a></li>
-                        <li><a href="/sheet/contact-outstaff">Полезные контакты</a></li>
                     </ul>
                 </li>
             </ul>
