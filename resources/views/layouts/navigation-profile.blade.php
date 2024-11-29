@@ -7,7 +7,7 @@
                 <img src="{{ asset('images/static/logo.png') }}" />
             </div>
             <ul>
-                <li><a href="..">← НАЗАД НА ГЛАВНУЮ САЙТА</a></li>
+                <li><a href="{{ route('post.index') }}">← НАЗАД НА ГЛАВНУЮ САЙТА</a></li>
                 <li><a href="{{ route('p.home.index') }}">ОБО МНЕ</a></li>
                 <li><a href="{{ route('p.analytics.index') }}">АНАЛИТИКА ПО ФИЛИАЛУ</a></li>
 				<li><a href="{{ route('p.tickets.index') }}">МОИ ЗАЯВКИ</a></li>
