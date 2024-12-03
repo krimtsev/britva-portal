@@ -19,6 +19,7 @@
                         <li><a href="{{ route('p.tickets.create-template', 'maket') }}">ЗАЯВКА НА ДИЗАЙН</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'cert') }}">ЗАЯВКА НА СЕРТИФИКАТ</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'admin') }}">ЗАЯВКА НА АТТЕСТАЦИЮ АДМИНИСТРАТОРА</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'dlyasebya') }}">ЗАЯВКА "МАКИЯЖ ДЛЯ СЕБЯ"</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'tophair') }}">ЗАЯВКА НА ТОП-СТИЛИСТА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'topbrow') }}">ЗАЯВКА НА ТОП-БРОВИСТА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'topnail') }}">ЗАЯВКА НА ТОП-МАСТЕРА НОГТЕВОГО СЕРВИСА</a></li>
