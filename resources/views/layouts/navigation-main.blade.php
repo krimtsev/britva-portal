@@ -55,7 +55,7 @@
 					<ul>
 						<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
 						<li><a href="page/subscription-yandex-2gis">Подписка Яндекс.Карты и 2GIS</a></li>
-						<li><a href="https://mybritva.ru/page/service-bot">Сервис пропущенных звонков</a></li>
+						<li><a href="https://mysoda.ru/page/service-bot">Сервис пропущенных звонков</a></li>
 					</ul>
 				</li>
                 <li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
