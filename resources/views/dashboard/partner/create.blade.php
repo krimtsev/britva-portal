@@ -62,6 +62,17 @@
                     </div>
 
                     <div class="col-6 col-12-xsmall">
+                        <h5>ОГРНИП</h5>
+                        <input
+                            id="ogrnip"
+                            type="text"
+                            name="ogrnip"
+                            :value="old('ogrnip')"
+                            placeholder=""
+                        />
+                    </div>
+
+                    <div class="col-6 col-12-xsmall">
                         <h5>Email</h5>
                         <input
                             id="email"

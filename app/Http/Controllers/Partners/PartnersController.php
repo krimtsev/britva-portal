@@ -29,7 +29,8 @@ class PartnersController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'inn'                => 'nullable|string|max:12',
+            'inn'                => 'nullable|string|min:10|max:12',
+            'ogrnip'             => 'nullable|string|min:15|max:15',
             'organization'       => 'nullable|string|max:255',
             'name'               => 'required|string|max:255|unique:partners',
             'contract_number'    => 'required|string|max:50|unique:partners',
@@ -65,7 +66,8 @@ class PartnersController extends Controller
     public function update(Partner $partner, Request $request)
     {
         $data = $request->validate([
-            'inn'                => 'nullable|string|max:12',
+            'inn'                => 'nullable|string|min:10|max:12',
+            'ogrnip'             => 'nullable|string|min:15|max:15',
             'organization'       => 'nullable|string|max:255',
             'name'               => 'required|string|max:255|unique:partners,name,'.$partner->id,
             'contract_number'    => 'required|string|max:50|unique:partners,contract_number,'.$partner->id,

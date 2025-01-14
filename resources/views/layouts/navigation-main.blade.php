@@ -1,20 +1,17 @@
 <!-- Sidebar -->
 <div id="sidebar">
     <div class="inner">
-		<div class="logo">
-			@if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
-				<img src="{{ asset('images/static/logo-white.png') }}" />
-			@else
-				<img src="{{ asset('images/static/logo.png') }}" />
-			@endif
-
-		</div>
 		<!-- Menu -->
 		<nav id="menu">
 
-			<!-- <header class="major">
-				<h2>Меню</h2>
-			</header> -->
+            <div class="logo">
+                @if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
+                    <img src="{{ asset('images/static/logo-white.png') }}" />
+                @else
+                    <img src="{{ asset('images/static/logo.png') }}" />
+                @endif
+
+            </div>
 
 			<ul>
 				<li><a href="{{ route('post.index') }}">Главная</a></li>
@@ -147,13 +144,6 @@
         <!-- Footer -->
             <footer id="footer">
                 <p class="copyright">{{ date("Y") }} | BRITVA</p>
-
-                <!-- @if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
-                    <button onclick="toogleTheme()" class="button primary icon small solid fa-sun"> сменить тему </button>
-                @else
-                    <button onclick="toogleTheme()" class="button primary icon small solid fa-moon"> сменить тему </button>
-                @endif -->
-
             </footer>
 
     </div>

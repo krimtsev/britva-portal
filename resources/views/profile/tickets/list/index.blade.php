@@ -2,13 +2,13 @@
     <x-header-section title="Список заявок" />
 
     <section>
-        @if ($partnerId && Route::has('p.tickets.create'))
+        @if ($isAllowedEditInProfile && Route::has('p.tickets.create'))
             <div class="mb-2 flex justify-between">
                 <a href="{{ route('p.tickets.create') }}" class="button"> Создать заявку </a>
             </div>
         @endif
 
-        @if(!$partnerId)
+        @if(!$isAllowedEditInProfile)
             <x-data-empty description="Не указан индентификатор филиала" />
         @elseif(!count($tickets))
             <x-data-empty description="Заявок на данный момент нет" />

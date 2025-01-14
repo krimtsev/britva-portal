@@ -3,14 +3,6 @@
 
     @if (Route::has('login'))
         <ul class="icons">
-            <li>
-				@if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
-                    <a onclick="toogleTheme()" class="pointer icon solid fa-sun"></a>
-                @else
-                    <a onclick="toogleTheme()" class="pointer icon solid fa-moon"></a>
-                @endif
-			</li>
-
             <li>{{ Auth::user()->login }}</li>
 
             @auth

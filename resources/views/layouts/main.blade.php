@@ -14,10 +14,6 @@
 
         <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}">
 
-        @if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
-            <link rel="stylesheet" href="{{ assetVerion('assets/css/theme-dark.css') }}">
-        @endif
-
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
