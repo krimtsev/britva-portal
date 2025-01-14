@@ -6,9 +6,7 @@
             <div class="logo">
                 <img src="{{ asset('images/static/logo.png') }}" />
             </div>
-            <!-- <header class="major">
-                    <h2>Меню</h2>
-                </header> -->
+
             @if(Auth::user()->isSysAdmin())
                 <ul>
                     <li><a href="{{ route('d.home.index') }}">Панель администратора</a></li>

@@ -5,12 +5,7 @@
 		<nav id="menu">
 
             <div class="logo">
-                @if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
-                    <img src="{{ asset('images/static/logo-white.png') }}" />
-                @else
-                    <img src="{{ asset('images/static/logo.png') }}" />
-                @endif
-
+                <img src="{{ asset('images/static/logo.png') }}" />
             </div>
 
 			<ul>
