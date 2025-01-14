@@ -1,20 +1,12 @@
 <!-- Sidebar -->
 <div id="sidebar">
     <div class="inner">
-        <div class="logo" style="padding: 0 40px;">
-			@if(isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark')
-				<img src="{{ asset('images/static/logo.svg') }}" />
-			@else
-				<img src="{{ asset('images/static/logo.svg') }}" />
-			@endif
-
-		</div>
 		<!-- Menu -->
 		<nav id="menu">
 
-			<!-- <header class="major">
-				<h2>Меню</h2>
-			</header> -->
+            <div class="logo" style="padding: 0 40px;">
+                <img src="{{ asset('images/static/logo.svg') }}" />
+            </div>
 
             <ul>
                 <li><a href="{{ route('post.index') }}">Главная</a></li>

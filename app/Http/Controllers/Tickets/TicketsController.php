@@ -32,16 +32,28 @@ class TicketsController extends Controller
         return $latestMessages->created_at->diff($now);
     }
 
+    private function isEditable($partnerId): bool {
+        if (!$partnerId) return false;
+
+        return Partner::sqlAvailable()
+            ->where('id', $partnerId)
+            ->exists();
+    }
+
     public function index(Request $request)
     {
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
-        $partnerId = $user->partner_id;
+        $isAllowedEditInProfile = false;
 
         $sql = Ticket::orderBy('id', 'DESC');
 
         if (!$isDashboard) {
-            $sql->where('partner_id', $partnerId);
+            $sql->where('partner_id', $user->partner_id);
+
+            $isAllowedEditInProfile = Partner::sqlAvailable()
+                ->where('id', $user->partner_id)
+                ->exists();
         }
 
         $filter['category'] = $request->input("filter_category");
@@ -85,7 +97,7 @@ class TicketsController extends Controller
         if (!$isDashboard) {
             return view('profile.tickets.list.index', compact(
                 'tickets',
-                'partnerId',
+                'isAllowedEditInProfile'
             ));
         }
 
@@ -106,7 +118,7 @@ class TicketsController extends Controller
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
 
-        if (!$isDashboard && !$user->partner_id) {
+        if (!$isDashboard && !self::isEditable($user->partner_id)) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -144,7 +156,7 @@ class TicketsController extends Controller
         $user = Auth::user();
         $partner_id = $user->partner_id;
 
-        if (!$isDashboard && !$partner_id) {
+        if (!$isDashboard && !self::isEditable($partner_id)) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -235,7 +247,7 @@ class TicketsController extends Controller
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $ticket->partner_id != $user->partner_id) {
+        if (!$isDashboard && ($ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id))) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -279,7 +291,7 @@ class TicketsController extends Controller
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $ticket->partner_id != $user->partner_id) {
+        if (!$isDashboard && ($ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id))) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -311,7 +323,7 @@ class TicketsController extends Controller
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $ticket->partner_id != $user->partner_id) {
+        if (!$isDashboard && $ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id)) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -346,7 +358,7 @@ class TicketsController extends Controller
         $isDashboard = $this->isDashboard($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $ticket->partner_id != $user->partner_id) {
+        if (!$isDashboard && $ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id)) {
             return redirect()->route('p.tickets.index');
         }
 
