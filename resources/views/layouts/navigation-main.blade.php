@@ -19,23 +19,22 @@
 						<li style="font-size: 10px; color: black;"><br>Если вам необходимо передать ссылку на курс сотруднику, нажмите на ссылку ПКМ (правая кнопка мыши) и "Копировать ссылку". А после отправьте своему сотруднику.</li>
 					</ul>
 				</li>
-				<li><a href="/cloud/">Облако файлов</a></li>
+				<li><a href="{{ route('upload.cloud') }}">Облако файлов</a></li>
 				<li>
 					<span class="opener">Документация</span>
 					<ul>
-						<!-- <li><a href="https://disk.yandex.ru/d/y3CMh7Hi8A3pyA" target="_blank">Облако документов</a></li>-->
-						<li><a href="/page/subscription">Система работы абонементов</a></li>
-						<li><a href="/page/certificate">Система работы сертификатов</a></li>
-						<li><a href="/page/fines">Штрафы</a></li>
-						<li><a href="/page/fines-audit">Штрафы по аудиту</a></li>
-						<li><a href="page/mango-audit">Балльная система по манго-аудиту </a></li>
+						<li><a href="{{ route('page.index', 'subscription') }}">Система работы абонементов</a></li>
+						<li><a href="{{ route('page.index', 'certificate') }}">Система работы сертификатов</a></li>
+						<li><a href="{{ route('page.index', 'fines') }}">Штрафы</a></li>
+						<li><a href="{{ route('page.index', 'fines-audit') }}">Штрафы по аудиту</a></li>
+						<li><a href="{{ route('page.index', 'mango-audit') }}">Балльная система по манго-аудиту </a></li>
 					</ul>
 				</li>
 				<li>
 					<span class="opener">Инструкции</span>
 					<ul>
-						<li><a href="/page/mango-forwarding">Настройка переадресации Mango</a></li>
-						<li><a href="/page/yclients-alerts">Всплывающие уведомления Yclients</a></li>
+						<li><a href="{{ route('page.index', 'mango-forwarding') }}">Настройка переадресации Mango</a></li>
+						<li><a href="{{ route('page.index', 'yclients-alerts') }}">Всплывающие уведомления Yclients</a></li>
 						<li><a target="_blank" href="https://www.youtube.com/playlist?list=PLhU6BmCA9pdCwapNa44e3BWdPe0EnvJJ2">Настройка Wahelp</a></li>
 						<li><a target="_blank" href="https://youtu.be/6cy9sEyNDXU?si=3x0R0pmKIRHM08YO">Настройка измнения цен ЭВОТОР</a></li>
 					</ul>
@@ -43,28 +42,19 @@
 				<li>
 					<span class="opener">Дополнительные услуги</span>
 					<ul>
-						<li><a href="/upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
-						<li><a href="page/subscription-yandex-2gis" target="_blank">Подписка Яндекс.Карты и 2GIS</a></li>
+						<li><a href="upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
+						<li><a href="{{ route('page.index', 'subscription-yandex-2gis') }}" target="_blank">Подписка Яндекс.Карты и 2GIS</a></li>
 						<li><a href="https://mybritva.ru/page/service-bot">Сервис пропущенных звонков</a></li>
-						<li><a href="/profile/analytics">Сервис аналитики показателей</a></li>
+						<li><a href="{{ route('p.analytics.index') }}">Сервис аналитики показателей</a></li>
 					</ul>
 				</li>
 				<li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1Y9zxXV-NZZvFHJNnESGBDiipCMNM1jjqQEzHqj8KRg0" target="_blank">Таблица оплаты телефонии</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1ka8_eTE18gQNr-LCCiKYKd_u0rG6dJ5R7oGFTQg6pdM/" target="_blank">Таблица маркет.сбора</a></li>
-				<!-- <li>
-					<span class="opener">Макеты</span>
-					<ul>
-						<li><a href="https://disk.yandex.ru/d/_MsaQHBq6RLC4A" target="_blank">Макеты печатные</a></li>
-						<li><a href="https://disk.yandex.ru/d/_G5bIHExwxfUlw" target="_blank">Макеты для инсты</a></li>
-						<li><a href="https://disk.yandex.ru/d/gYdjTyCWu_bU3A" target="_blank">Макеты на НГ 2023-2024</a></li>
-					</ul>
-				</li> -->
 				<li>
 					<span class="opener">Видео на ТВ</span>
 					<ul>
-						<!-- <li><a href="https://disk.yandex.ru/d/ODcgMSK8CtAh9A" target="_blank">Файлы для флешки</a></li> -->
-						<li><a href="/cloud/video">Файлы для флешки</a></li>
+    					<li><a href="{{ route('upload.cloud', 'video') }}">Файлы для флешки</a></li>
 						<li><a href="https://rutube.ru/channel/44286383/videos/" target="_blank">Смотреть на Rutube</a></li>
 						<li><a href="https://vk.com/video/@britvabarber" target="_blank">Смотреть на VK Video</a></li>
 
@@ -73,36 +63,26 @@
 				<li>
 					<span class="opener">Заявки</span>
 					<ul>
-						<!-- <li><a target="_blank" href="https://forms.gle/vStrvEx5uw9NqicR6">Заявка на дизайн</a></li>
-						<li><a target="_blank" href="https://docs.google.com/forms/d/1730Zt5Ect9gdMhOjjRvZBHc-cz3cG5WHzoPhp8Ep_24/viewform?edit_requested=true">Заявка на сертификат</a></li>
-						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdEPHKl637KqNBoeRJM70SG4RAa_Fkq7Kz24DEZe18yDtdTwQ/viewform?usp=sf_link">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
-						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScvCdbQqAQ9XF6I1fftLZ0Fuc3F_Kqe-dfNFkpOuLhfv2A_hw/viewform">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
-						<li><a target="_blank" href="https://docs.google.com/forms/d/1c5WIiAyJhyThcNNofdQpuwTz_LE_xaI5JiFws1ZvWDs/viewform?edit_requested=true#responses">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
-						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSerYr5kXeZs6XahEbxZMTdMLNJy71row8M3Bw1xx1jsTqr_bw/viewform">ЗАЯВКА НА ЭКСПЕРТА</a></li>
-						<li><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdxA6Q4fpN85PEVsIrI3HCFu_-XLuVV2_XLBU3bXouA7SQeXg/viewform">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
-						<li><a target="_blank" href="https://docs.google.com/forms/d/1xlCBolWdb4HEmWJD-7vowf2GDpU_ywi1PW6cT1W6Pys/viewform">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
-						<li><a target="_blank" href="https://forms.yandex.ru/u/664eb0cf73cee73b2057ce86/">ПОДАТЬ ИДЕЮ</a></li> -->
-						<li><a href="./profile/tickets/create/maket">ЗАЯВКА НА ДИЗАЙН</a></li>
-						<li><a href="./profile/tickets/create/cert">ЗАЯВКА НА СЕРТИФИКАТ</a></li>
-						<li><a href="./profile/tickets/create/top">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
-						<li><a href="./profile/tickets/create/brand">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
-						<li><a href="./profile/tickets/create/brandplus">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
-						<li><a href="./profile/tickets/create/expert">ЗАЯВКА НА ЭКСПЕРТА</a></li>
-						<li><a href="./profile/tickets/create/blacklist">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
-						<li><a href="./profile/tickets/create">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
-						<li><a href="./profile/tickets/create">ПОДАТЬ ИДЕЮ</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'maket') }}">ЗАЯВКА НА ДИЗАЙН</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'cert') }}">ЗАЯВКА НА СЕРТИФИКАТ</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'top') }}">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'brand') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'brandplus') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'expert') }}">ЗАЯВКА НА ЭКСПЕРТА</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'blacklist') }}">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
+						<li><a href="{{ route('p.tickets.create-template') }}">ЗАЯВКА НА ИНДИВИДУАЛЬНОЕ СОГЛАСОВАНИЕ</a></li>
+						<li><a href="{{ route('p.tickets.create-template') }}">ПОДАТЬ ИДЕЮ</a></li>
 					</ul>
 				</li>
 				<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeqcM5AKcoTWECLfA_kDPZEHGpUQv_iFIx1uCVtros447ubHQ/viewform">KPI франшизы (регионы)</a></li>
-				<li><a href="/page/discounts">Корпоративные скидки</a></li>
+				<li><a href="{{ route('page.index', 'discounts') }}">Корпоративные скидки</a></li>
 				<li><a href="https://britva.tech/britva/" target="_blank">Страница для администраторов</a></li>
 				<li>
 					<span class="opener">Контакты</span>
 					<ul>
-						<li><a href="/page/contact-office">Сотрудников ЦО</a></li>
-						<li><a href="/contact-franchise">Владельцев франшиз</a></li>
-						<li><a href="/page/contact-partner">Партнеров</a></li>
-						<!-- <li><a href="/sheet/contact-outstaff">Полезные контакты</a></li> -->
+						<li><a href="{{ route('page.index', 'contact-office') }}">Сотрудников ЦО</a></li>
+						<li><a href="{{ route('s.contact-franchise') }}">Владельцев франшиз</a></li>
+						<li><a href="{{ route('page.index', 'contact-partner') }}">Партнеров</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -131,9 +111,7 @@
 				<h2>График работы ЦО:</h2>
 			</header>
 			<p>C понедельника по пятницу<br />C 10:00 до 20:00</p>
-			<p>Больше информации на странице<br /><a href="/page/contact-office">контакты сотрудников ЦО</a></p>
-			<!-- <p>Телефон офиса:<br /><a href="tel:+74994440270">+7 (499) 444-02-70</a></p> -->
-
+			<p>Больше информации на странице<br /><a href="{{ route('page.index', 'contact-office') }}">контакты сотрудников ЦО</a></p>
 		</section>
 
         <!-- Footer -->
