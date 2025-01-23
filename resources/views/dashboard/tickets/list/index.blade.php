@@ -58,7 +58,7 @@
             <x-data-empty description="Заявок на данный момент нет" />
         @else
             <div class="table-wrapper">
-                <table>
+                <table style="font-size: 0.8em;">
                     <thead>
                     <tr>
                         <th>#</th>

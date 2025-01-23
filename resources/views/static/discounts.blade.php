@@ -4,7 +4,7 @@
         <h2>Корпоративная скидка</h2>
 
         <div class="table-wrapper">
-            <table>
+            <table style="font-size: 0.8em;">
                 <thead>
                     <tr>
                         <th>АКЦИЯ</th>
