@@ -14,9 +14,7 @@
 					<span class="opener">Обучение</span>
 					<ul>
 						<li><a href="http://learn.mybritva.ru/" target="_blank">Перейти на портал обучения</a></li>
-						<li><a href="http://britva.kassa.bizon365.ru/buy/kurs-administratorov-britva" target="_blank">Курс для администратора</a></li>
-						<li><a href="http://britva.kassa.bizon365.ru/buy/kurs-dlya-barberov-britva" target="_blank">Курс для барбера</a></li>
-						<li style="font-size: 10px; color: black;"><br>Если вам необходимо передать ссылку на курс сотруднику, нажмите на ссылку ПКМ (правая кнопка мыши) и "Копировать ссылку". А после отправьте своему сотруднику.</li>
+						<li><a href="https://britva-education.ru/" target="_blank">Курсы для сотрудников</a></li>
 					</ul>
 				</li>
 				<li><a href="{{ route('upload.cloud') }}">Облако файлов</a></li>
@@ -35,7 +33,7 @@
 					<ul>
 						<li><a href="{{ route('page.index', 'mango-forwarding') }}">Настройка переадресации Mango</a></li>
 						<li><a href="{{ route('page.index', 'yclients-alerts') }}">Всплывающие уведомления Yclients</a></li>
-						<li><a target="_blank" href="https://www.youtube.com/playlist?list=PLhU6BmCA9pdCwapNa44e3BWdPe0EnvJJ2">Настройка Wahelp</a></li>
+						<li><a target="_blank" href="https://youtube.com/playlist?list=PLhU6BmCA9pdCwapNa44e3BWdPe0EnvJJ2">Настройка Wahelp</a></li>
 						<li><a target="_blank" href="https://youtu.be/6cy9sEyNDXU?si=3x0R0pmKIRHM08YO">Настройка измнения цен ЭВОТОР</a></li>
 					</ul>
 				</li>
@@ -44,7 +42,7 @@
 					<ul>
 						<li><a href="upload/co-price.pdf" target="_blank">Платные услуги ЦО</a></li>
 						<li><a href="{{ route('page.index', 'subscription-yandex-2gis') }}" target="_blank">Подписка Яндекс.Карты и 2GIS</a></li>
-						<li><a href="https://mybritva.ru/page/service-bot">Сервис пропущенных звонков</a></li>
+						<li><a href="{{ route('page.index', 'service-bot') }}">Сервис пропущенных звонков</a></li>
 						<li><a href="{{ route('p.analytics.index') }}">Сервис аналитики показателей</a></li>
 					</ul>
 				</li>
@@ -83,6 +81,7 @@
 						<li><a href="{{ route('page.index', 'contact-office') }}">Сотрудников ЦО</a></li>
 						<li><a href="{{ route('s.contact-franchise') }}">Владельцев франшиз</a></li>
 						<li><a href="{{ route('page.index', 'contact-partner') }}">Партнеров</a></li>
+                        <li><a href="{{ route('sheet.index', 'contact-outstaff') }}">Полезные контакты</a></li>
 					</ul>
 				</li>
 			</ul>
