@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth', 'isAdminOrSysAdmin'], 'prefix' => 'dashbo
     require __DIR__ . '/dashboard/partners.php';
     require __DIR__ . '/dashboard/upload.php';
     require __DIR__ . '/dashboard/tickets.php';
+    require __DIR__ . '/dashboard/teams.php';
 });
 
 Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {

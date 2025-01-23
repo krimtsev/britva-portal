@@ -38,6 +38,9 @@
                     @if(Route::has('d.tickets.index'))
                         <li><a href="{{ route('d.tickets.index') }}">Заявки</a></li>
                     @endif
+                    @if(Route::has('d.teams.index'))
+                        <li><a href="{{ route('d.teams.index') }}">Команда</a></li>
+                    @endif
                 </ul>
             @elseif(Auth::user()->isAdmin())
                 <ul>
@@ -50,6 +53,9 @@
                     <li><a href="{{ route('d.partner.index') }}">Партнеры</a></li>
                     @if(Route::has('d.tickets.index'))
                         <li><a href="{{ route('d.tickets.index') }}">Заявки</a></li>
+                    @endif
+                    @if(Route::has('d.teams.index'))
+                        <li><a href="{{ route('d.teams.index') }}">Команда</a></li>
                     @endif
                 </ul>
             @endif

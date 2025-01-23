@@ -38,3 +38,16 @@ $('button[data-id="analytics-sync"], input[data-id="analytics-load"], button[dat
         console.log("in")
         toolgeLoading();
     });
+
+const loadFileEvent = function(event) {
+    const reader = new FileReader();
+    reader.onload = function(){
+        const output = document.getElementById('image');
+        output.src = reader.result;
+        const preview = document.getElementById('preview');
+        if (preview) {
+            preview.src = reader.result;
+        }
+    };
+    reader.readAsDataURL(event.target.files[0]);
+};

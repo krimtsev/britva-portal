@@ -1,0 +1,58 @@
+<?php
+
+namespace  App\Http\Controllers\Api\Teams;
+
+use App\Http\Controllers\Controller;
+use App\Models\Partner;
+use App\Models\Team;
+use Illuminate\Http\Request;
+
+class ApiTeamsController extends Controller
+{
+    public function getTeamsList() {
+        $teams = Team::orderBy('name', 'ASC')->get();
+        $partners = Partner::getPartnersName();
+
+        $temp = [];
+
+        foreach ($teams as $team) {
+            $temp[$team->partner_id][] = [
+                "id"         => $team->id,
+                "name"       => $team->name,
+                "photo"      => $team->photo,
+                "role"       => Team::$rolesList[$team->role_id],
+                "partner"    => $partners[$team->partner_id],
+                "updated_at" => $team->updated_at,
+            ];
+        }
+
+        return $temp;
+    }
+
+    public function getTeamsByPartnersId(Request $request) {
+        $partner_id = $request->partner_id;
+        $teams = Team::orderBy('name', 'ASC')
+            ->where("partner_id", $partner_id)
+            ->get();
+        $partners = Partner::getPartnersName();
+
+        $temp = [];
+
+        foreach ($teams as $team) {
+            $temp[] = [
+                "id"         => $team->id,
+                "name"       => $team->name,
+                "photo"      => $team->photo,
+                "role"       => Team::$rolesList[$team->role_id],
+                "partner"    => $partners[$team->partner_id],
+                "updated_at" => $team->updated_at,
+            ];
+        }
+
+        return $temp;
+    }
+
+    public function getTeamsRoles() {
+        return Team::$rolesList;
+    }
+}
