@@ -3,7 +3,7 @@
 
     <section>
         <div class="table-wrapper">
-            <table>
+            <table style="font-size: 0.8em;">
                 <thead>
                     <tr>
                         <th>Название филиала</th>
