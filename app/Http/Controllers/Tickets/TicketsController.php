@@ -20,6 +20,11 @@ class TicketsController extends Controller
         return $request->route()->getAction("view") == "dashboard";
     }
 
+    public function isProfile($request): bool
+    {
+        return $request->route()->getAction("view") == "profile";
+    }
+
     public function dateDiff($ticket)
     {
         $now = Carbon::now();
@@ -42,13 +47,15 @@ class TicketsController extends Controller
 
     public function index(Request $request)
     {
+        $isProfile = $this->isProfile($request);
         $isDashboard = $this->isDashboard($request);
+
         $user = Auth::user();
         $isAllowedEditInProfile = false;
 
         $sql = Ticket::orderBy('id', 'DESC');
 
-        if (!$isDashboard) {
+        if ($isProfile) {
             $sql->where('partner_id', $user->partner_id);
 
             $isAllowedEditInProfile = Partner::sqlAvailable()
@@ -94,7 +101,7 @@ class TicketsController extends Controller
             $partners =  Partner::available();
         }
 
-        if (!$isDashboard) {
+        if ($isProfile) {
             return view('profile.tickets.list.index', compact(
                 'tickets',
                 'isAllowedEditInProfile'
@@ -115,10 +122,10 @@ class TicketsController extends Controller
      */
     public function create(Request $request, $topic = null)
     {
-        $isDashboard = $this->isDashboard($request);
+        $isProfile = $this->isProfile($request);
         $user = Auth::user();
 
-        if (!$isDashboard && !self::isEditable($user->partner_id)) {
+        if ($isProfile && !self::isEditable($user->partner_id)) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -127,7 +134,7 @@ class TicketsController extends Controller
 
         $sql = Partner::sqlAvailable();
 
-        if ($user->partner_id || !$isDashboard) {
+        if ($user->partner_id || $isProfile) {
             $sql->where('id', $user->partner_id);
         }
 
@@ -138,7 +145,7 @@ class TicketsController extends Controller
             $questions = TicketsQuestions::getData($topic);
         }
 
-        if (!$isDashboard) {
+        if ($isProfile) {
             return view('profile.tickets.list.create', compact(
                 'categories',
                 'partners',
@@ -147,16 +154,21 @@ class TicketsController extends Controller
             ));
         }
 
-        return view('dashboard.tickets.list.create', compact('categories', 'partners'));
+        return view('dashboard.tickets.list.create', compact(
+            'categories',
+            'partners'
+        ));
     }
 
     public function store(Request $request, $topic = null): \Illuminate\Http\RedirectResponse
     {
+        $isProfile = $this->isProfile($request);
         $isDashboard = $this->isDashboard($request);
+
         $user = Auth::user();
         $partner_id = $user->partner_id;
 
-        if (!$isDashboard && !self::isEditable($partner_id)) {
+        if ($isProfile && !self::isEditable($partner_id)) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -235,7 +247,7 @@ class TicketsController extends Controller
             }
         }
 
-        if (!$isDashboard) {
+        if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);
         }
 
@@ -244,10 +256,12 @@ class TicketsController extends Controller
 
     public function edit(Ticket $ticket, Request $request)
     {
+        $isProfile = $this->isProfile($request);
         $isDashboard = $this->isDashboard($request);
+
         $user = Auth::user();
 
-        if (!$isDashboard && ($ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id))) {
+        if ($isProfile && ($ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id))) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -268,7 +282,7 @@ class TicketsController extends Controller
 
         $stateList = Ticket::stateList;
 
-        if (!$isDashboard) {
+        if ($isProfile) {
             return view('profile.tickets.list.edit', compact(
                 'ticket',
                 'messages',
@@ -288,10 +302,10 @@ class TicketsController extends Controller
     // Обнопить данные записи
     public function update(Ticket $ticket, Request $request)
     {
-        $isDashboard = $this->isDashboard($request);
+        $isProfile = $this->isProfile($request);
         $user = Auth::user();
 
-        if (!$isDashboard && ($ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id))) {
+        if ($isProfile && ($ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id))) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -311,7 +325,7 @@ class TicketsController extends Controller
             'partner_id'  => $validated['partner_id'],
         ]);
 
-        if (!$isDashboard) {
+        if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);
         }
 
@@ -320,10 +334,10 @@ class TicketsController extends Controller
 
     public function updateMessage(Ticket $ticket, Request $request)
     {
-        $isDashboard = $this->isDashboard($request);
+        $isProfile = $this->isProfile($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id)) {
+        if ($isProfile && !self::isEditable($user->partner_id)) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -336,7 +350,7 @@ class TicketsController extends Controller
 
         $ticket_message = TicketMessage::create([
             'text'         => $validated['text'],
-            'ticket_id' => $ticket->id,
+            'ticket_id'    => $ticket->id,
             'user_id'      => $user->id,
         ]);
 
@@ -346,7 +360,7 @@ class TicketsController extends Controller
             }
         }
 
-        if (!$isDashboard) {
+        if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);
         }
 
@@ -355,10 +369,10 @@ class TicketsController extends Controller
 
     public function state(Ticket $ticket, Request $request): \Illuminate\Http\RedirectResponse
     {
-        $isDashboard = $this->isDashboard($request);
+        $isProfile = $this->isProfile($request);
         $user = Auth::user();
 
-        if (!$isDashboard && $ticket->partner_id != $user->partner_id || !self::isEditable($user->partner_id)) {
+        if ($isProfile && !self::isEditable($user->partner_id)) {
             return redirect()->route('p.tickets.index');
         }
 
@@ -370,7 +384,7 @@ class TicketsController extends Controller
 
         $ticket->save();
 
-        if (!$isDashboard) {
+        if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);
         }
 
