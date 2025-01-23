@@ -48,7 +48,7 @@
 						<li><a href="{{ route('p.analytics.index') }}">Сервис аналитики показателей</a></li>
 					</ul>
 				</li>
-				<li><a href="/sheet/find-certificate" >Поиск по сертификатам</a></li>
+				<li><a href="{{ route('sheet.index', 'find-certificate') }}" >Поиск по сертификатам</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1Y9zxXV-NZZvFHJNnESGBDiipCMNM1jjqQEzHqj8KRg0" target="_blank">Таблица оплаты телефонии</a></li>
 				<li><a href="https://docs.google.com/spreadsheets/d/1ka8_eTE18gQNr-LCCiKYKd_u0rG6dJ5R7oGFTQg6pdM/" target="_blank">Таблица маркет.сбора</a></li>
 				<li>
