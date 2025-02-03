@@ -6,6 +6,27 @@
             <a href="{{ route('d.teams.create') }}" class="button"> Добавить </a>
         </div>
 
+        <div>
+            <form action="{{ route('d.teams.index') }}" method="GET">
+                <div class="row gtr-uniform">
+                    <div class="col-3">
+                        <h5>Филиалы</h5>
+                        <select name="filter_partner" id="filter_partner">
+                            <option value=""> Все </option>
+                            @foreach($partners as $id => $name)
+                                <option value="{{$id}}" {{ $filter['partner'] == $id ? 'selected' : '' }}> {{ $name }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-3">
+                        <h5> &emsp; </h5>
+                        <input type="submit" value="Показать" class="primary" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -13,7 +34,7 @@
                     <th> Id </th>
                     <th> Имя </th>
                     <th> Парнер </th>
-                    <th> Роль </th>
+                    <th> Градация </th>
                     <th> Дата создания </th>
                     <th> Действия </th>
                 </tr>
@@ -22,18 +43,6 @@
                 @foreach ($teams as $team)
                     <tr>
                         <td> {{ $team->id }} </td>
-                        <td style="position: relative">
-                            <img
-                                id="image"
-                                src="{{
-                                    $team->photo
-                                        ? asset('storage/' . $team->photo)
-                                        : asset('assets/teams/default.jpeg')
-                                 }}"
-                                alt="photo"
-                                style="max-height: 50px; position: absolute; bottom: 5px;"
-                            />
-                        </td>
                         <td> {{ $team->name }} </td>
                         <td> {{ $partners[$team->partner_id] }} </td>
                         <td> {{ $team->role() }} </td>

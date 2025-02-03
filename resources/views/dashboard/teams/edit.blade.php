@@ -9,9 +9,19 @@
 
         <div class="flex justify-content-center flex-col items-center">
             <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+            <div id="auth-validation-errors" style="display: none;">
+                <div class="font-medium text-red-600">
+                    Упс! Что-то пошло не так.
+                </div>
+                <ul class="mt-3 list-disc list-inside text-sm text-red-600"></ul>
+            </div>
 
-            <form method="POST" action="{{ route('d.teams.update', $team->id) }}" enctype="multipart/form-data">
+            <form
+                id="form"
+                method="POST"
+                action="{{ route('d.teams.update', $team->id) }}"
+                enctype="multipart/form-data"
+            >
                 @csrf
                 @method('patch')
 
@@ -52,7 +62,7 @@
                         <select name="partner_id" id="partner_id">
                             <option value="" disabled selected> --- </option>
                             @foreach($partners as $id => $name)
-                                <option {{ $id == $team->partner_id ? 'selected' : '' }} value="{{ $id }}">
+                                <option {{ $id == $team->partner_id ? 'selected="selected"' : '' }} value="{{ $id }}">
                                     {{ $name }}
                                 </option>
                             @endforeach
@@ -60,15 +70,24 @@
                     </div>
 
                     <div class="col-12">
-                        <h5>Роль</h5>
+                        <h5>Градация</h5>
                         <select name="role_id" id="role_id">
                             <option value="" disabled selected> --- </option>
                             @foreach($rolesList as $key => $value)
-                                <option {{ $key == $team->role_id ? 'selected' : '' }} value="{{ $key }}">
+                                <option {{ $key == $team->role_id ? 'selected="selected"' : '' }} value="{{ $key }}">
                                     {{ $value['name'] }}
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="col-12">
+                        <h5>Описание</h5>
+                        <textarea
+                            id="description"
+                            name="description"
+                            placeholder=""
+                        >{{ $team->description }}</textarea>
                     </div>
 
                     <div class="col-12">
@@ -80,3 +99,11 @@
     </section>
 </x-admin-layout>
 
+<script>
+    $(document).ready(function () {
+        $("#form").on('submit', function (e) {
+            e.preventDefault();
+            UpdateTeams.call(this)
+        });
+    });
+</script>

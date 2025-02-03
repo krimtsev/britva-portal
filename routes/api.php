@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['api.portal'], 'prefix' => 'portal'], function () {
     Route::get('/teams', [ApiTeamsController::class, 'getTeamsList']);
-    Route::get('/team/{partner_id}', [ApiTeamsController::class, 'getTeamsByPartnersId']);
+    Route::get('/teams/{partner_id}', [ApiTeamsController::class, 'getTeamsByPartnersId']);
     Route::get('/teams/roles', [ApiTeamsController::class, 'getTeamsRoles']);
     Route::get('/partners', [ApiPartnersController::class, 'getPartnersList']);
 });

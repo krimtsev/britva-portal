@@ -4,7 +4,7 @@ use App\Http\Controllers\Teams\TeamsController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::group(['prefix' => 'teams'], function () {
+Route::group(['prefix' => 'teams', 'middleware' => ['campaign.britva']], function () {
     Route::get('/', [TeamsController::class, 'index'])->name('d.teams.index');
 
     Route::get('/create', [TeamsController::class, 'create'])->name('d.teams.create');

@@ -89,4 +89,5 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'profile', 'view' => 'profil
     require __DIR__ . '/profile/user.php';
     require __DIR__ . '/profile/analytics.php';
     require __DIR__ . '/profile/tickets.php';
+    require __DIR__ . '/profile/teams.php';
 });

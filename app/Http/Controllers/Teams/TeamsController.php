@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Partner;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class TeamsController extends Controller
 {
@@ -16,38 +18,144 @@ class TeamsController extends Controller
      * LOCAL METHODS
      */
 
-    function index() {
-        $teams = Team::orderBy('id', 'DESC')->paginate(30);
+    public function isProfile(Request $request): bool
+    {
+        return $request->route()->getAction("view") == "profile";
+    }
+
+    function index(Request $request) {
+        $isProfile = $this->isProfile($request);
         $rolesList = Team::$rolesList;
-        $partners = Partner::getPartnersName();
+
+        /**
+         * Профиль пользователя
+         */
+
+        if ($isProfile) {
+            $user = Auth::user();
+            $partner_id = $user->partner_id;
+
+            $isAllowedEditInProfile = Partner::sqlAvailable()
+                ->where('id', $partner_id)
+                ->exists();
+
+            if (!$isAllowedEditInProfile) {
+                return view('profile.teams.index', compact(
+                    'isAllowedEditInProfile',
+                ));
+            }
+
+            $teams = Team::orderBy('id', 'ASC')
+                ->where('partner_id', $partner_id)
+                ->paginate(30);
+
+            $partners = Partner::getAllPartnersName();
+
+            return view('profile.teams.index', compact(
+                'teams',
+                'rolesList',
+                'partner_id',
+                'partners',
+                'isAllowedEditInProfile'
+            ));
+        }
+
+        /**
+         * Панель администратора
+         */
+
+        $filter = [];
+        $teams_sql = Team::orderBy('id', 'DESC');
+        $partners = Partner::getAllPartnersName();
+
+        $filter['partner'] = $request->input("filter_partner");
+
+        if ($filter['partner']) {
+            $teams_sql->where("partner_id", $filter['partner']);
+        }
+
+        $teams = $teams_sql->paginate(30);
 
         return view('dashboard.teams.index', compact(
             'teams',
             'rolesList',
-            'partners'
+            'partners',
+            'filter'
         ));
     }
 
-    function create() {
+    function create(Request $request) {
+        $isProfile = $this->isProfile($request);
+
         $rolesList = Team::$rolesList;
+
+        /**
+         * Профиль пользователя
+         */
+
+        if ($isProfile) {
+            $user = Auth::user();
+
+            if (!$user->partner_id) {
+                return redirect()->route('p.teams.index');
+            }
+
+            return view('profile.teams.create', compact(
+                'rolesList',
+            ));
+        }
+
+        /**
+         * Панель администратора
+         */
+
         $partners = Partner::getPartnersName();
 
         return view('dashboard.teams.create', compact(
             'rolesList',
             'partners'
         ));
-
     }
 
-    function store(Request $request) {
-        $data = $request->validate([
-            'photo'      => ['nullable', self::RULES_ALLOW_TYPES],
-            'name'       => 'required|min:3',
-            'partner_id' => 'required',
-            'role_id'    => 'required',
-        ]);
+    function store(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $isProfile = $this->isProfile($request);
+        $data = $request->all();
+        $redirect_url = route('d.teams.index');
 
-        if (array_key_exists("photo", $data)) {
+        $rules = [
+            'photo'       => ['nullable', self::RULES_ALLOW_TYPES],
+            'name'        => 'required',
+            'description' => 'nullable',
+            'partner_id'  => 'required',
+            'role_id'     => 'required',
+        ];
+
+        if ($isProfile) {
+            $user = Auth::user();
+
+            if (!$user->partner_id) {
+                return response()->json([
+                    "status"       => 301,
+                    "redirect_url" => route('p.teams.index')
+                ]);
+            }
+
+            $data['partner_id'] = $user->partner_id;
+
+            $redirect_url = route('p.teams.index');
+        }
+
+        $validator = Validator::make($data, $rules);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status'=> 400,
+                'errors'=> $validator->messages()
+            ]);
+        }
+
+        if (array_key_exists("photo", $data) && !empty($data["photo"])) {
             $file = $data["photo"];
             $path = Storage::disk("public")->put(Team::FOLDER,  $file);
             $data["photo"] = $path;
@@ -55,12 +163,32 @@ class TeamsController extends Controller
 
         Team::create($data);
 
-        return redirect()->route('d.teams.index');
+        return response()->json([
+            "status"       => 200,
+            "message"      => "Teams Updated.",
+            "redirect_url" => $redirect_url
+        ]);
     }
 
-    public function edit(Team $team)
+    public function edit(Team $team, Request $request)
     {
+        $isProfile = $this->isProfile($request);
+
         $rolesList = Team::$rolesList;
+
+        if ($isProfile) {
+            $user = Auth::user();
+
+            if (!$user->partner_id) {
+                return redirect()->route('p.teams.index');
+            }
+
+            return view('profile.teams.edit', compact(
+                'rolesList',
+                'team',
+            ));
+        }
+
         $partners = Partner::getPartnersName();
 
         return view('dashboard.teams.edit', compact(
@@ -70,16 +198,45 @@ class TeamsController extends Controller
         ));
     }
 
-    function update(Team $team, Request $request): \Illuminate\Http\RedirectResponse
+    function update(Team $team, Request $request): \Illuminate\Http\JsonResponse
     {
-        $data = $request->validate([
-            'photo'      => ['nullable', self::RULES_ALLOW_TYPES],
-            'name'       => 'required|min:3',
-            'partner_id' => 'required',
-            'role_id'    => 'required',
-        ]);
+        $isProfile = $this->isProfile($request);
+        $data = $request->all();
+        $redirect_url = route('d.teams.index');
 
-        if (array_key_exists("photo", $data)) {
+        $rules = [
+            'photo'       => ['nullable', self::RULES_ALLOW_TYPES],
+            'name'        => 'required',
+            'description' => 'nullable',
+            'partner_id'  => 'required',
+            'role_id'     => 'required',
+        ];
+
+        if ($isProfile) {
+            $user = Auth::user();
+
+            if (!$user->partner_id) {
+                return response()->json([
+                    "status"       => 301,
+                    "redirect_url" => route('d.teams.index')
+                ]);
+            }
+
+            $data['partner_id'] = $user->partner_id;
+
+            $redirect_url = route('p.teams.index');
+        }
+
+        $validator = Validator::make($data, $rules);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status'=> 400,
+                'errors'=> $validator->messages()
+            ]);
+        }
+
+        if (array_key_exists("photo", $data) && !empty($data["photo"])) {
             $file = $data["photo"];
             $path = Storage::disk("public")->put(Team::FOLDER,  $file);
             $data["photo"] = $path;
@@ -87,6 +244,10 @@ class TeamsController extends Controller
 
         $team->update($data);
 
-        return redirect()->route('d.teams.index');
+        return response()->json([
+            "status"       => 200,
+            "message"      => "Teams Updated.",
+            "redirect_url" => $redirect_url
+        ]);
     }
 }

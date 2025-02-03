@@ -4,7 +4,7 @@
     <section>
 
         <div class="mb-2 flex justify-content-start">
-            <a href="{{ route('d.teams.index') }}" class="button">{{ __('Назад') }}</a>
+            <a href="{{ route('p.teams.index') }}" class="button">{{ __('Назад') }}</a>
         </div>
 
         <div class="flex justify-content-center flex-col items-center">
@@ -16,21 +16,22 @@
                 <ul class="mt-3 list-disc list-inside text-sm text-red-600"></ul>
             </div>
 
-
             <form
                 id="form"
                 method="POST"
-                action="{{ route('d.teams.store') }}"
+                action="{{ route('p.teams.update', $team->id) }}"
                 enctype="multipart/form-data"
             >
                 @csrf
+                @method('patch')
+
                 <div class="row gtr-uniform">
 
                     <div class="col-12">
                         <h5>Фото</h5>
                         <img
                             id="image"
-                            src="{{ asset('assets/teams/default.jpeg') }}"
+                            src="{{ $team->photo ? asset('storage/' . $team->photo) : asset('assets/teams/default.jpeg') }}"
                             alt="photo"
                             style="max-width: 250px; max-height: 250px"
                         />
@@ -51,29 +52,17 @@
                             id="name"
                             type="text"
                             name="name"
-                            :value="old('name')"
+                            value="{{ $team->name }}"
                             placeholder=""
                         />
                     </div>
 
                     <div class="col-12">
-                        <h5>Партнер</h5>
-                        <select name="partner_id" id="partner_id">
-                            <option value="" disabled selected="selected"> --- </option>
-                            @foreach($partners as $id => $name)
-                                <option value="{{ $id }}">
-                                    {{ $name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-12">
                         <h5>Градация</h5>
                         <select name="role_id" id="role_id">
-                            <option value="" disabled selected="selected"> --- </option>
+                            <option value="" disabled selected> --- </option>
                             @foreach($rolesList as $key => $value)
-                                <option value="{{ $key }}">
+                                <option {{ $key == $team->role_id ? 'selected="selected"' : '' }} value="{{ $key }}">
                                     {{ $value['name'] }}
                                 </option>
                             @endforeach
@@ -86,7 +75,7 @@
                             id="description"
                             name="description"
                             placeholder=""
-                        >{{ old('description') }}</textarea>
+                        >{{ $team->description }}</textarea>
                     </div>
 
                     <div class="col-12">
@@ -102,8 +91,7 @@
     $(document).ready(function () {
         $("#form").on('submit', function (e) {
             e.preventDefault();
-            CreateTeams.call(this)
+            UpdateTeams.call(this)
         });
     });
 </script>
-

@@ -38,7 +38,7 @@
                     @if(Route::has('d.tickets.index'))
                         <li><a href="{{ route('d.tickets.index') }}">Заявки</a></li>
                     @endif
-                    @if(Route::has('d.teams.index'))
+                    @if(Route::has('d.teams.index') && $isBritvaPartner)
                         <li><a href="{{ route('d.teams.index') }}">Команда</a></li>
                     @endif
                 </ul>
@@ -54,7 +54,7 @@
                     @if(Route::has('d.tickets.index'))
                         <li><a href="{{ route('d.tickets.index') }}">Заявки</a></li>
                     @endif
-                    @if(Route::has('d.teams.index'))
+                    @if(Route::has('d.teams.index') && $isBritvaPartner)
                         <li><a href="{{ route('d.teams.index') }}">Команда</a></li>
                     @endif
                 </ul>

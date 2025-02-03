@@ -18,6 +18,7 @@ class Team extends Model
         'photo',
         'partner_id',
         'role_id',
+        'description'
     ];
 
     const FOLDER = 'teams';
@@ -25,18 +26,28 @@ class Team extends Model
     public static $rolesList = [
         1 => [
             "id"   => 1,
-            "name" => "Барбер",
+            "name" => "БАРБЕР",
             "tag"  => "BARBER",
         ],
         2 => [
             "id"   => 2,
-            "name" => "Top барбер",
+            "name" => "TОП-БАРБЕР",
             "tag"  => "TOP_BARBER",
         ],
         3 => [
             "id"   => 3,
-            "name" => "Бренд барбер",
+            "name" => "БРЕНД-БАРБЕР",
             "tag"  => "BRAND_BARBER",
+        ],
+        4 => [
+            "id"   => 4,
+            "name" => "БРЕНД-БАРБЕР+",
+            "tag"  => "BRAND_BARBER_PLUS",
+        ],
+        5 => [
+            "id"   => 5,
+            "name" => "ЭКСПЕРТ",
+            "tag"  => "EXPERT",
         ],
     ];
 

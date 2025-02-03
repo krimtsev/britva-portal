@@ -5,6 +5,7 @@ namespace  App\Http\Controllers\Api\Teams;
 use App\Http\Controllers\Controller;
 use App\Models\Partner;
 use App\Models\Team;
+use App\Utils\Utils;
 use Illuminate\Http\Request;
 
 class ApiTeamsController extends Controller
@@ -12,6 +13,7 @@ class ApiTeamsController extends Controller
     public function getTeamsList() {
         $teams = Team::orderBy('name', 'ASC')->get();
         $partners = Partner::getPartnersName();
+        $url = env('PUBLIC_URL', '');
 
         $temp = [];
 
@@ -19,7 +21,7 @@ class ApiTeamsController extends Controller
             $temp[$team->partner_id][] = [
                 "id"         => $team->id,
                 "name"       => $team->name,
-                "photo"      => $team->photo,
+                "photo"      => Utils::joinPath($url, 'storage', $team->photo),
                 "role"       => Team::$rolesList[$team->role_id],
                 "partner"    => $partners[$team->partner_id],
                 "updated_at" => $team->updated_at,
@@ -35,6 +37,7 @@ class ApiTeamsController extends Controller
             ->where("partner_id", $partner_id)
             ->get();
         $partners = Partner::getPartnersName();
+        $url = env('PUBLIC_URL', '');
 
         $temp = [];
 
@@ -42,7 +45,7 @@ class ApiTeamsController extends Controller
             $temp[] = [
                 "id"         => $team->id,
                 "name"       => $team->name,
-                "photo"      => $team->photo,
+                "photo"      => Utils::joinPath($url, 'storage', $team->photo),
                 "role"       => Team::$rolesList[$team->role_id],
                 "partner"    => $partners[$team->partner_id],
                 "updated_at" => $team->updated_at,

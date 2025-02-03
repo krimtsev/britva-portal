@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class TicketsController extends Controller
 {
 
-    public function isDashboard($request): bool
+    public function isDashboard(Request $request): bool
     {
         return $request->route()->getAction("view") == "dashboard";
     }

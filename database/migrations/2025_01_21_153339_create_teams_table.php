@@ -19,6 +19,7 @@ class CreateTeamsTable extends Migration
             $table->string('name');
             $table->string('partner_id');
             $table->string('role_id');
+            $table->text('description');
 
             $table->timestamps();
             $table->softDeletes();

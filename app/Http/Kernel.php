@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
         'isAdminOrSysAdmin' => \App\Http\Middleware\RoleAdminOrSysAdmin::class,
         'api.personal' =>\App\Http\Middleware\PersonalApiTokenIsValid::class,
         'api.portal' =>\App\Http\Middleware\PortalApiTokenIsValid::class,
+        'campaign.britva' =>\App\Http\Middleware\CampaignBritva::class,
     ];
 }
