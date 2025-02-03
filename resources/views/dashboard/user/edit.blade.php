@@ -19,6 +19,7 @@
                 action="{{ route('d.user.update', $user->id) }}"
                 method="post"
                 class="auth-form"
+                autocomplete="off"
             >
                 @csrf
                 @method('patch')
@@ -55,6 +56,7 @@
                                         selected="selected"
                                     @endif
                                     value="{{ $key }}"
+                                    label="{{ $value }}"
                                 >
                                     {{ $value }}
                                 </option>
@@ -77,7 +79,9 @@
                                     @if ($partner->id === $user->partner_id)
                                         selected="selected"
                                     @endif
-                                    value="{{ $partner->id }}"
+                                    @if ($partner->name)
+                                        label="{{ $partner->name }} ({{ $partner->organization }})"
+                                     @endif
                                 >
                                     @if ($partner->name)
                                         {{ $partner->name }}
