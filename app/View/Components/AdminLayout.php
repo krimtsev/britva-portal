@@ -14,6 +14,13 @@ class AdminLayout extends Component
             "isDashboard" => $isDashboard
         ) = RouteServiceProvider::getAdminTypeView();
 
-        return view("layouts.admin", compact("isProfile", "isDashboard"));
+        $partner = env('PARTNER_NAME', '');
+        $isBritvaPartner = $partner == "britva";
+
+        return view("layouts.admin", compact(
+            "isProfile",
+            "isDashboard",
+            "isBritvaPartner"
+        ));
     }
 }

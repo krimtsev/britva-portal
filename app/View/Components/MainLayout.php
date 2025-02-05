@@ -11,6 +11,12 @@ class MainLayout extends Component
     {
         $digests = Digest::where('is_published', '=', 1)->orderBy('id', 'DESC')->take(3)->get();
 
-        return view('layouts.main', compact('digests'));
+        $partner = env('PARTNER_NAME', '');
+        $isBritvaPartner = $partner == "britva";
+
+        return view('layouts.main', compact(
+            'digests',
+            'isBritvaPartner'
+        ));
     }
 }

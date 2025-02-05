@@ -70,6 +70,8 @@ class Kernel extends HttpKernel
         'isAdmin' => \App\Http\Middleware\RoleAdmin::class,
         'isSysAdmin' => \App\Http\Middleware\RoleSysAdmin::class,
         'isAdminOrSysAdmin' => \App\Http\Middleware\RoleAdminOrSysAdmin::class,
-        'api_token' =>\App\Http\Middleware\EnsureTokenIsValid::class,
+        'api.personal' =>\App\Http\Middleware\PersonalApiTokenIsValid::class,
+        'api.portal' =>\App\Http\Middleware\PortalApiTokenIsValid::class,
+        'campaign.britva' =>\App\Http\Middleware\CampaignBritva::class,
     ];
 }

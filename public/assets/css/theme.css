@@ -36,6 +36,10 @@
     background: #F44336;
 }
 
+.text-red-600 {
+    color: #F44336;
+}
+
 body {
     color: #111111;
 }

@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth', 'isAdminOrSysAdmin'], 'prefix' => 'dashbo
     require __DIR__ . '/dashboard/partners.php';
     require __DIR__ . '/dashboard/upload.php';
     require __DIR__ . '/dashboard/tickets.php';
+    require __DIR__ . '/dashboard/teams.php';
 });
 
 Route::group(['middleware' => ['auth', 'isSysAdmin'], 'prefix' => 'dashboard', 'view' => 'dashboard' ], function () {
@@ -88,4 +89,5 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'profile', 'view' => 'profil
     require __DIR__ . '/profile/user.php';
     require __DIR__ . '/profile/analytics.php';
     require __DIR__ . '/profile/tickets.php';
+    require __DIR__ . '/profile/teams.php';
 });
