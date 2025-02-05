@@ -19,12 +19,13 @@ class ApiTeamsController extends Controller
 
         foreach ($teams as $team) {
             $temp[$team->partner_id][] = [
-                "id"         => $team->id,
-                "name"       => $team->name,
-                "photo"      => Utils::joinPath($url, 'storage', $team->photo),
-                "role"       => Team::$rolesList[$team->role_id],
-                "partner"    => $partners[$team->partner_id],
-                "updated_at" => $team->updated_at,
+                "id"          => $team->id,
+                "name"        => $team->name,
+                "description" => $team->description,
+                "photo"       => Utils::joinPath($url, 'storage', $team->photo),
+                "role"        => Team::$rolesList[$team->role_id],
+                "partner"     => $partners[$team->partner_id],
+                "updated_at"  => $team->updated_at,
             ];
         }
 
@@ -43,12 +44,13 @@ class ApiTeamsController extends Controller
 
         foreach ($teams as $team) {
             $temp[] = [
-                "id"         => $team->id,
-                "name"       => $team->name,
-                "photo"      => Utils::joinPath($url, 'storage', $team->photo),
-                "role"       => Team::$rolesList[$team->role_id],
-                "partner"    => $partners[$team->partner_id],
-                "updated_at" => $team->updated_at,
+                "id"          => $team->id,
+                "name"        => $team->name,
+                "description" => $team->description,
+                "photo"       => Utils::joinPath($url, 'storage', $team->photo),
+                "role"        => Team::$rolesList[$team->role_id],
+                "partner"     => $partners[$team->partner_id],
+                "updated_at"  => $team->updated_at,
             ];
         }
 
