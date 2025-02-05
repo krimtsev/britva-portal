@@ -86,6 +86,7 @@
                             id="description"
                             name="description"
                             placeholder=""
+                            rows="8"
                         >{{ old('description') }}</textarea>
                     </div>
 

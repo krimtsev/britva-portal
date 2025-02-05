@@ -87,6 +87,7 @@
                             id="description"
                             name="description"
                             placeholder=""
+                            rows="8"
                         >{{ $team->description }}</textarea>
                     </div>
 

@@ -49,6 +49,16 @@ class Team extends Model
             "name" => "ЭКСПЕРТ",
             "tag"  => "EXPERT",
         ],
+        6 => [
+            "id"   => 6,
+            "name" => "АДМИНИСТРАТОР",
+            "tag"  => "ADMINISTRATOR",
+        ],
+        7 => [
+            "id"   => 7,
+            "name" => "РУКОВОДИТЕЛЬ",
+            "tag"  => "MANAGER",
+        ],
     ];
 
     public function role()

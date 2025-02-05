@@ -250,4 +250,8 @@ class TeamsController extends Controller
             "redirect_url" => $redirect_url
         ]);
     }
+
+    function destroy() {
+        // TODO: Добавить удаления пользователя
+    }
 }
