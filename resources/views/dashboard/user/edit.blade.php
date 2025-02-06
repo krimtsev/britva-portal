@@ -56,7 +56,6 @@
                                         selected="selected"
                                     @endif
                                     value="{{ $key }}"
-                                    label="{{ $value }}"
                                 >
                                     {{ $value }}
                                 </option>
@@ -79,9 +78,7 @@
                                     @if ($partner->id === $user->partner_id)
                                         selected="selected"
                                     @endif
-                                    @if ($partner->name)
-                                        label="{{ $partner->name }} ({{ $partner->organization }})"
-                                     @endif
+                                    value="{{ $partner->id }}"
                                 >
                                     @if ($partner->name)
                                         {{ $partner->name }}
