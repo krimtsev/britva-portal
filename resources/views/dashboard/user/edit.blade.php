@@ -52,9 +52,7 @@
                         <select name="role_id" id="role_id">
                             @foreach($user->roleListById() as $key => $value)
                                 <option
-                                    @if ($key === $user->role_id)
-                                        selected="selected"
-                                    @endif
+                                    {{ $key === $user->role_id ? "selected" : "" }}
                                     value="{{ $key }}"
                                 >
                                     {{ $value }}
