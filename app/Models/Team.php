@@ -27,37 +27,37 @@ class Team extends Model
         1 => [
             "id"   => 1,
             "name" => "БАРБЕР",
-            "tag"  => "BARBER",
+            "tag"  => "barber",
         ],
         2 => [
             "id"   => 2,
             "name" => "TОП-БАРБЕР",
-            "tag"  => "TOP_BARBER",
+            "tag"  => "top_barber",
         ],
         3 => [
             "id"   => 3,
             "name" => "БРЕНД-БАРБЕР",
-            "tag"  => "BRAND_BARBER",
+            "tag"  => "brand_barber",
         ],
         4 => [
             "id"   => 4,
             "name" => "БРЕНД-БАРБЕР+",
-            "tag"  => "BRAND_BARBER_PLUS",
+            "tag"  => "brand_barber_plus",
         ],
         5 => [
             "id"   => 5,
             "name" => "ЭКСПЕРТ",
-            "tag"  => "EXPERT",
+            "tag"  => "expert",
         ],
         6 => [
             "id"   => 6,
             "name" => "АДМИНИСТРАТОР",
-            "tag"  => "ADMINISTRATOR",
+            "tag"  => "administrator",
         ],
         7 => [
             "id"   => 7,
             "name" => "РУКОВОДИТЕЛЬ",
-            "tag"  => "MANAGER",
+            "tag"  => "manager",
         ],
     ];
 

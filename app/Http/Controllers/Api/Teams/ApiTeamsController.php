@@ -11,7 +11,10 @@ use Illuminate\Http\Request;
 class ApiTeamsController extends Controller
 {
     public function getTeamsList() {
-        $teams = Team::orderBy('name', 'ASC')->get();
+        $teams = Team::orderBy('name', 'ASC')
+            ->whereNull('deleted_at')
+            ->get();
+
         $partners = Partner::getPartnersName();
         $url = env('PUBLIC_URL', '');
 
@@ -34,9 +37,12 @@ class ApiTeamsController extends Controller
 
     public function getTeamsByPartnersId(Request $request) {
         $partner_id = $request->partner_id;
+
         $teams = Team::orderBy('name', 'ASC')
             ->where("partner_id", $partner_id)
+            ->whereNull('deleted_at')
             ->get();
+
         $partners = Partner::getPartnersName();
         $url = env('PUBLIC_URL', '');
 

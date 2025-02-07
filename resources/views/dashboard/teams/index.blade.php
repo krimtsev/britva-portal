@@ -2,8 +2,9 @@
     <x-header-section title="Команды" />
 
     <section>
-        <div class="mb-2 flex justify-between">
+        <div class="mb-2 flex gap-2">
             <a href="{{ route('d.teams.create') }}" class="button"> Добавить </a>
+            <a href="{{ route('d.teams.statistics') }}" class="button"> Статистика </a>
         </div>
 
         <div>

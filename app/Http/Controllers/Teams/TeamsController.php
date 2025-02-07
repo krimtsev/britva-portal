@@ -5,6 +5,7 @@ namespace  App\Http\Controllers\Teams;
 use App\Http\Controllers\Controller;
 use App\Models\Partner;
 use App\Models\Team;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -251,7 +252,36 @@ class TeamsController extends Controller
         ]);
     }
 
-    function destroy() {
-        // TODO: Добавить удаления пользователя
+    function destroy(Team $team, Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $isProfile = $this->isProfile($request);
+
+        $exists = Storage::disk(Team::FOLDER)->exists($team->photo);
+
+        if ($exists) {
+            Storage::disk(Team::FOLDER)->delete($team->photo);
+        }
+
+        $team->delete();
+
+        if ($isProfile) {
+            return redirect()->route('p.teams.index');
+        }
+
+        return redirect()->route('d.teams.index');
+    }
+
+    function statistics() {
+        $_teams = Team::select('partner_id as id', Team::raw('count(partner_id) as total'))
+            ->groupBy('partner_id');
+
+        $teams = Partner::sqlAvailable(['partners.name as name', 'total'])
+            ->leftJoinSub($_teams, 'teams', function (JoinClause $join) {
+                $join->on('teams.id', '=', 'partners.id');
+            })->get();
+
+        return view('dashboard.teams.statistics', compact(
+            'teams'
+        ));
     }
 }

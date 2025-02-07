@@ -115,7 +115,7 @@
 
                 <div class="row gtr-uniform">
                     <div class="col-12">
-                        <textarea name="text" id="text" rows="5" placeholder="Новое соощбение">{{ old('text') }}</textarea>
+                        <textarea name="text" id="text" rows="5" placeholder="Новое сообщение">{{ old('text') }}</textarea>
                     </div>
                     <div class="col-12">
                         <h5>Загрузить файлы</h5>
