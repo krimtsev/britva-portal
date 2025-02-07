@@ -75,9 +75,7 @@
                             <option value=""> --- </option>
                             @foreach($partners as $partner)
                                 <option
-                                    @if ($partner->id === $user->partner_id)
-                                        selected="selected"
-                                    @endif
+                                    {{ $partner->id === $user->partner_id ? "selected" : "" }}
                                     value="{{ $partner->id }}"
                                 >
                                     @if ($partner->name)
