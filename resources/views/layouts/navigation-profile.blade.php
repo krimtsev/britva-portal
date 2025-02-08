@@ -29,6 +29,9 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('p.user.password.index') }}">СМЕНА ПАРОЛЯ</a></li>
+                @if(Route::has('p.teams.index') && $isBritvaPartner)
+                    <li><a href="{{ route('p.teams.index') }}">Команда</a></li>
+                @endif
             </ul>
         </nav>
     </div>

@@ -16,9 +16,10 @@ class StoreController extends Controller
     public function __invoke(Request $request)
     {
         $data = $request->validate([
-            'login' => ['required', 'string', 'min:3', 'max:50', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'partner_id'  => 'nullable|string',
+            'login'      => ['required', 'string', 'min:3', 'max:50', 'unique:users'],
+            'name'       => ['nullable', 'string', 'min:3', 'max:50'],
+            'password'   => ['required', 'confirmed', Rules\Password::defaults()],
+            'partner_id' => ['nullable', 'string'],
         ]);
 
         // Задаем partner_id как 0 если отвязываем его от пользователя
@@ -26,6 +27,7 @@ class StoreController extends Controller
 
         $user = User::create([
             'login'      => $request->login,
+            'name'       => $request->name,
             'password'   => Hash::make($request->password),
             "partner_id" => $partner_id
         ]);

@@ -27,6 +27,19 @@
                         />
                     </div>
 
+                    <!-- Name -->
+                    <div class="col-12">
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            :value="old('name')"
+                            required
+                            autofocus
+                            placeholder="Имя"
+                        />
+                    </div>
+
                     <!-- Password -->
                     <div class="col-12">
                         <input

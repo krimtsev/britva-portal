@@ -40,8 +40,8 @@ class Partner extends Model
         return $this->belongsTo(Partner::class, "partner_id");
     }
 
-    static function sqlAvailable() {
-        return Partner::select("id", "name", "organization", "yclients_id")
+    static function sqlAvailable($arg = ["id", "name", "organization", "yclients_id"]) {
+        return Partner::select($arg)
             ->where('yclients_id', '<>', "")
             ->where('disabled', '<>', 1)
             ->orderBy("name");
@@ -49,5 +49,25 @@ class Partner extends Model
 
     static function available() {
         return self::sqlAvailable()->get();
+    }
+
+    static function getPartnersName() {
+        $partners = [];
+        foreach (Partner::available() as $one) {
+            $partners[$one->id] = $one->name;
+        }
+        return $partners;
+    }
+
+    static function getAllPartnersName() {
+        $partners = [];
+        $_list = Partner::select("id", "name")
+            ->orderBy("name")
+            ->get();
+
+        foreach ($_list as $one) {
+            $partners[$one->id] = $one->name;
+        }
+        return $partners;
     }
 }

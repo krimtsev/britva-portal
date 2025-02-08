@@ -14,7 +14,13 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-            <form action="{{ route('d.user.update', $user->id) }}" method="post" class="auth-form">
+            <form
+                id="form"
+                action="{{ route('d.user.update', $user->id) }}"
+                method="post"
+                class="auth-form"
+                autocomplete="off"
+            >
                 @csrf
                 @method('patch')
 
@@ -46,7 +52,7 @@
                         <select name="role_id" id="role_id">
                             @foreach($user->roleListById() as $key => $value)
                                 <option
-                                    {{ $key === $user->role_id ? 'selected' : '' }}
+                                    {{ $key == $user->role_id ? "selected" : "" }}
                                     value="{{ $key }}"
                                 >
                                     {{ $value }}
@@ -67,7 +73,7 @@
                             <option value=""> --- </option>
                             @foreach($partners as $partner)
                                 <option
-                                    {{ $partner->id === $user->partner_id ? 'selected' : '' }}
+                                    {{ $partner->id == $user->partner_id ? "selected" : "" }}
                                     value="{{ $partner->id }}"
                                 >
                                     @if ($partner->name)

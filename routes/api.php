@@ -3,9 +3,19 @@
 use App\Http\Controllers\Analytics\ClientsVisitsController;
 use App\Http\Controllers\Mango\MangoController;
 use App\Http\Controllers\Staff\StaffController;
+use App\Http\Controllers\Api\Teams\ApiTeamsController;
+use App\Http\Controllers\Api\Partners\ApiPartnersController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['api_token']], function () {
+
+Route::group(['middleware' => ['api.portal'], 'prefix' => 'portal'], function () {
+    Route::get('/teams', [ApiTeamsController::class, 'getTeamsList']);
+    Route::get('/teams/{partner_id}', [ApiTeamsController::class, 'getTeamsByPartnersId']);
+    Route::get('/teams/roles', [ApiTeamsController::class, 'getTeamsRoles']);
+    Route::get('/partners', [ApiPartnersController::class, 'getPartnersList']);
+});
+
+Route::group(['middleware' => ['api.personal']], function () {
     Route::get('/mango', [MangoController::class, 'index']);
     Route::get('/mango/test', [MangoController::class, 'test']);
     Route::get('/mango/statistics', [MangoController::class, 'getStatisticsForPastDay']);

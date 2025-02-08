@@ -56,15 +56,15 @@ class User extends Authenticatable
             'NAME' => 'Пользователь',
             'VALUE' => 1000
         ],
-        'SYS_ADMIN' => [
-            'ID' => 2,
-            'NAME' => 'Системный администратор',
-            'VALUE' => 3000
-        ],
         'ADMIN' => [
             'ID' => 3,
             'NAME' => 'Администратор',
             'VALUE' => 2000
+        ],
+        'SYS_ADMIN' => [
+            'ID' => 2,
+            'NAME' => 'Суперадминистратор',
+            'VALUE' => 3000
         ],
     ];
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tickets;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\ReportService;
 use App\Models\Partner;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketCategory;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 class TicketsController extends Controller
 {
 
-    public function isDashboard($request): bool
+    public function isDashboard(Request $request): bool
     {
         return $request->route()->getAction("view") == "dashboard";
     }
@@ -43,6 +44,29 @@ class TicketsController extends Controller
         return Partner::sqlAvailable()
             ->where('id', $partnerId)
             ->exists();
+    }
+
+    static function sendMessage($ticket) {
+        $type = "ticket";
+        $msg = "Создана новая заявка";
+
+        $partner_id = $ticket["partner_id"];
+        $category_id = $ticket["category_id"];
+
+        $partner = Partner::select("name")
+            ->where("id", $partner_id)
+            ->first();
+
+        $category = TicketCategory::select("title")
+            ->where("id", $category_id)
+            ->first();
+
+        $data = [];
+        $data["title"] = $ticket["title"];
+        $data["company_name"] = $partner["name"];
+        $data["category"] = $category["title"];
+
+        ReportService::msg($type, $msg, $data);
     }
 
     public function index(Request $request)
@@ -214,12 +238,16 @@ class TicketsController extends Controller
 
         $user = Auth::user();
 
-        $ticket = Ticket::create([
+        $data = [
             'title'       => $validated['title'],
             'category_id' => $validated['category_id'],
             'partner_id'  => $partner_id,
             'user_id'     => $user->id,
-        ]);
+        ];
+
+        $ticket = Ticket::create($data);
+
+        self::sendMessage($data);
 
         $list = [];
         if (TicketsQuestions::isExist($topic)) {
@@ -318,12 +346,14 @@ class TicketsController extends Controller
             'title.required' => 'Тема запроса обязательна для заполнения'
         ]);
 
-        $ticket->update([
+        $data = [
             'title'       => $validated['title'],
             'state'       => $validated['state'],
             'category_id' => $validated['category_id'],
             'partner_id'  => $validated['partner_id'],
-        ]);
+        ];
+
+        $ticket->update($data);
 
         if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);
