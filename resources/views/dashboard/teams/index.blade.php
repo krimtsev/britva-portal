@@ -2,32 +2,34 @@
     <x-header-section title="Команды" />
 
     <section>
-        <div class="mb-2 flex gap-2">
-            <a href="{{ route('d.teams.create') }}" class="button"> Добавить </a>
-            <a href="{{ route('d.teams.statistics') }}" class="button"> Статистика </a>
-        </div>
+       
+		<div class="">
+		
+			<form action="{{ route('d.teams.index') }}" method="GET">
+				<div class="row gtr-uniform">
+					<div class="col-4">
+						<h5>Филиалы</h5>
+						<select name="filter_partner" id="filter_partner">
+							<option value=""> Все </option>
+							@foreach($partners as $id => $name)
+								<option value="{{$id}}" {{ $filter['partner'] == $id ? 'selected' : '' }}> {{ $name }} </option>
+							@endforeach
+						</select>
+					</div>
 
-        <div>
-            <form action="{{ route('d.teams.index') }}" method="GET">
-                <div class="row gtr-uniform">
-                    <div class="col-3">
-                        <h5>Филиалы</h5>
-                        <select name="filter_partner" id="filter_partner">
-                            <option value=""> Все </option>
-                            @foreach($partners as $id => $name)
-                                <option value="{{$id}}" {{ $filter['partner'] == $id ? 'selected' : '' }}> {{ $name }} </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-3">
-                        <h5> &emsp; </h5>
-                        <input type="submit" value="Показать" class="primary" />
-                    </div>
-                </div>
-            </form>
-        </div>
-
+					<div class="col-6">
+						<h5> &emsp; </h5>
+						<input type="submit" value="Показать" class="primary" />
+					</div>
+					
+					<div class="col-2">
+						<h5> &emsp; </h5>
+						<a href="{{ route('d.teams.create') }}" class="button"> Добавить </a>
+					</div>
+				</div>
+			</form>
+		 </div>
+		
         <div class="table-wrapper">
             <table>
                 <thead>

@@ -38,9 +38,15 @@
                     @if(Route::has('d.tickets.index'))
                         <li><a href="{{ route('d.tickets.index') }}">Заявки</a></li>
                     @endif
+					<li>
+						<span class="opener">Команда</span>
                     @if(Route::has('d.teams.index') && $isBritvaPartner)
-                        <li><a href="{{ route('d.teams.index') }}">Команда</a></li>
+						<ul>
+							<li><a href="{{ route('d.teams.index') }}">Общий список сотрудников</a></li>
+							<li><a href="{{ route('d.teams.statistics') }}">Общий список филиалов</a></li>
+						</ul>
                     @endif
+					</li>
                 </ul>
             @elseif(Auth::user()->isAdmin())
                 <ul>
@@ -54,9 +60,15 @@
                     @if(Route::has('d.tickets.index'))
                         <li><a href="{{ route('d.tickets.index') }}">Заявки</a></li>
                     @endif
+                    <li>
+						<span class="opener">Команда</span>
                     @if(Route::has('d.teams.index') && $isBritvaPartner)
-                        <li><a href="{{ route('d.teams.index') }}">Команда</a></li>
+						<ul>
+							<li><a href="{{ route('d.teams.index') }}">Общий список сотрудников</a></li>
+							<li><a href="{{ route('d.teams.statistics') }}">Общий список филиалов</a></li>
+						</ul>
                     @endif
+					</li>
                 </ul>
             @endif
         </nav>

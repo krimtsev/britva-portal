@@ -26,73 +26,73 @@
                 @csrf
                 <div class="row gtr-uniform">
 
-                    <div class="col-12">
-                        <h5>Фото</h5>
-                        <img
-                            id="image"
-                            src="{{ asset('assets/teams/default.jpeg') }}"
-                            alt="photo"
-                            style="max-width: 250px; max-height: 250px"
-                        />
+					<div class="col-6">
+						<div class="col-12 mb-2">
+							<input
+								id="name"
+								type="text"
+								name="name"
+								:value="old('name')"
+								placeholder="Имя"
+							/>
+						</div>
 
-                        <input
-                            type="file"
-                            name="photo"
-                            :value="old(photo)"
-                            placeholder="Фото"
-                            accept="image/png, image/jpg, image/jpeg"
-                            onchange="loadFileEvent(event)"
-                        />
-                    </div>
+						<div class="col-12 mb-2">
+							<select name="partner_id" id="partner_id">
+								<option value="" disabled selected="selected"> Выберите партнера </option>
+								@foreach($partners as $id => $name)
+									<option value="{{ $id }}">
+										{{ $name }}
+									</option>
+								@endforeach
+							</select>
+						</div>
 
-                    <div class="col-12">
-                        <h5>Имя</h5>
-                        <input
-                            id="name"
-                            type="text"
-                            name="name"
-                            :value="old('name')"
-                            placeholder=""
-                        />
-                    </div>
+						<div class="col-12 mb-2">
+							<select name="role_id" id="role_id">
+								<option value="" disabled selected="selected"> Выберите специалзиацию </option>
+								@foreach($rolesList as $key => $value)
+									<option value="{{ $key }}">
+										{{ $value['name'] }}
+									</option>
+								@endforeach
+							</select>
+						</div>
 
-                    <div class="col-12">
-                        <h5>Партнер</h5>
-                        <select name="partner_id" id="partner_id">
-                            <option value="" disabled selected="selected"> --- </option>
-                            @foreach($partners as $id => $name)
-                                <option value="{{ $id }}">
-                                    {{ $name }}
-                                </option>
-                            @endforeach
-                        </select>
+						<div class="col-12 mb-2">
+							<textarea
+								id="description"
+								name="description"
+								placeholder="Описание"
+								rows="8"
+							>{{ old('description') }}</textarea>
+						</div>
                     </div>
+					
+                    <div class="col-6">
+						<div class="col-12 mb-2">
+							<img
+								id="image"
+								src="{{ asset('assets/teams/default.jpeg') }}"
+								alt="photo"
+								style="max-width: 400px; max-height: 400px"
+							/>
 
-                    <div class="col-12">
-                        <h5>Градация</h5>
-                        <select name="role_id" id="role_id">
-                            <option value="" disabled selected="selected"> --- </option>
-                            @foreach($rolesList as $key => $value)
-                                <option value="{{ $key }}">
-                                    {{ $value['name'] }}
-                                </option>
-                            @endforeach
-                        </select>
+							<input
+								type="file"
+								name="photo"
+								:value="old(photo)"
+								placeholder="Фото"
+								accept="image/png, image/jpg, image/jpeg"
+								onchange="loadFileEvent(event)"
+								style="max-width: 400px; max-height: 400px"
+							/>
+						</div>
                     </div>
-
-                    <div class="col-12">
-                        <h5>Описание</h5>
-                        <textarea
-                            id="description"
-                            name="description"
-                            placeholder=""
-                            rows="8"
-                        >{{ old('description') }}</textarea>
-                    </div>
-
-                    <div class="col-12">
-                        <button type="submit" class="primary ">Сохранить</button>
-                    </div>
+					
+				<div class="col-12 mb-2">
+					<button type="submit" class="primary ">Добавить</button>
+				</div>
                 </div>
             </form>
         </div>
