@@ -5,11 +5,13 @@ namespace  App\Http\Controllers\Teams;
 use App\Http\Controllers\Controller;
 use App\Models\Partner;
 use App\Models\Team;
+use Carbon\Carbon;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Utils\Utils;
 
 class TeamsController extends Controller
 {
@@ -255,14 +257,15 @@ class TeamsController extends Controller
     function destroy(Team $team, Request $request): \Illuminate\Http\RedirectResponse
     {
         $isProfile = $this->isProfile($request);
-
-        $exists = Storage::disk(Team::FOLDER)->exists($team->photo);
+        $exists = Storage::disk("public")->exists($team->photo);
 
         if ($exists) {
-            Storage::disk(Team::FOLDER)->delete($team->photo);
+            Storage::disk("public")->delete($team->photo);
+            $team->photo = null;
         }
 
-        $team->delete();
+        $team->deleted_at = Carbon::now();
+        $team->save();
 
         if ($isProfile) {
             return redirect()->route('p.teams.index');

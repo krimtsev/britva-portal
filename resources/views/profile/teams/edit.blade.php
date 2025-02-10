@@ -27,58 +27,57 @@
             <div class="mb-2">
                 <div class="teams-wrapper">
                     <div class="row gtr-uniform">
-					
 						<div class="col-6">
-							<div class="col-12 mb-2">
-								<input
-									id="name"
-									type="text"
-									name="name"
-									value="{{ $team->name }}"
-									placeholder=""
-								/>
-							</div>
+                            <div class="row gtr-uniform">
+                                <div class="col-12">
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        name="name"
+                                        value="{{ $team->name }}"
+                                        placeholder=""
+                                    />
+                                </div>
 
-							<div class="col-12 mb-2">
-								<select name="role_id" id="role_id">
-									<option value="" disabled selected> Градация </option>
-									@foreach($rolesList as $key => $value)
-										<option {{ $key == $team->role_id ? 'selected="selected"' : '' }} value="{{ $key }}">
-											{{ $value['name'] }}
-										</option>
-									@endforeach
-								</select>
-							</div>
+                                <div class="col-12">
+                                    <select name="role_id" id="role_id">
+                                        <option value="" disabled selected> Градация </option>
+                                        @foreach($rolesList as $key => $value)
+                                            <option {{ $key == $team->role_id ? 'selected="selected"' : '' }} value="{{ $key }}">
+                                                {{ $value['name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-							<div class="col-12 mb-2">
-								<textarea
-									id="description"
-									name="description"
-									placeholder=""
-									rows="10"
-								>{{ $team->description }}</textarea>
-							</div>
+                                <div class="col-12">
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        placeholder=""
+                                        rows="10"
+                                    >{{ $team->description }}</textarea>
+                                </div>
+                            </div>
 						</div>
-						
-						<div class="col-6">
-							<div class="col-12 mb-2">
-								<img
-									id="image"
-									src="{{ $team->photo ? asset('storage/' . $team->photo) : asset('assets/teams/default.jpeg') }}"
-									alt="photo"
-									style="max-width: 350px; max-height: 350px"
-								/>
 
-								<input
-									type="file"
-									name="photo"
-									:value="old(photo)"
-									placeholder="Фото"
-									accept="image/png, image/jpg, image/jpeg"
-									onchange="loadFileEvent(event)"
-									style="max-width: 350px; max-height: 350px"
-								/>
-							</div>
+						<div class="col-6">
+                            <img
+                                id="image"
+                                src="{{ $team->photo ? asset('storage/' . $team->photo) : asset('assets/teams/default.jpeg') }}"
+                                alt="photo"
+                                style="max-width: 350px; max-height: 350px"
+                            />
+
+                            <input
+                                type="file"
+                                name="photo"
+                                :value="old(photo)"
+                                placeholder="Фото"
+                                accept="image/png, image/jpg, image/jpeg"
+                                onchange="loadFileEvent(event)"
+                                style="max-width: 350px; max-height: 350px"
+                            />
                         </div>
                     </div>
                 </div>
