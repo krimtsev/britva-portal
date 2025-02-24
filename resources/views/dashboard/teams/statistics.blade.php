@@ -2,17 +2,13 @@
     <x-header-section title="Статистика команды" />
 
     <section>
-        <div class="mb-2 flex justify-between">
-            <a href="{{ route('d.teams.index') }}" class="button"> Список </a>
-        </div>
-
         <div class="table-wrapper">
             <table>
                 <thead>
                 <tr>
-                    <th> # </th>
-                    <th> Имя </th>
-                    <th> Всего </th>
+                    <th style="width: 3%;"> # </th>
+                    <th style="width: 22%;"> Имя </th>
+                    <th style="width: 75%;"> Всего </th>
                 </tr>
                 </thead>
                 <tbody>
