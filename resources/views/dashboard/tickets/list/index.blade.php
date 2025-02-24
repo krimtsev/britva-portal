@@ -106,6 +106,12 @@
         @endif
     </section>
     <div class="align-center">
-        {{ $tickets->links() }}
+        {{
+            $tickets->appends([
+                'filter_category' => $filter['category'],
+                'filter_partner'  => $filter['partner'],
+                'filter_state'    => $filter['state'],
+            ])->links()
+        }}
     </div>
 </x-admin-layout>
