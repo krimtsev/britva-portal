@@ -75,7 +75,7 @@ class YclientsService
      * @return false | array<string[]>
      */
 
-    public function getStaff() {
+    public function getStaff($params = []) {
         try {
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff", $this->company_id);
 
@@ -87,10 +87,12 @@ class YclientsService
                 return false;
             }
 
+            $withRemoveStaff = array_key_exists('withRemoveStaff', $params);
+
             $staff = [];
 
             foreach ($response["data"] as $one) {
-                if($this->isRemoveStaff($one)) {
+                if(!$withRemoveStaff && $this->isRemoveStaff($one)) {
                     continue;
                 }
                 $id = $one["id"];
@@ -99,6 +101,10 @@ class YclientsService
                 $staff[$id]["name"] = $one["name"];
                 $staff[$id]["specialization"] = $one["specialization"];
                 $staff[$id]["avatar_big"] = $one["avatar_big"];
+
+                if (array_key_exists('is_fired', $one)) {
+                    $staff[$id]["is_fired"] = $one["is_fired"];
+                }
 
                 if (isset($one["user"]["phone"])) {
                     $staff[$id]["phone"] = $one["user"]["phone"];
@@ -456,11 +462,11 @@ class YclientsService
 				11414169 => 1150, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК // ТОП-БАРБЕР
 				11414170 => 1150, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN + ВОСК // ТОП-БАРБЕР
 
-				11414156 => 1000, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN // БРЕНД-БАРБЕР 
+				11414156 => 1000, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN // БРЕНД-БАРБЕР
 				11414160 => 150, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // БРЕНД-БАРБЕР
 				11414157 => 1150, // МУЖСКАЯ СТРИЖКА + BLACK MASK/VOLCANO/ACUMEN + ВОСК // БРЕНД-БАРБЕР
 				11414158 => 1150, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN + ВОСК // БРЕНД-БАРБЕР
-				
+
             ];
 
             $SERVICES_COST_IDS = array_keys($SERVICES_COST);
