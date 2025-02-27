@@ -157,6 +157,8 @@ class StaffController extends Controller
             "company_id"     => $company_id,
             "name"           => $data["name"],
             "specialization" => $data["specialization"],
+
+            // Обязательное преобразование для исправления сапоставления типов!
             "is_fired"       => filter_var($data["is_fired"], FILTER_VALIDATE_BOOLEAN),
         ];
     }
