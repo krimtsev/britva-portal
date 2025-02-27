@@ -157,7 +157,7 @@ class StaffController extends Controller
             "company_id"     => $company_id,
             "name"           => $data["name"],
             "specialization" => $data["specialization"],
-            "is_fired"       => $data["is_fired"],
+            "is_fired"       => filter_var($data["is_fired"], FILTER_VALIDATE_BOOLEAN),
         ];
     }
 }
