@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Analytics;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\ReportService;
+use App\Http\Services\YclientsError;
 use App\Http\Services\YclientsService;
 use Illuminate\Support\Str;
 use Throwable;
@@ -57,6 +58,10 @@ class BranchReport extends Controller
                 // Средний чек, Заполняемость, Новые клиенты, Оборот,
                 $companyStatsByStaff = $client->getCompanyStatsByStaff($id);
 
+                if ($companyStatsByStaff instanceof YclientsError) {
+                    throw new $companyStatsByStaff;
+                }
+
                 if (is_array($companyStatsByStaff) && !empty($companyStatsByStaff)) {
                     $table[$id]["average_sum"] = round($companyStatsByStaff["average_sum"], 0);
                     $table[$id]["fullness"] = $companyStatsByStaff["fullness"];
@@ -87,6 +92,10 @@ class BranchReport extends Controller
                 // Лояльность и продажи
                 $transactions = $client->getTransactionsCompanyByStaffId($id);
 
+                if ($transactions instanceof YclientsError) {
+                    throw new $transactions;
+                }
+
                 if (is_array($transactions) && array_key_exists("loyalty", $transactions)) {
                     $table[$id]["loyalty"] = round($transactions["loyalty"], 0);
                 } else {
@@ -102,6 +111,10 @@ class BranchReport extends Controller
                 // Дополнительные услуги
                 $additional_services = $client->getRecordsByStaffId($id);
 
+                if ($additional_services instanceof YclientsError) {
+                    throw new $additional_services;
+                }
+
                 if (is_numeric($additional_services)) {
                     $table[$id]["additional_services"] = round($additional_services, 0);
                 } else {
@@ -114,6 +127,10 @@ class BranchReport extends Controller
 
             // Итого
             $stats = $client->getCompanyStats();
+
+            if ($stats instanceof YclientsError) {
+                throw new $stats;
+            }
 
             $total = [
                 "average_sum" => 0,
