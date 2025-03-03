@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Throwable;
 use Carbon\Carbon;
@@ -171,7 +172,7 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                return false;
+                return throw new Exception("Exception => getCompanyStatsByStaff");
             }
 
             return [
@@ -186,7 +187,7 @@ class YclientsService
         } catch (Throwable $e) {
             report($e->getMessage());
 
-            return false;
+            return throw new Exception("Exception => getCompanyStatsByStaff");
         }
     }
 
@@ -209,7 +210,7 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                return false;
+                return throw new Exception("Exception => getCompanyStats");
             }
 
             return [
@@ -222,7 +223,7 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e->getMessage());
-            return false;
+            return throw new Exception("Exception => getCompanyStats");
         }
     }
 
@@ -305,7 +306,7 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                return false;
+                return throw new Exception("Exception => getTransactionsCompanyByStaffId");
             }
 
             $loyalty = 0;
@@ -327,7 +328,7 @@ class YclientsService
             ];
         } catch (Throwable $e) {
             report($e->getMessage());
-            return false;
+            return throw new Exception("Exception => getTransactionsCompanyByStaffId");
         }
     }
 
@@ -449,7 +450,7 @@ class YclientsService
                 12320307 => 3500, // МУЖСКАЯ СТРИЖКА + DEPOT // ЭКСПЕРТ
                 12320304 => 4100, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + DEPOT + ВОСК // ЭКСПЕРТ
                 12320306 => 600, // МУЖСКАЯ СТРИЖКА + МОДЕЛИРОВАНИЕ БОРОДЫ + ВОСК // ЭКСПЕРТ
-				
+
 				// Услуги в комплексе сеть регионы 772294
 
 				11414147 => 1000, // МОДЕЛИРОВАНИЕ БОРОДЫ + BLACK MASK/VOLCANO/ACUMEN
@@ -478,7 +479,7 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                return false;
+                return throw new Exception("Exception => getRecordsByStaffId");
             }
 
             $total = 0;
@@ -502,7 +503,7 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e->getMessage());
-            return false;
+            return throw new Exception("Exception => getRecordsByStaffId");
         }
     }
 
