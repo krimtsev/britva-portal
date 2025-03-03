@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use Exception;
 use Illuminate\Support\Facades\Http;
 use Throwable;
 use Carbon\Carbon;
@@ -172,7 +171,7 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                return throw new Exception("Exception => getCompanyStatsByStaff");
+                abort(500, 'getCompanyStatsByStaff.');
             }
 
             return [
@@ -186,8 +185,7 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e->getMessage());
-
-            return throw new Exception("Exception => getCompanyStatsByStaff");
+            abort(500, 'getCompanyStatsByStaff.');
         }
     }
 
@@ -210,7 +208,7 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                return throw new Exception("Exception => getCompanyStats");
+                abort(500, 'getCompanyStats.');
             }
 
             return [
@@ -223,7 +221,7 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e->getMessage());
-            return throw new Exception("Exception => getCompanyStats");
+            abort(500, 'getCompanyStats.');
         }
     }
 
@@ -306,7 +304,7 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                return throw new Exception("Exception => getTransactionsCompanyByStaffId");
+                abort(500, 'getTransactionsCompanyByStaffId.');
             }
 
             $loyalty = 0;
@@ -328,7 +326,7 @@ class YclientsService
             ];
         } catch (Throwable $e) {
             report($e->getMessage());
-            return throw new Exception("Exception => getTransactionsCompanyByStaffId");
+            abort(500, 'getTransactionsCompanyByStaffId.');
         }
     }
 
@@ -479,7 +477,7 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                return throw new Exception("Exception => getRecordsByStaffId");
+                abort(500, 'getRecordsByStaffId.');
             }
 
             $total = 0;
@@ -503,7 +501,7 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e->getMessage());
-            return throw new Exception("Exception => getRecordsByStaffId");
+            abort(500, 'getRecordsByStaffId.');
         }
     }
 
