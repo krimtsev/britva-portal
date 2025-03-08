@@ -19,6 +19,7 @@
                         <li><a href="{{ route('p.tickets.create-template', 'top') }}">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'brand') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'brandplus') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
+                        <li><a href="{{ route('p.tickets.create-template', 'brandpro') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА ПРО</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'expert') }}">ЗАЯВКА НА ЭКСПЕРТА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'blacklist') }}">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
                     </ul>
