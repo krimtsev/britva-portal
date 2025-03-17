@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Http;
 use Throwable;
 use Carbon\Carbon;
 
+class YclientsError extends \Exception {}
+
 class YclientsService
 {
     /** Динасический ID филиала */
@@ -171,7 +173,8 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                abort(500, 'getCompanyStatsByStaff.');
+                //abort(500, 'getCompanyStatsByStaff.');
+                return throw new YclientsError('getCompanyStatsByStaff.');
             }
 
             return [
@@ -185,7 +188,8 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e->getMessage());
-            abort(500, 'getCompanyStatsByStaff.');
+            //abort(500, 'getCompanyStatsByStaff.');
+            return throw new YclientsError('getCompanyStatsByStaff.');
         }
     }
 
@@ -208,7 +212,8 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                abort(500, 'getCompanyStats.');
+                //abort(500, 'getCompanyStats.');
+                return throw new YclientsError('getCompanyStats.');
             }
 
             return [
@@ -221,7 +226,8 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e->getMessage());
-            abort(500, 'getCompanyStats.');
+            //abort(500, 'getCompanyStats.');
+            return throw new YclientsError('getCompanyStats.');
         }
     }
 
@@ -304,7 +310,8 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                abort(500, 'getTransactionsCompanyByStaffId.');
+                //abort(500, 'getTransactionsCompanyByStaffId.');
+                return throw new YclientsError('getTransactionsCompanyByStaffId.');
             }
 
             $loyalty = 0;
@@ -326,7 +333,8 @@ class YclientsService
             ];
         } catch (Throwable $e) {
             report($e->getMessage());
-            abort(500, 'getTransactionsCompanyByStaffId.');
+            //abort(500, 'getTransactionsCompanyByStaffId.');
+            return throw new YclientsError('getTransactionsCompanyByStaffId.');
         }
     }
 
@@ -477,7 +485,8 @@ class YclientsService
             $response = $response->json($key = null);
 
             if(!$response["success"]) {
-                abort(500, 'getRecordsByStaffId.');
+                //abort(500, 'getRecordsByStaffId.');
+                return throw new YclientsError('getRecordsByStaffId.');
             }
 
             $total = 0;
@@ -501,7 +510,8 @@ class YclientsService
 
         } catch (Throwable $e) {
             report($e->getMessage());
-            abort(500, 'getRecordsByStaffId.');
+            //abort(500, 'getRecordsByStaffId.');
+            return throw new YclientsError('getRecordsByStaffId.');
         }
     }
 
