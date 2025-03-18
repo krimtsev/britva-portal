@@ -59,6 +59,7 @@
                         <li><a href="{{ route('p.tickets.create-template', 'cert') }}">ЗАЯВКА НА СЕРТИФИКАТ</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'admin') }}">ЗАЯВКА НА АТТЕСТАЦИЮ АДМИНИСТРАТОРА</a></li>
 						<li><a href="{{ route('p.tickets.create-template', 'dlyasebya') }}">ЗАЯВКА "МАКИЯЖ ДЛЯ СЕБЯ"</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'hairquestion') }}">ЗАЯВКА НА ОТКРЫТИЕ УСЛУГИ (СТИЛИСТЫ)</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'tophair') }}">ЗАЯВКА НА ТОП-СТИЛИСТА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'topbrow') }}">ЗАЯВКА НА ТОП-БРОВИСТА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'topnail') }}">ЗАЯВКА НА ТОП-МАСТЕРА НОГТЕВОГО СЕРВИСА</a></li>
@@ -78,7 +79,8 @@
                         <li><a href="/page/contact-office">Сотрудников ЦО</a></li>
                         <li><a href="/contact-franchise">Владельцев франшиз</a></li>
                         <li><a href="/page/contact-partner">Партнеров</a></li>
-                        <li><a href="/page/contents-brands">Торговые марки (ногтевой сервис)</a></li>
+                        <li><a href="/page/contacts-brands-nail">Торговые марки (ногтевой сервис)</a></li>
+                        <li><a href="/page/contacts-brands-hair">Торговые марки (стилисты)</a></li>
                     </ul>
                 </li>
             </ul>
