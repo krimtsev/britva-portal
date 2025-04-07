@@ -81,6 +81,7 @@
                         <li><a href="/page/contact-partner">Партнеров</a></li>
                         <li><a href="/page/contacts-brands-nail">Торговые марки (ногтевой сервис)</a></li>
                         <li><a href="/page/contacts-brands-hair">Торговые марки (стилисты)</a></li>
+                        <li><a href="/page/contacts-brands-brow">Торговые марки (бровисты)</a></li>
                     </ul>
                 </li>
             </ul>
