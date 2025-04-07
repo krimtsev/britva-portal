@@ -63,21 +63,25 @@ class MessagesController extends Controller
                     $tg_ids[] = $request->selected_partners;
             }
 
-            $body = [
-                "msg"     => $request->description,
-                "tg_ids"  => $tg_ids,
-                "partner" => env('PARTNER_NAME', '')
-            ];
-
-            Http::withOptions([
-                "verify" => false,
-            ])
-                ->asForm()
-                ->post(self::URL, $body);
+            self::handler($request->description, $tg_ids);
 
             return redirect()->route('d.messages.index');
         } catch (Throwable $e) {
             report($e->getMessage());
         }
+    }
+
+    static function handler($msg, $ids = []) {
+        $body = [
+            "msg"     => $msg,
+            "tg_ids"  => $ids,
+            "partner" => env('PARTNER_NAME', '')
+        ];
+
+        Http::withOptions([
+            "verify" => false,
+        ])
+            ->asForm()
+            ->post(self::URL, $body);
     }
 }

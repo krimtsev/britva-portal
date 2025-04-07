@@ -75,7 +75,7 @@ class YclientsService
      * @return false | array<string[]>
      */
 
-    public function getStaff() {
+    public function getStaff($params = []) {
         try {
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff", $this->company_id);
 
@@ -87,10 +87,12 @@ class YclientsService
                 return false;
             }
 
+            $withRemoveStaff = array_key_exists('withRemoveStaff', $params);
+
             $staff = [];
 
             foreach ($response["data"] as $one) {
-                if($this->isRemoveStaff($one)) {
+                if(!$withRemoveStaff && $this->isRemoveStaff($one)) {
                     continue;
                 }
                 $id = $one["id"];
@@ -99,6 +101,10 @@ class YclientsService
                 $staff[$id]["name"] = $one["name"];
                 $staff[$id]["specialization"] = $one["specialization"];
                 $staff[$id]["avatar_big"] = $one["avatar_big"];
+
+                if (array_key_exists('is_fired', $one)) {
+                    $staff[$id]["is_fired"] = $one["is_fired"];
+                }
 
                 if (isset($one["user"]["phone"])) {
                     $staff[$id]["phone"] = $one["user"]["phone"];
@@ -581,7 +587,7 @@ class YclientsService
                 17543049, // УКЛАДКА СЕРФ-ЛОКОНЫ (ДЛИННЫЕ) // АРТ-СТИЛИСТ
                 17543050, // УКЛАДКА СЕРФ-ЛОКОНЫ (ОЧЕНЬ ДЛИННЫЕ) // АРТ-СТИЛИСТ
                 17543048, // УКЛАДКА СЕРФ-ЛОКОНЫ (СРЕДНИЕ) // АРТ-СТИЛИСТ
-				
+
             ];
 
             // Услуги в комплексе
@@ -697,7 +703,7 @@ class YclientsService
                 14957260 => 2500, // СТРИЖКА + ЭКСПРЕСС-УХОД ВЕГЕТАРИАНСКОЕ ЧУДО ОТ DAVINES (КОРОТКИЕ) // АРТ-СТИЛИСТ
                 14957263 => 3300, // СТРИЖКА + ЭКСПРЕСС-УХОД ВЕГЕТАРИАНСКОЕ ЧУДО ОТ DAVINES (ДЛИННЫЕ) // АРТ-СТИЛИСТ
                 14957261 => 3700, // СТРИЖКА + ЭКСПРЕСС-УХОД ВЕГЕТАРИАНСКОЕ ЧУДО ОТ DAVINES (СРЕДНИЕ) // АРТ-СТИЛИСТ
-				
+
             ];
 
             $SERVICES_COST_IDS = array_keys($SERVICES_COST);

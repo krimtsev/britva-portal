@@ -64,7 +64,7 @@ class StaffController extends Controller
         ]);
 
         // Список сотрудников
-        $staff = $client->getStaff();
+        $staff = $client->getStaff(['withRemoveStaff' => true]);
 
         if (!is_array($staff)) {
             ReportService::error("[Staff] update", "bad request, partner: {$company_id}");
@@ -156,7 +156,10 @@ class StaffController extends Controller
             "staff_id"       => $data["id"],
             "company_id"     => $company_id,
             "name"           => $data["name"],
-            "specialization" => $data["specialization"]
+            "specialization" => $data["specialization"],
+
+            // Обязательное преобразование для исправления сапоставления типов!
+            "is_fired"       => filter_var($data["is_fired"], FILTER_VALIDATE_BOOLEAN),
         ];
     }
 }
