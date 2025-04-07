@@ -20,14 +20,21 @@ class Kernel extends ConsoleKernel
         $schedule->command('blacklist:update')
             ->hourly()
             ->onFailure(function (Stringable $output) {
-                ReportService::error("[command] mango blacklist update", $output);
+                ReportService::error('[command] mango blacklist update', $output);
             });
 
         $schedule->command('staff:update')
             ->withoutOverlapping()
             ->cron('30 10,14,18,22 * * *')
             ->onFailure(function (Stringable $output) {
-                ReportService::error("[command] staff update", $output);
+                ReportService::error('[command] staff update', $output);
+            });
+
+        $schedule->command('reports:video')
+            ->withoutOverlapping()
+            ->cron('0 10 * * 1')
+            ->onFailure(function (Stringable $output) {
+                ReportService::error('[command] reports video', $output);
             });
     }
 
