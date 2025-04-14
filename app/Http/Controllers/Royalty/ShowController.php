@@ -46,7 +46,7 @@ class ShowController extends Controller {
 
             $client = new YclientsService($params);
 
-            $staff = $client->getStaff();
+            $staff = $client->getStaff(["withRemoveStaff" => true]);
 
             $table = [];
 
