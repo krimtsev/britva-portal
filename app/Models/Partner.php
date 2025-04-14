@@ -13,6 +13,8 @@ class Partner extends Model
 
     protected $table = "partners";
 
+    const IGNORE_START_YCLIENTS_ID = "000";
+
     protected $fillable = [
         "organization",
         "inn",

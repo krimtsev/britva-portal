@@ -180,4 +180,9 @@ class Utils
 
         return false;
     }
-}
+
+    public static function toPriceFormat($value): string
+    {
+        return number_format($value, 2, ',', ' ');
+    }
+ }

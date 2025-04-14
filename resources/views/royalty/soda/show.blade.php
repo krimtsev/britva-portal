@@ -29,6 +29,8 @@
                                     <th>Сотрудник</th>
                                     <th>Валовая выручка</th>
                                     <th>Роялти</th>
+                                    <th>НДС</th>
+                                    <th>Роялти + НДС</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,10 +40,14 @@
                                         <td> <b> Итого </b> </td>
                                         <td> <b> {{ $one["income_total"] }} </b> </td>
                                         <td> <b> {{ $one["sum"] }} </b> </td>
+                                        <td> <b> {{ $one["nds"] }} </b> </td>
+                                        <td> <b> {{ $one["sum_with_nds"] }} </b> </td>
                                     @else
                                         <td> {{ $one["name"] }} </td>
                                         <td> {{ $one["income_total"] }} </td>
                                         <td> {{ $one["sum"] }} </td>
+                                        <td> {{ $one["nds"] }} </td>
+                                        <td> {{ $one["sum_with_nds"] }} </td>
                                     @endif
                                 </tr>
                             @endforeach

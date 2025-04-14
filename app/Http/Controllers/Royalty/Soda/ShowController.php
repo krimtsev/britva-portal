@@ -22,6 +22,8 @@ class ShowController extends Controller {
 
         $cacheKey = "soda_royalty"."_".$end_date;
 
+        $nds = 5; // НДС 5%
+
         try {
             $params = [
                 "start_date" => $start_date,
@@ -37,42 +39,61 @@ class ShowController extends Controller {
                 ->orderBy("name")
                 ->get();
 
-            $table = [];
+            $table = Cache::has($cacheKey)
+                ? Cache::get($cacheKey)
+                : [];
 
-            if(Cache::has($cacheKey)) {
-                $table = Cache::get($cacheKey);
-            } else {
+            if(!$table || count($table) == 0) {
                 $total_sum = 0;
                 $total_income = 0;
+                $total_percentage_of_sum = 0;
+                $total_sum_with_nds = 0;
 
                 foreach ($partners as $partner) {
+                    // Пропускаем партнеров которые начинаются с 000
+                    if (str_starts_with($partner->yclients_id, Partner::IGNORE_START_YCLIENTS_ID)) {
+                        continue;
+                    }
+
                     $client->setCompanyId($partner->yclients_id);
                     $companyStats = $client->getCompanyStats();
 
                     if (is_array($companyStats) && array_key_exists("income_total", $companyStats)) {
                         $sum = self::getPercentageOfSum($companyStats["income_total"]);
+
+                        $percentageOfSum = ($sum / 100) * $nds;
+                        $sumWithNds = $sum + $percentageOfSum;
+
                         $table[] = [
-                            "name" => $partner->name,
-                            "income_total" => number_format($companyStats["income_total"], 2, ',', ' '),
-                            "sum" => number_format($sum, 2, ',', ' ')
+                            "name"         => $partner->name,
+                            "income_total" => Utils::toPriceFormat($companyStats["income_total"]),
+                            "sum"          => Utils::toPriceFormat($sum),
+                            "nds"          => Utils::toPriceFormat($percentageOfSum),
+                            "sum_with_nds" => Utils::toPriceFormat($sumWithNds),
                         ];
 
                         $total_income += $companyStats["income_total"];
                         $total_sum += $sum;
+                        $total_percentage_of_sum += $percentageOfSum;
+                        $total_sum_with_nds += $sumWithNds;
 
                     } else {
                         $table[] = [
                             "name" => $partner->name,
                             "income_total" => "-",
-                            "sum" => "-"
+                            "sum"          => "-",
+                            "nds"          => "-",
+                            "sum_with_nds" => "-"
                         ];
                     }
                 }
 
                 $table[] = [
-                    "name" => "",
-                    "income_total" => number_format($total_income, 2, ',', ' '),
-                    "sum" => number_format($total_sum, 2, ',', ' '),
+                    "name"         => "",
+                    "income_total" => Utils::toPriceFormat($total_income),
+                    "sum"          => Utils::toPriceFormat($total_sum),
+                    "nds"          => Utils::toPriceFormat($total_percentage_of_sum),
+                    "sum_with_nds" => Utils::toPriceFormat($total_sum_with_nds),
                 ];
 
                 Cache::put($cacheKey, $table, Carbon::now()->addMinutes(60));
