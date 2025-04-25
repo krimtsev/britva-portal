@@ -117,6 +117,7 @@ return [
         'http' => [
             'driver' => 'single',
             'path' => storage_path('logs/http.log'),
+            'level' => 'info',
         ]
     ],
 
