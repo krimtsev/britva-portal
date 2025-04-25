@@ -62,6 +62,11 @@ class YclientsService
             "verify" => false,
         ]);
 
+        $isUseRetry = (bool) env('HTTP_USE_RETRY', false);
+        if ($isUseRetry) {
+            $http->retry(2, 5000);
+        }
+
         $isHttpDebug = (bool) env('HTTP_DEBUG', false);
         if ($isHttpDebug) {
             $http->withMiddleware(function ($handler) {
@@ -78,6 +83,23 @@ class YclientsService
         }
 
         return $http;
+    }
+
+    private function httpGet($url) {
+        $response = $this->httpWithHeaders()->get($url);
+
+        $isHttpDebug = (bool) env('HTTP_DEBUG', false);
+        if ($isHttpDebug) {
+            Log::channel('http')->info('Response', [
+                'method'  => 'GET',
+                'url'     => $url,
+                'status'  => $response->status(),
+                'body'    => $response->body(),
+                'headers' => $response->headers(),
+            ]);
+        }
+
+        return $response;
     }
 
     /**
@@ -97,7 +119,7 @@ class YclientsService
         try {
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff", $this->company_id);
 
-            $response = $this->httpWithHeaders()->get($url);
+            $response = $this->httpGet($url);
 
             $response = $response->json($key = null);
 
@@ -148,7 +170,7 @@ class YclientsService
         try {
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff/%s", $this->company_id, $staff);
 
-            $response = $this->httpWithHeaders()->get($url);
+            $response = $this->httpGet($url);
 
             $response = $response->json($key = null);
 
@@ -184,7 +206,7 @@ class YclientsService
 
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/analytics/overall/?%s", $this->company_id, $query);
 
-            $response = $this->httpWithHeaders()->get($url);
+            $response = $this->httpGet($url);
 
             $response = $response->json($key = null);
 
@@ -222,7 +244,7 @@ class YclientsService
 
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/analytics/overall/?%s", $this->company_id, $query);
 
-            $response = $this->httpWithHeaders()->get($url);
+            $response = $this->httpGet($url);
 
             $response = $response->json($key = null);
 
@@ -261,7 +283,7 @@ class YclientsService
             ]);
             $url = sprintf("https://api.yclients.com/api/v1/comments/%s?%s", $this->company_id, $query);
 
-            $response = $this->httpWithHeaders()->get($url);
+            $response = $this->httpGet($url);
 
             $response = $response->json($key = null);
 
@@ -318,7 +340,7 @@ class YclientsService
             ]);
             $url = sprintf("https://api.yclients.com/api/v1/transactions/%s?%s", $this->company_id, $query);
 
-            $response = $this->httpWithHeaders()->get($url);
+            $response = $this->httpGet($url);
 
             $response = $response->json($key = null);
 
@@ -491,7 +513,7 @@ class YclientsService
 
             $url = sprintf("https://api.yclients.com/api/v1/records/%s?%s", $this->company_id, $query);
 
-            $response = $this->httpWithHeaders()->get($url);
+            $response = $this->httpGet($url);
 
             $response = $response->json($key = null);
 
@@ -536,7 +558,7 @@ class YclientsService
 
         $url = sprintf("https://api.yclients.com/api/v1/company/%s/services?%s", $this->company_id, $query);
 
-        $response = $this->httpWithHeaders()->get($url);
+        $response = $this->httpGet($url);
 
         $response = $response->json($key = null);
 
@@ -554,7 +576,7 @@ class YclientsService
 
         $url = sprintf("https://api.yclients.com/api/v1/clients/%s?%s", $this->company_id, $query);
 
-        $response = $this->httpWithHeaders()->retry(2, 5000)->get($url);
+        $response = $this->httpGet($url);
 
         $response = $response->json($key = null);
 
@@ -576,7 +598,7 @@ class YclientsService
 
             $url = sprintf("https://api.yclients.com/api/v1/records/%s?%s", $this->company_id, $query);
 
-            $response = $this->httpWithHeaders()->get($url);
+            $response = $this->httpGet($url);
 
             $response = $response->json($key = null);
 
@@ -617,7 +639,7 @@ class YclientsService
 
             $url = sprintf("https://api.yclients.com/api/v1/records/%s?%s", $this->company_id, $query);
 
-            $response = $this->httpWithHeaders()->get($url);
+            $response = $this->httpGet($url);
 
             $response = $response->json($key = null);
 
