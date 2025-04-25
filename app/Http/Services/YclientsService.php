@@ -60,7 +60,17 @@ class YclientsService
             "Authorization" => sprintf("Bearer %s, User %s", $this->partner_token, $this->app_token),
         ])->withOptions([
             "verify" => false,
-        ]);
+        ])->withMiddleware(function ($handler) {
+            return function ($request, array $options) use ($handler) {
+                Log::channel('http')->info('Request', [
+                    'method'  => $request->getMethod(),
+                    'url'     => (string) $request->getUri(),
+                    'headers' => $request->getHeaders(),
+                    'body'    => (string) $request->getBody(),
+                ]);
+                return $handler($request, $options);
+            };
+        });
     }
 
     /**
@@ -537,15 +547,7 @@ class YclientsService
 
         $url = sprintf("https://api.yclients.com/api/v1/clients/%s?%s", $this->company_id, $query);
 
-        $response = $this->httpWithHeaders()->retry(1, 3000)->get($url);
-
-        Log::channel('http')->info('Request', [
-            'url' => $url,
-            'headers' => $response->headers(),
-            'status' => $response->status(),
-            'body' => $response->body(),
-            'json' => $response->json(),
-        ]);
+        $response = $this->httpWithHeaders()->retry(2, 5000)->get($url);
 
         $response = $response->json($key = null);
 
