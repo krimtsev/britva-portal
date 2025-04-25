@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 use Carbon\Carbon;
 
@@ -53,13 +54,18 @@ class YclientsService
     }
 
     private function httpWithHeaders() {
-        return Http::withHeaders([
+        $http =  Http::withHeaders([
             "Accept"        => "application/vnd.yclients.v2+json",
             "Content-Type"  => "application/json",
             "Authorization" => sprintf("Bearer %s, User %s", $this->partner_token, $this->app_token),
         ])->withOptions([
             "verify" => false,
         ]);
+
+        Log::channel('http')->info(json_encode($http));
+
+        return $http;
+
     }
 
     /**
@@ -536,7 +542,7 @@ class YclientsService
 
         $url = sprintf("https://api.yclients.com/api/v1/clients/%s?%s", $this->company_id, $query);
 
-        $response = $this->httpWithHeaders()->get($url);
+        $response = $this->httpWithHeaders()->retry(1, 3000)->get($url);
 
         $response = $response->json($key = null);
 
