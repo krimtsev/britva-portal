@@ -54,23 +54,30 @@ class YclientsService
     }
 
     private function httpWithHeaders() {
-        return  Http::withHeaders([
+        $http = Http::withHeaders([
             "Accept"        => "application/vnd.yclients.v2+json",
             "Content-Type"  => "application/json",
             "Authorization" => sprintf("Bearer %s, User %s", $this->partner_token, $this->app_token),
         ])->withOptions([
             "verify" => false,
-        ])->withMiddleware(function ($handler) {
-            return function ($request, array $options) use ($handler) {
-                Log::channel('http')->info('Request', [
-                    'method'  => $request->getMethod(),
-                    'url'     => (string) $request->getUri(),
-                    'headers' => $request->getHeaders(),
-                    'body'    => (string) $request->getBody(),
-                ]);
-                return $handler($request, $options);
-            };
-        });
+        ]);
+
+        $isHttpDebug = (bool) env('HTTP_DEBUG', false);
+        if ($isHttpDebug) {
+            $http->withMiddleware(function ($handler) {
+                return function ($request, array $options) use ($handler) {
+                    Log::channel('http')->info('Request', [
+                        'method'  => $request->getMethod(),
+                        'url'     => (string) $request->getUri(),
+                        'headers' => $request->getHeaders(),
+                        'body'    => (string) $request->getBody(),
+                    ]);
+                    return $handler($request, $options);
+                };
+            });
+        }
+
+        return $http;
     }
 
     /**
