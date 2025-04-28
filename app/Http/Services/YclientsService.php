@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Throwable;
 use Carbon\Carbon;
 
@@ -55,9 +56,10 @@ class YclientsService
 
     private function httpWithHeaders() {
         $http = Http::withHeaders([
-            "Accept"        => "application/vnd.yclients.v2+json",
-            "Content-Type"  => "application/json",
-            "Authorization" => sprintf("Bearer %s, User %s", $this->partner_token, $this->app_token),
+            "Accept"          => "application/vnd.yclients.v2+json",
+            "Content-Type"    => "application/json",
+            "Authorization"   => sprintf("Bearer %s, User %s", $this->partner_token, $this->app_token),
+            "Idempotency-Key" => Str::uuid()->toString(),
         ])->withOptions([
             "verify" => false,
         ]);
