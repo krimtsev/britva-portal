@@ -54,22 +54,25 @@ class YclientsService
         }
     }
 
-    private function httpWithHeaders() {
+    private function httpWithHeaders(): \Illuminate\Http\Client\PendingRequest
+    {
+        $isUseRetry = (bool) env('HTTP_USE_RETRY', false);
+        $isHttpDebug = (bool) env('HTTP_DEBUG', false);
+
         $http = Http::withHeaders([
             "Accept"          => "application/vnd.yclients.v2+json",
             "Content-Type"    => "application/json",
             "Authorization"   => sprintf("Bearer %s, User %s", $this->partner_token, $this->app_token),
             "Idempotency-Key" => Str::uuid()->toString(),
+            "Connection"      => "close"
         ])->withOptions([
             "verify" => false,
         ]);
 
-        $isUseRetry = (bool) env('HTTP_USE_RETRY', false);
         if ($isUseRetry) {
             $http->retry(2, 5000);
         }
 
-        $isHttpDebug = (bool) env('HTTP_DEBUG', false);
         if ($isHttpDebug) {
             $http->withMiddleware(function ($handler) {
                 return function ($request, array $options) use ($handler) {
