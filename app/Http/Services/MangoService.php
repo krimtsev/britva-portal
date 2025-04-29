@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Utils\Utils;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Throwable;
 
 class MangoService
@@ -52,7 +53,10 @@ class MangoService
     }
 
     private function httpWithHeaders() {
-        return Http::withOptions([
+        return Http::withHeaders([
+            "Idempotency-Key" => Str::uuid()->toString(),
+            "Connection"      => "close"
+        ])->withOptions([
             "verify" => false,
         ])->asForm();
     }
