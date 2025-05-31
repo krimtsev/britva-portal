@@ -46,29 +46,6 @@ class TicketsController extends Controller
             ->exists();
     }
 
-    static function sendMessage($ticket) {
-        $type = "ticket";
-        $msg = "Создана новая заявка";
-
-        $partner_id = $ticket["partner_id"];
-        $category_id = $ticket["category_id"];
-
-        $partner = Partner::select("name")
-            ->where("id", $partner_id)
-            ->first();
-
-        $category = TicketCategory::select("title")
-            ->where("id", $category_id)
-            ->first();
-
-        $data = [];
-        $data["title"] = $ticket["title"];
-        $data["company_name"] = $partner["name"];
-        $data["category"] = $category["title"];
-
-        ReportService::msg($type, $msg, $data);
-    }
-
     public function index(Request $request)
     {
         $isProfile = $this->isProfile($request);
@@ -238,16 +215,28 @@ class TicketsController extends Controller
 
         $user = Auth::user();
 
-        $data = [
+        $data_new = [
             'title'       => $validated['title'],
             'category_id' => $validated['category_id'],
             'partner_id'  => $partner_id,
             'user_id'     => $user->id,
+            'state'       => 1,
         ];
 
-        $ticket = Ticket::create($data);
+        $ticket = Ticket::create($data_new);
 
-        self::sendMessage($data);
+        TicketsAuditController::handler(
+            $data_new,
+            [],
+            ['id' => $ticket->id],
+            []
+        );
+
+        TicketsAuditController::sendMessage(
+            $data_new,
+            ['id' => $ticket->id],
+            $user
+        );
 
         $list = [];
         if (TicketsQuestions::isExist($topic)) {
@@ -346,14 +335,34 @@ class TicketsController extends Controller
             'title.required' => 'Тема запроса обязательна для заполнения'
         ]);
 
-        $data = [
+        $data_new = [
             'title'       => $validated['title'],
             'state'       => $validated['state'],
             'category_id' => $validated['category_id'],
             'partner_id'  => $validated['partner_id'],
         ];
 
-        $ticket->update($data);
+        $data_old = [
+            'title'       => $ticket['title'],
+            'state'       => $ticket['state'],
+            'category_id' => $ticket['category_id'],
+            'partner_id'  => $ticket['partner_id'],
+        ];
+
+        $ticket->update($data_new);
+
+        TicketsAuditController::handler(
+            $data_new,
+            $data_old,
+            ['id' => $ticket->id],
+            ['id' => $ticket->id],
+        );
+
+        TicketsAuditController::sendMessage(
+            $data_new,
+            ['id' => $ticket->id],
+            $user
+        );
 
         if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);
@@ -408,11 +417,38 @@ class TicketsController extends Controller
 
         $state = in_array($ticket->state, Ticket::stateIdsClosed) ? 1 : 5;
 
+        $data_new = [
+            'title'       => $request['title'],
+            'state'       => $request['state'],
+            'category_id' => $request['category_id'],
+            'partner_id'  => $request['partner_id'],
+        ];
+
+        $data_old = [
+            'title'       => $ticket['title'],
+            'state'       => $ticket['state'],
+            'category_id' => $ticket['category_id'],
+            'partner_id'  => $ticket['partner_id'],
+        ];
+
         $ticket->fill([
             'state' => $state
         ]);
 
         $ticket->save();
+
+        TicketsAuditController::handler(
+            $data_new,
+            $data_old,
+            ['id' => $ticket->id],
+            ['id' => $ticket->id],
+        );
+
+        TicketsAuditController::sendMessage(
+            $data_new,
+            ['id' => $ticket->id],
+            $user
+        );
 
         if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);

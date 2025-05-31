@@ -8,14 +8,11 @@ use App\Http\Services\YclientsService;
 use App\Jobs\StaffJob;
 use App\Models\Partner;
 use App\Models\Staff;
-use App\Models\Audit;
 use Illuminate\Http\Request;
 use Throwable;
 
 class StaffController extends Controller
 {
-    const TYPE = "staff";
-
     /**
      * Устанавливаем задачи (Queues) для каждого парнера
      * setJobs -> StaffJob -> update
@@ -100,44 +97,15 @@ class StaffController extends Controller
             if (!empty($data_diff)) {
                 Staff::addRecord($data_new);
 
-                Audit::create([
-                    "type" => Audit::STAFF_TYPE,
-                    "new"  => json_encode($data_new, JSON_UNESCAPED_UNICODE),
-                    "old"  => json_encode($data_old, JSON_UNESCAPED_UNICODE),
-                ]);
+                StaffAuditController::handler($data_new, $company_id);
 
                 if (!$quiet) {
-                    self::sendMessage($company_id, $one, $data_new, $data_old);
+                    StaffAuditController::sendMessage($company_id, $one, $data_new, $data_old);
                 }
             }
         }
 
         return true;
-    }
-
-    static function sendMessage($company_id, $staff, $data_new, $data_old) {
-        $msg = "Изменены данные сотрудника";
-
-        $partner = Partner::select("name")
-            ->where("yclients_id", $company_id)
-            ->first();
-
-        $data = [];
-        $data["new"] = $data_new;
-        $data["old"] = $data_old;
-        $data["company_name"] = $partner["name"];
-
-        // Доп. данные если добавлен новый сотрудник
-        if (empty($data_old)) {
-            $data["avatar"] = $staff["avatar_big"];
-            $data["isNew"] = true;
-        }
-
-        // Номер телефона не логируем и не проверяем изменения
-        // Отправляем текущий телефон для уведомления
-        $data["phone"] = $staff["phone"];
-
-        ReportService::msg(self::TYPE, $msg, $data);
     }
 
     /**
