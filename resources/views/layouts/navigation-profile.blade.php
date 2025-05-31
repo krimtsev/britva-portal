@@ -26,6 +26,7 @@
                         <li><a href="{{ route('p.tickets.create-template', 'topnail') }}">ЗАЯВКА НА ТОП-МАСТЕРА НОГТЕВОГО СЕРВИСА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'brandbrow') }}">ЗАЯВКА НА БРЕНД-БРОВИСТА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'brandnail') }}">ЗАЯВКА НА БРЕНД-МАСТЕРА НОГТЕВОГО СЕРВИСА</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'podolog') }}">ЗАЯВКА НА ПОДОЛОГА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'blacklist') }}">ЗАЯВКА НА ЧЕРНЫЙ СПИСОК</a></li>
                     </ul>
                 </li>
