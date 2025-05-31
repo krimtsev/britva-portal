@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Tickets;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\ReportService;
 use App\Models\Partner;
 use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketCategory;
@@ -358,11 +357,13 @@ class TicketsController extends Controller
             ['id' => $ticket->id],
         );
 
+        /* Отправление сообщений в телеграм
         TicketsAuditController::sendMessage(
             $data_new,
             ['id' => $ticket->id],
             $user
         );
+        */
 
         if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);
@@ -444,11 +445,13 @@ class TicketsController extends Controller
             ['id' => $ticket->id],
         );
 
+        /* Отправление сообщений в телеграм
         TicketsAuditController::sendMessage(
             $data_new,
             ['id' => $ticket->id],
             $user
         );
+        */
 
         if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);

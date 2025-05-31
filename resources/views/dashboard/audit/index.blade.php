@@ -10,6 +10,7 @@
                         <th>Type</th>
                         <th style="width: 400px; word-break: break-word;">New</th>
                         <th style="width: 400px; word-break: break-word;">Old</th>
+                        <th>login</th>
                         <th>Date</th>
                     </tr>
                 </thead>
@@ -20,6 +21,7 @@
                         <td> {{ $one->type }}</td>
                         <td style="width: 400px; word-break: break-word;"> {{ $one->new }}</td>
                         <td style="width: 400px; word-break: break-word;"> {{ $one->old }}</td>
+                        <td> {{ $one->login }}</td>
                         <td> {{ $one->created_at }}</td>
                     </tr>
                     @endforeach

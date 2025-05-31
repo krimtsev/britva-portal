@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Audit extends Model
 {
@@ -40,6 +41,13 @@ class Audit extends Model
     public static function add(array $data): void {
         if (!self::isValidAuditData($data)) {
             return;
+        }
+
+        $user = Auth::user();
+        if ($user) {
+            $data['login'] = $user->login ?? null;
+            $data['user_id'] = $user->id ?? null;
+            $data['role_id'] = $user->role_id ?? null;
         }
 
         $data['new'] = self::normalize($data['new']);

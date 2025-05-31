@@ -7,20 +7,14 @@ use App\Http\Services\ReportService;
 use App\Models\Audit;
 use App\Models\Partner;
 use App\Models\Ticket\TicketCategory;
-use Illuminate\Support\Facades\Auth;
 
 class TicketsAuditController extends Controller
 {
     static function handler($data_new, $data_old, $data_new_c = [], $data_old_c = []) {
-        $user = Auth::user();
-
         Audit::add([
-            'type'    => Audit::$types['ticket'],
-            'new'     => array_merge($data_new, $data_new_c),
-            'old'     => array_merge($data_old, $data_old_c),
-            'login'   => $user->login ?? null,
-            'user_id' => $user->user_id ?? null,
-            'role_id' => $user->role_id ?? null,
+            "type" => Audit::$types['ticket'],
+            "new"  => array_merge($data_new, $data_new_c),
+            "old"  => array_merge($data_old, $data_old_c),
         ]);
     }
 
