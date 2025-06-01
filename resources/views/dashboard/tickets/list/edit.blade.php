@@ -84,29 +84,40 @@
                         @if(count($messages))
                             @foreach($messages as $message)
                                 <div class="col-12">
-                                    <div class="ticket-box {{ $message->user_id != $ticket->user_id ? 'other' : '' }}">
-                                        <div class="ticket">
-                                            <div class="ticket-user"> {{ $message->user->nameOrLogin() }} ({{ $message->created_at }})</div>
-                                            <div class="ticket-content">
-                                                <div class="ticket-text">{!! $message->text !!}</div>
-                                                @if(count($message->files))
-                                                    <br/>
-                                                    <div class="ticket-files">
-                                                        <div>Прикрепленные файлы:</div>
-                                                        <ul class="ma-0">
-                                                            @foreach($message->files as $file)
-                                                                <li>
-                                                                    <a href="{{ route('ticket.download', ["folder" => $ticket->id, "file" => $file->name]) }}">
-                                                                        {{ $file->origin }}
-                                                                    </a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                @endif
+                                    @if($message->is_event)
+                                        <div class="ticket-box event">
+                                            <div class="ticket">
+                                                <div class="ticket-user"> <span class="icon solid fa-cog mr-1 gray" ></span> {{ $message->user->nameOrLogin() }} внес(ла) изменения ({{ $message->created_at }}) </div>
+                                                <div class="ticket-content">
+                                                    <div class="ticket-text">{!! $message->text !!}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div class="ticket-box {{ $message->user_id != $ticket->user_id ? 'other' : '' }}">
+                                            <div class="ticket">
+                                                <div class="ticket-user"> {{ $message->user->nameOrLogin() }} ({{ $message->created_at }})</div>
+                                                <div class="ticket-content">
+                                                    <div class="ticket-text">{!! $message->text !!}</div>
+                                                    @if(count($message->files))
+                                                        <br/>
+                                                        <div class="ticket-files">
+                                                            <div>Прикрепленные файлы:</div>
+                                                            <ul class="ma-0">
+                                                                @foreach($message->files as $file)
+                                                                    <li>
+                                                                        <a href="{{ route('ticket.download', ["folder" => $ticket->id, "file" => $file->name]) }}">
+                                                                            {{ $file->origin }}
+                                                                        </a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
                         @endif

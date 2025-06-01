@@ -287,6 +287,7 @@ class TicketsController extends Controller
             ->get();
 
         $categories = [];
+        $partners = [];
 
         if ($isDashboard) {
             $categories = TicketCategory::select("id", "title")
@@ -364,6 +365,13 @@ class TicketsController extends Controller
             $user
         );
         */
+
+        TicketsMessageController::eventMessage(
+            $data_new,
+            $data_old,
+            $ticket->id,
+            $user
+        );
 
         if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);
@@ -452,6 +460,13 @@ class TicketsController extends Controller
             $user
         );
         */
+
+        TicketsMessageController::eventMessage(
+            $data_new,
+            $data_old,
+            $ticket->id,
+            $user
+        );
 
         if ($isProfile) {
             return redirect()->route('p.tickets.edit', $ticket->id);
