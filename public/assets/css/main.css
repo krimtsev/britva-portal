@@ -3173,3 +3173,17 @@ button:disabled,
     color: #333;
 }
 
+.ticket-box.event .ticket-content {
+    border: solid 1px rgb(158 148 148 / 75%);
+    background: rgb(153 144 144 / 25%);
+    color: #333;
+}
+
+.ticket-box.event .icon:before {
+    color: rgb(158 148 148 / 75%);
+}
+
+.ticket-box.event .ticket-user {
+    text-transform: none;
+    padding: 0;
+}

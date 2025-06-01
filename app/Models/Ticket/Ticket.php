@@ -63,4 +63,11 @@ class Ticket extends Model
     public function stateName() {
         return self::stateList[$this->state]["title"];
     }
+
+    static function getStateNameById($id) {
+        if (array_key_exists($id, self::stateList)) {
+            return self::stateList[$id]["title"];
+        }
+        return "";
+    }
 }
