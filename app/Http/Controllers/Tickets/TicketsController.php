@@ -427,17 +427,11 @@ class TicketsController extends Controller
         $state = in_array($ticket->state, Ticket::stateIdsClosed) ? 1 : 5;
 
         $data_new = [
-            'title'       => $request['title'],
-            'state'       => $request['state'],
-            'category_id' => $request['category_id'],
-            'partner_id'  => $request['partner_id'],
+            'state' => $state,
         ];
 
         $data_old = [
-            'title'       => $ticket['title'],
-            'state'       => $ticket['state'],
-            'category_id' => $ticket['category_id'],
-            'partner_id'  => $ticket['partner_id'],
+            'state' => $ticket->state,
         ];
 
         $ticket->fill([
