@@ -5,17 +5,17 @@ namespace App\Console\Commands\Notifications;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Notifications\NotificationsController;
 
-class Notifications extends Command
+class VideoNotification extends Command
 {
     // Define command name
-    protected $signature = 'reports:video';
+    protected $signature = 'notifications:video';
 
     // Add description to your command
-    protected $description = 'Send video reports';
+    protected $description = 'Send video message';
 
     // Create your own custom command
     public function handle() {
-        (new NotificationsController())->videoReports();
+        (new NotificationsController())->videoMessage();
     }
 }
 
