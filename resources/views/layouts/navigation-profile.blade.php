@@ -16,6 +16,7 @@
                     <ul>
                         <li><a href="{{ route('p.tickets.create-template', 'maket') }}">ЗАЯВКА НА ДИЗАЙН</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'cert') }}">ЗАЯВКА НА СЕРТИФИКАТ</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'barberplus') }}">ЗАЯВКА НА БАРБЕРА+</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'top') }}">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'brand') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'brandplus') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
