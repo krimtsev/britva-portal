@@ -13,22 +13,26 @@ class NotificationsController extends Controller
         "-1002037086197"  // soda
     ];
 
-    private function getPartners() {
-        return Partner::select(
+    private function getPartners(bool $isIgnore = false) {
+        $query = Partner::select(
             "name",
             "tg_chat_id",
         )
             ->where('yclients_id', '<>', "")
             ->where('disabled', '<>', 1)
-            ->where("tg_active", 1)
-            ->whereNotIn("tg_chat_id", self::IGNORE)
-            ->orderBy("name")
+            ->where("tg_active", 1);
+
+        if ($isIgnore) {
+            $query->whereNotIn("tg_chat_id", self::IGNORE);
+        }
+
+        return $query->orderBy("name")
             ->get();
     }
 
-    private function getUniqChatIds(): array
+    private function getUniqChatIds(bool $isIgnore = false): array
     {
-        $partners = self::getPartners()
+        $partners = self::getPartners($isIgnore)
             ->groupBy('tg_chat_id')
             ->toArray();
 
@@ -39,7 +43,7 @@ class NotificationsController extends Controller
      * Видео напоминание
      */
     public function videoMessage() {
-        $ids = $this->getUniqChatIds();
+        $ids = $this->getUniqChatIds(true);
         $msg = join("\n\n", [
             "🔔 Напоминание:",
             "Не забудьте отправить <b>еженедельный видеоотчет по филиалу</b> пользователю @britva_otchet <b>до 16:00 каждого понедельника</b>.",
