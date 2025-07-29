@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('notifications:whatsapp')
             ->withoutOverlapping()
-            ->cron('45 9 * * *')
+            ->cron('30 12 * * *')
             ->onFailure(function (Stringable $output) {
                 ReportService::error('[command] notification whatsapp', $output);
             });
