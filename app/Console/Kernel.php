@@ -30,11 +30,18 @@ class Kernel extends ConsoleKernel
                 ReportService::error('[command] staff update', $output);
             });
 
-        $schedule->command('reports:video')
+        $schedule->command('notifications:video')
             ->withoutOverlapping()
             ->cron('0 10 * * 1')
             ->onFailure(function (Stringable $output) {
-                ReportService::error('[command] reports video', $output);
+                ReportService::error('[command] notification video', $output);
+            });
+
+        $schedule->command('notifications:whatsapp')
+            ->withoutOverlapping()
+            ->cron('30 12 * * *')
+            ->onFailure(function (Stringable $output) {
+                ReportService::error('[command] notification whatsapp', $output);
             });
     }
 
