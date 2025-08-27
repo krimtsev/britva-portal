@@ -51,7 +51,7 @@ class NotificationsController extends Controller
             "✅ Если отчет уже отправлен — <b>отметь это в комментариях</b> под этой публикацией.",
         ]);
 
-        MessagesController::handler($msg, $ids);
+        MessagesController::handler($msg, $ids, MessagesController::TYPES['VIDEO_MESSAGE']);
     }
 
     /**
