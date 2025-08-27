@@ -13,6 +13,10 @@ class MessagesController extends Controller
 
     const TEST_TG_ID = "-1001993054003";
 
+    const TYPES = [
+        "VIDEO_MESSAGE" => "VideoMessage"
+    ];
+
     private function getPartners() {
         return Partner::select(
             "name",
@@ -54,7 +58,7 @@ class MessagesController extends Controller
 
             switch ($request->selected_partners) {
                 case "test":
-                    $tg_ids[] = self::TEST_TG_ID;;
+                    $tg_ids[] = self::TEST_TG_ID;
                     break;
                 case "all":
                     $tg_ids = self::getUniqChatIds();
@@ -71,12 +75,16 @@ class MessagesController extends Controller
         }
     }
 
-    static function handler($msg, $ids = []) {
+    static function handler($msg, $ids = [], $type = null) {
         $body = [
             "msg"     => $msg,
             "tg_ids"  => $ids,
             "partner" => env('PARTNER_NAME', '')
         ];
+
+        if ($type) {
+            $body["type"] = $type;
+        }
 
         Http::withOptions([
             "verify" => false,
