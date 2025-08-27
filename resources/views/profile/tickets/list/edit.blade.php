@@ -1,3 +1,8 @@
+@php
+    /** @var \App\Models\Ticket\Ticket $ticket */
+    $isEdited = in_array($ticket->state, [1,2,3])
+@endphp
+
 <x-admin-layout>
     <x-header-section title="Редактировать заявку" />
 
@@ -67,43 +72,49 @@
                     </div>
                 </div>
 
-                <div class="row gtr-uniform">
-                    <div class="col-12">
-                        <textarea name="text" id="text" rows="5" placeholder="Новое сообщение">{{ old('text') }}</textarea>
-                    </div>
+                @if($isEdited)
+                    <div class="row gtr-uniform">
+                        <div class="col-12">
+                            <textarea name="text" id="text" rows="5" placeholder="Новое сообщение">{{ old('text') }}</textarea>
+                        </div>
 
-                    <div class="col-12">
-                        <h5>Загрузить файлы</h5>
-                        <input
-                            type="file"
-                            name="files[]"
-                            :value="old(files)"
-                            placeholder="Файлы"
-                            multiple="multiple"
-                        />
+                        <div class="col-12">
+                            <h5>Загрузить файлы</h5>
+                            <input
+                                type="file"
+                                name="files[]"
+                                :value="old(files)"
+                                placeholder="Файлы"
+                                multiple="multiple"
+                            />
+                        </div>
                     </div>
+                @endif
+            </div>
+
+            @if($isEdited)
+                <div style="float: left">
+                    <input
+                        type="submit"
+                        value="Отправить сообщение"
+                        class="primary"
+                    />
                 </div>
-            </div>
-
-            <div style="float: left">
-                <input
-                    type="submit"
-                    value="Отправить сообщение"
-                    class="primary"
-                />
-            </div>
+            @endif
         </form>
 
-        <div style="float: right">
-            <form action="{{ route('p.ticket.state', $ticket->id) }}" method="post" enctype="multipart/form-data">
-                @csrf
+        @if($isEdited)
+            <div style="float: right">
+                <form action="{{ route('p.ticket.state', $ticket->id) }}" method="post" enctype="multipart/form-data">
+                    @csrf
 
-                <input
-                    type="submit"
-                    value="{{ $ticket->state == 1 || $ticket->state == 2 || $ticket->state == 3 ? 'Закрыть заявку' : 'Открыть заявку' }}"
-                    class="danger"
-                />
-            </form>
-        </div>
+                    <input
+                        type="submit"
+                        value="Закрыть заявку"
+                        class="danger"
+                    />
+                </form>
+            </div>
+        @endif
     </section>
 </x-admin-layout>
