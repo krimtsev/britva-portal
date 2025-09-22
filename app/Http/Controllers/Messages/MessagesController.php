@@ -88,6 +88,9 @@ class MessagesController extends Controller
 
         Http::withOptions([
             "verify" => false,
+			"curl" => [
+                CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
+            ],
         ])
             ->asForm()
             ->post(self::URL, $body);

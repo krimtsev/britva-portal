@@ -44,6 +44,7 @@
 						<li><a href="{{ route('page.index', 'subscription-yandex-2gis') }}" target="_blank">Подписка Яндекс.Карты и 2GIS</a></li>
 						<li><a href="{{ route('page.index', 'service-bot') }}">Сервис пропущенных звонков</a></li>
 						<li><a href="{{ route('p.analytics.index') }}">Сервис аналитики показателей</a></li>
+						<li><a href="{{ route('page.index', 'britva-search') }}">Поиск сотрудников на замену</a></li>
 					</ul>
 				</li>
 				<li><a href="{{ route('sheet.index', 'find-certificate') }}" >Поиск по сертификатам</a></li>
@@ -65,6 +66,7 @@
 						<li><a href="{{ route('p.tickets.create-template', 'cert') }}">ЗАЯВКА НА СЕРТИФИКАТ</a></li>
 						<li><a href="{{ route('p.tickets.create-template', 'barberplus') }}">ЗАЯВКА НА БАРБЕРА+</a></li>
 						<li><a href="{{ route('p.tickets.create-template', 'top') }}">ЗАЯВКА НА ТОП-БАРБЕРА</a></li>
+						<li><a href="{{ route('p.tickets.create-template', 'topplus') }}">ЗАЯВКА НА ТОП-БАРБЕРА+</a></li>
 						<li><a href="{{ route('p.tickets.create-template', 'brand') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА</a></li>
 						<li><a href="{{ route('p.tickets.create-template', 'brandplus') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА+</a></li>
                         <li><a href="{{ route('p.tickets.create-template', 'brandpro') }}">ЗАЯВКА НА БРЕНД-БАРБЕРА ПРО</a></li>
