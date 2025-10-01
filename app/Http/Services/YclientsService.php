@@ -111,6 +111,25 @@ class YclientsService
         return $response;
     }
 
+    private function httpPost($url, $body, $contentType = "application/json") {
+        $response = $this->httpWithHeaders()
+            ->withBody($body, $contentType)
+            ->post($url);
+
+        $isHttpDebug = (bool) env('HTTP_DEBUG', false);
+        if ($isHttpDebug) {
+            Log::channel('http')->info('Response', [
+                'method'  => 'POST',
+                'url'     => $url,
+                'status'  => $response->status(),
+                'body'    => $response->body(),
+                'headers' => $response->headers(),
+            ]);
+        }
+
+        return $response;
+    }
+
     /**
      * Фильтр уволенных сотрудников, удаленных сотрудников, лист ожидания. 2191383
      */
@@ -464,7 +483,7 @@ class YclientsService
                 11414223, // КОМПЛЕКС ПО УХОДУ ЗА КОЖЕЙ ОТ LONDON GROOMING
                 11414221, // MGC QUICK SPA
                 11414217, // ACUMEN
-				
+
             ];
 
             $SERVICES_COST = [
@@ -721,9 +740,7 @@ class YclientsService
 
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/clients/search", $this->company_id);
 
-            $response = $this->httpWithHeaders()
-                ->withBody($body, 'application/json')
-                ->post($url);
+            $response = $this->httpPost($url, $body);
 
             $response = $response->json($key = null);
 
