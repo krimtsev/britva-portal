@@ -97,7 +97,8 @@ class YclientsService
      * Логируем если HTTP_DEBUG = true - общий переключатель
      * HTTP_DEBUG_ONLY_ERROR - сужает записи только до status != 200
      */
-    private function isDebugLoged(int $status) {
+    private function isDebugLogged(int $status): bool
+    {
         $isHttpDebug = (bool) env('HTTP_DEBUG', false);
         $isHttpDebugOnlyError = (bool) env('HTTP_DEBUG_ONLY_ERROR', false);
 
@@ -107,7 +108,7 @@ class YclientsService
     private function httpGet($url) {
         $response = $this->httpWithHeaders()->get($url);
 
-        if ($this->isDebugLoged($response->status())) {
+        if ($this->isDebugLogged($response->status())) {
             Log::channel('http')->info('Response', [
                 'method'  => 'GET',
                 'url'     => $url,
@@ -125,7 +126,7 @@ class YclientsService
             ->withBody($body, $contentType)
             ->post($url);
 
-        if ($this->isDebugLoged($response->status())) {
+        if ($this->isDebugLogged($response->status())) {
             Log::channel('http')->info('Response', [
                 'method'  => 'POST',
                 'url'     => $url,
