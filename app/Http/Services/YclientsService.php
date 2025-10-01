@@ -93,18 +93,21 @@ class YclientsService
 		return $http;
 	}
 
+    /**
+     * Логируем если HTTP_DEBUG = true - общий переключатель
+     * HTTP_DEBUG_ONLY_ERROR - сужает записи только до status != 200
+     */
+    private function isDebugLoged(int $status) {
+        $isHttpDebug = (bool) env('HTTP_DEBUG', false);
+        $isHttpDebugOnlyError = (bool) env('HTTP_DEBUG_ONLY_ERROR', false);
+
+        return $isHttpDebug && (!$isHttpDebugOnlyError || $status !== 200);
+    }
 
     private function httpGet($url) {
         $response = $this->httpWithHeaders()->get($url);
 
-        $isHttpDebug = (bool) env('HTTP_DEBUG', false);
-        $isHttpDebugOnlyError = (bool) env('HTTP_DEBUG_ONLY_ERROR', false);
-
-        /**
-         * Логируем если HTTP_DEBUG = true - общий переключатель
-         * HTTP_DEBUG_ONLY_ERROR - сужает записи только до status != 200
-         */
-        if ($isHttpDebug && (!$isHttpDebugOnlyError || $response->status() !== 200)) {
+        if ($this->isDebugLoged($response->status())) {
             Log::channel('http')->info('Response', [
                 'method'  => 'GET',
                 'url'     => $url,
@@ -122,14 +125,7 @@ class YclientsService
             ->withBody($body, $contentType)
             ->post($url);
 
-        $isHttpDebug = (bool) env('HTTP_DEBUG', false);
-        $isHttpDebugOnlyError = (bool) env('HTTP_DEBUG_ONLY_ERROR', false);
-
-        /**
-         * Логируем если HTTP_DEBUG = true - общий переключатель
-         * HTTP_DEBUG_ONLY_ERROR - сужает записи только до status != 200
-         */
-        if ($isHttpDebug && (!$isHttpDebugOnlyError || $response->status() !== 200)) {
+        if ($this->isDebugLoged($response->status())) {
             Log::channel('http')->info('Response', [
                 'method'  => 'POST',
                 'url'     => $url,
