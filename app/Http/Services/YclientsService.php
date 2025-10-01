@@ -98,7 +98,13 @@ class YclientsService
         $response = $this->httpWithHeaders()->get($url);
 
         $isHttpDebug = (bool) env('HTTP_DEBUG', false);
-        if ($isHttpDebug) {
+        $isHttpDebugOnlyError = (bool) env('HTTP_DEBUG_ONLY_ERROR', false);
+
+        /**
+         * Логируем если HTTP_DEBUG = true - общий переключатель
+         * HTTP_DEBUG_ONLY_ERROR - сужает записи только до status != 200
+         */
+        if ($isHttpDebug && (!$isHttpDebugOnlyError || $response->status() !== 200)) {
             Log::channel('http')->info('Response', [
                 'method'  => 'GET',
                 'url'     => $url,
@@ -117,7 +123,13 @@ class YclientsService
             ->post($url);
 
         $isHttpDebug = (bool) env('HTTP_DEBUG', false);
-        if ($isHttpDebug) {
+        $isHttpDebugOnlyError = (bool) env('HTTP_DEBUG_ONLY_ERROR', false);
+
+        /**
+         * Логируем если HTTP_DEBUG = true - общий переключатель
+         * HTTP_DEBUG_ONLY_ERROR - сужает записи только до status != 200
+         */
+        if ($isHttpDebug && (!$isHttpDebugOnlyError || $response->status() !== 200)) {
             Log::channel('http')->info('Response', [
                 'method'  => 'POST',
                 'url'     => $url,
