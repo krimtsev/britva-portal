@@ -36,11 +36,13 @@ class YclientsService
         $this->updateParams($params);
     }
 
-    public function setCompanyId($id) {
+    public function setCompanyId($id): void
+    {
         $this->company_id = $id;
     }
 
-    public function updateParams($params) {
+    public function updateParams($params): void
+    {
         if (array_key_exists('company_id', $params)) {
             $this->company_id = $params["company_id"];
         }
@@ -102,39 +104,39 @@ class YclientsService
         $isHttpDebug = (bool) env('HTTP_DEBUG', false);
         $isHttpDebugOnlyError = (bool) env('HTTP_DEBUG_ONLY_ERROR', false);
 
-        return $isHttpDebug && (!$isHttpDebugOnlyError || $status !== 200);
+        if (!$isHttpDebug) return false;
+        return !$isHttpDebugOnlyError || $status !== 200;
     }
 
-    private function httpGet($url) {
-        $response = $this->httpWithHeaders()->get($url);
-
+    private function logResponse(string $method, string $url, \Illuminate\Http\Client\Response $response): void
+    {
         if ($this->isDebugLogged($response->status())) {
             Log::channel('http')->info('Response', [
-                'method'  => 'GET',
+                'method'  => $method,
                 'url'     => $url,
                 'status'  => $response->status(),
                 'body'    => $response->body(),
                 'headers' => $response->headers(),
             ]);
         }
+    }
+
+    private function httpGet($url): \Illuminate\Http\Client\Response
+    {
+        $response = $this->httpWithHeaders()->get($url);
+
+        $this->logResponse('GET', $url, $response);
 
         return $response;
     }
 
-    private function httpPost($url, $body, $contentType = "application/json") {
+    private function httpPost(string $url, $body, $contentType = "application/json"): \Illuminate\Http\Client\Response
+    {
         $response = $this->httpWithHeaders()
             ->withBody($body, $contentType)
             ->post($url);
 
-        if ($this->isDebugLogged($response->status())) {
-            Log::channel('http')->info('Response', [
-                'method'  => 'POST',
-                'url'     => $url,
-                'status'  => $response->status(),
-                'body'    => $response->body(),
-                'headers' => $response->headers(),
-            ]);
-        }
+        $this->logResponse('POST', $url, $response);
 
         return $response;
     }
@@ -149,10 +151,10 @@ class YclientsService
 
     /**
      * Получение списка сотрудников
-     * @return false | array<string[]>
+     * @return array<string, mixed>|false
      */
-
-    public function getStaff($params = []) {
+    public function getStaff(array $params = [])
+    {
         try {
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff", $this->company_id);
 
@@ -202,8 +204,8 @@ class YclientsService
      * Получение данных по сотруднику
      * @return false | array<string[]>
      */
-
-    public function getStaffData($staff) {
+    public function getStaffData($staff)
+    {
         try {
             $url = sprintf("https://api.yclients.com/api/v1/company/%s/staff/%s", $this->company_id, $staff);
 
@@ -270,7 +272,7 @@ class YclientsService
 
     /**
      * Получить основные показатели компании за период
-     * @return false | array<int, string, string>
+     * @return false|array<int, mixed>
      */
     public function getCompanyStats() {
         try {
