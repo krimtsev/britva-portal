@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Http\Controllers\Analytics\TableReport;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class AnalyticsJob implements ShouldQueue, ShouldBeUnique
@@ -33,14 +34,11 @@ class AnalyticsJob implements ShouldQueue, ShouldBeUnique
         $this->company_id = $company_id;
     }
 
-    /**
-     * Количество попыток выполнения задания.
-     *
-     * @var int
-     */
     public $tries = 5;
-
-    public $sleep = 30;
+    public $timeout = 3600;
+    public $sleep = 5;
+    //public $backoff = [60, 120, 300];
+    //public $uniqueFor = 300;
 
     /**
      * Задать временной предел попыток выполнить задания.
@@ -57,9 +55,15 @@ class AnalyticsJob implements ShouldQueue, ShouldBeUnique
      *
      * @return string
      */
-    public function uniqueId()
+    public function uniqueId(): string
     {
-        return $this->company_id;
+        $sync = $this->isSync ? 'sync' : 'root';
+        return implode('_', [
+            $this->company_id,
+            $this->start_date,
+            $this->end_date,
+            $sync
+        ]);
     }
 
     /**
@@ -76,8 +80,14 @@ class AnalyticsJob implements ShouldQueue, ShouldBeUnique
                 $this->end_date,
                 $this->company_id,
             );
-        } catch (Throwable $exception) {
-            $this->release($this->attempts() * 5);
+        } catch (Throwable $e) {
+            Log::error('AnalyticsJob exception', [
+                'company_id' => $this->company_id,
+                'error'      => $e->getMessage(),
+                'attempts'   => $this->attempts(),
+            ]);
+
+            $this->release($this->attempts() * 30);
         }
     }
 }

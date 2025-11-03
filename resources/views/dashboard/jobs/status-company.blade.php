@@ -6,6 +6,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Имя</th>
                         @foreach ($months as $month)
                             <th class="text-center"> {{ $month }}</th>
@@ -15,6 +16,7 @@
                 <tbody>
                 @foreach ($table as $one)
                     <tr>
+                        <td> {{ $loop->iteration }} </td>
                         <td> {{ $one["name"] }}</td>
                         @foreach ($one["dates"] as $date)
                             <td class="text-center">

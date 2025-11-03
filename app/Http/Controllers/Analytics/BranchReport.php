@@ -34,8 +34,20 @@ class BranchReport extends Controller
             // Список сотрудников
             $staff = $client->getStaff();
 
+            if (!is_array($staff)) {
+                //ReportService::error("BranchReport get", "getStaff() вернул: " . var_export($staff, true));
+                report("BranchReport::get() — getStaff() вернул не массив: " . var_export($staff, true));
+                return [[], []];
+            }
+
             // Коментарии
             $comments = $client->getCommentsByCompany();
+
+            if (!is_array($comments)) {
+                //ReportService::error("BranchReport get", "getCommentsByCompany() вернул: " . var_export($comments, true));
+                report("BranchReport::get() — getCommentsByCompany() вернул не массив: " . var_export($comments, true));
+                return [[], []];
+            }
 
             $table = [];
 
@@ -56,6 +68,12 @@ class BranchReport extends Controller
 
                 // Средний чек, Заполняемость, Новые клиенты, Оборот,
                 $companyStatsByStaff = $client->getCompanyStatsByStaff($id);
+
+                if (!is_array($companyStatsByStaff)) {
+                    //ReportService::error("BranchReport get", "getCompanyStatsByStaff() вернул: " . var_export($companyStatsByStaff, true));
+                    report("BranchReport::get() — getCompanyStatsByStaff() вернул не массив: " . var_export($companyStatsByStaff, true));
+                    return [[], []];
+                }
 
                 if (is_array($companyStatsByStaff) && !empty($companyStatsByStaff)) {
                     $table[$id]["average_sum"] = round($companyStatsByStaff["average_sum"], 0);
