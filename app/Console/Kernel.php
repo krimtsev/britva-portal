@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('staff:update')
             ->withoutOverlapping()
-            ->cron('30 10,14,18,22 * * *')
+            ->cron('30 8,14,18,22 * * *')
             ->onFailure(function (Stringable $output) {
                 ReportService::error('[command] staff update', $output);
             });
